@@ -1,8 +1,8 @@
 <div class="h-screen grid place-items-center">
 
     <div class="card w-full max-w-md p-8 shadow-2xl rounded-2xl">
-        <a href="/" wire:navigate.hover>
-            <button class="btn btn-ghost">&larr; Go Back</button>
+        <a href="/" class="btn btn-ghost w-fit" wire:navigate.hover>
+            &larr; Go Back
         </a>
         <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-16 my-3">
         <h1 class="text-3xl font-bold text-center text-white mb-6">Welcome Back</h1>
@@ -31,7 +31,7 @@
         </form>
         <p class="text-center text-sm mt-6 flex items-center gap-2">
             Don't have an account?
-            <a href="/signup">
+            <a href="/signup/volunteer">
                 <button class="btn btn-link px-0">
                     Sign up
                 </button>
