@@ -7,7 +7,7 @@
 
     <div class="navbar-end">
         <div class="flex-none">
-            <a href="/login">
+            <a href="/login" wire:navigate.hover>
                 <button class="btn btn-primary btn-outline">Log In</button>
             </a>
         </div>

@@ -1,7 +1,7 @@
 <div class="h-screen grid place-items-center">
 
     <div class="card w-full max-w-md p-8 shadow-2xl rounded-2xl">
-        <a href="/">
+        <a href="/" wire:navigate.hover>
             <button class="btn btn-ghost">&larr; Go Back</button>
         </a>
         <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-16 my-3">
