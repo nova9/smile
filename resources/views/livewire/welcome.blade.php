@@ -3,19 +3,7 @@
 
     <div class="hero min-h-screen">
         <div class="hero-content flex-col lg:flex-row-reverse -mt-36 w-full">
-{{--            <img src="{{asset('storage/assets/landing_image.svg')}}" class="max-w-lg" alt="a man helping another man get up" />--}}
-            <div class="h-96 rounded-2xl shadow-lg overflow-hidden">
-                <video
-                    x-ref="video"
-                    @mouseenter="$refs.video.play()"
-                    @click="$refs.video.play()"
-                    @play.once
-                    muted
-                    autoplay
-                    playsinline
-                    src="{{asset('storage/assets/small_dog.webm')}}"
-                ></video>
-            </div>
+            <img src="{{asset('storage/assets/landing_image.svg')}}" class="max-w-lg" alt="a man helping another man get up" />
 
             <div>
                 <h1 class="text-5xl font-bold">Join Our Volunteer Community</h1>
