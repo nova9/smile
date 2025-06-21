@@ -1,9 +1,38 @@
-import { createIcons, Menu, ArrowRight, Globe } from 'lucide';
+import {
+    createIcons,
+    Menu,
+    ArrowRight,
+    Globe,
+    House,
+    PanelLeft,
+    ChevronUp,
+    ChevronDown,
+    Calendar,
+    MessageCircle,
+    Bell,
+    LogOut,
+    CircleUser,
+    Sparkles
+} from 'lucide';
 
-createIcons({
-    icons: {
-        Menu,
-        ArrowRight,
-        Globe
-    }
-});
+document.addEventListener('livewire:navigated', () => {
+    createIcons({
+        icons: {
+            Menu,
+            ArrowRight,
+            Globe,
+            House,
+            PanelLeft,
+            ChevronUp,
+            ChevronDown,
+            Calendar,
+            MessageCircle,
+            Bell,
+            LogOut,
+            CircleUser,
+            Sparkles
+        }
+    });
+})
+
+
