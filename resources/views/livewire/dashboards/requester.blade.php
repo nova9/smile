@@ -1,14 +1,10 @@
 <div>
-{{--    logout form--}}
-    <form method="POST" action="/logout">
-        @csrf
-        <button type="submit" class="btn btn-danger">Logout</button>
-    </form>
+    <x-dashboard>
+        <x-slot name="items">
+            <x-dashboard.item to="/requester/dashboard" icon="house" title="Dashboard"/>
+            <x-dashboard.item to="/requester/events" icon="calendar" title="Events"/>
+        </x-slot>
 
-    {{--    dashboard content--}}
-    <div class="container">
-        <h1>Requester Dashboard</h1>
-        <p>Welcome to the Requester Dashboard!</p>
-        <p>Here you can manage your requests and view their statuses.</p>
-    </div>
+        content
+    </x-dashboard>
 </div>

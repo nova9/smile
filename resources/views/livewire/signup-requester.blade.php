@@ -5,14 +5,14 @@
         </a>
         <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-16 my-3">
         <div class="text-center text-white mb-6">
-            <h1 class="text-3xl font-bold ">Create an Account</h1>
-            <p class="text-gray-400">Let's find volunteers.</p>
+            <h1 class="text-3xl font-bold text-primary">Create an Account</h1>
+            <p class="text-gray-500">Let's find volunteers.</p>
         </div>
 
         <form class="space-y-6" method="post">
             @csrf
             <div>
-                <label for="name" class="block text-sm font-medium text-gray-300">Full Name</label>
+                <label for="name" class="block text-sm font-medium text-gray-500">Full Name</label>
                 <input id="name" type="text" name="name" value="{{ old('name') }}" placeholder="Enter your full name"
                        class="input input-bordered w-full mt-2 input-focus @error('name') input-error @enderror"
                        required/>
@@ -21,7 +21,7 @@
                 @enderror
             </div>
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-300">Email Address</label>
+                <label for="email" class="block text-sm font-medium text-gray-500">Email Address</label>
                 <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email"
                        class="input input-bordered w-full mt-2 input-focus @error('email') input-error @enderror"
                        required/>
@@ -30,7 +30,7 @@
                 @enderror
             </div>
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                <label for="password" class="block text-sm font-medium text-gray-500">Password</label>
                 <input id="password" type="password" name="password" placeholder="Create a password"
                        class="input input-bordered w-full mt-2 input-focus @error('password') input-error @enderror"
                        required/>
@@ -39,7 +39,7 @@
                 @enderror
             </div>
             <div>
-                <label for="password-confirmation" class="block text-sm font-medium text-gray-300">Confirm
+                <label for="password-confirmation" class="block text-sm font-medium text-gray-500">Confirm
                     Password</label>
                 <input id="password-confirmation" type="password" name="password-confirmation"
                        placeholder="Confirm your password"
@@ -54,7 +54,7 @@
                     <label class="label cursor-pointer">
                         <input type="checkbox" name="tos"
                                class="checkbox checkbox-primary checkbox-sm @error('tos') input-error @enderror"/>
-                        <span class="label-text text-gray-400 ml-2">I agree to the Terms of Service</span>
+                        <span class="label-text text-gray-600 ml-2">I agree to the Terms of Service</span>
                     </label>
                 </div>
                 @error('tos')

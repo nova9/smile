@@ -8,6 +8,9 @@
 
     <link rel="icon" href="{{ asset('storage/assets/logo.svg') }}" type="image/svg+xml">
 
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#31881C">
+
 
     <title>{{ $title ?? config('app.name') }}</title>
 </head>
