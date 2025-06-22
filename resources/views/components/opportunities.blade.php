@@ -13,13 +13,10 @@
     <div class="flex gap-[32px] items-center ">
         <div class="relative w-[600px] h-[680px]">
             <img
-                src="{{asset('storage/assets/3.jpg')}}"
+                src="{{asset('storage/assets/3.webp')}}"
                 class="w-full h-full rounded-lg object-cover "
+                alt=""
             />
-            <div
-                class="absolute top-0 left-0 w-full h-full bg-secondary-content opacity-20 rounded-lg pointer-events-none">
-            </div>
-
         </div>
 
         <div class="flex flex-col gap-[32px]">
@@ -27,11 +24,10 @@
             <div class="flex">
                 <div class="relative w-[212px] h-[200px]">
                     <img
-                        src="{{asset('storage/assets/2.jpg')}}"
+                        src="{{asset('storage/assets/2.webp')}}"
                         class="w-full h-full rounded-lg object-cover "
+                        alt=""
                     />
-                    <div
-                        class="absolute top-0 left-0 w-full h-full bg-secondary-content opacity-20 rounded-lg pointer-events-none"></div>
                 </div>
                 <div class="flex flex-col ">
 
@@ -40,20 +36,18 @@
 
             <div class="relative w-[212px] h-[200px]">
                 <img
-                    src="{{asset('storage/assets/2.jpg')}}"
+                    src="{{asset('storage/assets/2.webp')}}"
                     class="w-full h-full rounded-lg object-cover "
+                    alt=""
                 />
-                <div
-                    class="absolute top-0 left-0 w-full h-full bg-secondary-content opacity-20 rounded-lg pointer-events-none"></div>
             </div>
 
             <div class="relative w-[212px] h-[200px]">
                 <img
-                    src="{{asset('storage/assets/2.jpg')}}"
+                    src="{{asset('storage/assets/2.webp')}}"
                     class="w-full h-full rounded-lg object-cover "
+                    alt=""
                 />
-                <div
-                    class="absolute top-0 left-0 w-full h-full bg-secondary-content opacity-20 rounded-lg pointer-events-none"></div>
             </div>
 
         </div>
