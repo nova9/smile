@@ -1,15 +1,24 @@
-<div class="navbar bg-base-100 shadow-sm px-16">
+<div class="navbar bg-base-100 sticky">
     <div class="navbar-start">
         <a href="/">
-            <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-10 select-none">
+            <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-15  select-none">
         </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1  text-base">
+            <li><a>Home</a></li>
+            <li><a>About Us</a></li>
+            <li><a>Volunteer Opportunities</a></li>
+            <li><a >Get Involved</a></li>
+            <li><a>Donate</a></li>
+        </ul>
     </div>
 
     <div class="navbar-end">
         <div class="flex-none">
             @guest
                 <a href="/login" wire:navigate.hover>
-                    <button class="btn btn-primary btn-outline">Log In</button>
+                    <button class="btn rounded-xl btn-accent text-base p-5">Log In</button>
                 </a>
             @endguest
 
