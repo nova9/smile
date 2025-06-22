@@ -26,7 +26,7 @@
                        class="input input-bordered w-full mt-2 input-focus @error('email') input-error @enderror"
                        required/>
                 @error('email')
-                <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
+                    <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div>
@@ -35,7 +35,7 @@
                        class="input input-bordered w-full mt-2 input-focus @error('password') input-error @enderror"
                        required/>
                 @error('password')
-                <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
+                    <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div>
@@ -46,7 +46,7 @@
                        class="input input-bordered w-full mt-2 input-focus @error('password-confirmation') input-error @enderror"
                        required/>
                 @error('password-confirmation')
-                <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
+                    <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div>
@@ -58,13 +58,13 @@
                     </label>
                 </div>
                 @error('tos')
-                <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
+                    <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary w-full">Sign Up</button>
+            <button type="submit" class="btn btn-accent w-full">Sign Up</button>
         </form>
-        <p class="text-center text-sm mt-6 flex items-center gap-2">
+        <p class="text-center text-sm flex items-center gap-2">
             Already have an account?
             <a href="/login">
                 <button class="btn btn-link px-0">

@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="card bg-base-300  w-[350px] h-[330px] shadow-xl">
+        <div class="card bg-base-300  w-[350px] h-[330px] shadow-md">
             <div class="card-body items-center text-center">
                 <h2 class="card-title text-primary text-[30px] pt-15">Our Values</h2>
                 <p class="text-neutral text-base">
