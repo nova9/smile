@@ -14,14 +14,19 @@
                 Start your volunteering journey today!
             </p>
             <div class="flex w-1/2 gap-5">
-                <button
-                    class="btn btn-accent w-[230px] h-[46px] rounded-[99px] text-accent-content px-[12px] py-[24px] lg:text-base">
-                    I'd like to volunteer
-                </button>
-                <button
-                    class="btn btn-outline border-2 btn-accent w-[230px] h-[46px] rounded-[99px] px-[12px] py-[24px] lg:text-base ">
-                    I'm looking for volunteers
-                </button>
+                <a href="/signup/volunteer" wire:navigate.hover>
+                    <button
+                        class="btn btn-accent w-[230px] h-[46px] rounded-[99px] text-accent-content px-[12px] py-[24px] lg:text-base">
+                        I'd like to volunteer
+                    </button>
+                </a>
+
+                <a href="/signup/requester" wire:navigate.hover>
+                    <button
+                        class="btn btn-outline border-2 btn-accent w-[230px] h-[46px] rounded-[99px] px-[12px] py-[24px] lg:text-base ">
+                        I'm looking for volunteers
+                    </button>
+                </a>
 
             </div>
 
@@ -31,11 +36,10 @@
             <div class="flex items-center">
                 <div class="relative w-[410px] h-[420px]">
                     <img
-                        src="{{asset('storage/assets/1.jpg')}}"
+                        src="{{asset('storage/assets/1.webp')}}"
                         class="w-full h-full rounded-lg object-cover "
+                        alt="hero image"
                     />
-                    <div
-                        class="absolute top-0 left-0 w-full h-full bg-secondary-content opacity-20 rounded-lg pointer-events-none"></div>
                 </div>
 
             </div>
@@ -43,20 +47,17 @@
             <div class="flex flex-col gap-[29px]">
                 <div class="relative w-[250px] h-[270px]">
                     <img
-                        src="{{ asset('storage/assets/2.jpg') }}"
+                        src="{{ asset('storage/assets/2.webp') }}"
                         class="w-full h-full object-cover rounded-lg"
+                        alt="hero image"
                     />
-                    <div
-                        class="absolute top-0 left-0 w-full h-full bg-secondary-content opacity-20 rounded-lg pointer-events-none"></div>
                 </div>
                 <div class="relative w-[250px] h-[270px] ">
-
                     <img
-                        src="{{asset('storage/assets/3.jpg')}}"
+                        src="{{asset('storage/assets/3.webp')}}"
                         class="w-full h-full rounded-lg object-cover"
+                        alt="hero image"
                     />
-                    <div
-                        class="absolute top-0 left-0 w-full h-full bg-secondary-content opacity-20 rounded-lg pointer-events-none"></div>
 
                 </div>
 
