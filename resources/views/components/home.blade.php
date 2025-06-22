@@ -14,14 +14,19 @@
                 Start your volunteering journey today!
             </p>
             <div class="flex w-1/2 gap-5">
-                <button
-                    class="btn btn-accent w-[230px] h-[46px] rounded-[99px] text-accent-content px-[12px] py-[24px] lg:text-base">
-                    I'd like to volunteer
-                </button>
-                <button
-                    class="btn btn-outline border-2 btn-accent w-[230px] h-[46px] rounded-[99px] px-[12px] py-[24px] lg:text-base ">
-                    I'm looking for volunteers
-                </button>
+                <a href="/signup/volunteer" wire:navigate.hover>
+                    <button
+                        class="btn btn-accent w-[230px] h-[46px] rounded-[99px] text-accent-content px-[12px] py-[24px] lg:text-base">
+                        I'd like to volunteer
+                    </button>
+                </a>
+
+                <a href="/signup/requester" wire:navigate.hover>
+                    <button
+                        class="btn btn-outline border-2 btn-accent w-[230px] h-[46px] rounded-[99px] px-[12px] py-[24px] lg:text-base ">
+                        I'm looking for volunteers
+                    </button>
+                </a>
 
             </div>
 
