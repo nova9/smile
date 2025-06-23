@@ -13,10 +13,12 @@
     <div class="flex justify-between items-center">
         <div class="relative w-1/2 h-170">
             <img
-                src="{{asset('storage/assets/4.jpg')}}"
+
+                src="{{asset('storage/assets/3.webp')}}"
                 class="w-full h-full rounded-lg object-cover shadow-lg "
                 alt="volunteer"
             />
+
 
         </div>
 
@@ -25,9 +27,11 @@
             <div class="flex gap-8">
                 <div class="relative w-3xs h-48">
                     <img
-                        src="{{asset('storage/assets/2.jpg')}}"
+
+                        src="{{asset('storage/assets/2.webp')}}"
                         class="w-full h-full rounded-lg object-cover shadow-lg "
                         alt="volunteer"
+
                     />
                 </div>
 
@@ -52,10 +56,11 @@
                 </div>
             </div>
 
+
             <div class="flex gap-8">
                 <div class="relative w-3xs h-48">
                     <img
-                        src="{{asset('storage/assets/2.jpg')}}"
+                        src="{{asset('storage/assets/2.webp')}}"
                         class="w-full h-full rounded-lg object-cover shadow-lg"
                         alt="volunteer"
                     />
@@ -79,6 +84,7 @@
 
 
                 </div>
+
             </div>
             <div class="flex gap-8">
                 <div class="relative w-3xs h-48">
@@ -106,7 +112,9 @@
                     </div>
 
 
+
                 </div>
+
             </div>
 
 

@@ -14,13 +14,19 @@
                 Start your volunteering journey today!
             </p>
             <div class="flex w-1/2 gap-5">
+
+               <a href="/signup/volunteer" wire:navigate.hover>
                 <x-buttons.button1>
                     I'd like to volunteer
                 </x-buttons.button1>
-
+                </a>
+                
+                <a href="/signup/requester" wire:navigate.hover>
                 <x-buttons.button2>
                     I'm looking for volunteers
                 </x-buttons.button2>
+                </a>
+
 
             </div>
 
@@ -30,8 +36,9 @@
             <div class="flex items-center">
                 <div class="relative w-sm h-100">
                     <img
-                        src="{{asset('storage/assets/1.jpg')}}"
+                        src="{{asset('storage/assets/1.webp')}}"
                         class="w-full h-full rounded-lg object-cover "
+                        alt="hero image"
                     />
                 </div>
 
@@ -40,18 +47,21 @@
             <div class="flex flex-col gap-8">
                 <div class="relative w-3xs h-64">
                     <img
-                        src="{{ asset('storage/assets/2.jpg') }}"
+                        src="{{ asset('storage/assets/2.webp') }}"
                         class="w-full h-full object-cover rounded-lg"
+                        alt="hero image"
                     />
+
 
                 </div>
                 <div class="relative w-3xs h-64 ">
 
-                    <img
-                        src="{{asset('storage/assets/3.jpg')}}"
-                        class="w-full h-full rounded-lg object-cover"
-                    />
 
+                    <img
+                        src="{{asset('storage/assets/3.webp')}}"
+                        class="w-full h-full rounded-lg object-cover"
+                        alt="hero image"
+                    />
 
                 </div>
 
