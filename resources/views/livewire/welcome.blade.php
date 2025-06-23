@@ -3,4 +3,6 @@
     <x-home />
     <x-aboutus />
     <x-opportunities/>
+    <x-involved/>
+    <x-donate/>
 </div>
