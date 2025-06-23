@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1  text-base">
+        <ul class="menu menu-horizontal px-1  text-xl">
             <li><a>Home</a></li>
             <li><a>About Us</a></li>
             <li><a>Volunteer Opportunities</a></li>
@@ -18,7 +18,7 @@
         <div class="flex-none">
             @guest
                 <a href="/login" wire:navigate.hover>
-                    <button class="btn rounded-xl btn-accent text-base p-5">Log In</button>
+                    <button class="btn btn-accent text-base p-5">Log In</button>
                 </a>
             @endguest
 
