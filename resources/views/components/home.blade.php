@@ -1,40 +1,41 @@
-<div class="mt-25">
-    <div class="flex justify-between">
-        <div class=" w-1/3 h-[510px] flex flex-col lg:gap-[15px]">
-            <h1 class=" lg:text-6xl font-bold text-primary leading-tight ">
+<div class="px-4 sm:px-6 lg:px-8">
+    <div class="grid place-items-center grid-cols-2 gap-x-10 ">
+        <div class="w-full flex flex-col gap-y-2 ">
+            <h1 class="xl:text-6xl lg:text-4xl font-bold text-primary leading-tight">
                 Welcome to Smile
                 <span class="text-accent">Volunteer</span>
                 <br>
                 with Heart!
             </h1>
-            <p class="lg:text-xl py-6 ">
-                Join a community of compassionate individuals making a <br>
-                difference. Whether you're lending a hand, sharing a <span class="text-accent">smile</span>,<br>
-                or building lasting friendships, your effort changes lives.<br>
+            <p class="xl:text-xl  text-base py-4 md:py-6 max-w-2xl mx-auto lg:mx-0 ">
+                Join a community of compassionate individuals making a
+                difference. Whether you're lending a hand, sharing a <span class="text-accent">smile</span>,
+                or building lasting friendships, your effort changes lives.
                 Start your volunteering journey today!
             </p>
-            <div class="flex w-1/2 gap-5">
-                <a href="/signup/volunteer" wire:navigate.hover>
-                    <button
-                        class="btn btn-accent w-[230px] h-[46px] rounded-[99px] text-accent-content px-[12px] py-[24px] lg:text-base">
-                        I'd like to volunteer
-                    </button>
+            <div class="flex gap-x-4 ">
+
+               <a href="/signup/volunteer" wire:navigate.hover>
+                <x-common.buttons.button1>
+                    I'd like to volunteer
+                </x-common.buttons.button1>
                 </a>
 
                 <a href="/signup/requester" wire:navigate.hover>
-                    <button
-                        class="btn btn-outline border-2 btn-accent w-[230px] h-[46px] rounded-[99px] px-[12px] py-[24px] lg:text-base ">
+                    <x-common.buttons.button2>
                         I'm looking for volunteers
-                    </button>
+                    </x-common.buttons.button2>
                 </a>
+
 
             </div>
 
         </div>
-        <div class="flex gap-[29px] w-1/2">
+
+        <div class="flex gap-8 max-w-full items-center">
 
             <div class="flex items-center">
-                <div class="relative w-[410px] h-[420px]">
+                <div class="relative max-w-3xs xl:max-w-sm  aspect-square">
                     <img
                         src="{{asset('storage/assets/1.webp')}}"
                         class="w-full h-full rounded-lg object-cover "
@@ -44,15 +45,19 @@
 
             </div>
 
-            <div class="flex flex-col gap-[29px]">
-                <div class="relative w-[250px] h-[270px]">
+            <div class="flex flex-col gap-8 max-w-full">
+                <div class="relative  xl:max-w-3xs max-w-36 aspect-square  ">
                     <img
                         src="{{ asset('storage/assets/2.webp') }}"
                         class="w-full h-full object-cover rounded-lg"
                         alt="hero image"
                     />
+
+
                 </div>
-                <div class="relative w-[250px] h-[270px] ">
+                <div class="relative xl:max-w-3xs max-w-36 aspect-square ">
+
+
                     <img
                         src="{{asset('storage/assets/3.webp')}}"
                         class="w-full h-full rounded-lg object-cover"
