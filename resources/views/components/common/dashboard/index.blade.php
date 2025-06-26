@@ -5,7 +5,7 @@
                 <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-8 select-none">
             </div>
             <div class="p-1" x-show="navClosed">
-                <x-logo class="size-8 text-accent"/>
+                <x-common.logo class="size-8 text-accent"/>
             </div>
         </div>
         <div>
@@ -23,8 +23,8 @@
                 <div class="flex items-center gap-2" @click.outside="open = false" @click="open = !open">
                     <img src="https://picsum.photos/300/300" class="size-8 rounded-lg" alt="">
                     <div class="text-xs" x-show="!navClosed">
-                        <p class="font-medium">Thathsara Madusha</p>
-                        <p>thathsaramadhhusha@gmail.com</p>
+                        <p class="font-medium">{{ auth()->user()->name }}</p>
+                        <p>{{ auth()->user()->email }}</p>
                     </div>
                     <div class="-space-y-1.5 ml-4" x-show="!navClosed">
                         <i data-lucide="chevron-up" class="size-4"></i>
@@ -41,8 +41,8 @@
 
                         </div>
                         <div class="text-xs">
-                            <p class="font-medium">Thathsara Madusha</p>
-                            <p>thathsaramadhhusha@gmail.com</p>
+                            <p class="font-medium">{{ auth()->user()->name }}</p>
+                            <p>{{ auth()->user()->email }}</p>
                         </div>
                     </div>
                     {{--                        divider --}}
