@@ -5,7 +5,7 @@
                 <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-8 select-none">
             </div>
             <div class="p-1" x-show="navClosed">
-                <x-logo class="size-8 text-accent"/>
+                <x-common.logo class="size-8 text-accent"/>
             </div>
         </div>
         <div>
