@@ -1,12 +1,12 @@
 <div class="-mt-20 min-h-screen flex flex-col gap-y-10 justify-center ">
 
     <div class="flex justify-between">
-        <x-common.headings.h2>
+        <x-common.landing.headings.h2>
             Volunteer Opportunities
-        </x-common.headings.h2>
-        <x-common.buttons.button2>View
+        </x-common.landing.headings.h2>
+        <x-common.landing.buttons.button2>View
             All Opportunities
-        </x-common.buttons.button2>
+        </x-common.landing.buttons.button2>
 
     </div>
     <div class="flex gap-8 items-center 2xl:flex-row flex-col">
@@ -20,7 +20,7 @@
         </div>
         <div class="flex flex-col gap-8">
 
-            <x-common.cards.opportunities-card>
+            <x-common.landing.cards.opportunities-card>
                 <x-slot:title>
                     Community Outreach Assistant
                 </x-slot:title>
@@ -33,9 +33,9 @@
                 <x-slot:detail2>
                     Commitment:4 hours/week<
                 </x-slot:detail2>
-            </x-common.cards.opportunities-card>
+            </x-common.landing.cards.opportunities-card>
 
-            <x-common.cards.opportunities-card>
+            <x-common.landing.cards.opportunities-card>
                 <x-slot:title>
                     Community Outreach Assistant
                 </x-slot:title>
@@ -48,9 +48,9 @@
                 <x-slot:detail2>
                     Commitment:4 hours/week<
                 </x-slot:detail2>
-            </x-common.cards.opportunities-card>
+            </x-common.landing.cards.opportunities-card>
 
-            <x-common.cards.opportunities-card>
+            <x-common.landing.cards.opportunities-card>
                 <x-slot:title>
                     Community Outreach Assistant
                 </x-slot:title>
@@ -63,7 +63,7 @@
                 <x-slot:detail2>
                     Commitment:4 hours/week<
                 </x-slot:detail2>
-            </x-common.cards.opportunities-card>
+            </x-common.landing.cards.opportunities-card>
 
         </div>
     </div>

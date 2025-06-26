@@ -16,15 +16,15 @@
             <div class="flex gap-x-4 ">
 
                <a href="/signup/volunteer" wire:navigate.hover>
-                <x-common.buttons.button1>
+                <x-common.landing.buttons.button1>
                     I'd like to volunteer
-                </x-common.buttons.button1>
+                </x-common.landing.buttons.button1>
                 </a>
 
                 <a href="/signup/requester" wire:navigate.hover>
-                    <x-common.buttons.button2>
+                    <x-common.landing.buttons.button2>
                         I'm looking for volunteers
-                    </x-common.buttons.button2>
+                    </x-common.landing.buttons.button2>
                 </a>
 
 
