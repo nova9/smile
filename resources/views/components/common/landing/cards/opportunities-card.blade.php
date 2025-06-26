@@ -17,10 +17,10 @@
                 <p>{{$detail1}}</p>
                 <p>{{$detail2}}</p>
             </div>
-            <x-common.buttons.button1 class="btn-primary w-3xs">
+            <x-common.landing.buttons.button1 class="btn-primary w-3xs">
                 <i data-lucide="mouse-pointer-2"></i>
                 Apply now
-            </x-common.buttons.button1>
+            </x-common.landing.buttons.button1>
         </div>
 
 

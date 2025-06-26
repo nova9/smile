@@ -11,7 +11,6 @@
         <div>
             <ul class="menu rounded-box w-full space-y-1 m-0 p-0">
                 {{ $items }}
-
             </ul>
         </div>
 
@@ -19,10 +18,10 @@
             {{--                spacer--}}
         </div>
 
-        <div x-data="{ open: false }">
-            <div class=" rounded-md hover:bg-gray-100 transition-colors relative">
+        <div x-data="{ open: false }" wire:cloak>
+            <div class=" rounded-md hover:bg-gray-100 p-1 transition-colors relative">
                 <div class="flex items-center gap-2" @click.outside="open = false" @click="open = !open">
-                    <img src="https://picsum.photos/300/300" class="size-10 rounded-lg" alt="">
+                    <img src="https://picsum.photos/300/300" class="size-8 rounded-lg" alt="">
                     <div class="text-xs" x-show="!navClosed">
                         <p class="font-medium">Thathsara Madusha</p>
                         <p>thathsaramadhhusha@gmail.com</p>
