@@ -14,20 +14,11 @@
                 Start your volunteering journey today!
             </p>
             <div class="flex gap-x-4 ">
-
-               <a href="/signup/volunteer" wire:navigate.hover>
-                <x-common.landing.buttons.button1>
-                    I'd like to volunteer
-                </x-common.landing.buttons.button1>
+                <a href="/signup" wire:navigate.hover>
+                    <x-common.landing.buttons.button1>
+                        Let's get started
+                    </x-common.landing.buttons.button1>
                 </a>
-
-                <a href="/signup/requester" wire:navigate.hover>
-                    <x-common.landing.buttons.button2>
-                        I'm looking for volunteers
-                    </x-common.landing.buttons.button2>
-                </a>
-
-
             </div>
 
         </div>
