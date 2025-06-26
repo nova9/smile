@@ -5,9 +5,9 @@
         <p class="text-gray-500 text-base">
             {{$des}}
         </p>
-        <x-common.buttons.button1 class="w-full">
+        <x-common.landing.buttons.button1 class="w-full">
             {{$icon}}
             {{$name}}
-        </x-common.buttons.button1>
+        </x-common.landing.buttons.button1>
     </div>
 </div>

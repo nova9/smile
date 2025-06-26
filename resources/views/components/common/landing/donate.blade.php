@@ -1,9 +1,9 @@
 <div class="-mt-20 min-h-screen flex flex-col gap-y-10 justify-center ">
 
     <div class="flex flex-col gap-y-3 w-1/2">
-        <x-common.headings.h2 class="text-left">
+        <x-common.landing.headings.h2 class="text-left">
             Support Smile with a Donation
-        </x-common.headings.h2>
+        </x-common.landing.headings.h2>
         <p class="text-gray-500 text-base">
             Every contribution helps us fund community programs, support volunteers, and spread smiles across the world. Your generosity makes a lasting impact!
         </p>
@@ -48,10 +48,10 @@
                 </ul>
             </div>
 
-            <x-common.buttons.button1 class="w-full">
+            <x-common.landing.buttons.button1 class="w-full">
                 <i data-lucide="heart"></i>
                 Donate
-            </x-common.buttons.button1>
+            </x-common.landing.buttons.button1>
         </div>
 
 
