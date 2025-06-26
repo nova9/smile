@@ -39,13 +39,13 @@
 
             <button type="submit" class="btn btn-accent w-full">Log In</button>
         </form>
-        <p class="text-center text-sm flex items-center gap-2">
-            Don't have an account?
-            <a href="/signup/volunteer">
-                <button class="btn btn-link px-0">
-                    Sign Up
-                </button>
-            </a>
-        </p>
+{{--        <p class="text-center text-sm flex items-center gap-2">--}}
+{{--            Don't have an account?--}}
+{{--            <a href="/signup/volunteer">--}}
+{{--                <button class="btn btn-link px-0">--}}
+{{--                    Sign Up--}}
+{{--                </button>--}}
+{{--            </a>--}}
+{{--        </p>--}}
     </div>
 </div>
