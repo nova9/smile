@@ -1,11 +1,11 @@
 <div class="navbar bg-base-100 sticky">
     <div class="navbar-start">
         <a href="/">
-            <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-15  select-none">
+            <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="xl:h-15 h-8 select-none">
         </a>
     </div>
     <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1  text-base">
+        <ul class="menu menu-horizontal px-1  xl:text-xl text-base ">
             <li><a>Home</a></li>
             <li><a>About Us</a></li>
             <li><a>Volunteer Opportunities</a></li>
@@ -18,7 +18,7 @@
         <div class="flex-none">
             @guest
                 <a href="/login" wire:navigate.hover>
-                    <button class="btn rounded-xl btn-accent text-base p-5">Log In</button>
+                    <button class="btn btn-accent p-5 xl:text-base text-sm"">Log In</button>
                 </a>
             @endguest
 

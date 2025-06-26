@@ -12,7 +12,14 @@ import {
     Bell,
     LogOut,
     CircleUser,
-    Sparkles
+    Sparkles,
+    CircleArrowRight,
+    Heart,
+    Link,
+    Share2,
+    MousePointer2,
+    Circle,
+    Share
 } from 'lucide';
 
 document.addEventListener('livewire:navigated', () => {
@@ -30,7 +37,15 @@ document.addEventListener('livewire:navigated', () => {
             Bell,
             LogOut,
             CircleUser,
-            Sparkles
+            Sparkles,
+            CircleArrowRight,
+            Heart,
+            Link,
+            Share2,
+            MousePointer2,
+            Circle,
+            Share
+
         }
     });
 })
