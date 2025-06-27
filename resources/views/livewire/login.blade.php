@@ -12,7 +12,7 @@
         <form class="space-y-6" method="post">
             @csrf
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-400">Email Address</label>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
                 <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email"
                        class="input input-bordered w-full mt-2 input-focus @error('email') input-error @enderror"
                        required/>
@@ -21,7 +21,7 @@
                 @enderror
             </div>
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-400">Password</label>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                 <input id="password" type="password" name="password" placeholder="Enter your password"
                        class="input input-bordered w-full mt-2 input-focus @error('password') input-error @enderror"
                        required/>
@@ -37,15 +37,15 @@
                 <a href="/forgot-password" class="btn btn-link">Forgot Password?</a>
             </div>
 
-            <button type="submit" class="btn btn-primary w-full">Log In</button>
+            <button type="submit" class="btn btn-accent w-full">Log In</button>
         </form>
-        <p class="text-center text-sm mt-6 flex items-center gap-2">
-            Don't have an account?
-            <a href="/signup/volunteer">
-                <button class="btn btn-link px-0">
-                    Sign Up
-                </button>
-            </a>
-        </p>
+{{--        <p class="text-center text-sm flex items-center gap-2">--}}
+{{--            Don't have an account?--}}
+{{--            <a href="/signup/volunteer">--}}
+{{--                <button class="btn btn-link px-0">--}}
+{{--                    Sign Up--}}
+{{--                </button>--}}
+{{--            </a>--}}
+{{--        </p>--}}
     </div>
 </div>
