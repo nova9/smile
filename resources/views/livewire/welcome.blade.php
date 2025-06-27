@@ -3,7 +3,7 @@
     <x-home />
     <x-aboutus />
     <x-opportunities/>
-{{--    <x-involved/>--}}
+    <x-involved/>
     <x-donate/>
     <x-testimonials/>
 </div>
