@@ -1,11 +1,11 @@
-<div class="navbar bg-base-100 sticky">
+<div class="navbar  sticky">
     <div class="navbar-start">
         <a href="/">
             <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="xl:h-15 h-8 select-none">
         </a>
     </div>
     <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1  xl:text-xl text-base ">
+        <ul class="menu menu-horizontal px-1 text-base gap-x-2 ">
             <li><a>Home</a></li>
             <li><a>About Us</a></li>
             <li><a>Volunteer Opportunities</a></li>
