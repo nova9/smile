@@ -19,7 +19,9 @@ import {
     Share2,
     MousePointer2,
     Circle,
-    Share
+    Share,
+    SquarePen,
+    ImageUp
 } from 'lucide';
 
 document.addEventListener('livewire:navigated', () => {
@@ -44,7 +46,9 @@ document.addEventListener('livewire:navigated', () => {
             Share2,
             MousePointer2,
             Circle,
-            Share
+            Share,
+            SquarePen,
+            ImageUp
 
         }
     });
