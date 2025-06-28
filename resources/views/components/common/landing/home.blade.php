@@ -1,5 +1,6 @@
-<div class="px-4 sm:px-6 lg:px-8">
-    <div class="grid place-items-center grid-cols-2 gap-x-10 ">
+<div class="px-4 sm:px-6 lg:px-8 min-h-screen grid grid-rows-8">
+    <x-common.landing.nav class="row-span-1" />
+    <div class="row-span-7 grid grid-cols-2 gap-x-10 place-items-center">
         <div class="w-full flex flex-col gap-y-2 ">
             <h1 class="xl:text-6xl lg:text-4xl font-bold text-primary leading-tight">
                 Welcome to Smile

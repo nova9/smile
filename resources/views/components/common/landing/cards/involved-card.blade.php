@@ -1,13 +1,8 @@
-<div class="card w-sm  shadow-md rounded-xl border border-gray-200 transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl">
-    <div class="card-body items-center text-center flex flex-col gap-y-5 p-10">
-        {{$img}}
-        <h1 class="text-3xl text-primary font-bold" >{{$title}}</h1>
-        <p class="text-gray-500 text-base">
+<div class="card rounded-xl border border-gray-200 bg-info-content">
+    <div class="card-body flex flex-col  p-15">
+        <h1 class="text-3xl text-primary font-bold flex items-center" >{{$title}}</h1>
+        <p class="text-gray-500 text-xl flex items-end ">
             {{$des}}
         </p>
-        <x-common.landing.buttons.button1 class="w-full">
-            {{$icon}}
-            {{$name}}
-        </x-common.landing.buttons.button1>
     </div>
 </div>

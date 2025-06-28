@@ -1,4 +1,4 @@
-<div class="min-h-screen flex flex-col gap-y-25 justify-center items-center lg:mb-30 xl:mb-0">
+<div class="flex flex-col items-center gap-y-10">
     <x-common.landing.headings.h2>
         About Us
     </x-common.landing.headings.h2>
@@ -46,7 +46,5 @@
         <i data-lucide="circle-arrow-right"></i>
         <span> Learn more</span>
     </x-common.landing.buttons.button1>
-
-
 
 </div>
