@@ -1,3 +1,5 @@
 import './bootstrap';
 
-import './lucide.js'
+import './alpine.js';
+
+import './lucide.js';
