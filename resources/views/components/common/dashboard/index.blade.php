@@ -56,7 +56,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/requester/profile" class="hover:bg-gray-100">
+                            <a href="/volunteer/dashboard/profile" class="hover:bg-gray-100">
                                 <i data-lucide="circle-user" class="size-5"></i>
                                 <span>Profile</span>
                             </a>

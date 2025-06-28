@@ -1,5 +1,5 @@
-<div class="card max-w-sm  shadow-md rounded-xl border border-gray-200">
-    <div class="card-body items-left text-left transition-transform duration-300 ease-in-out hover:translate-y-2 hover:shadow-xl ">
+<div class="card w-sm  shadow-md rounded-xl border border-gray-200">
+    <div class="card-body items-left text-left ">
         <div class="flex flex-col gap-y-15">
             <div class="flex gap-x-3">
                 <div class="rating">
@@ -18,7 +18,7 @@
 
 
                 <div class="flex flex-col ">
-                    <h2 class="card-title text-primary text-3xl">{{$name}}</h2>
+                    <h2 class="card-title text-primary text-xl">{{$name}}</h2>
 
                     <p class="text-neutral text-base-sm ">
                         {{$role}}

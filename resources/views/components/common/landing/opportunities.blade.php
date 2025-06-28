@@ -1,4 +1,4 @@
-<div class="-mt-20 min-h-screen flex flex-col gap-y-10 justify-center ">
+<div class="min-h-screen flex flex-col gap-y-10 justify-center ">
 
     <div class="flex justify-between">
         <x-common.landing.headings.h2>
@@ -9,8 +9,9 @@
         </x-common.landing.buttons.button2>
 
     </div>
-    <div class="flex gap-8 items-center 2xl:flex-row flex-col">
-        <div class="relative 2xl:max-w-1/2 2xl:h-170 max-w-full ">
+    <div class="grid 2xl:grid-cols-10 xl:grid-rows-1 gap-10">
+        <div class="relative 2xl:col-span-4 ">
+
             <img
 
                 src="{{asset('storage/assets/3.webp')}}"
@@ -18,9 +19,16 @@
                 alt="volunteer"
             />
         </div>
-        <div class="flex flex-col gap-8">
+        <div class="2xl:col-span-6 flex flex-col gap-8">
 
             <x-common.landing.cards.opportunities-card>
+                <x-slot:img>
+                    <img
+                        src="{{asset('storage/assets/2.webp')}}"
+                        class="w-full h-full rounded-lg object-cover shadow-lg"
+                        alt="volunteer"
+                    />
+                </x-slot:img>
                 <x-slot:title>
                     Community Outreach Assistant
                 </x-slot:title>
@@ -31,11 +39,18 @@
                     Location:Downtown Area
                 </x-slot:detail1>
                 <x-slot:detail2>
-                    Commitment:4 hours/week<
+                    Commitment:4 hours/week
                 </x-slot:detail2>
             </x-common.landing.cards.opportunities-card>
 
             <x-common.landing.cards.opportunities-card>
+                <x-slot:img>
+                    <img
+                        src="{{asset('storage/assets/2.webp')}}"
+                        class="w-full h-full rounded-lg object-cover shadow-lg"
+                        alt="volunteer"
+                    />
+                </x-slot:img>
                 <x-slot:title>
                     Community Outreach Assistant
                 </x-slot:title>
@@ -46,11 +61,18 @@
                     Location:Downtown Area
                 </x-slot:detail1>
                 <x-slot:detail2>
-                    Commitment:4 hours/week<
+                    Commitment:4 hours/week
                 </x-slot:detail2>
             </x-common.landing.cards.opportunities-card>
 
             <x-common.landing.cards.opportunities-card>
+                <x-slot:img>
+                    <img
+                        src="{{asset('storage/assets/2.webp')}}"
+                        class="w-full h-full rounded-lg object-cover shadow-lg"
+                        alt="volunteer"
+                    />
+                </x-slot:img>
                 <x-slot:title>
                     Community Outreach Assistant
                 </x-slot:title>
@@ -61,7 +83,7 @@
                     Location:Downtown Area
                 </x-slot:detail1>
                 <x-slot:detail2>
-                    Commitment:4 hours/week<
+                    Commitment:4 hours/week
                 </x-slot:detail2>
             </x-common.landing.cards.opportunities-card>
 
