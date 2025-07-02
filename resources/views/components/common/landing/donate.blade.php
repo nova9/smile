@@ -1,6 +1,6 @@
 <div class="-mt-20 min-h-screen flex flex-col gap-y-10 justify-center ">
 
-    <div class="flex flex-col gap-y-3 w-1/2">
+    <div class="flex flex-col gap-y-3 xl:w-1/2">
         <x-common.landing.headings.h2 class="text-left">
             Support Smile with a Donation
         </x-common.landing.headings.h2>
@@ -9,8 +9,8 @@
         </p>
 
     </div>
-    <div class="grid grid-cols-8">
-        <div class="col-span-5 flex flex-col gap-y-10">
+    <div class="grid grid-cols-8 gap-y-5">
+        <div class="col-span-3 flex flex-col gap-y-10">
 
             <div class="flex flex-col gap-y-3">
                 <h1 class="lg:text-3xl font-bold text-primary">
@@ -56,7 +56,7 @@
 
 
 
-        <div class="col-span-3 relative w-full h-170">
+        <div class="col-span-5 relative w-full h-170">
             <img
                 src="{{asset('storage/assets/5.jpg')}}"
                 class="w-full h-full rounded-lg object-cover shadow-lg "
