@@ -21,7 +21,18 @@ import {
     Circle,
     Share,
     SquarePen,
-    ImageUp
+    ImageUp,
+    Instagram,
+    Linkedin,
+    Twitter,
+    Facebook,
+    Plus,
+    Settings,
+    PartyPopper,
+    MessageSquareQuote,
+    Orbit,
+    Tractor
+
 } from 'lucide';
 
 document.addEventListener('livewire:navigated', () => {
@@ -48,7 +59,18 @@ document.addEventListener('livewire:navigated', () => {
             Circle,
             Share,
             SquarePen,
-            ImageUp
+            ImageUp,
+            Instagram,
+            Linkedin,
+            Twitter,
+            Facebook,
+            Plus,
+            Settings,
+            PartyPopper,
+            MessageSquareQuote,
+            Orbit,
+            Tractor
+
 
         }
     });

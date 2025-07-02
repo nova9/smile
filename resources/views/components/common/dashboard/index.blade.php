@@ -63,6 +63,13 @@
                                 <span>Profile</span>
                             </a>
                         </li>
+
+                        <li>
+                            <a href="/requester/setting" class="hover:bg-gray-100">
+                                <i data-lucide="settings"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
                     </ul>
                     {{--                        divider --}}
                     <div class="border-[0.5px] border-gray-200"></div>
