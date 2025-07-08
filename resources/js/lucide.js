@@ -31,6 +31,15 @@ import {
     PartyPopper,
     MessageSquareQuote,
     Orbit,
+    Users,
+    Building2,
+    Files,
+    Award,
+    Clock,
+    ShieldCheck,
+    Megaphone,
+    Handshake,
+    Ban,
     Tractor
 
 } from 'lucide';
@@ -69,6 +78,15 @@ document.addEventListener('livewire:navigated', () => {
             PartyPopper,
             MessageSquareQuote,
             Orbit,
+            Users,
+            Building2,
+            Files,
+            Award,
+            Clock,
+            ShieldCheck,
+            Megaphone,
+            Handshake,
+            Ban,
             Tractor
 
 
