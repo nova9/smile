@@ -9,47 +9,99 @@
            <div class="text-lg font-bold text-gray-600 leading-tight text-center">
                Celebrating Our Top Volunteers!
            </div>
+       </div>
+{{--       cards--}}
+       <div class="flex flex-col items-center">
+
+           <div class="carousel carousel-end rounded-box flex gap-5 my-10">
+               <div class="carousel-item">
+                   <div class="card bg-base-100 w-96 shadow-sm">
+                       <figure>
+                           <img
+                               src="{{asset('storage/assets/secondplace.png')}}"
+                               alt="2" />
+                       </figure>
+                       <div class="card-body">
+                           <div class="flex">
+
+                               <h2 class="card-title">Noufa Nuzurath</h2>
+                               <div class="avatar">
+                                   <div class="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
+                                       <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                                   </div>
+                               </div>
+                           </div>
+                           <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                           <div class="card-actions justify-end">
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="carousel-item">
+                   <div class="card bg-base-100 w-96 shadow-sm">
+                       <figure>
+                           <img
+                               src="{{asset('storage/assets/firstplace.png')}}"
+                               alt="1" />
+                       </figure>
+                       <div class="card-body">
+                           <h2 class="card-title">Thathsara madusha</h2>
+                           <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                           <div class="card-actions justify-end">
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="carousel-item">
+                   <div class="card bg-base-100 w-96 shadow-sm">
+                       <figure>
+                           <img
+                               src="{{asset('storage/assets/thirdplace.png')}}"
+                               alt="3" />
+                       </figure>
+                       <div class="card-body">
+                           <h2 class="card-title">Nethmi Nimansa</h2>
+                           <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                           <div class="card-actions justify-end">
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+           </div>
+       </div>
+{{--       table--}}
+       <div class="flex gap-3 my-10 items-center text-lg font-bold text-gray-600 leading-tight text-center">
+           <div>
+               Filter by
+           </div>
            <div class="filter">
                <input class="btn filter-reset" type="radio" name="metaframeworks" aria-label="All"/>
                <input class="btn" type="radio" name="metaframeworks" aria-label="Monthly"/>
                <input class="btn" type="radio" name="metaframeworks" aria-label="Yearly"/>
            </div>
        </div>
-{{--       cards--}}
-       <div class="flex flex-col items-center">
-           <div class="carousel carousel-end rounded-box flex gap-5 my-10">
-               <div class="carousel-item">
-                   <img src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp" alt="Drink" />
-               </div>
-               <div class="carousel-item">
-                   <img
-                       src="https://img.daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.webp"
-                       alt="Drink" />
-               </div>
-               <div class="carousel-item">
-                   <img
-                       src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.webp"
-                       alt="Drink" />
-               </div>
 
-           </div>
-       </div>
-{{--       table--}}
        <div>
            <div class="overflow-x-auto">
                <table class="table">
                    <!-- head -->
                    <thead>
                    <tr>
-                       <th>Name</th>
-                       <th>Job</th>
-                       <th>Favorite Color</th>
-                       <th></th>
+                       <th class="p-3 text-left">Rank</th>
+                       <th class="p-3 text-left">Volunteer</th>
+                       <th class="p-3 text-left">Points</th>
+                       <th class="p-3 text-left">Level</th>
+                       <th class="p-3 text-left">Hours</th>
+                       <th class="p-3 text-left">Badges</th>
                    </tr>
                    </thead>
                    <tbody>
                    <!-- row 1 -->
                    <tr>
+                       <td>
+                           <div class="text-4xl font-thin opacity-30 tabular-nums">01</div>
+                       </td>
                        <td>
                            <div class="flex items-center gap-3">
                                <div class="avatar">
@@ -78,6 +130,9 @@
                    <!-- row 2 -->
                    <tr>
                        <td>
+                           <div class="text-4xl font-thin opacity-30 tabular-nums">01</div>
+                       </td>
+                       <td>
                            <div class="flex items-center gap-3">
                                <div class="avatar">
                                    <div class="mask mask-squircle h-12 w-12">
@@ -105,6 +160,9 @@
                    <!-- row 3 -->
                    <tr>
                        <td>
+                           <div class="text-4xl font-thin opacity-30 tabular-nums">01</div>
+                       </td>
+                       <td>
                            <div class="flex items-center gap-3">
                                <div class="avatar">
                                    <div class="mask mask-squircle h-12 w-12">
@@ -131,6 +189,9 @@
                    </tr>
                    <!-- row 4 -->
                    <tr>
+                       <td>
+                           <div class="text-4xl font-thin opacity-30 tabular-nums">01</div>
+                       </td>
                        <td>
                            <div class="flex items-center gap-3">
                                <div class="avatar">
