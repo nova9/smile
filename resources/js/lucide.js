@@ -31,7 +31,8 @@ import {
     PartyPopper,
     MessageSquareQuote,
     Orbit,
-    Tractor
+    Tractor,
+    Users
 
 } from 'lucide';
 
@@ -69,7 +70,8 @@ document.addEventListener('livewire:navigated', () => {
             PartyPopper,
             MessageSquareQuote,
             Orbit,
-            Tractor
+            Tractor,
+            Users
 
 
         }
