@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1 text-base gap-x-2 ">
+        <ul class="menu menu-horizontal px-1 xl:text-base lg:text-sm xl:gap-x-2 lg:gap-x-1 ">
             <li><a>Home</a></li>
             <li><a>About Us</a></li>
             <li><a>Volunteer Opportunities</a></li>

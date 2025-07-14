@@ -1,9 +1,9 @@
-<div class="flex flex-col items-center gap-y-10">
+<div class="flex flex-col items-center gap-y-30 -mt-20">
     <x-common.landing.headings.h2>
         About Us
     </x-common.landing.headings.h2>
 
-    <div class="grid grid-cols-2 xl:grid-cols-4 gap-x-5 gap-y-5 ">
+    <div class="grid grid-cols-2 2xl:grid-cols-4 gap-x-5 gap-y-5 ">
 
         <x-common.landing.cards.about-card>
             <x-slot:title>
