@@ -102,10 +102,10 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors">
+                <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="messages">
                     <i data-lucide="message-circle" class="size-5"></i>
                 </div>
-                <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors">
+                <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="notifications">
                     <i data-lucide="bell" class="size-5"></i>
                 </div>
             </div>
