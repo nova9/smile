@@ -1,20 +1,20 @@
-<div class="min-h-screen flex flex-col gap-y-15 justify-center items-center">
+<div class="min-h-screen flex flex-col gap-y-15 justify-center items-center xl:p-20">
 
     <div class="font-bold text-primary leading-tight text-center flex flex-col gap-y-5">
         <x-common.landing.headings.h2>
             Get involved
         </x-common.landing.headings.h2>
 
-        <h1 class="lg:text-3xl font-medium ">
+        <h1 class="text-3xl font-medium ">
             Ways to Make a Difference
         </h1>
     </div>
-    <div class="flex flex-col w-full ">
-        <div class="grid grid-cols-3 gap-x-10 ">
-            <div class="grid grid-rows-2 max-h-screen gap-y-10">
+    <div class="flex flex-col items-center">
+        <div class="grid grid-cols-1 gap-10 max-w-full mx-10 ">
+            <div class="grid grid-cols-2 xl:max-h-screen gap-10">
                 <div class="relative">
                     <img
-                        src="{{asset('storage/assets/1.webp')}}"
+                        src="{{asset('storage/assets/4.jpg')}}"
                         class="w-full h-full rounded-lg object-cover "
                         alt="hero image"
                     />
@@ -30,7 +30,7 @@
                 </x-common.landing.cards.involved-card>
             </div>
 
-            <div class="grid grid-rows-2 max-h-screen gap-y-10">
+            <div class="grid grid-cols-2  max-h-screen gap-10">
                 <x-common.landing.cards.involved-card>
                     <x-slot:title>
                         Donate to Support <br> Our Cause
@@ -50,7 +50,7 @@
 
             </div>
 
-            <div class="grid grid-rows-2 max-h-screen gap-y-10">
+            <div class="grid grid-cols-2  max-h-screen gap-10">
                 <div class="relative">
                     <img
                         src="{{asset('storage/assets/3.webp')}}"
