@@ -1,5 +1,5 @@
 <div x-data="{ navClosed: $persist(false) }" class="flex h-screen">
-    <div class="border-r border-gray-200 bg-stone-50 flex flex-col p-1.5">
+    <div class="border-r border-gray-200 bg-stone-50 flex flex-col p-1.5 sticky">
         <div class="flex mb-4" :class="navClosed ? '' : 'w-64'">
             <div class="flex justify-center w-full mt-2" x-show="!navClosed">
                 <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-8 select-none">
@@ -36,7 +36,7 @@
 
 
                 <div x-show="open"
-                     class="absolute bottom-0 -right-1 translate-x-full bg-white rounded-box border border-gray-200 shadow-lg">
+                     class="absolute bottom-0 -right-1 translate-x-full bg-white rounded-box border border-gray-200 shadow-lg w-fit">
                     <div class="flex items-center py-1 gap-2 m-2">
                         <div class="size-8">
                             <img src="https://picsum.photos/300/300" class="rounded-lg" alt="">
@@ -54,7 +54,7 @@
                         <li>
                             <a href="/requester/upgrade" class="hover:bg-gray-100">
                                 <i data-lucide="sparkles" class="size-5"></i>
-                                <span>Upgrade to Pro</span>
+                                <span class="text-nowrap">Upgrade to Pro</span>
                             </a>
                         </li>
                         <li>
@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-2">
+        <div class="overflow-scroll">
             {{ $slot }}
         </div>
     </div>
