@@ -78,7 +78,7 @@
                         <li>
                             <form class="hover:bg-gray-100" method="POST" action="/logout">
                                 @csrf
-                                <button type="submit" class="flex items-center gap-2">
+                                <button type="submit" class="flex items-center gap-2 hover:cursor-pointer">
                                     <i data-lucide="log-out" class="size-5"></i>
                                     <span>Log out</span>
                                 </button>
@@ -92,7 +92,7 @@
 
 
     <div class="flex flex-col flex-grow">
-        <div class="h-14 px-3 flex items-center border-b border-gray-200">
+        <div class="h-12 px-3 shrink-0 flex items-center border-b border-gray-200">
             <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors" @click="navClosed = !navClosed">
                 <i data-lucide="panel-left" class="size-4 "></i>
             </div>
