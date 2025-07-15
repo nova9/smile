@@ -10,10 +10,6 @@
 }
 
 
-
-
-
-
 @plugin "daisyui/theme" {
     name: "lofi";
     default: true;
@@ -48,14 +44,6 @@
     --depth: 0;
     --noise: 0;
 }
-
-
-
-
-
-
-
-
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
