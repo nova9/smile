@@ -40,8 +40,8 @@ import {
     Megaphone,
     Handshake,
     Ban,
-    Tractor
-
+    Tractor,
+    Timer,
 
 } from 'lucide';
 
@@ -84,11 +84,12 @@ document.addEventListener('livewire:navigated', () => {
             Files,
             Award,
             Clock,
-            ShieldCheck,
             Megaphone,
             Handshake,
             Ban,
-            Tractor
+            Tractor,
+            Timer,
+            ShieldCheck
 
 
         }
