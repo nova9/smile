@@ -18,125 +18,103 @@
                         Pending Approval
                     </span>
                     <button class="btn btn-md btn-success w-full sm:w-auto">Approve</button>
-
                     <button class="btn btn-md btn-error w-full sm:w-auto">Reject</button>
                     <button class="btn btn-md btn-warning w-full sm:w-auto">Suspend</button>
-
                 </div>
             </div>
         </div>
     </div>
-    </ <!-- Main Content -->
+    <!-- Main Content -->
     <div class="px-4 sm:px-6 lg:px-8 py-6">
-        <div x-data="{ activeTab: 'profile' }">
-            <!-- Navigation Tabs -->
-            <div class="border-b border-gray-200 mb-6">
-                <nav class="flex space-x-8">
-                    <button @click="activeTab = 'profile'"
-                        :class="activeTab === 'profile' ? 'border-purple-500 text-purple-600 bg-purple-50' : 'border-transparent text-gray-500 hover:text-gray-700'"
-                        class="py-2 px-4 border-b-2 font-medium text-sm transition-colors rounded-t-lg">
-                        <i class="fas fa-user mr-2"></i>Profile & Verification
-                    </button>
-                    <button @click="activeTab = 'opportunities'"
-                        :class="activeTab === 'opportunities' ? 'border-purple-500 text-purple-600 bg-purple-50' : 'border-transparent text-gray-500 hover:text-gray-700'"
-                        class="py-2 px-4 border-b-2 font-medium text-sm transition-colors rounded-t-lg">
-                        <i class="fas fa-calendar-alt mr-2"></i>Opportunities
-                    </button>
-                    <button @click="activeTab = 'documents'"
-                        :class="activeTab === 'documents' ? 'border-purple-500 text-purple-600 bg-purple-50' : 'border-transparent text-gray-500 hover:text-gray-700'"
-                        class="py-2 px-4 border-b-2 font-medium text-sm transition-colors rounded-t-lg">
-                        <i class="fas fa-file-alt mr-2"></i>Documents
-                    </button>
-                    <button @click="activeTab = 'audit'"
-                        :class="activeTab === 'audit' ? 'border-purple-500 text-purple-600 bg-purple-50' : 'border-transparent text-gray-500 hover:text-gray-700'"
-                        class="py-2 px-4 border-b-2 font-medium text-sm transition-colors rounded-t-lg">
-                        <i class="fas fa-history mr-2"></i>Audit Log
-                    </button>
-                </nav>
-            </div>
-
-            <!-- Profile & Verification Tab -->
-            <div x-show="activeTab === 'profile'" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Organization Details -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-semibold text-gray-900">Organization Details</h2>
-                        <button class="text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-edit mr-2"></i>Edit
-                        </button>
-                    </div>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Organization Name</label>
-                            <p class="text-gray-900">GreenHope Foundation</p>
+        <div class="tabs tabs-lift">
+            <label class="tab flex gap-1">
+                <input type="radio" name="org_tabs" checked="checked" />
+                <i class="fas fa-user mr-2"></i>
+                Profile & Verification
+            </label>
+            <div class="tab-content bg-base-100 border-base-300 p-6">
+                <!-- Profile & Verification Tab -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Organization Details -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-semibold text-gray-900">Organization Details</h2>
+                            <button class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-edit mr-2"></i>Edit
+                            </button>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <p class="text-gray-900">info@greenhope.org</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                            <p class="text-gray-900">+1 (555) 123-4567</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                            <p class="text-gray-900">123 Green Street, Eco City, EC 12345</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                            <p class="text-gray-900">A non-profit organization dedicated to environmental conservation
-                                and sustainable development practices.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Organization Name</label>
+                                <p class="text-gray-900">GreenHope Foundation</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <p class="text-gray-900">info@greenhope.org</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                <p class="text-gray-900">+1 (555) 123-4567</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                                <p class="text-gray-900">123 Green Street, Eco City, EC 12345</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <p class="text-gray-900">A non-profit organization dedicated to environmental
+                                    conservation
+                                    and sustainable development practices.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Verification Status -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Verification Status</h2>
-                    <div class="space-y-4">
-
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-700">Documents Submitted</span>
-                            <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
-                                Complete
-                            </span>
+                    <!-- Verification Status -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4">Verification Status</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Documents Submitted</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+                                    Complete
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Background Check</span>
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+                                    In Progress
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Legal Verification</span>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">
+                                    Pending
+                                </span>
+                            </div>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-700">Background Check</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                                In Progress
-                            </span>
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Rejection Reason (if
+                                applicable)</label>
+                            <textarea
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                rows="3" placeholder="Enter reason for rejection..."></textarea>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-700">Legal Verification</span>
-                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">
-                                Pending
-                            </span>
+                        <div class="mt-6 flex space-x-3">
+                            <button class="btn btn-md btn-success w-full sm:w-auto">Approve</button>
+                            <button class="btn btn-md btn-error w-full sm:w-auto">Reject</button>
                         </div>
-                    </div>
-
-                    <div class="mt-6">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Rejection Reason (if
-                            applicable)</label>
-                        <textarea
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                            rows="3" placeholder="Enter reason for rejection..."></textarea>
-                    </div>
-
-                    <div class="mt-6 flex space-x-3">
-                        <button class="btn btn-md btn-success w-full sm:w-auto">Approve</button>
-
-                        <button class="btn btn-md btn-error w-full sm:w-auto">Reject</button>
-                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Opportunities Tab -->
-            <div x-show="activeTab === 'opportunities'" class="bg-white rounded-lg shadow-sm">
-                <div class="p-6">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Volunteer Opportunities</h2>
-                    <x-admin.data-table  :columns="[
+            <label class="tab flex gap-1">
+                <input type="radio" name="org_tabs" />
+                <i class="fas fa-calendar-alt mr-2"></i>
+                Opportunities
+            </label>
+            <div class="tab-content bg-base-100 border-base-300 p-6">
+                <!-- Opportunities Tab -->
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Volunteer Opportunities</h2>
+                <x-admin.data-table :columns=" [
         ['key' => 'id', 'label' => 'Id', 'type' => 'text'],
         ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
         ['key' => 'status', 'label' => 'Status', 'type' => 'badge'],
@@ -145,7 +123,7 @@
         ['key' => 'volunteers', 'label' => 'Volunteers', 'type' => 'text'],
         ['key' => 'promotions', 'label' => 'Promotions', 'type' => 'custom'],
         ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions']
-    ]" :data="[
+    ]" :data=" [
         [
             'id' => '1',
             'title' => 'Tree Planting 2025',
@@ -173,57 +151,63 @@
             ]
         ]
     ]" />
-                </div>
             </div>
 
-            <!-- Documents Tab -->
-            <div x-show="activeTab === 'documents'" class="bg-white rounded-lg shadow-sm">
-                <div class="p-6">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Legal Documents</h2>
-                    <p class="text-sm text-gray-600 mb-4">Uploaded Documents (7/10 files uploaded)</p>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <div class="flex items-center space-x-3">
-                                <i class="fas fa-file-pdf text-red-500"></i>
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">registration.pdf</p>
-                                    <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded">PDF</span>
-                                <button class="text-blue-600 hover:text-blue-900 text-sm">Download</button>
+            <label class="tab flex gap-1">
+                <input type="radio" name="org_tabs" />
+                <i class="fas fa-file-alt mr-2"></i>
+                Documents
+            </label>
+            <div class="tab-content bg-base-100 border-base-300 p-6">
+                <!-- Documents Tab -->
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Legal Documents</h2>
+                <p class="text-sm text-gray-600 mb-4">Uploaded Documents (7/10 files uploaded)</p>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-file-pdf text-red-500"></i>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">registration.pdf</p>
+                                <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <div class="flex items-center space-x-3">
-                                <i class="fas fa-file-pdf text-red-500"></i>
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">tax_exemption.pdf</p>
-                                    <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded">PDF</span>
-                                <button class="text-blue-600 hover:text-blue-900 text-sm">Download</button>
-                            </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded">PDF</span>
+                            <button class="text-blue-600 hover:text-blue-900 text-sm">Download</button>
                         </div>
                     </div>
-                    <p class="text-sm text-red-600 mt-4">Max 10 files allowed per opportunity.</p>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-file-pdf text-red-500"></i>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">tax_exemption.pdf</p>
+                                <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded">PDF</span>
+                            <button class="text-blue-600 hover:text-blue-900 text-sm">Download</button>
+                        </div>
+                    </div>
                 </div>
+                <p class="text-sm text-red-600 mt-4">Max 10 files allowed per opportunity.</p>
             </div>
 
-            <!-- Audit Log Tab -->
-            <div x-show="activeTab === 'audit'" class="bg-white rounded-lg shadow-sm">
-                <div class="p-6">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Audit Log</h2>
-                    <x-admin.data-table :columns="[
+            <label class="tab flex gap-1">
+                <input type="radio" name="org_tabs" />
+                <i class="fas fa-history mr-2"></i>
+                Audit Log
+            </label>
+            <div class="tab-content bg-base-100 border-base-300 p-6">
+                <!-- Audit Log Tab -->
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Audit Log</h2>
+                <x-admin.data-table :columns=" [
         ['key' => 'id', 'label' => 'Id', 'type' => 'text'],
         ['key' => 'status', 'label' => 'Status', 'type' => 'badge'],
         ['key' => 'changed_by', 'label' => 'Changed By', 'type' => 'text'],
         ['key' => 'date_time', 'label' => 'Date/Time', 'type' => 'text'],
         ['key' => 'reason', 'label' => 'Reason', 'type' => 'text']
-    ]" :data="[
+    ]" :data=" [
         [
             'id' => '1',
             'status' => ['class' => 'badge-success', 'text' => 'Verified'],
@@ -239,7 +223,6 @@
             'reason' => 'Initial registration submitted'
         ]
     ]" />
-                </div>
             </div>
         </div>
     </div>
