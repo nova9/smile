@@ -45,7 +45,7 @@ import {
     Search
 } from 'lucide';
 
-document.addEventListener('livewire:navigated', () => {
+function registerIcons() {
     createIcons({
         icons: {
             Menu,
@@ -89,12 +89,20 @@ document.addEventListener('livewire:navigated', () => {
             Handshake,
             Ban,
             Tractor,
-            Timer,
-            ShieldCheck
-
-
+            Timer
         }
     });
+}
+
+document.addEventListener('livewire:navigated', () => {
+    registerIcons()
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    registerIcons()
 })
 
 
+Livewire.hook('morph.added',  ({ el }) => {
+    registerIcons()
+})
