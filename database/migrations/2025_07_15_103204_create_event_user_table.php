@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('event_user', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->timestamp('started_at')->nullable();
-            $table->timestamp('ended_at')->nullable();
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
             $table->foreignIdFor(\App\Models\Event::class);
             $table->foreignIdFor(\App\Models\User::class);
         });
