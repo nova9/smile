@@ -16,7 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(\App\Models\Category::class);
             $table->foreignIdFor(\App\Models\Chat::class);
-            $table->foreignIdFor(\App\Models\User::class, 'organizer_id');
+            $table->foreignIdFor(\App\Models\User::class);
+            $table->string('name');
+            $table->string('description')->nullable();
         });
     }
 
