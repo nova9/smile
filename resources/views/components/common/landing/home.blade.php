@@ -99,7 +99,7 @@
                             class="absolute inset-0 bg-gradient-to-tr from-accent/20 to-primary/20 rounded-3xl transform rotate-3">
                         </div>
                         <div class="relative bg-white p-6 rounded-3xl shadow-2xl">
-                            <img src="{{asset('storage/assets/1.webp')}}" class="w-full h-96 object-cover rounded-2xl"
+                            <img src="{{asset('storage/assets/1.webp')}}" class="w-full object-cover rounded-2xl"
                                 alt="Volunteers making a difference" />
                         </div>
                     </div>

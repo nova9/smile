@@ -53,7 +53,7 @@ class BadgeSeeder extends Seeder
             [
                 'name' => 'Volunteer of the Month',
                 'description' => 'Recognized as the best volunteer in a month.',
-                'points' => 'monthly_top',
+                'points' => '100',
                 'icon_name' => 'badge7.svg'
             ],
             [
