@@ -62,9 +62,9 @@
                         'hours' => '54',
                         'badges' => '3',
                         'actions' => [
-                            ['type' => 'button', 'class' => 'btn-warning suspend-btn', 'text' => 'Suspend', 'data-id' => '1', 'data-name' => 'John Perera', 'data-email' => 'johnperera20@email.com', 'data-status' => 'Active', 'data-hours' => '54', 'data-badges' => '3'],
-                            ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete'],
-                            ['type' => 'button', 'class' => 'btn-info', 'text' => 'View']
+                            ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
+
+                            ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
                         ]
                     ],
                     [
@@ -76,9 +76,9 @@
                         'hours' => '22',
                         'badges' => '1',
                         'actions' => [
-                            ['type' => 'button', 'class' => 'btn-success', 'text' => 'Reactivate'],
-                            ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete'],
-                            ['type' => 'button', 'class' => 'btn-info', 'text' => 'View']
+                            ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
+
+                            ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
                         ]
                     ]
                 ] as $vol)
@@ -97,7 +97,6 @@
                         <div class="flex flex-wrap gap-2">
                             @foreach($vol['actions'] as $action)
                                 @php
-                                    // Match styles to organizationManagement Approve/Reject/View
                                     $btnClass = '';
                                     if ($action['text'] === 'View') {
                                         $btnClass = 'btn btn-neutral font-bold';

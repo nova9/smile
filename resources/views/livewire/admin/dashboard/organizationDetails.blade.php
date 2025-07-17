@@ -4,10 +4,7 @@
         <div class="px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex items-center justify-between flex-wrap gap-6">
                 <div class="flex items-center space-x-4">
-                    <div
-                        class="w-20 h-20 bg-gradient-to-br from-green-600 to-accent rounded-full flex items-center justify-center shadow-lg">
-                        <i class="fas fa-building text-white text-3xl"></i>
-                    </div>
+                   
                     <div>
                         <h1
                             class="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
