@@ -11,6 +11,12 @@ class Event extends Model
 {
     use HasFactory;
 
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+  
     protected $casts = [
         'ends_at' => 'datetime',
         'starts_at' => 'datetime',
