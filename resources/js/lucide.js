@@ -42,7 +42,7 @@ import {
     Ban,
     Tractor,
     Timer,
-
+    Search
 } from 'lucide';
 
 document.addEventListener('livewire:navigated', () => {
@@ -70,6 +70,7 @@ document.addEventListener('livewire:navigated', () => {
             Share,
             SquarePen,
             ImageUp,
+            Search,
             Instagram,
             Linkedin,
             Twitter,
