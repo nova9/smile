@@ -1,9 +1,99 @@
-import { createIcons, Menu, ArrowRight, Globe } from 'lucide';
+import {
+    createIcons,
+    Menu,
+    ArrowRight,
+    Globe,
+    House,
+    PanelLeft,
+    ChevronUp,
+    ChevronDown,
+    Calendar,
+    MessageCircle,
+    Bell,
+    LogOut,
+    CircleUser,
+    Sparkles,
+    CircleArrowRight,
+    Heart,
+    Link,
+    Share2,
+    MousePointer2,
+    Circle,
+    Share,
+    SquarePen,
+    ImageUp,
+    Instagram,
+    Linkedin,
+    Twitter,
+    Facebook,
+    Plus,
+    Settings,
+    PartyPopper,
+    MessageSquareQuote,
+    Orbit,
+    Users,
+    Building2,
+    Files,
+    Award,
+    Clock,
+    ShieldCheck,
+    Megaphone,
+    Handshake,
+    Ban,
+    Tractor,
+    Timer,
 
-createIcons({
-    icons: {
-        Menu,
-        ArrowRight,
-        Globe
-    }
-});
+} from 'lucide';
+
+document.addEventListener('livewire:navigated', () => {
+    createIcons({
+        icons: {
+            Menu,
+            ArrowRight,
+            Globe,
+            House,
+            PanelLeft,
+            ChevronUp,
+            ChevronDown,
+            Calendar,
+            MessageCircle,
+            Bell,
+            LogOut,
+            CircleUser,
+            Sparkles,
+            CircleArrowRight,
+            Heart,
+            Link,
+            Share2,
+            MousePointer2,
+            Circle,
+            Share,
+            SquarePen,
+            ImageUp,
+            Instagram,
+            Linkedin,
+            Twitter,
+            Facebook,
+            Plus,
+            Settings,
+            PartyPopper,
+            MessageSquareQuote,
+            Orbit,
+            Users,
+            Building2,
+            Files,
+            Award,
+            Clock,
+            Megaphone,
+            Handshake,
+            Ban,
+            Tractor,
+            Timer,
+            ShieldCheck
+
+
+        }
+    });
+})
+
+

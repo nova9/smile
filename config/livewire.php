@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'layout' => 'components.layouts.app',
+    'layout' => 'components.common.layouts.app',
 
     /*
     |---------------------------------------------------------------------------
@@ -129,7 +129,7 @@ return [
 
     'navigate' => [
         'show_progress_bar' => true,
-        'progress_bar_color' => '#9FE88DFF',
+        'progress_bar_color' => '#000',
     ],
 
     /*

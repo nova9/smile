@@ -17,6 +17,7 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
-        "composer": "^4.1.0"
+        "@alpinejs/persist": "^3.14.9",
+        "alpinejs": "^3.14.9"
     }
 }
