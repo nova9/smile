@@ -36,7 +36,7 @@
 
 
                 <div x-show="open"
-                     class="absolute bottom-0 -right-1 translate-x-full bg-white rounded-box border border-gray-200 shadow-lg w-fit">
+                     class="absolute bottom-0 z-500 -right-1 translate-x-full bg-white rounded-box border border-gray-200 shadow-lg w-fit">
                     <div class="flex items-center py-1 gap-2 m-2">
                         <div class="size-8">
                             <img src="https://picsum.photos/300/300" class="rounded-lg" alt="">
