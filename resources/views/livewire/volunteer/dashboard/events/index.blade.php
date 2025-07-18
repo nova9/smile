@@ -55,9 +55,9 @@
                     <span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-xs flex items-center gap-1">
                         Environment
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 cursor-pointer" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
+                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
+                                  d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </span>
                 </div>
@@ -73,23 +73,23 @@
             <div class="flex gap-2">
                 <button class="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
+                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                              d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
                 </button>
                 <button class="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
+                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                              d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                     </svg>
                 </button>
             </div>
         </div>
 
         <!-- Opportunities Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <!-- Opportunity Card 1 - Environment -->
             @foreach($events as $item)
                 <div
@@ -98,7 +98,7 @@
                     <div class="p-6 flex flex-col grow">
                         <div class="flex justify-between items-center mb-2 flex-wrap">
                             <div class="px-3 py-1 bg-green-100 rounded-full text-sm font-medium"
-                                style="color: {{ $item->category->color }}; background-color: {{ hexToRgba($item->category->color, 0.1) }}">
+                                 style="color: {{ $item->category->color }}; background-color: {{ hexToRgba($item->category->color, 0.1) }}">
                                 {{ $item->category->name }}
                             </div>
                             <div class="text-sm text-gray-500">{{ $item->created_at->diffForHumans() }}</div>
@@ -129,7 +129,7 @@
                             </div>
                             <div class="flex items-center gap-1 text-yellow-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor"
-                                    viewBox="0 0 24 24">
+                                     viewBox="0 0 24 24">
                                     <path
                                         d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                                 </svg>
@@ -140,19 +140,19 @@
                         <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
                             <div class="flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
                                 {{ $item->address->city }}
                             </div>
                             <div class="flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 4 hours
                             </div>
@@ -169,9 +169,11 @@
                         </div>
 
                         <div class="flex gap-3">
-                            <button class="flex-1 btn btn-accent">
-                                Apply Now
-                            </button>
+                            <a href="/volunteer/dashboard/events/{{ $item->id }}" wire:navigate class="w-full">
+                                <button class="flex-1 btn btn-accent w-full">
+                                    Show more
+                                </button>
+                            </a>
                             <button class="btn btn-square">
                                 <i data-lucide="heart"></i>
                             </button>

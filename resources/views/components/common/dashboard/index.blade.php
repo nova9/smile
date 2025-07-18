@@ -1,4 +1,4 @@
-<div x-data="{ navClosed: $persist(false) }" class="flex h-screen">
+<div x-data="{ navClosed: $persist(false) }" class="flex h-screen overflow-hidden">
     <div class="border-r border-gray-200 bg-stone-50 flex flex-col p-1.5 sticky">
         <div class="flex mb-4" :class="navClosed ? '' : 'w-64'">
             <div class="flex justify-center w-full mt-2" x-show="!navClosed">
