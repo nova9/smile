@@ -14,9 +14,9 @@ class Event extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('status');
     }
-  
+
     protected $casts = [
         'ends_at' => 'datetime',
         'starts_at' => 'datetime',
