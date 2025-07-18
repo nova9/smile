@@ -16,8 +16,15 @@
                 Time Tracking
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-6">
-                <div class="flex flex-col md:flex-row gap-8 items-center justify-center">
-                    <div class="card shadow-xl rounded-2xl bg-white/90 p-8 text-center w-full max-w-md">
+                <div class="flex flex-col  items-center justify-center">
+                @if($activities->isEmpty())
+                    <div class="card  rounded-2xl p-8 flex flex-col items-center justify-center gap-4">
+                        
+                        <h3 class="font-bold text-xl text-primary">No Activities Found</h3>
+                        <p class="text-gray-600 text-center">You haven't participated in any activities yet.<br>Start volunteering to see your progress here!</p>
+                    </div>
+                @else
+                  <div class="card shadow-xl rounded-2xl bg-white/90 p-8 text-center w-full mb-10">
                         <div class="flex flex-col items-center">
                             <svg class="w-10 h-10 text-accent mb-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -33,28 +40,34 @@
                             <p class="text-xs text-gray-500 mt-1">80% of your yearly goal</p>
                         </div>
                     </div>
-                    <div class="w-full max-w-lg">
+                </div>
+                    <div class="w-full">
                         <h4 class="font-bold text-primary mb-2">Recent Activities</h4>
-                        <div class="grid grid-cols-1 gap-8">
-                            @foreach($activities as $activity)
-                                <div class="card bg-white shadow-2xl rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8">
-                                    <div class="flex-1 flex flex-col gap-2">
-                                        <h2 class="font-bold text-2xl text-primary mb-2">{{ $activity->name }}</h2>
-                                        <p class="text-gray-700 text-lg mb-2">{{ $activity->description ?? 'No description available.' }}</p>
-                                        <div class="flex flex-wrap gap-4 mt-4">
-                                            <span class="badge bg-accent text-white text-base px-4 py-2">
-                                                Date: {{  \Carbon\Carbon::parse($activity->started_at)->format('M d, Y')}}
-                                            </span>
-                                            <span class="badge bg-primary text-white text-base px-4 py-2">
-                                                Duration: {{ ceil(\Carbon\Carbon::parse($activity->started_at)->floatDiffInHours(\Carbon\Carbon::parse($activity->ended_at))) }} hours
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full min-w-full bg-white rounded-lg shadow">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Description</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Date</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Duration</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($activities as $activity)
+                                    <tr>
+                                        <td class="px-6 py-4 font-bold text-primary">{{ $activity->name }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ $activity->description ?? 'No description available.' }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($activity->started_at)->format('M d, Y') }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ ceil(\Carbon\Carbon::parse($activity->started_at)->floatDiffInHours(\Carbon\Carbon::parse($activity->ended_at))) }} hour</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
+                    @endif
+                      
             </div>
 
             <label class="tab flex gap-1">
@@ -64,6 +77,13 @@
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-6">
                 <div class="overflow-x-auto">
+                    @if($certificates->isEmpty())
+                    <div class="card  rounded-2xl p-8 flex flex-col items-center justify-center gap-4">
+                        
+                        <h3 class="font-bold text-xl text-primary">No Certificates Found</h3>
+                        <p class="text-gray-600 text-center">You haven't earned any certificates yet.<br>Complete activities to unlock your first certificate!</p>
+                    </div>
+                    @else
                     <table class="min-w-full bg-white rounded-lg shadow">
                         <thead>
                             <tr class="bg-gray-100">
@@ -84,6 +104,7 @@
                         @endforeach
                           </tbody>
                     </table>
+                    @endif
                 </div>
 
             </div>
@@ -96,6 +117,13 @@
             <div class="tab-content bg-base-100 border-base-300 p-6">
                 <div class="flex flex-col gap-8 items-center">
                 <div class="overflow-x-auto w-full">
+                @if($badges->isEmpty())
+                    <div class="card  rounded-2xl p-8 flex flex-col items-center justify-center gap-4">
+                        
+                        <h3 class="font-bold text-xl text-primary">No badges earned yet</h3>
+                        <p class="text-gray-600 text-center">Start participating in activities to earn your first badge and unlock achievements!</p>
+                    </div>
+                @else
                     <table class="min-w-full bg-white rounded-lg shadow">
                         <thead>
                             <tr class="bg-gray-100">
@@ -127,6 +155,7 @@
                             
                         </tbody>
                     </table>
+                    @endif
                 </div>
                     <div class="w-full max-w-lg">
                         <div class="card shadow-xl rounded-2xl bg-white/90 p-6 text-center">

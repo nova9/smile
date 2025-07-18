@@ -1,4 +1,5 @@
 <x-volunteer.dashboard-layout>
+
     <main class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto space-y-8">
             <!-- Header Section -->
@@ -12,6 +13,7 @@
                     </svg>
                     Celebrating Our Top Smilers
                 </div>
+
 
                 <!-- Title -->
                 <div class="space-y-4">
@@ -39,6 +41,7 @@
                     <div class="flex items-center justify-between flex-wrap gap-6">
                         <div class="flex items-center gap-6">
                             <div class="relative">
+
                                 <div class="avatar">
                                     <div class="mask mask-squircle h-20 w-20 ring-4 ring-accent/20">
                                         <img src="https://img.daisyui.com/images/profile/demo/2@94.webp"
