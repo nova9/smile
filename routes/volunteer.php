@@ -11,4 +11,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/feedback', \App\Livewire\Volunteer\Dashboard\Feedback::class);
     Route::get('/dashboard/community', \App\Livewire\Volunteer\Dashboard\Community::class);
     Route::get('/dashboard/activities', \App\Livewire\Volunteer\Dashboard\Activities::class);
+    Route::get('/dashboard/certificate/{id}', \App\Livewire\Volunteer\Dashboard\Certificate::class)->name('volunteer.certificate.show');
 });

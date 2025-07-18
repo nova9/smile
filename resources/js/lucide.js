@@ -89,7 +89,8 @@ function registerIcons() {
             Handshake,
             Ban,
             Tractor,
-            Timer
+            Timer,
+            ShieldCheck
         }
     });
 }

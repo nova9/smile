@@ -129,7 +129,6 @@
                                                       ($user->rank == 3 ? 'from-orange-600 to-red-600' :
                                                       'text-primary'));
                                         $medal = $user->rank == 1 ? 'firstplace.png' : ($user->rank == 2 ? 'secondplace.png' : ($user->rank == 3 ? 'thirdplace.png' : null));
-                                        $university = $user->rank == 1 ? 'UCSC' : ($user->rank == 2 ? 'UOC' : ($user->rank == 3 ? 'UOK' : 'Brazil'));
                                     @endphp
                                     @if($index < $users->takeWhile(fn($u) => $u->rank <= 3)->count())
                                         <tr class="{{ $rowClasses }} transition-all duration-300 border-l-4 {{ $user->rank == 1 ? 'border-l-yellow-400' : ($user->rank == 2 ? 'border-l-gray-400' : 'border-l-orange-400') }}">
@@ -156,7 +155,7 @@
                                                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                                             </svg>
-                                                            <span class="text-sm text-gray-600 font-medium">{{ $university }}</span>
+                                                            <span class="text-sm text-gray-600 font-medium">UCSC</span>
                                                         </div>
                                                     </div>
                                                 </div>
