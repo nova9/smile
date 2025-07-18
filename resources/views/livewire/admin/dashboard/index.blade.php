@@ -2,9 +2,9 @@
     <!-- Main Dashboard Header -->
     <div class="text-center mt-10 mb-8">
         <h2
-            class="text-4xl sm:text-5xl font-bold text-primary leading-tight relative bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            class="text-4xl sm:text-5xl font-bold text-accent leading-tight relative bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
             Admin Dashboard
-            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-3 text-accent/30"
+            <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-3 text-primary/30"
                 viewBox="0 0 100 12" fill="none">
                 <path d="M2 6C20 1 40 1 50 6C60 11 80 11 98 6" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" />
@@ -51,7 +51,7 @@
             <!-- Pending Actions Table -->
             <div class="bg-white/90 rounded-3xl shadow-xl p-8">
                 <h3
-                    class="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
+                    class="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
                     Pending Actions Required</h3>
                 <x-admin.data-table :columns="[
         ['key' => 'type', 'label' => 'Type', 'type' => 'text'],
@@ -79,7 +79,7 @@
             <!-- Recent Activity -->
             <div class="bg-white/90 rounded-3xl shadow-xl p-8">
                 <h3
-                    class="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
+                    class="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
                     Recent Admin Actions</h3>
                 <div class="space-y-4">
                     <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl shadow">
