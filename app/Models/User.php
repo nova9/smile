@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -52,4 +54,20 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class);
+    }
+
+    public function createdEvents(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function participatingEvents(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class)
+            ->withTimestamps()
+;    }
 }

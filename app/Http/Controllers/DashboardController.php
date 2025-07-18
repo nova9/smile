@@ -14,6 +14,8 @@ class DashboardController extends Controller
         $roleRoutes = [
             'requester' => '/requester/dashboard',
             'volunteer' => '/volunteer/dashboard',
+            'lawyer' => '/lawyer/dashboard',
+            'admin' => '/admin/dashboard',
         ];
 
         $role = auth()->user()->role->name;
