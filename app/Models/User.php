@@ -70,4 +70,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Event::class)
             ->withTimestamps()
 ;    }
+
+    public function events()
+    {
+        return $this->hasMany(\App\Models\Event::class);
+    }
+
 }
