@@ -1,15 +1,8 @@
 <x-volunteer.dashboard-layout>
     <main class="relative z-10 px-4 sm:px-6 lg:px-8 pt-20 pb-32">
         <div class="max-w-7xl mx-auto">
-            <div class="bg-white/90 backdrop-blur-md rounded-3xl p-10 flex flex-col gap-6">
-                <!-- Badge -->
-                <div class="inline-flex items-center px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium mx-auto lg:mx-0">
-                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    Celebrating Our Top Smilers
-                </div>
-
+            <div class="rounded-3xl p-10 flex flex-col gap-6">
+               
                 <!-- Title -->
                 <h2 class="text-4xl sm:text-5xl font-bold text-primary leading-tight text-center relative">
                     Top Smilers
@@ -19,7 +12,7 @@
                 </h2>
 
                 <!-- Responsive Flex Row: My Rank Card + Leaderboard Table -->
-                <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="flex flex-col  gap-8 items-center">
                     <!-- My Rank Card -->
                     <div class="w-full md:w-1/3">
                         <div class="relative bg-gray-50/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
