@@ -95,11 +95,13 @@ function registerIcons() {
             Ban,
             Tractor,
             Timer,
+            ShieldCheck,
             MapPin,
             Star,
             UserPlus,
             Navigation,
             FileClock
+
         }
     });
 }
