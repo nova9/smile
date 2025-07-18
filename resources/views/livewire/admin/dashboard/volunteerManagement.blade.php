@@ -110,15 +110,22 @@
                                         $btnClass = 'btn font-bold';
                                     }
                                 @endphp
-                                <button
-                                    class="{{ $btnClass }}"
-                                    @if(isset($action['data-id'])) data-id="{{ $action['data-id'] }}" @endif
-                                    @if(isset($action['data-name'])) data-name="{{ $action['data-name'] }}" @endif
-                                    @if(isset($action['data-email'])) data-email="{{ $action['data-email'] }}" @endif
-                                    @if(isset($action['data-status'])) data-status="{{ $action['data-status'] }}" @endif
-                                    @if(isset($action['data-hours'])) data-hours="{{ $action['data-hours'] }}" @endif
-                                    @if(isset($action['data-badges'])) data-badges="{{ $action['data-badges'] }}" @endif
-                                >{{ $action['text'] }}</button>
+                                @if($action['text'] === 'View')
+                                    <a
+                                        href="{{ url('http://127.0.0.1:8000/admin/dashboard/volunteer-details') }}"
+                                        class="{{ $btnClass }}"
+                                    >{{ $action['text'] }}</a>
+                                @else
+                                    <button
+                                        class="{{ $btnClass }}"
+                                        @if(isset($action['data-id'])) data-id="{{ $action['data-id'] }}" @endif
+                                        @if(isset($action['data-name'])) data-name="{{ $action['data-name'] }}" @endif
+                                        @if(isset($action['data-email'])) data-email="{{ $action['data-email'] }}" @endif
+                                        @if(isset($action['data-status'])) data-status="{{ $action['data-status'] }}" @endif
+                                        @if(isset($action['data-hours'])) data-hours="{{ $action['data-hours'] }}" @endif
+                                        @if(isset($action['data-badges'])) data-badges="{{ $action['data-badges'] }}" @endif
+                                    >{{ $action['text'] }}</button>
+                                @endif
                             @endforeach
                         </div>
                     </td>
