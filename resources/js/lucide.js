@@ -19,10 +19,38 @@ import {
     Share2,
     MousePointer2,
     Circle,
-    Share
+    Share,
+    SquarePen,
+    ImageUp,
+    Instagram,
+    Linkedin,
+    Twitter,
+    Facebook,
+    Plus,
+    Settings,
+    PartyPopper,
+    MessageSquareQuote,
+    Orbit,
+    Users,
+    Building2,
+    Files,
+    Award,
+    Clock,
+    ShieldCheck,
+    Megaphone,
+    Handshake,
+    Ban,
+    Tractor,
+    Timer,
+    Search,
+    MapPin,
+    Star,
+    UserPlus,
+    Navigation,
+    FileClock
 } from 'lucide';
 
-document.addEventListener('livewire:navigated', () => {
+function registerIcons() {
     createIcons({
         icons: {
             Menu,
@@ -44,10 +72,49 @@ document.addEventListener('livewire:navigated', () => {
             Share2,
             MousePointer2,
             Circle,
-            Share
+            Share,
+            SquarePen,
+            ImageUp,
+            Search,
+            Instagram,
+            Linkedin,
+            Twitter,
+            Facebook,
+            Plus,
+            Settings,
+            PartyPopper,
+            MessageSquareQuote,
+            Orbit,
+            Users,
+            Building2,
+            Files,
+            Award,
+            Clock,
+            Megaphone,
+            Handshake,
+            Ban,
+            Tractor,
+            Timer,
+            ShieldCheck,
+            MapPin,
+            Star,
+            UserPlus,
+            Navigation,
+            FileClock
 
         }
     });
+}
+
+document.addEventListener('livewire:navigated', () => {
+    registerIcons()
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    registerIcons()
 })
 
 
+Livewire.hook('morph.added',  ({ el }) => {
+    registerIcons()
+})
