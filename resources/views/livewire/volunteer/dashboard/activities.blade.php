@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="w-full max-w-4xl">
-                        <h4 class="font-bold text-primary mb-4 text-lg">Recent Activities</h4>
+                        <h4 class="font-bold text-primary mb-4 text-lg">Recent Events</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             @forelse($activities as $activity)
                                 <div class="card bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-2 hover:shadow-2xl transition-shadow">
@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                                 <div class="flex gap-2 mt-4 justify-end">
-                                        <a href="{{ route('volunteer.certificate.show', $certificate->id) }}" target="_blank" class="btn btn-neutral btn-sm">View</a>
+                                        <a href="{{ route('volunteer.certificate.show', $certificate->id) }}" wire:navigate class="btn btn-neutral btn-sm">View</a>
 
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                     <div class="w-full max-w-lg">
                         <div class="card shadow-xl rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 p-6 text-center">
                             <h3 class="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Total Points</h3>
-                            <p class="mt-2 text-3xl font-semibold text-primary">{{ $totalBadgePoints }} Points</p>
+                            <p class="mt-2 text-3xl font-semibold text-primary">{{ $badges->sum('points')}} Points</p>
                         </div>
                     </div>
                 </div>
