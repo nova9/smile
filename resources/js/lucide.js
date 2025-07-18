@@ -42,7 +42,11 @@ import {
     Ban,
     Tractor,
     Timer,
-    Search
+    Search,
+    MapPin,
+    Star,
+    UserPlus,
+    Navigation
 } from 'lucide';
 
 function registerIcons() {
@@ -89,7 +93,11 @@ function registerIcons() {
             Handshake,
             Ban,
             Tractor,
-            Timer
+            Timer,
+            MapPin,
+            Star,
+            UserPlus,
+            Navigation
         }
     });
 }

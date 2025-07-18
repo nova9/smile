@@ -60,8 +60,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Badge::class);
     }
 
-    public function events(): HasMany
+    public function createdEvents(): HasMany
     {
         return $this->hasMany(Event::class);
     }
+
+    public function participatingEvents(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class)
+            ->withTimestamps()
+;    }
 }
