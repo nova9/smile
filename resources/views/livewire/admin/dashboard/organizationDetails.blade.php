@@ -1,13 +1,13 @@
 <x-admin.dashboard-layout>
     <!-- Organization Header -->
-    <div class="bg-gradient-to-r from-accent/10 to-green-600/10 shadow-lg rounded-3xl mt-6">
+    <div class="bg-gradient-to-r from-primary/10 to-green-600/10 shadow-lg rounded-3xl mt-6">
         <div class="px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex items-center justify-between flex-wrap gap-6">
                 <div class="flex items-center space-x-4">
-                   
+
                     <div>
                         <h1
-                            class="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                            class="text-3xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
                             GreenHope Foundation</h1>
                         <p class="text-gray-600 font-medium">ID: ORG-001</p>
                         <p class="text-gray-600 font-medium">Registered: June 10, 2025</p>
@@ -31,7 +31,7 @@
         <div class="tabs tabs-lift">
             <label class="tab flex gap-1">
                 <input type="radio" name="org_tabs" checked="checked" />
-                <i class="fas fa-user mr-2 text-accent"></i>
+                <i class="fas fa-user mr-2 text-primary"></i>
                 <span class="font-semibold">Profile & Verification</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
@@ -41,9 +41,9 @@
                     <div class="bg-white/90 rounded-2xl shadow-xl p-8">
                         <div class="flex items-center justify-between mb-6">
                             <h2
-                                class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                                class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
                                 Organization Details</h2>
-                            <button class="btn btn-outline btn-accent font-semibold">
+                            <button class="btn btn-outline btn-primary font-semibold">
                                 <i class="fas fa-edit mr-2"></i>Edit
                             </button>
                         </div>
@@ -75,7 +75,7 @@
                     <!-- Verification Status -->
                     <div class="bg-white/90 rounded-2xl shadow-xl p-8">
                         <h2
-                            class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
+                            class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
                             Verification Status</h2>
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
@@ -99,7 +99,7 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Rejection Reason (if
                                 applicable)</label>
                             <textarea
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 rows="3" placeholder="Enter reason for rejection..."></textarea>
                         </div>
                         <div class="mt-6 flex gap-3">
@@ -112,13 +112,13 @@
 
             <label class="tab flex gap-1">
                 <input type="radio" name="org_tabs" />
-                <i class="fas fa-calendar-alt mr-2 text-primary"></i>
+                <i class="fas fa-calendar-alt mr-2 text-accent"></i>
                 <span class="font-semibold">Opportunities</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
                 <!-- Opportunities Tab -->
                 <h2
-                    class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
+                    class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
                     Volunteer Opportunities</h2>
                 <x-admin.data-table :columns=" [
         ['key' => 'id', 'label' => 'Id', 'type' => 'text'],
@@ -161,13 +161,13 @@
 
             <label class="tab flex gap-1">
                 <input type="radio" name="org_tabs" />
-                <i class="fas fa-file-alt mr-2 text-accent"></i>
+                <i class="fas fa-file-alt mr-2 text-primary"></i>
                 <span class="font-semibold">Documents</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
                 <!-- Documents Tab -->
                 <h2
-                    class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
+                    class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
                     Legal Documents</h2>
                 <p class="text-sm text-gray-600 mb-4">Uploaded Documents (7/10 files uploaded)</p>
                 <div class="space-y-3">
@@ -181,7 +181,7 @@
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded">PDF</span>
-                            <button class="btn btn-outline btn-accent btn-sm font-semibold">Download</button>
+                            <button class="btn btn-outline btn-primary btn-sm font-semibold">Download</button>
                         </div>
                     </div>
                     <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow">
@@ -194,7 +194,7 @@
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded">PDF</span>
-                            <button class="btn btn-outline btn-accent btn-sm font-semibold">Download</button>
+                            <button class="btn btn-outline btn-primary btn-sm font-semibold">Download</button>
                         </div>
                     </div>
                 </div>
@@ -203,13 +203,13 @@
 
             <label class="tab flex gap-1">
                 <input type="radio" name="org_tabs" />
-                <i class="fas fa-history mr-2 text-primary"></i>
+                <i class="fas fa-history mr-2 text-accent"></i>
                 <span class="font-semibold">Audit Log</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
                 <!-- Audit Log Tab -->
                 <h2
-                    class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
+                    class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
                     Audit Log</h2>
                 <x-admin.data-table :columns=" [
         ['key' => 'id', 'label' => 'Id', 'type' => 'text'],

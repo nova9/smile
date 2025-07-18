@@ -12,13 +12,13 @@
                     <table class="min-w-full bg-white rounded-3xl shadow-xl">
                         <thead>
                             <tr class="bg-gray-100">
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tl-3xl">Report
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">Report
                                     ID</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">User</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Type</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Reason</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Date</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tr-3xl">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">User</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Type</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Reason</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Date</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">
                                     Actions</th>
                             </tr>
                         </thead>
@@ -55,7 +55,7 @@
             <!-- Reactivation Requests Tab -->
             <label class="tab flex gap-1">
                 <input type="radio" name="dispute_tabs" />
-                <i class="fas fa-undo mr-2 text-primary"></i>
+                <i class="fas fa-undo mr-2 text-accent"></i>
                 <span class="font-semibold">Reactivation Requests</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
@@ -63,13 +63,13 @@
                     <table class="min-w-full bg-white rounded-3xl shadow-xl">
                         <thead>
                             <tr class="bg-gray-100">
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tl-3xl">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">
                                     Request ID</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">User</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Type</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Reason</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Date</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tr-3xl">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">User</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Type</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Reason</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Date</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">
                                     Actions</th>
                             </tr>
                         </thead>
