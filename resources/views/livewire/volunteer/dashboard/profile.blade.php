@@ -22,35 +22,7 @@
                 </div>
             </div>
 
-            <!-- Bio & Skills -->
             <div class="card bg-base-100 shadow-sm p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h1 class="font-bold text-xl">Bio & Details</h1>
-                    <button class="btn btn-accent btn-sm mb-2">
-                        Edit
-                    </button>
-                </div>
-                <div class="grid grid-cols-2 gap-8 mb-8">
-                    <div>
-                        <div class="flex flex-col mb-3">
-                            <h1 class="font-medium text-gray-500 text-sm">Gender</h1>
-                            <p class="font-semibold text-base"></p>
-
-                        </div>
-                        <h2 id="profileName" class="font-bold  text-2xl bg-clip-text text-black-50 mb-1">{{auth()->user()->name}}</h2>
-                        <p id="profileRole" class="text-sm text-gray-500 mb-2">{{auth()->user()->role['name']}}</p>
-                        <p id="profileEmail" class="text-xs text-gray-400 mb-4">{{auth()->user()->email}}</p>
-                        <button onclick="updatePhoto()" class="btn bg-black text-white px-4 py-2 rounded-md  btn-sm mb-2">Update Photo</button>
-                        <div class="flex gap-2 mt-2">
-                            <span id="profileLocation" class="badge badge-info bg-blue-500/10 text-blue-600 border-blue-500/20">Ganemulla</span>
-                            <span id="profilePhone" class="badge badge-success bg-green-500/10 text-green-600 border-green-500/20">076-240-2350</span>
-                        </div>
-                        <div class="mt-6">
-                            <div class="radial-progress bg-black text-white border-black border-4" style="--value:70;" aria-valuenow="70" role="progressbar">70%</div>
-                            <p class="text-xs text-gray-500 mt-2">Profile Completion</p>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Bio & Skills -->
                 <div class="relative group">
@@ -96,17 +68,13 @@
                             <p id="profileAbout" class="text-gray-700">Enthusiastic volunteer passionate about making a difference in the community. Always eager to learn and help others.</p>
                         </div>
 
-                        <button class="btn btn-outline btn-accent btn-sm">
-                            <i data-lucide="plus"></i>
-                            Add Skill
-                        </button>
 
                     </div>
                 </div>
             </div>
         </div>
-    </main>
 
+    </div>
 
 
 </x-volunteer.dashboard-layout>
