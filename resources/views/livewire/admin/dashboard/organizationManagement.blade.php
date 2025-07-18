@@ -27,27 +27,125 @@
         ]
     ]" />
 
-    <x-admin.data-table  :columns="[
-        ['key' => 'id', 'label' => 'Id', 'type' => 'text'],
-        ['key' => 'name', 'label' => 'Organization Name', 'type' => 'text'],
-        ['key' => 'email', 'label' => 'Email', 'type' => 'text'],
-        ['key' => 'status', 'label' => 'Status', 'type' => 'badge'],
-        ['key' => 'registered', 'label' => 'Registered On', 'type' => 'text'],
-        ['key' => 'opportunities', 'label' => 'Opportunities', 'type' => 'text'],
-        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions']
-    ]" :data="[
-        [
-            'id' => '1',
-            'name' => 'GreenHope Foundation',
-            'email' => 'info@greenhope.org',
-            'status' => ['class' => 'badge-warning', 'text' => 'Pending'],
-            'registered' => '2025-06-10',
-            'opportunities' => '5',
-            'actions' => [
-                ['type' => 'link', 'url' => 'http://127.0.0.1:8000/admin/dashboard/organization-details', 'class' => 'btn-info', 'text' => 'View'],
-                ['type' => 'button', 'class' => 'btn-success', 'text' => 'Approve'],
-                ['type' => 'button', 'class' => 'btn-error', 'text' => 'Reject']
-            ]
-        ]
-    ]" />
+    <div class="px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tabs tabs-lift">
+            <label class="tab flex gap-1">
+                <input type="radio" name="org_mgmt_tabs" checked="checked" />
+                <i class="fas fa-list mr-2 text-accent"></i>
+                <span class="font-semibold">All Organizations</span>
+            </label>
+            <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-3xl shadow-xl">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tl-3xl">Id
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Organization Name
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Email</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Status</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Registered On</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Opportunities</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tr-3xl">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-6 py-4">1</td>
+                                <td class="px-6 py-4">GreenHope Foundation</td>
+                                <td class="px-6 py-4">info@greenhope.org</td>
+                                <td class="px-6 py-4">
+                                    <span class="badge badge-warning">Pending</span>
+                                </td>
+                                <td class="px-6 py-4">2025-06-10</td>
+                                <td class="px-6 py-4">5</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <a href="http://127.0.0.1:8000/admin/dashboard/organization-details"
+                                        class="btn btn-neutral font-bold">View</a>
+                                   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4">2</td>
+                                <td class="px-6 py-4">EcoFuture Org</td>
+                                <td class="px-6 py-4">contact@ecofuture.org</td>
+                                <td class="px-6 py-4">
+                                    <span class="badge badge-warning">Pending</span>
+                                </td>
+                                <td class="px-6 py-4">2025-07-01</td>
+                                <td class="px-6 py-4">0</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <a href="#" class="btn btn-neutral font-bold">View</a>
+                                 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4">3</td>
+                                <td class="px-6 py-4">RiverCare Trust</td>
+                                <td class="px-6 py-4">info@rivercare.org</td>
+                                <td class="px-6 py-4">
+                                    <span class="badge badge-success">Registered</span>
+                                </td>
+                                <td class="px-6 py-4">2025-05-20</td>
+                                <td class="px-6 py-4">2</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <a href="#" class="btn btn-neutral font-bold">View</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <label class="tab flex gap-1">
+                <input type="radio" name="org_mgmt_tabs" />
+                <i class="fas fa-user-plus mr-2 text-primary"></i>
+                <span class="font-semibold">New Registrations</span>
+            </label>
+            <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-3xl shadow-xl">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tl-3xl">Id
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Organization Name
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Email</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Status</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Registered On</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Opportunities</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tr-3xl">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            {{-- Example new registrations --}}
+                            <tr class="hover:bg-accent/10 transition-all duration-200">
+                                <td class="px-6 py-4 font-semibold text-gray-900">2</td>
+                                <td class="px-6 py-4 font-bold text-primary">EcoFuture Org</td>
+                                <td class="px-6 py-4 text-gray-700">contact@ecofuture.org</td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="badge badge-warning px-4 py-2 text-base font-semibold rounded-full">Pending</span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-700">2025-07-01</td>
+                                <td class="px-6 py-4 text-gray-700">0</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <a href="#" class="btn btn-neutral font-bold">View</a>
+                                    <button class="btn btn-outline btn-success font-bold">Approve</button>
+                                    <button class="btn btn-outline btn-error font-bold">Reject</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+   
+            </div>
+        </div>
+    </div>
 </x-admin.dashboard-layout>

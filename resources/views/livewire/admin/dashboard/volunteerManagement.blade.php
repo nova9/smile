@@ -39,43 +39,94 @@
     </label>
 
 
-    <x-admin.data-table :columns="[
-        ['key' => 'id', 'label' => 'Id', 'type' => 'text'],
-        ['key' => 'name', 'label' => 'Name', 'type' => 'text'],
-        ['key' => 'email', 'label' => 'Email', 'type' => 'text'],
-        ['key' => 'status', 'label' => 'Status', 'type' => 'badge'],
-        ['key' => 'hours', 'label' => 'Hours', 'type' => 'text'],
-        ['key' => 'badges', 'label' => 'Badges', 'type' => 'text'],
-        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions']
-    ]" :data="[
-        [
-            'id' => '1',
-            'name' => 'John Perera',
-            'email' => 'johnperera20@email.com',
-            'status' => ['class' => 'badge-success', 'text' => 'Active'],
-            'hours' => '54',
-            'badges' => '3',
-            'actions' => [
-                ['type' => 'button', 'class' => 'btn-warning suspend-btn', 'text' => 'Suspend', 'data-id' => '1', 'data-name' => 'John Perera', 'data-email' => 'johnperera20@email.com', 'data-status' => 'Active', 'data-hours' => '54', 'data-badges' => '3'],
-                ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete'],
-                ['type' => 'button', 'class' => 'btn-info', 'text' => 'View']
-            ]
-        ],
-        [
-            'id' => '2',
-            'name' => 'Jane Fernando',
-            'email' => 'janefdo12@email.com',
-            'status' => ['class' => 'badge-warning', 'text' => 'Suspended'],
-            'applications' => '5',
-            'hours' => '22',
-            'badges' => '1',
-            'actions' => [
-                ['type' => 'button', 'class' => 'btn-success', 'text' => 'Reactivate'],
-                ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete'],
-                ['type' => 'button', 'class' => 'btn-info', 'text' => 'View']
-            ]
-        ]
-    ]" />
+    <div class="overflow-x-auto mt-8">
+        <table class="min-w-full bg-white rounded-3xl shadow-xl">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tl-3xl">Id</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Name</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Email</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Status</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Hours</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Badges</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tr-3xl">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @foreach([
+                    [
+                        'id' => '1',
+                        'name' => 'John Perera',
+                        'email' => 'johnperera20@email.com',
+                        'status' => ['class' => 'badge-success', 'text' => 'Active'],
+                        'hours' => '54',
+                        'badges' => '3',
+                        'actions' => [
+                            ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
+
+                            ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
+                        ]
+                    ],
+                    [
+                        'id' => '2',
+                        'name' => 'Jane Fernando',
+                        'email' => 'janefdo12@email.com',
+                        'status' => ['class' => 'badge-warning', 'text' => 'Suspended'],
+                        'applications' => '5',
+                        'hours' => '22',
+                        'badges' => '1',
+                        'actions' => [
+                            ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
+
+                            ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
+                        ]
+                    ]
+                ] as $vol)
+                <tr class="hover:bg-accent/10 transition-all duration-200">
+                    <td class="px-6 py-4 font-semibold text-gray-900">{{ $vol['id'] }}</td>
+                    <td class="px-6 py-4 font-bold text-primary">{{ $vol['name'] }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ $vol['email'] }}</td>
+                    <td class="px-6 py-4">
+                        <span class="badge {{ $vol['status']['class'] }} px-4 py-2 text-base font-semibold rounded-full">
+                            {{ $vol['status']['text'] }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-gray-700">{{ $vol['hours'] }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ $vol['badges'] }}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex flex-wrap gap-2">
+                            @foreach($vol['actions'] as $action)
+                                @php
+                                    $btnClass = '';
+                                    if ($action['text'] === 'View') {
+                                        $btnClass = 'btn btn-neutral font-bold';
+                                    } elseif ($action['text'] === 'Suspend') {
+                                        $btnClass = 'btn btn-outline btn-warning font-bold suspend-btn';
+                                    } elseif ($action['text'] === 'Delete') {
+                                        $btnClass = 'btn btn-outline btn-error font-bold';
+                                    } elseif ($action['text'] === 'Reactivate') {
+                                        $btnClass = 'btn btn-outline btn-success font-bold';
+                                    } else {
+                                        $btnClass = 'btn font-bold';
+                                    }
+                                @endphp
+                                <button
+                                    class="{{ $btnClass }}"
+                                    @if(isset($action['data-id'])) data-id="{{ $action['data-id'] }}" @endif
+                                    @if(isset($action['data-name'])) data-name="{{ $action['data-name'] }}" @endif
+                                    @if(isset($action['data-email'])) data-email="{{ $action['data-email'] }}" @endif
+                                    @if(isset($action['data-status'])) data-status="{{ $action['data-status'] }}" @endif
+                                    @if(isset($action['data-hours'])) data-hours="{{ $action['data-hours'] }}" @endif
+                                    @if(isset($action['data-badges'])) data-badges="{{ $action['data-badges'] }}" @endif
+                                >{{ $action['text'] }}</button>
+                            @endforeach
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     <!-- Delete Modal  -->
      
