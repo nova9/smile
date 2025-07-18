@@ -11,26 +11,15 @@ class Activities extends Component
     public $activities;
     public $certificates;
     public $badges;
-    public $badgeImgs;
-    public $totalBadgePoints;
-
     public function mount()
     {
-        $this->activities = Event::whereHas('users', function ($q) {
-            $q->where('user_id', auth()->id());
-        })->with('users')->get();
-        
-        $this->certificates = Event::whereHas('users', function ($q) {
-            $q->where('user_id', auth()->id());
-        })
-            ->whereNotNull('ends_at')
-            ->with('users')
-            ->get();
+        $this->activities = auth()->user()->participatingEvents;
+        //pivottable=event_user
+        $this->certificates = auth()->user()->participatingEvents()->wherePivot('ends_at','!=', null)->get();
 
-        $this->badges = User::where('id', auth()->id())->with('badges')->first()?->badges ?? collect();
-        $this->totalBadgePoints = $this->badges->sum('points');
-        
-        
+        $this->badges = auth()->user()->badges;
+
+
     }
 
     public function render()
