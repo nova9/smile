@@ -13,15 +13,15 @@
     <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
         <!-- Header Section -->
         <div class="mb-4">
-            <h1 class="text-4xl sm:text-5xl font-bold text-primary mb-2">
+            <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
                 Volunteer
-                <span class="bg-gradient-to-r from-accent to-green-600 bg-clip-text text-transparent">
+                <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
                     Opportunities
                 </span>
             </h1>
             <p class="text-gray-600 text-lg leading-relaxed">
                 Find opportunities that match your
-                <span class="text-accent font-semibold">passion</span>
+                <span class="text-primary font-semibold">passion</span>
                 and skills.
             </p>
         </div>
@@ -52,7 +52,7 @@
                 <span class="text-sm text-gray-600">Active filters:</span>
                 <div class="flex flex-wrap gap-2">
                     <!-- These would be dynamically generated based on active filters -->
-                    <span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-xs flex items-center gap-1">
+                    <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs flex items-center gap-1">
                         Environment
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 cursor-pointer" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor">
@@ -67,8 +67,8 @@
         <!-- Results Summary -->
         <div class="mb-6 flex justify-between items-center">
             <div class="text-gray-600">
-                Showing <span class="font-semibold text-primary">12</span> of <span
-                    class="font-semibold text-primary">24</span> opportunities
+                Showing <span class="font-semibold text-accent">12</span> of <span
+                    class="font-semibold text-accent">24</span> opportunities
             </div>
             <div class="flex gap-2">
                 <button class="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
@@ -103,7 +103,7 @@
                             </div>
                             <div class="text-sm text-gray-500">{{ $item->created_at->diffForHumans() }}</div>
                         </div>
-                        <h2 class="text-xl font-bold text-primary mb-2">{{ $item->name }}</h2>
+                        <h2 class="text-xl font-bold text-accent mb-2">{{ $item->name }}</h2>
                         <p class="text-gray-600 text-sm mb-3 leading-relaxed line-clamp-2">{{ $item->description }}</p>
 
                         <div class="flex flex-wrap gap-2 mb-4">
@@ -160,7 +160,7 @@
 
                         <div class="mb-4">
                             <div class="text-sm">
-                                <span class="text-primary">
+                                <span class="text-accent">
                                     <span class="font-semibold ">{{ $item->starts_at->format('F j') }}</span> to <span
                                         class="font-semibold ">{{ $item->ends_at->format('F j') }}</span>
                                 </span>
@@ -170,7 +170,7 @@
 
                         <div class="flex gap-3">
                             <a href="/volunteer/dashboard/events/{{ $item->id }}" wire:navigate class="w-full">
-                                <button class="flex-1 btn btn-accent w-full">
+                                <button class="flex-1 btn btn-primary w-full">
                                     Show more
                                 </button>
                             </a>
