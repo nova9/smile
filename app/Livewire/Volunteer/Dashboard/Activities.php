@@ -3,7 +3,6 @@
 namespace App\Livewire\Volunteer\Dashboard;
 
 use App\Models\Event;
-use App\Models\File;
 use App\Models\User;
 use Livewire\Component;
 
@@ -20,16 +19,17 @@ class Activities extends Component
         $this->activities = Event::whereHas('users', function ($q) {
             $q->where('user_id', auth()->id());
         })->with('users')->get();
-
+        
         $this->certificates = Event::whereHas('users', function ($q) {
             $q->where('user_id', auth()->id());
         })
-            ->whereNotNull('ended_at')
+            ->whereNotNull('ends_at')
             ->with('users')
             ->get();
 
         $this->badges = User::where('id', auth()->id())->with('badges')->first()?->badges ?? collect();
         $this->totalBadgePoints = $this->badges->sum('points');
+        
         
     }
 
