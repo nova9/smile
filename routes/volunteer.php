@@ -12,6 +12,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/events', \App\Livewire\Volunteer\Dashboard\Eventz\Index::class);
         Route::get('/events/{id}', \App\Livewire\Volunteer\Dashboard\Eventz\Show::class);
 
+        Route::get('/applications', \App\Livewire\Volunteer\Dashboard\Applications\Index::class);
+
         Route::get('/feedback', \App\Livewire\Volunteer\Dashboard\Feedback::class);
         Route::get('/community', \App\Livewire\Volunteer\Dashboard\Community::class);
         Route::get('/activities', \App\Livewire\Volunteer\Dashboard\Activities::class);
