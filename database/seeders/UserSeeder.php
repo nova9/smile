@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             ->recycle($roleVolunteer)
             ->has(Event::factory()
                 ->has(Tag::factory()->count(3))
-                ->count(2), 'events')
+                ->count(2), 'createdEvents')
             ->create()
             ->each(function (User $user) use ($existingBadges) {
                 $randomBadges = $existingBadges->random(rand(0, $existingBadges->count()));
