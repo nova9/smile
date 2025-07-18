@@ -1,6 +1,6 @@
 <x-common.auth.layout>
     <div class="text-center text-white mb-6">
-        <h1 class="text-3xl font-bold text-primary">Create an Account</h1>
+        <h1 class="text-3xl font-bold text-accent">Create an Account</h1>
         <p class="text-gray-500">Let's help each other.</p>
     </div>
 
@@ -66,7 +66,7 @@
                         wire:model="tos"
                         type="checkbox"
                         name="tos"
-                        class="checkbox checkbox-accent checkbox-sm @error('tos') input-error @enderror"
+                        class="checkbox checkbox-primary checkbox-sm @error('tos') input-error @enderror"
                     />
                     <span class="label-text text-gray-600 ml-1">I agree to the Terms of Service</span>
                 </label>
@@ -76,7 +76,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-accent w-full">Sign Up</button>
+        <button type="submit" class="btn btn-primary w-full">Sign Up</button>
     </form>
     <p class="text-center text-sm flex items-center gap-2">
         Already have an account?
