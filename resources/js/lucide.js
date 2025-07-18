@@ -46,7 +46,8 @@ import {
     MapPin,
     Star,
     UserPlus,
-    Navigation
+    Navigation,
+    FileClock
 } from 'lucide';
 
 function registerIcons() {
@@ -97,7 +98,8 @@ function registerIcons() {
             MapPin,
             Star,
             UserPlus,
-            Navigation
+            Navigation,
+            FileClock
         }
     });
 }

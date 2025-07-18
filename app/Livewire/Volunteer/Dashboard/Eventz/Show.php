@@ -12,6 +12,7 @@ class Show extends Component
     public function join()
     {
         $this->event->users()->attach(auth()->user()->id);
+        return redirect('/volunteer/dashboard/applications');
     }
 
     public function mount($id)
