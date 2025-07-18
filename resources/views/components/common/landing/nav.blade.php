@@ -12,34 +12,34 @@
             <!-- Desktop Navigation -->
             <div class="hidden lg:flex items-center space-x-8">
                 <a href="#home"
-                    class="nav-link text-gray-700 hover:text-accent transition-colors duration-300 font-medium relative group">
+                    class="nav-link text-gray-700 hover:text-primary transition-colors duration-300 font-medium relative group">
                     Home
                     <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <a href="#about"
-                    class="nav-link text-gray-700 hover:text-accent transition-colors duration-300 font-medium relative group">
+                    class="nav-link text-gray-700 hover:text-primary transition-colors duration-300 font-medium relative group">
                     About Us
                     <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <a href="#opportunities"
-                    class="nav-link text-gray-700 hover:text-accent transition-colors duration-300 font-medium relative group">
+                    class="nav-link text-gray-700 hover:text-primary transition-colors duration-300 font-medium relative group">
                     Opportunities
                     <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <a href="#involved"
-                    class="nav-link text-gray-700 hover:text-accent transition-colors duration-300 font-medium relative group">
+                    class="nav-link text-gray-700 hover:text-primary transition-colors duration-300 font-medium relative group">
                     Get Involved
                     <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <a href="#donate"
-                    class="nav-link text-gray-700 hover:text-accent transition-colors duration-300 font-medium relative group">
+                    class="nav-link text-gray-700 hover:text-primary transition-colors duration-300 font-medium relative group">
                     Donate
                     <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
             </div>
 
@@ -47,13 +47,13 @@
             <div class="flex items-center space-x-4">
                 @guest
                     <a href="/login" wire:navigate.hover class="hidden sm:inline-flex">
-                        <button class="text-gray-700 hover:text-accent font-medium transition-colors duration-300">
+                        <button class="text-gray-700 hover:text-primary font-medium transition-colors duration-300">
                             Log In
                         </button>
                     </a>
                     <a href="/signup" wire:navigate.hover>
                         <button
-                            class="bg-accent hover:bg-accent/90 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                             Get Started
                         </button>
                     </a>
@@ -62,14 +62,14 @@
                 @auth
                     <a href="/dashboard" wire:navigate.hover>
                         <button
-                            class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            class="bg-accent hover:bg-accent/90 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                             Dashboard
                         </button>
                     </a>
                 @endauth
 
                 <!-- Mobile menu button -->
-                <button class="lg:hidden p-2 text-gray-700 hover:text-accent transition-colors duration-300"
+                <button class="lg:hidden p-2 text-gray-700 hover:text-primary transition-colors duration-300"
                     onclick="toggleMobileMenu()">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -83,20 +83,20 @@
         <div id="mobileMenu" class="lg:hidden hidden border-t border-gray-200 py-4">
             <div class="space-y-3">
                 <a href="#home"
-                    class="block px-4 py-2 text-gray-700 hover:text-accent hover:bg-gray-50 rounded-lg transition-all duration-300">Home</a>
+                    class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-300">Home</a>
                 <a href="#about"
-                    class="block px-4 py-2 text-gray-700 hover:text-accent hover:bg-gray-50 rounded-lg transition-all duration-300">About
+                    class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-300">About
                     Us</a>
                 <a href="#opportunities"
-                    class="block px-4 py-2 text-gray-700 hover:text-accent hover:bg-gray-50 rounded-lg transition-all duration-300">Opportunities</a>
+                    class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-300">Opportunities</a>
                 <a href="#involved"
-                    class="block px-4 py-2 text-gray-700 hover:text-accent hover:bg-gray-50 rounded-lg transition-all duration-300">Get
+                    class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-300">Get
                     Involved</a>
                 <a href="#donate"
-                    class="block px-4 py-2 text-gray-700 hover:text-accent hover:bg-gray-50 rounded-lg transition-all duration-300">Donate</a>
+                    class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-300">Donate</a>
                 @guest
                     <a href="/login" wire:navigate.hover
-                        class="block px-4 py-2 text-gray-700 hover:text-accent hover:bg-gray-50 rounded-lg transition-all duration-300">Log
+                        class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-300">Log
                         In</a>
                 @endguest
             </div>

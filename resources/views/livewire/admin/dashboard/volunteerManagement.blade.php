@@ -43,13 +43,13 @@
         <table class="min-w-full bg-white rounded-3xl shadow-xl">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tl-3xl">Id</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Name</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Email</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Status</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Hours</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary">Badges</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-primary rounded-tr-3xl">Actions</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">Id</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Name</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Email</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Status</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Hours</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Badges</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">Actions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
@@ -82,9 +82,9 @@
                         ]
                     ]
                 ] as $vol)
-                <tr class="hover:bg-accent/10 transition-all duration-200">
+                <tr class="hover:bg-primary/10 transition-all duration-200">
                     <td class="px-6 py-4 font-semibold text-gray-900">{{ $vol['id'] }}</td>
-                    <td class="px-6 py-4 font-bold text-primary">{{ $vol['name'] }}</td>
+                    <td class="px-6 py-4 font-bold text-accent">{{ $vol['name'] }}</td>
                     <td class="px-6 py-4 text-gray-700">{{ $vol['email'] }}</td>
                     <td class="px-6 py-4">
                         <span class="badge {{ $vol['status']['class'] }} px-4 py-2 text-base font-semibold rounded-full">
@@ -136,7 +136,7 @@
     </div>
 
     <!-- Delete Modal  -->
-     
+
     <div id="deleteModal" class="modal hidden">
         <div class="modal-box w-11/12 max-w-2xl">
             <div class="flex justify-between items-center mb-4">

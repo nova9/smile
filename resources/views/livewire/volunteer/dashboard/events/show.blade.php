@@ -14,7 +14,7 @@
         <!-- Back Button -->
         <div class="p-6 pb-0">
             <a href="/volunteer/dashboard/events" wire:navigate
-                class="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors group">
+                class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:-translate-x-1 transition-transform"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -47,7 +47,7 @@
                 <div class="p-8">
                     <!-- Header -->
                     <div class="mb-6">
-                        <h1 class="text-4xl font-bold text-primary mb-3">
+                        <h1 class="text-4xl font-bold text-accent mb-3">
                             {{ $event->name }}
                         </h1>
                         <p class="text-gray-600 text-lg leading-relaxed">
@@ -193,7 +193,7 @@
                                     <span class="capitalize">{{ $event->users->where('id', auth()->user()->id)->first()->pivot->status }}</span>
                                 </button>
                                 @else
-                                    <button class="w-full btn btn-accent btn-lg" wire:click="join">
+                                    <button class="w-full btn btn-primary btn-lg" wire:click="join">
                                         <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
                                         Join This Event
                                     </button>

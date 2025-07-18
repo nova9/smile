@@ -5,7 +5,7 @@
         </a>
         <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-16 my-3">
         <div class="text-center text-white mb-6">
-            <h1 class="text-3xl font-bold text-primary">Log In</h1>
+            <h1 class="text-3xl font-bold text-accent">Log In</h1>
             <p class="text-gray-500">Welcome back! Please log in to continue.</p>
         </div>
 
@@ -31,13 +31,13 @@
             </div>
             <div class="flex items-center justify-between">
                 <label class="label cursor-pointer">
-                    <input type="checkbox" name="remember" class="checkbox checkbox-primary checkbox-sm"/>
+                    <input type="checkbox" name="remember" class="checkbox checkbox-accent checkbox-sm"/>
                     <span class="label-text text-gray-600 ml-2">Remember me</span>
                 </label>
                 <a href="/forgot-password" class="btn btn-link">Forgot Password?</a>
             </div>
 
-            <button type="submit" class="btn btn-accent w-full">Log In</button>
+            <button type="submit" class="btn btn-primary w-full">Log In</button>
         </form>
 {{--        <p class="text-center text-sm flex items-center gap-2">--}}
 {{--            Don't have an account?--}}
