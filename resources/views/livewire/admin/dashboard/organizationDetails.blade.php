@@ -43,9 +43,7 @@
                             <h2
                                 class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
                                 Organization Details</h2>
-                            <button class="btn btn-outline btn-primary font-semibold">
-                                <i class="fas fa-edit mr-2"></i>Edit
-                            </button>
+
                         </div>
                         <div class="space-y-4">
                             <div>
@@ -83,12 +81,7 @@
                                 <span
                                     class="px-3 py-1 bg-green-100 text-green-800 text-sm font-bold rounded-full shadow">Complete</span>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-semibold text-gray-700">Background Check</span>
-                                <span
-                                    class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-bold rounded-full shadow">In
-                                    Progress</span>
-                            </div>
+
                             <div class="flex items-center justify-between">
                                 <span class="text-sm font-semibold text-gray-700">Legal Verification</span>
                                 <span
@@ -187,10 +180,7 @@
                     <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow">
                         <div class="flex items-center space-x-3">
                             <i class="fas fa-file-pdf text-red-500"></i>
-                            <div>
-                                <p class="text-sm font-semibold text-gray-900">tax_exemption.pdf</p>
-                                <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
-                            </div>
+
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded">PDF</span>
@@ -233,6 +223,79 @@
             'reason' => 'Initial registration submitted'
         ]
     ]" />
+            </div>
+
+            <label class="tab flex gap-1">
+                <input type="radio" name="org_tabs" />
+                <i class="fas fa-exclamation-triangle mr-2 text-error"></i>
+                <span class="font-semibold">Reports/Complaints</span>
+            </label>
+            <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
+                <h2
+                    class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
+                    Reports for Volunteer: John Fernando
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Report Card 1 -->
+                    <div class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-accent">Report ID: RPT-001</span>
+                            <span
+                                class="px-3 py-1 bg-red-100 text-red-800 text-xs font-bold rounded-full shadow">Open</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Type:</span>
+                            <span class="text-gray-900">Volunteer</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Reason:</span>
+                            <span class="text-gray-900">Inappropriate behavior</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Date:</span>
+                            <span class="text-gray-900">2024-06-20</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Details:</span>
+                            <span class="text-gray-900">Reported for using offensive language during event.</span>
+                        </div>
+                        <div class="flex gap-2 mt-2">
+                            <button class="btn btn-neutral font-bold">View</button>
+                            <button class="btn btn-outline btn-success font-bold">Resolve</button>
+                            <button class="btn btn-outline btn-error font-bold">Dismiss</button>
+                        </div>
+                    </div>
+                    <!-- Report Card 2 -->
+                    <div class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-accent">Report ID: RPT-002</span>
+                            <span
+                                class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full shadow">Closed</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Type:</span>
+                            <span class="text-gray-900">Volunteer</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Reason:</span>
+                            <span class="text-gray-900">Late attendance</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Date:</span>
+                            <span class="text-gray-900">2024-05-10</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Details:</span>
+                            <span class="text-gray-900">Arrived late to scheduled activity.</span>
+                        </div>
+                        <div class="flex gap-2 mt-2">
+                            <button class="btn btn-neutral font-bold">View</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end">
+                    <button class="btn btn-error font-bold">Suspend Volunteer</button>
+                </div>
             </div>
         </div>
     </div>
