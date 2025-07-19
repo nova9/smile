@@ -1,0 +1,282 @@
+[33mcommit d9e3e17909d5c506ffb55ad60ade0ab4ca587513[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mgamidu[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 21def9c 1c509d5
+Author: gamiduwelikanna <100673717+gamiduwelikanna@users.noreply.github.com>
+Date:   Fri Jul 18 23:48:16 2025 +0530
+
+    Merge pull request #43 from nova9/gamidu
+    
+    service requester making in progress
+
+[33mcommit 1c509d5d5fb4ad8a9e2a914b8cbbb3a42d9f7b3c[m[33m ([m[1;31morigin/gamidu[m[33m)[m
+Author: gamiduwelikanna <gamidukaveen@gmail.com>
+Date:   Fri Jul 18 23:46:09 2025 +0530
+
+    service requester making in progress
+
+[33mcommit 21def9c62f8149612bc0fc8722f78cf9f2c2abff[m[33m ([m[1;32mmain[m[33m)[m
+Merge: 42cdd94 8859c7d
+Author: gamiduwelikanna <100673717+gamiduwelikanna@users.noreply.github.com>
+Date:   Fri Jul 18 23:34:46 2025 +0530
+
+    Merge pull request #42 from nova9/gamidu
+    
+    service requester
+
+[33mcommit 8859c7d68320408827996008911b4f0555048e61[m
+Author: gamiduwelikanna <gamidukaveen@gmail.com>
+Date:   Fri Jul 18 23:30:58 2025 +0530
+
+    service requester
+
+[33mcommit 42cdd9462b535bc1ec3579a5238313c5ed80b938[m
+Merge: 88b0e39 37c308d
+Author: gamiduwelikanna <100673717+gamiduwelikanna@users.noreply.github.com>
+Date:   Fri Jul 18 19:04:38 2025 +0530
+
+    Merge pull request #40 from nova9/noufa
+    
+    new changes
+
+[33mcommit 88b0e39a0d449a538b188c05e76caa338fc8d1fe[m
+Merge: c75dfe4 2b49693
+Author: gamiduwelikanna <100673717+gamiduwelikanna@users.noreply.github.com>
+Date:   Fri Jul 18 19:04:23 2025 +0530
+
+    Merge pull request #41 from nova9/gamidu
+    
+    Gamidu
+
+[33mcommit 2b496936340929f424499f2c8be4a2a278029b96[m
+Author: gamiduwelikanna <gamidukaveen@gmail.com>
+Date:   Fri Jul 18 19:00:38 2025 +0530
+
+    requestor
+
+[33mcommit da9b17143b8c3aa72b0236e6d85c80497fb2d934[m
+Merge: 6bfc2d0 c75dfe4
+Author: gamiduwelikanna <gamidukaveen@gmail.com>
+Date:   Fri Jul 18 17:59:59 2025 +0530
+
+    initial 1
+
+[33mcommit 6bfc2d018e10a4f8e27c2b5ebb09960a88489473[m
+Author: gamiduwelikanna <gamidukaveen@gmail.com>
+Date:   Fri Jul 18 17:58:57 2025 +0530
+
+    initial
+
+[33mcommit 37c308df3d9ab1d02f1bb66d251636f9e08798e2[m[33m ([m[1;31morigin/noufa[m[33m)[m
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 16:52:56 2025 +0530
+
+    new changes
+
+[33mcommit c75dfe456e0112d53d965d5a9434565902449ac2[m
+Merge: b69c203 616c122
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 16:49:12 2025 +0530
+
+    Merge pull request #39 from nova9/noufa
+    
+    new changes
+
+[33mcommit 616c122b58b92c0b7b73cd1500656c918f56dbfb[m
+Merge: a096da5 b69c203
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 16:49:03 2025 +0530
+
+    Merge branch 'main' into noufa
+
+[33mcommit a096da5ba964f9fc66348a47151c1570389f2e3a[m
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 16:46:23 2025 +0530
+
+    new changes
+
+[33mcommit b69c2032b02d6bd67571855b5f22af09e7c27396[m
+Merge: 0e8d4fa 410292c
+Author: nova9 <thathsaramadhhusha@gmail.com>
+Date:   Fri Jul 18 16:32:40 2025 +0530
+
+    Merge pull request #38 from nova9/thathsara
+    
+    Thathsara
+
+[33mcommit 410292cf04edbba8813a1e11abbbe43856282e63[m[33m ([m[1;31morigin/thathsara[m[33m)[m
+Author: Thathsara <thathsaramadhhusha@gmail.com>
+Date:   Fri Jul 18 16:30:26 2025 +0530
+
+    theme change
+
+[33mcommit 965b91e36cab0ebc7a83d45f4d7a9c3fd713b485[m
+Author: Thathsara <thathsaramadhhusha@gmail.com>
+Date:   Fri Jul 18 16:24:55 2025 +0530
+
+    my events
+
+[33mcommit 47c325a6e8013ec947948e243c7bb891bb12dc19[m
+Author: Thathsara <thathsaramadhhusha@gmail.com>
+Date:   Fri Jul 18 16:19:14 2025 +0530
+
+    remove reduntandt event file
+
+[33mcommit 0e8d4fa9d43f14470c495b05e657a6a81e62021a[m[33m ([m[1;31morigin/tharindiw[m[33m)[m
+Merge: 6616ea4 472b4ed
+Author: tharindi wijayasiri <140165114+TharindiW@users.noreply.github.com>
+Date:   Fri Jul 18 15:14:02 2025 +0530
+
+    Merge pull request #37 from nova9/tharindiw
+    
+    volunteer details page
+
+[33mcommit 472b4ed1448ee99e28cd6702b9e259c6afcf7872[m
+Author: tharindi wijayasiri <tharindiwijayasiri@gmail.com>
+Date:   Fri Jul 18 15:13:00 2025 +0530
+
+    volunteer details page
+
+[33mcommit 6616ea4eb43dcd1f6b0942f681f1e17ca6630afc[m
+Merge: b10bba0 045233c
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 14:45:25 2025 +0530
+
+    Merge pull request #36 from nova9/noufa
+    
+    new changes
+
+[33mcommit 045233ccfbf042dfd7721fc9e8ca6c8e4db3e77f[m
+Merge: 3de2676 b10bba0
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 14:45:14 2025 +0530
+
+    Merge branch 'main' into noufa
+
+[33mcommit 3de2676eb53722c1ad4408eb8a6e26565678e756[m
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 14:43:10 2025 +0530
+
+    new changes
+
+[33mcommit b10bba04e0d629496035448953f28796cbb98400[m
+Merge: 0fb0e74 e808634
+Author: nova9 <thathsaramadhhusha@gmail.com>
+Date:   Fri Jul 18 14:42:52 2025 +0530
+
+    Merge pull request #35 from nova9/thathsara
+    
+    Thathsara
+
+[33mcommit e80863438b5127dd321ec2f9663a1e45b9c35bd3[m
+Author: Thathsara <thathsaramadhhusha@gmail.com>
+Date:   Fri Jul 18 14:40:27 2025 +0530
+
+    application
+
+[33mcommit 6e8f46b5d9e2dee9c510a0fc026bdf4a5eb0cd49[m
+Author: Thathsara <thathsaramadhhusha@gmail.com>
+Date:   Fri Jul 18 14:23:32 2025 +0530
+
+    join event
+
+[33mcommit 0fb0e74b58c070390f4b303ee0d27dfa19f4cca9[m
+Merge: eff07a7 a5b22bc
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 10:38:16 2025 +0530
+
+    Merge pull request #34 from nova9/noufa
+    
+    new changes
+
+[33mcommit a5b22bcfd2aa28d14e742a13c6f6fc2c21bacd36[m
+Merge: 9d2a536 eff07a7
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 10:38:03 2025 +0530
+
+    Merge branch 'main' into noufa
+
+[33mcommit 9d2a536770548cf47c6529dd6d6d701c05eee294[m
+Author: salim359 <snoufa3@gmail.com>
+Date:   Fri Jul 18 09:46:54 2025 +0530
+
+    new changes
+
+[33mcommit eff07a742d70fd53fb2c77ba633c329c1019d4ed[m
+Merge: 68c6de2 13d2e08
+Author: tharindi wijayasiri <140165114+TharindiW@users.noreply.github.com>
+Date:   Fri Jul 18 00:00:43 2025 +0530
+
+    Merge pull request #33 from nova9/tharindiw
+    
+    Update admin dashboard views: dispute handling, volunteer managemnt changes
+
+[33mcommit 13d2e0836f8e2a90b93d4fe307bf24778fc886f2[m
+Author: tharindi wijayasiri <tharindiwijayasiri@gmail.com>
+Date:   Thu Jul 17 23:59:32 2025 +0530
+
+    Update admin dashboard views: dispute handling, index, org, and volunteer management
+
+[33mcommit 68c6de2e7728f6963d365f7b6f28d28967b2e12e[m
+Merge: 5b194c6 2ceadff
+Author: tharindi wijayasiri <140165114+TharindiW@users.noreply.github.com>
+Date:   Thu Jul 17 20:22:24 2025 +0530
+
+    Merge pull request #32 from nova9/tharindiw
+    
+    Update admin dashboard blade views
+
+[33mcommit 2ceadff4e9cde0c1ef8205f54a400e4eb213a8b6[m
+Author: tharindi wijayasiri <tharindiwijayasiri@gmail.com>
+Date:   Thu Jul 17 20:04:36 2025 +0530
+
+    Update admin dashboard blade views
+
+[33mcommit 5b194c6f5c306ff80b9a4f702a6e60785766a00c[m
+Merge: bd2ad4e 19886d2
+Author: nova9 <thathsaramadhhusha@gmail.com>
+Date:   Thu Jul 17 17:29:56 2025 +0530
+
+    Merge pull request #31 from nova9/thathsara
+    
+    fix
+
+[33mcommit 19886d2dddcdf9f6a69bd376926cdf22468f0424[m
+Author: Thathsara <thathsaramadhhusha@gmail.com>
+Date:   Thu Jul 17 17:29:27 2025 +0530
+
+    fix
+
+[33mcommit bd2ad4e611328fbf3b48405794bc73e0a0f2cb33[m
+Merge: 37045a2 c5d99cb
+Author: salim359 <snoufa3@gmail.com>
+Date:   Thu Jul 17 16:36:24 2025 +0530
+
+    Merge pull request #30 from nova9/noufa
+    
+    newchanges
+
+[33mcommit c5d99cb3d0811144163b4e1592965c64aa3d6fb0[m
+Merge: 2ce5f7a 37045a2
+Author: salim359 <snoufa3@gmail.com>
+Date:   Thu Jul 17 16:36:13 2025 +0530
+
+    Merge branch 'main' into noufa
+
+[33mcommit 37045a287e23df49aa608b46949d84a93d647753[m
+Author: Thathsara <thathsaramadhhusha@gmail.com>
+Date:   Thu Jul 17 16:17:18 2025 +0530
+
+    fix
+
+[33mcommit 60429ffdc62a93d2f747ae8d9f2ae84df1eb833d[m
+Author: Thathsara <thathsaramadhhusha@gmail.com>
+Date:   Thu Jul 17 16:04:24 2025 +0530
+
+    events
+
+[33mcommit 2ce5f7a8706ad05e5758db884913e123c0be8ef1[m
+Author: salim359 <snoufa3@gmail.com>
+Date:   Thu Jul 17 16:02:27 2025 +0530
+
+    newchanges
+
+[33mcommit e6bb1f456fd2599db2488
