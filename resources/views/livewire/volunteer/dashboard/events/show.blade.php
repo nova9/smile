@@ -82,7 +82,7 @@
                                 <i data-lucide="map-pin" class="w-6 h-6 text-purple-600"></i>
                             </div>
                             <div class="text-sm text-gray-500">Location</div>
-                            <div class="font-semibold text-gray-700">{{ $event->address->city }}</div>
+                            <div class="font-semibold text-gray-700">City</div>
                         </div>
 
                         <div class="bg-gray-50 rounded-xl p-4 text-center">
