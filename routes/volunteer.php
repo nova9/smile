@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'role:volunteer'])->group(function () {
     Route::prefix('/dashboard')->group(function () {
         Route::get('/', \App\Livewire\Volunteer\Dashboard\Index::class);
         Route::get('/events', \App\Livewire\Volunteer\Dashboard\Eventz\Index::class);
