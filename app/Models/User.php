@@ -64,7 +64,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Attribute::class,'attribute_user','user_id','attribute_id')->withPivot('value');
     }
 
-    public function createdEvents(): HasMany
+    public function organizingEvents(): HasMany
     {
         return $this->hasMany(Event::class);
     }

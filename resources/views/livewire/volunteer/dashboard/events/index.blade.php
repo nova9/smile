@@ -122,7 +122,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
-                                {{ $item->address->city }}
+{{--                                {{ $item->address->city }}--}} City
                             </div>
                             <div class="flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
