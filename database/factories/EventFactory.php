@@ -31,6 +31,9 @@ class EventFactory extends Factory
             'starts_at' => fake()->dateTimeBetween('now', '+1 hour'),
             'ends_at' => fake()->dateTimeBetween('now', '+7 days'),
             'address_id' => Address::factory(),
+            'max_participants' => fake()->numberBetween(1, 100),
+            'latitude' => fake()->latitude(),
+            'longitude' => fake()->longitude(),
         ];
     }
 }

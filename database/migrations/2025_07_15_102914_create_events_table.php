@@ -22,6 +22,9 @@ return new class extends Migration
             $table->timestamp('starts_at');
             $table->timestamp('ends_at');
             $table->foreignIdFor(\App\Models\Address::class);
+            $table->integer('max_participants');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
         });
     }
 

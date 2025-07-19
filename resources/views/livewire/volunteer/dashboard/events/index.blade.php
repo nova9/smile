@@ -32,68 +32,44 @@
                 <!-- Search Bar -->
                 <label class="input flex-grow-1">
                     <i data-lucide="search" class="opacity-50"></i>
-                    <input type="search" class="grow" placeholder="Search" />
+                    <input type="search" class="grow" placeholder="Search events..." wire:model.live.debounce.300ms="search" />
                 </label>
 
-                <!-- Filters -->
-                <div class="flex flex-wrap gap-3">
-                    <select class="select">
-                        <option disabled selected>Pick a location</option>
-                        <option value="education">Education</option>
-                        <option value="healthcare">Healthcare</option>
-                        <option value="community">Community</option>
-                        <option value="technology">Technology</option>
-                    </select>
-                </div>
+{{--                <!-- Filters -->--}}
+{{--                <div class="flex flex-wrap gap-3">--}}
+{{--                    <select class="select">--}}
+{{--                        <option disabled selected>Pick a location</option>--}}
+{{--                        <option value="education">Education</option>--}}
+{{--                        <option value="healthcare">Healthcare</option>--}}
+{{--                        <option value="community">Community</option>--}}
+{{--                        <option value="technology">Technology</option>--}}
+{{--                    </select>--}}
+{{--                </div>--}}
             </div>
 
             <!-- Active Filters Display -->
-            <div class="mt-4 flex flex-wrap gap-2">
-                <span class="text-sm text-gray-600">Active filters:</span>
-                <div class="flex flex-wrap gap-2">
-                    <!-- These would be dynamically generated based on active filters -->
-                    <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs flex items-center gap-1">
-                        Environment
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 cursor-pointer" fill="none"
-                             viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Results Summary -->
-        <div class="mb-6 flex justify-between items-center">
-            <div class="text-gray-600">
-                Showing <span class="font-semibold text-accent">12</span> of <span
-                    class="font-semibold text-accent">24</span> opportunities
-            </div>
-            <div class="flex gap-2">
-                <button class="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none"
-                         viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                    </svg>
-                </button>
-                <button class="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none"
-                         viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
+{{--            <div class="mt-4 flex flex-wrap gap-2">--}}
+{{--                <span class="text-sm text-gray-600">Active filters:</span>--}}
+{{--                <div class="flex flex-wrap gap-2">--}}
+{{--                    <!-- These would be dynamically generated based on active filters -->--}}
+{{--                    <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs flex items-center gap-1">--}}
+{{--                        Environment--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 cursor-pointer" fill="none"--}}
+{{--                             viewBox="0 0 24 24" stroke="currentColor">--}}
+{{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
+{{--                                  d="M6 18L18 6M6 6l12 12" />--}}
+{{--                        </svg>--}}
+{{--                    </span>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
 
         <!-- Opportunities Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <!-- Opportunity Card 1 - Environment -->
-            @foreach($events as $item)
+            @forelse($events as $item)
                 <div
-                    class="flex flex-col bg-white rounded-xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
+                    class="flex flex-col bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 transform overflow-hidden">
                     <img src="https://picsum.photos/seed/{{$item->id}}/350/200" alt="image" class="w-full">
                     <div class="p-6 flex flex-col grow">
                         <div class="flex justify-between items-center mb-2 flex-wrap">
@@ -180,8 +156,12 @@
                         </div>
                     </div>
                 </div>
-
-            @endforeach
+            @empty
+                <div class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center p-6 bg-white rounded-xl shadow-md border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-2">No Opportunities Found</h2>
+                    <p class="text-gray-500">Try adjusting your search or filters.</p>
+                </div>
+            @endforelse
         </div>
 
         <div class="mt-6">
