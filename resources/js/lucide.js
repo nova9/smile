@@ -47,7 +47,12 @@ import {
     Star,
     UserPlus,
     Navigation,
-    FileClock
+    FileClock,
+    CalendarDays,
+    Info,
+    Crosshair,
+    Loader,
+    RefreshCw
 } from 'lucide';
 
 function registerIcons() {
@@ -100,8 +105,12 @@ function registerIcons() {
             Star,
             UserPlus,
             Navigation,
-            FileClock
-
+            FileClock,
+            CalendarDays,
+            Info,
+            Crosshair,
+            Loader,
+            RefreshCw
         }
     });
 }

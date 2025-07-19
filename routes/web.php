@@ -6,6 +6,7 @@ Route::get('/', \App\Livewire\Welcome::class)->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
+    Route::get('/profile', \App\Http\Controllers\ProfileController::class)->name('profile');
     Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 });
 
