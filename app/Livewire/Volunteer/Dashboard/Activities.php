@@ -13,7 +13,7 @@ class Activities extends Component
     public $badges;
     public function mount()
     {
-        $this->activities = auth()->user()->participatingEvents;
+        $this->activities = auth()->user()->participatingEvents()->wherePivot('starts_at','!=',null)->get();
         //pivottable=event_user
         $this->certificates = auth()->user()->participatingEvents()->wherePivot('ends_at','!=', null)->get();
 

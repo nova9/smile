@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Livewire;
-
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
