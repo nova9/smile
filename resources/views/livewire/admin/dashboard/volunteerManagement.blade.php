@@ -22,86 +22,87 @@
         ]
     ]" />
 
-    <label class="input">
-        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-            </g>
-        </svg>
-        <input type="search" class="grow" placeholder="Search" />
+    <div class="px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Search & Filters -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div class="flex gap-2">
+                <input id="volSearch" type="text" placeholder="Search volunteers..." class="input input-bordered w-full md:w-64" />
+                <select id="volStatusFilter" class="select select-bordered">
+                    <option value="">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Suspended">Suspended</option>
+                </select>
+            </div>
+        </div>
+        <div class="overflow-x-auto mt-8">
+            <table id="volTable" class="min-w-full bg-white rounded-3xl shadow-xl">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">Id</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Name</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Email</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Status</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Hours</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Badges</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @foreach([
+                            [
+                                'id' => '1',
+                                'name' => 'John Perera',
+                                'email' => 'johnperera20@email.com',
+                                'status' => ['class' => 'badge-success', 'text' => 'Active'],
+                                'hours' => '54',
+                                'badges' => '3',
+                                'actions' => [
+                                    ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
 
-    </label>
+                                    ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
+                                ]
+                            ],
+                            [
+                                'id' => '2',
+                                'name' => 'Jane Fernando',
+                                'email' => 'janefdo12@email.com',
+                                'status' => ['class' => 'badge-warning', 'text' => 'Suspended'],
+                                'applications' => '5',
+                                'hours' => '22',
+                                'badges' => '1',
+                                'actions' => [
+                                    ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
 
-
-    <div class="overflow-x-auto mt-8">
-        <table class="min-w-full bg-white rounded-3xl shadow-xl">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">Id</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Name</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Email</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Status</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Hours</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Badges</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-                @foreach([
-                        [
-                            'id' => '1',
-                            'name' => 'John Perera',
-                            'email' => 'johnperera20@email.com',
-                            'status' => ['class' => 'badge-success', 'text' => 'Active'],
-                            'hours' => '54',
-                            'badges' => '3',
-                            'actions' => [
-                                ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
-
-                                ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
+                                    ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
+                                ]
                             ]
-                        ],
-                        [
-                            'id' => '2',
-                            'name' => 'Jane Fernando',
-                            'email' => 'janefdo12@email.com',
-                            'status' => ['class' => 'badge-warning', 'text' => 'Suspended'],
-                            'applications' => '5',
-                            'hours' => '22',
-                            'badges' => '1',
-                            'actions' => [
-                                ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
 
-                                ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
-                            ]
-                        ]
+                        ] as $vol)
+                                    <tr class="hover:bg-accent/10 transition-all duration-200">
+                                        <td class="px-6 py-4 font-semibold text-gray-900">{{ $vol['id'] }}</td>
+                                        <td class="px-6 py-4 font-bold text-primary">{{ $vol['name'] }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ $vol['email'] }}</td>
+                                        <td class="px-6 py-4">
+                                            <span class="badge {{ $vol['status']['class'] }} px-4 py-2 text-base font-semibold rounded-full">
+                                                {{ $vol['status']['text'] }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-gray-700">{{ $vol['hours'] }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ $vol['badges'] }}</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex flex-wrap gap-2">
+                                                <a href="{{ url('/admin/dashboard/volunteer-details') }}" class="btn btn-neutral font-bold">View</a>
 
-                    ] as $vol)
-                                <tr class="hover:bg-accent/10 transition-all duration-200">
-                                    <td class="px-6 py-4 font-semibold text-gray-900">{{ $vol['id'] }}</td>
-                                    <td class="px-6 py-4 font-bold text-primary">{{ $vol['name'] }}</td>
-                                    <td class="px-6 py-4 text-gray-700">{{ $vol['email'] }}</td>
-                                    <td class="px-6 py-4">
-                                        <span class="badge {{ $vol['status']['class'] }} px-4 py-2 text-base font-semibold rounded-full">
-                                            {{ $vol['status']['text'] }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-700">{{ $vol['hours'] }}</td>
-                                    <td class="px-6 py-4 text-gray-700">{{ $vol['badges'] }}</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex flex-wrap gap-2">
-                                            <a href="{{ url('/admin/dashboard/volunteer-details') }}" class="btn btn-neutral font-bold">View</a>
+                                                <button class="btn btn-outline btn-error font-bold">Delete</button>
+                                                {{-- Add other actions here if needed --}}
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                            <button class="btn btn-outline btn-error font-bold">Delete</button>
-                                            {{-- Add other actions here if needed --}}
-                                        </div>
-                                    </td>
-                                </tr>
-
-                @endforeach
-            </tbody>
-        </table>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Delete Modal  -->
@@ -159,7 +160,20 @@
         <div class="modal-backdrop" onclick="closeDeleteModal()"></div>
     </div>
 
-
-       
+    <script>
+        // Search & Filter logic for Volunteers
+        function filterVolTable() {
+            const search = document.getElementById('volSearch').value.toLowerCase();
+            const status = document.getElementById('volStatusFilter').value;
+            document.querySelectorAll('#volTable tbody tr').forEach(function(row) {
+                let text = row.textContent.toLowerCase();
+                let matchesSearch = text.includes(search);
+                let matchesStatus = !status || (row.querySelector('.badge') && row.querySelector('.badge').textContent.trim() === status);
+                row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+            });
+        }
+        document.getElementById('volSearch').addEventListener('input', filterVolTable);
+        document.getElementById('volStatusFilter').addEventListener('change', filterVolTable);
+    </script>
 </x-admin.dashboard-layout>
 

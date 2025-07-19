@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContractController;
+
+Route::post('/contracts/{id}/upload', [ContractController::class, 'uploadDocument'])->name('contracts.upload');
+
 
 Route::get('/', \App\Livewire\Welcome::class)->name('home');
 
