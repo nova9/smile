@@ -40,9 +40,9 @@
 
                         <!-- Max Participants -->
                         <div>
-                            <label for="max_participants" class="block text-sm font-medium text-gray-700 mb-2">Maximum Participants</label>
-                            <input wire:model="max_participants" type="number" id="max_participants" class="input input-bordered w-full" placeholder="e.g., 50" min="1">
-                            @error('max_participants') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                            <label for="maximum_participants" class="block text-sm font-medium text-gray-700 mb-2">Maximum Participants</label>
+                            <input wire:model="maximum_participants" type="number" id="maximum_participants" class="input input-bordered w-full" placeholder="e.g., 50" min="1">
+                            @error('maximum_participants') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <!-- Description -->
@@ -51,9 +51,70 @@
                             <textarea wire:model="description" id="description" rows="4" class="textarea textarea-bordered w-full @error('description') textarea-error @enderror" placeholder="Describe the event, activities, and what volunteers will be doing..."></textarea>
                             @error('description') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
+
+                        <!-- Tags -->
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+
+                            <!-- Selected Tags Display -->
+                            @if(count($tags) > 0)
+                                <div class="flex flex-wrap gap-2 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                    @foreach($tags as $index => $tag)
+                                        <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary rounded-full">
+                                            {{ $tag }}
+                                            <button type="button" wire:click="removeTag({{ $index }})" class="ml-2 text-white hover:cursor-pointer">
+                                                <i data-lucide="x" class="w-3 h-3 hover:cursor-pointer"></i>
+                                            </button>
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            <!-- Add New Tag Input -->
+                            <div class="flex gap-2 mb-3">
+                                <input
+                                    wire:model="newTag"
+                                    wire:keydown.enter.prevent="addTag"
+                                    type="text"
+                                    class="input input-bordered flex-1"
+                                    placeholder="Type a tag name and press Enter"
+                                >
+                                <button type="button" wire:click="addTag" class="btn btn-primary">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                    Add
+                                </button>
+                            </div>
+
+{{--                            @error('tags') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror--}}
+
+
+                            <!-- Existing Tags (if any) -->
+                            @if($availableTags && count($availableTags) > 0)
+                                <div class="mt-3">
+                                    <p class="text-xs text-gray-600 mb-2">Or choose from existing tags:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach($availableTags as $availableTag)
+                                            @if(!in_array($availableTag->name, $tags))
+                                                <button
+                                                    type="button"
+                                                    wire:click="addExistingTag('{{ $availableTag->name }}')"
+                                                    class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+                                                >
+                                                    <i data-lucide="plus" class="w-3 h-3 mr-1"></i>
+                                                    {{ $availableTag->name }}
+                                                </button>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+
+                            <p class="text-xs text-gray-500 mt-2">Tags help volunteers find events that match their interests</p>
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- Date & Time Card -->
             <div class="card bg-white shadow-md">
@@ -83,24 +144,26 @@
 
             <!-- Location Card -->
             <div class="card bg-white shadow-md">
+
                 <div class="card-body">
                     <h2 class="card-title text-xl mb-4 flex items-center">
                         <i data-lucide="map-pin" class="size-5 mr-2 text-primary"></i>
                         Location Details
                     </h2>
 
+
+
                     <!-- Map Location Picker -->
-                    <div class="mb-6">
+
+                    <div class="mb-6" wire:ignore>
                         <div class="border border-gray-300 rounded-lg overflow-hidden">
                             <div id="map" class="w-full h-96 bg-gray-100 relative">
                                 <!-- Map will be initialized here -->
                                 <div class="absolute inset-0 flex items-center justify-center">
 {{--                                    loading state--}}
                                     <div class="flex items-center gap-2">
-                                        <button
-                                            type="button"
-                                            onclick="initializeMap()"
-                                            class="btn btn-sm bg-primary"
+                                        <button class="btn btn-sm btn-primary" onclick="initializeMap()"
+                                                type="button"
                                         >
                                             <i data-lucide="refresh-cw" class="size-4"></i>
                                             <span class="ml-1">Reload Map</span>
@@ -140,9 +203,9 @@
                                 </div>
                             </div>
 
-                            <div id="no-location" class="flex items-center justify-center py-6 text-gray-500">
+                            <div id="no-location" class="flex items-center justify-center text-gray-500">
                                 <div class="text-center">
-                                    <i data-lucide="map" class="size-8 mx-auto mb-2 text-gray-300"></i>
+                                    <i data-lucide="map" class="size-8 mx-auto mb-2 text-primary"></i>
                                     <p class="text-sm">Click on the map to select a location</p>
                                 </div>
                             </div>
@@ -168,87 +231,26 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Skills Required -->
-                        <div>
-                            <label for="skills_required" class="block text-sm font-medium text-gray-700 mb-2">Skills Required</label>
-                            <textarea wire:model="skills_required" id="skills_required" rows="3" class="textarea textarea-bordered w-full" placeholder="List any specific skills, experience, or qualifications needed..."></textarea>
-                        </div>
+                        <div class="md:col-span-2">
+                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Skills Required</label>
+                            <textarea wire:model="skills" id="skills" rows="3" class="textarea textarea-bordered w-full" placeholder="List any specific skills, experience, or qualifications needed..."></textarea>
+                            @error('skills') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
 
-                        <!-- What to Bring -->
-                        <div>
-                            <label for="what_to_bring" class="block text-sm font-medium text-gray-700 mb-2">What Volunteers Should Bring</label>
-                            <textarea wire:model="what_to_bring" id="what_to_bring" rows="3" class="textarea textarea-bordered w-full" placeholder="e.g., comfortable clothing, water bottle, gloves..."></textarea>
                         </div>
 
                         <!-- Age Requirements -->
                         <div>
-                            <label for="min_age" class="block text-sm font-medium text-gray-700 mb-2">Minimum Age</label>
-                            <select wire:model="min_age" id="min_age" class="select select-bordered w-full">
-                                <option value="">No age restriction</option>
-                                <option value="13">13+</option>
-                                <option value="16">16+</option>
-                                <option value="18">18+</option>
-                                <option value="21">21+</option>
-                            </select>
-                        </div>
-
-                        <!-- Physical Requirements -->
-                        <div>
-                            <label for="physical_requirements" class="block text-sm font-medium text-gray-700 mb-2">Physical Requirements</label>
-                            <select wire:model="physical_requirements" id="physical_requirements" class="select select-bordered w-full">
-                                <option value="none">No physical requirements</option>
-                                <option value="light">Light physical activity</option>
-                                <option value="moderate">Moderate physical activity</option>
-                                <option value="heavy">Heavy physical activity</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact & Additional Info Card -->
-            <div class="card bg-white shadow-md">
-                <div class="card-body">
-                    <h2 class="card-title text-xl mb-4 flex items-center">
-                        <i data-lucide="phone" class="size-5 mr-2 text-primary"></i>
-                        Contact & Additional Information
-                    </h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Contact Person -->
-                        <div>
-                            <label for="contact_person" class="block text-sm font-medium text-gray-700 mb-2">Contact Person</label>
-                            <input wire:model="contact_person" type="text" id="contact_person" class="input input-bordered w-full" placeholder="Name of contact person">
-                        </div>
-
-                        <!-- Contact Phone -->
-                        <div>
-                            <label for="contact_phone" class="block text-sm font-medium text-gray-700 mb-2">Contact Phone</label>
-                            <input wire:model="contact_phone" type="tel" id="contact_phone" class="input input-bordered w-full" placeholder="+94 77 123 4567">
-                        </div>
-
-                        <!-- Contact Email -->
-                        <div>
-                            <label for="contact_email" class="block text-sm font-medium text-gray-700 mb-2">Contact Email</label>
-                            <input wire:model="contact_email" type="email" id="contact_email" class="input input-bordered w-full" placeholder="contact@organization.com">
-                        </div>
-
-                        <!-- Registration Deadline -->
-                        <div>
-                            <label for="registration_deadline" class="block text-sm font-medium text-gray-700 mb-2">Registration Deadline</label>
-                            <input wire:model="registration_deadline" type="date" id="registration_deadline" class="input input-bordered w-full">
-                        </div>
-
-                        <!-- Tags -->
-                        <div class="md:col-span-2">
-                            <label for="tags" class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
-                            <input wire:model="tags" type="text" id="tags" class="input input-bordered w-full" placeholder="e.g., community, environment, youth (comma separated)">
-                            <p class="text-xs text-gray-500 mt-1">Separate multiple tags with commas</p>
+                            <label for="minimum_age" class="block text-sm font-medium text-gray-700 mb-2">Minimum Age</label>
+                            <input wire:model="minimum_age" type="number" id="minimum_age" class="input input-bordered w-full" placeholder="e.g., 13" min="13">
+                            @error('minimum_age') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <!-- Additional Notes -->
                         <div class="md:col-span-2">
-                            <label for="additional_notes" class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
-                            <textarea wire:model="additional_notes" id="additional_notes" rows="3" class="textarea textarea-bordered w-full" placeholder="Any other important information for volunteers..."></textarea>
+                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
+                            <textarea wire:model="notes" id="notes" rows="3" class="textarea textarea-bordered w-full" placeholder="Any other important information for volunteers..."></textarea>
+                            @error('notes') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+
                         </div>
                     </div>
                 </div>
@@ -261,11 +263,7 @@
                     Cancel
                 </a>
 
-                <div class="flex gap-3">
-                    <button type="button" wire:click="saveDraft" class="btn btn-outline">
-                        <i data-lucide="save" class="size-4 mr-2"></i>
-                        Save as Draft
-                    </button>
+                <div>
                     <button type="submit" class="btn btn-primary">
                         <i data-lucide="calendar-plus" class="size-4 mr-2"></i>
                         Create Event
@@ -275,89 +273,95 @@
         </form>
     </div>
 
-    <script>
-        let map;
-        let marker;
-
-        function initializeMap() {
-            // Initialize the map
-            const mapOptions = {
-                center: { lat: 7.8731, lng: 80.7718 },
-                zoom: 7,
-                mapId: "198a0e442491558328ee7d20"
-            };
-
-            map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-            // Add a click listener to the map
-            map.addListener("click", (event) => {
-                const pos = {
-                    lat: event.latLng.lat(),
-                    lng: event.latLng.lng()
-                };
-                placeMarker(pos);
-            });
-        }
-
-        function placeMarker(pos) {
-            // If a marker already exists, remove it
-            if (marker) {
-                marker.setMap(null);
-            }
-
-            console.log(google)
-
-            // Create a new marker
-            marker = new google.maps.marker.AdvancedMarkerElement({
-                map,
-                position: pos,
-                title: "Hello, Sri Lanka!"
-            });
-
-            // Set the latitude and longitude input values
-            document.getElementById("latitude").value = pos.lat;
-            document.getElementById("longitude").value = pos.lng;
-
-            // Update the coordinates display
-            document.getElementById("lat-display").innerText = `Lat: ${pos.lat.toFixed(6)}`;
-            document.getElementById("lng-display").innerText = `Lng: ${pos.lng.toFixed(6)}`;
-            document.getElementById("coordinates-display").classList.remove("hidden");
-            document.getElementById("no-location").classList.add("hidden");
-        }
-
-        function getCurrentLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        console.log("Latitude:", latitude);
-                        console.log("Longitude:", longitude);
-                        // Set the map center to the current location
-                        const pos = {
-                            lat: latitude,
-                            lng: longitude
-                        }
-                        map.setCenter(pos);
-                        placeMarker(pos)
-                    },
-                    function (error) {
-                        console.error("Error getting location:", error.message);
-                    }
-                );
-            } else {
-                console.log("Geolocation is not supported by this browser.");
-            }
-        }
-
-        // Load the Google Maps script
-        function loadScript() {
-            const script = document.createElement("script");
-            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
-            script.async = true;
-            document.head.appendChild(script);
-        }
-
-        window.addEventListener("load", loadScript);
-    </script>
 </x-requester.dashboard-layout>
+
+@assets
+<script>
+    let map;
+    let marker;
+
+    function initializeMap() {
+        // Initialize the map
+        const mapOptions = {
+            center: { lat: 7.8731, lng: 80.7718 },
+            zoom: 7,
+            mapId: "198a0e442491558328ee7d20"
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        // Add a click listener to the map
+        map.addListener("click", (event) => {
+            const pos = {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng()
+            };
+            placeMarker(pos);
+        });
+    }
+
+    function placeMarker(pos) {
+        // If a marker already exists, remove it
+        if (marker) {
+            marker.setMap(null);
+        }
+
+        console.log(google)
+
+        // Create a new marker
+        marker = new google.maps.marker.AdvancedMarkerElement({
+            map,
+            position: pos,
+            title: "Hello, Sri Lanka!"
+        });
+
+        // Set the latitude and longitude input values
+        document.getElementById("latitude").value = pos.lat;
+        document.getElementById("longitude").value = pos.lng;
+
+        Livewire.dispatch('coordinates', pos);
+
+        // Update the coordinates display
+        document.getElementById("lat-display").innerText = `Lat: ${pos.lat.toFixed(6)}`;
+        document.getElementById("lng-display").innerText = `Lng: ${pos.lng.toFixed(6)}`;
+        document.getElementById("coordinates-display").classList.remove("hidden");
+        document.getElementById("no-location").classList.add("hidden");
+    }
+
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    console.log("Latitude:", latitude);
+                    console.log("Longitude:", longitude);
+                    // Set the map center to the current location
+                    const pos = {
+                        lat: latitude,
+                        lng: longitude
+                    }
+                    map.setCenter(pos);
+                    placeMarker(pos)
+                },
+                function (error) {
+                    console.error("Error getting location:", error.message);
+                }
+            );
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    }
+
+    // Load the Google Maps script
+    function loadScript() {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
+        script.async = true;
+        document.head.appendChild(script);
+    }
+
+    window.addEventListener("load", loadScript);
+</script>
+
+@endassets
