@@ -62,8 +62,9 @@
                                 <td class="px-6 py-4">2025-06-10</td>
                                 <td class="px-6 py-4">5</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <a href="http://127.0.0.1:8000/admin/dashboard/organization-details"
+                                    <a href="{{ url('/admin/dashboard/organization-details') }}"
                                         class="btn btn-neutral font-bold">View</a>
+
 
                                 </td>
                             </tr>
@@ -145,7 +146,7 @@
             </div>
 
 
-            </div>
         </div>
+    </div>
     </div>
 </x-admin.dashboard-layout>
