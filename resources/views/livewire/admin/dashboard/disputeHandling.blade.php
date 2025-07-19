@@ -34,7 +34,6 @@
                                     <button class="btn btn-outline btn-success font-bold resolve-btn"
                                         data-report-id="RPT-001" data-user="john fernando" data-type="Volunteer"
                                         data-reason="Inappropriate behavior" data-date="2024-06-20">Resolve</button>
-                                    <button class="btn btn-outline btn-error font-bold">Dismiss</button>
                                 </td>
                             </tr>
                             <tr>
@@ -49,7 +48,6 @@
                                         data-report-id="RPT-002" data-user="GreenHope Foundation"
                                         data-type="Organization" data-reason="Spam activity"
                                         data-date="2024-06-19">Resolve</button>
-                                    <button class="btn btn-outline btn-error font-bold">Dismiss</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -138,14 +136,16 @@
             <div class="mb-4">
                 <h4 class="font-semibold text-base-content mb-2">Profile & Status</h4>
                 <div class="bg-base-200 p-4 rounded-lg">
-                    <p class="text-sm"><span class="font-medium">Status:</span> Active</p>
-                    <p class="text-sm"><span class="font-medium">Prior Reports:</span> 1</p>
+                    <p class="text-sm"><span class="font-medium">Total volunteer hours:</span> 50</p>
+                    <p class="text-sm"><span class="font-medium">Badges:</span> 1</p>
+                    <p class="text-sm"><span class="font-medium">Completed work :</span> Community development project</p>
                 </div>
             </div>
             <!-- History -->
             <div class="mb-4">
                 <h4 class="font-semibold text-base-content mb-2">History</h4>
                 <div class="bg-base-200 p-4 rounded-lg">
+                    <p class="text-sm">Total number of reports : 1</p>
                     <p class="text-sm">Previous report: Late attendance (2024-05-10)</p>
                 </div>
             </div>
@@ -177,15 +177,19 @@
                     document.getElementById('modalReason').textContent = btn.dataset.reason;
                     document.getElementById('modalDate').textContent = btn.dataset.date;
                     document.getElementById('adminNotes').value = '';
-                    document.getElementById('resolveModal').classList.remove('hidden');
-                    document.getElementById('resolveModal').classList.add('modal-open');
+                    // Always reset modal classes before showing
+                    const modal = document.getElementById('resolveModal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('modal-open');
                 });
             });
         });
 
         function closeResolveModal() {
-            document.getElementById('resolveModal').classList.add('hidden');
-            document.getElementById('resolveModal').classList.remove('modal-open');
+            const modal = document.getElementById('resolveModal');
+            // Always reset modal classes before hiding
+            modal.classList.add('hidden');
+            modal.classList.remove('modal-open');
         }
         function suspendAccount() {
             alert('Account will be suspended.');
@@ -201,4 +205,3 @@
         }
     </script>
 </x-admin.dashboard-layout>
-
