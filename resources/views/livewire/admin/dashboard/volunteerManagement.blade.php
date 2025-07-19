@@ -7,12 +7,7 @@
             'value' => '2,350',
             'description' => 'Active as of today'
         ],
-        [
-            'icon' => 'files',
-            'title' => 'Applications This Month',
-            'value' => '480',
-            'description' => '↗︎ 8% from last month'
-        ],
+       
         [
             'icon' => 'award',
             'title' => 'Badges Awarded',
