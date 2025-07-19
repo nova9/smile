@@ -24,9 +24,9 @@
             'description' => 'All registered users'
         ],
         [
-            'icon' => 'user-check',
-            'title' => 'Active Users',
-            'value' => '1,850',
+            'icon' => 'ban',
+            'title' => 'suspended Users',
+            'value' => '10',
             'description' => 'Last 30 days'
         ],
         [
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <!-- Critical Actions Required & Recent Activity -->
+    <!-- Critical Actions Required & Recent Contract -->
     <div class="mb-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Pending Actions Table -->
@@ -76,7 +76,7 @@
     ]" />
             </div>
 
-            <!-- Recent Activity -->
+            <!-- Recent Contract -->
             <div class="bg-white/90 rounded-3xl shadow-xl p-8">
                 <h3
                     class="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
