@@ -8,8 +8,25 @@
                 <span class="font-semibold">Account Reports</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
+                <!-- Search & Filters -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                    <div class="flex gap-2">
+                        <input id="reportSearch" type="text" placeholder="Search reports..."
+                            class="input input-bordered w-full md:w-64" />
+                        <select id="reportTypeFilter" class="select select-bordered">
+                            <option value="">All Types</option>
+                            <option value="Volunteer">Volunteer</option>
+                            <option value="Organization">Organization</option>
+                        </select>
+                        <select id="reportStatusFilter" class="select select-bordered">
+                            <option value="">All Status</option>
+                            <option value="Open">Open</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white rounded-3xl shadow-xl">
+                    <table id="reportsTable" class="min-w-full bg-white rounded-3xl shadow-xl">
                         <thead>
                             <tr class="bg-gray-100">
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">Report
@@ -30,8 +47,9 @@
                                 <td class="px-6 py-4">Inappropriate behavior</td>
                                 <td class="px-6 py-4">2024-06-20</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <button class="btn btn-neutral font-bold">View</button>
-                                    <button class="btn btn-outline btn-success font-bold resolve-btn"
+                                    <a href="{{ url('/admin/dashboard/volunteer-details') }}"
+                                        class="btn btn-neutral font-bold">View</a> <button
+                                        class="btn btn-outline btn-success font-bold resolve-btn"
                                         data-report-id="RPT-001" data-user="john fernando" data-type="Volunteer"
                                         data-reason="Inappropriate behavior" data-date="2024-06-20">Resolve</button>
                                 </td>
@@ -43,8 +61,9 @@
                                 <td class="px-6 py-4">Spam activity</td>
                                 <td class="px-6 py-4">2024-06-19</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <button class="btn btn-neutral font-bold">View</button>
-                                    <button class="btn btn-outline btn-success font-bold resolve-btn"
+                                    <a href="{{ url('/admin/dashboard/organization-details') }}"
+                                        class="btn btn-neutral font-bold">View</a> <button
+                                        class="btn btn-outline btn-success font-bold resolve-btn"
                                         data-report-id="RPT-002" data-user="GreenHope Foundation"
                                         data-type="Organization" data-reason="Spam activity"
                                         data-date="2024-06-19">Resolve</button>
@@ -62,8 +81,20 @@
                 <span class="font-semibold">Reactivation Requests</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
+                <!-- Search & Filters -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                    <div class="flex gap-2">
+                        <input id="requestSearch" type="text" placeholder="Search requests..."
+                            class="input input-bordered w-full md:w-64" />
+                        <select id="requestTypeFilter" class="select select-bordered">
+                            <option value="">All Types</option>
+                            <option value="Volunteer">Volunteer</option>
+                            <option value="Organization">Organization</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white rounded-3xl shadow-xl">
+                    <table id="requestsTable" class="min-w-full bg-white rounded-3xl shadow-xl">
                         <thead>
                             <tr class="bg-gray-100">
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">
@@ -84,8 +115,9 @@
                                 <td class="px-6 py-4">Appeal suspension</td>
                                 <td class="px-6 py-4">2024-06-18</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <button class="btn btn-neutral font-bold">View</button>
-                                    <button class="btn btn-outline btn-success font-bold">Approve</button>
+                                    <a href="{{ url('/admin/dashboard/volunteer-details') }}"
+                                        class="btn btn-neutral font-bold">View</a> <button
+                                        class="btn btn-outline btn-success font-bold">Approve</button>
                                     <button class="btn btn-outline btn-error font-bold">Reject</button>
                                 </td>
                             </tr>
@@ -138,7 +170,8 @@
                 <div class="bg-base-200 p-4 rounded-lg">
                     <p class="text-sm"><span class="font-medium">Total volunteer hours:</span> 50</p>
                     <p class="text-sm"><span class="font-medium">Badges:</span> 1</p>
-                    <p class="text-sm"><span class="font-medium">Completed work :</span> Community development project</p>
+                    <p class="text-sm"><span class="font-medium">Completed work :</span> Community development project
+                    </p>
                 </div>
             </div>
             <!-- History -->
@@ -168,26 +201,23 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.resolve-btn').forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    document.getElementById('modalReportId').textContent = btn.dataset.reportId;
-                    document.getElementById('modalUser').textContent = btn.dataset.user;
-                    document.getElementById('modalType').textContent = btn.dataset.type;
-                    document.getElementById('modalReason').textContent = btn.dataset.reason;
-                    document.getElementById('modalDate').textContent = btn.dataset.date;
-                    document.getElementById('adminNotes').value = '';
-                    // Always reset modal classes before showing
-                    const modal = document.getElementById('resolveModal');
-                    modal.classList.remove('hidden');
-                    modal.classList.add('modal-open');
-                });
-            });
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('resolve-btn')) {
+                const btn = e.target;
+                document.getElementById('modalReportId').textContent = btn.dataset.reportId;
+                document.getElementById('modalUser').textContent = btn.dataset.user;
+                document.getElementById('modalType').textContent = btn.dataset.type;
+                document.getElementById('modalReason').textContent = btn.dataset.reason;
+                document.getElementById('modalDate').textContent = btn.dataset.date;
+                document.getElementById('adminNotes').value = '';
+                const modal = document.getElementById('resolveModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('modal-open');
+            }
         });
 
         function closeResolveModal() {
             const modal = document.getElementById('resolveModal');
-            // Always reset modal classes before hiding
             modal.classList.add('hidden');
             modal.classList.remove('modal-open');
         }
@@ -203,5 +233,36 @@
             alert('Report dismissed.');
             closeResolveModal();
         }
+
+        // Search & Filter logic for Account Reports
+        function filterReportsTable() {
+            const search = document.getElementById('reportSearch').value.toLowerCase();
+            const type = document.getElementById('reportTypeFilter').value;
+            const status = document.getElementById('reportStatusFilter').value;
+            document.querySelectorAll('#reportsTable tbody tr').forEach(function (row) {
+                let text = row.textContent.toLowerCase();
+                let matchesSearch = text.includes(search);
+                let matchesType = !type || row.querySelector('td:nth-child(3)').textContent === type;
+                let matchesStatus = !status || (row.querySelector('span[data-status]') && row.querySelector('span[data-status]').textContent === status);
+                row.style.display = (matchesSearch && matchesType && matchesStatus) ? '' : 'none';
+            });
+        }
+        document.getElementById('reportSearch').addEventListener('input', filterReportsTable);
+        document.getElementById('reportTypeFilter').addEventListener('change', filterReportsTable);
+        document.getElementById('reportStatusFilter').addEventListener('change', filterReportsTable);
+
+        // Search & Filter logic for Reactivation Requests
+        function filterRequestsTable() {
+            const search = document.getElementById('requestSearch').value.toLowerCase();
+            const type = document.getElementById('requestTypeFilter').value;
+            document.querySelectorAll('#requestsTable tbody tr').forEach(function (row) {
+                let text = row.textContent.toLowerCase();
+                let matchesSearch = text.includes(search);
+                let matchesType = !type || row.querySelector('td:nth-child(3)').textContent === type;
+                row.style.display = (matchesSearch && matchesType) ? '' : 'none';
+            });
+        }
+        document.getElementById('requestSearch').addEventListener('input', filterRequestsTable);
+        document.getElementById('requestTypeFilter').addEventListener('change', filterRequestsTable);
     </script>
 </x-admin.dashboard-layout>
