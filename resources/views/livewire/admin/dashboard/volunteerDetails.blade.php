@@ -7,7 +7,7 @@
                     <div>
                         <h1
                             class="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                            John Doe</h1>
+                            John Perera</h1>
                         <p class="text-gray-600 font-medium">ID: VOL-001</p>
                         <p class="text-gray-600 font-medium">Joined: May 15, 2025</p>
                     </div>
@@ -40,18 +40,16 @@
                             <h2
                                 class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                                 Volunteer Details</h2>
-                            <button class="btn btn-outline btn-accent font-semibold">
-                                <i class="fas fa-edit mr-2"></i>Edit
-                            </button>
+                           
                         </div>
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
-                                <p class="text-gray-900 font-medium">John Doe</p>
+                                <p class="text-gray-900 font-medium">John Perera</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
-                                <p class="text-gray-900 font-medium">john.doe@email.com</p>
+                                <p class="text-gray-900 font-medium">johnPerera@email.com</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Phone</label>
@@ -70,29 +68,13 @@
                     </div>
                     <!-- Verification Status -->
                     <div class="bg-white/90 rounded-2xl shadow-xl p-8">
-                        <h2
-                            class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
-                            Verification Status</h2>
+                       
                         <div class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-semibold text-gray-700">ID Verified</span>
-                                <span
-                                    class="px-3 py-1 bg-green-100 text-green-800 text-sm font-bold rounded-full shadow">Complete</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-semibold text-gray-700">Background Check</span>
-                                <span
-                                    class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-bold rounded-full shadow">In
-                                    Progress</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-semibold text-gray-700">References</span>
-                                <span
-                                    class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-bold rounded-full shadow">Pending</span>
-                            </div>
+                       
+                           
                         </div>
                         <div class="mt-6">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Rejection Reason (if
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Suspension Reason (if
                                 applicable)</label>
                             <textarea
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
@@ -100,7 +82,7 @@
                         </div>
                         <div class="mt-6 flex gap-3">
                             <button class="btn btn-neutral font-bold w-full sm:w-auto">Approve</button>
-                            <button class="btn btn-outline btn-error font-bold w-full sm:w-auto">Reject</button>
+                            <button class="btn btn-outline btn-error font-bold w-full sm:w-auto">Suspend</button>
                         </div>
                     </div>
                 </div>
