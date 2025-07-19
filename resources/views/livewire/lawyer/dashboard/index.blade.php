@@ -1,3 +1,4 @@
 <x-lawyer.dashboard-layout>
-    lawyer dashboard
+    lawyer dashboard boooo
+
 </x-lawyer.dashboard-layout>
