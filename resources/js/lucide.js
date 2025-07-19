@@ -47,7 +47,10 @@ import {
     Star,
     UserPlus,
     Navigation,
-    FileClock
+    FileClock,
+    Mail,
+    Contact,
+    BookOpenText
 } from 'lucide';
 
 function registerIcons() {
@@ -100,7 +103,10 @@ function registerIcons() {
             Star,
             UserPlus,
             Navigation,
-            FileClock
+            FileClock,
+            Mail,
+            Contact,
+            BookOpenText
 
         }
     });
