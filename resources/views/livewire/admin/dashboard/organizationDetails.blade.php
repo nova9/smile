@@ -20,7 +20,6 @@
                     <div class="flex gap-2 mt-2 sm:mt-0">
                         <button class="btn btn-neutral font-bold">Approve</button>
                         <button class="btn btn-outline btn-error font-bold">Reject</button>
-                        <button class="btn btn-outline btn-warning font-bold">Suspend</button>
                     </div>
                 </div>
             </div>
@@ -233,7 +232,7 @@
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
                 <h2
                     class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
-                    Reports for Volunteer: John Fernando
+                    Reports for organization : GreenHope Foundation
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Report Card 1 -->
@@ -243,13 +242,10 @@
                             <span
                                 class="px-3 py-1 bg-red-100 text-red-800 text-xs font-bold rounded-full shadow">Open</span>
                         </div>
-                        <div>
-                            <span class="font-medium text-gray-700">Type:</span>
-                            <span class="text-gray-900">Volunteer</span>
-                        </div>
+                        
                         <div>
                             <span class="font-medium text-gray-700">Reason:</span>
-                            <span class="text-gray-900">Inappropriate behavior</span>
+                            <span class="text-gray-900">Financial misconduct</span>
                         </div>
                         <div>
                             <span class="font-medium text-gray-700">Date:</span>
@@ -257,10 +253,9 @@
                         </div>
                         <div>
                             <span class="font-medium text-gray-700">Details:</span>
-                            <span class="text-gray-900">Reported for using offensive language during event.</span>
+                            <span class="text-gray-900">Did not disclose how they handled fimaces</span>
                         </div>
                         <div class="flex gap-2 mt-2">
-                            <button class="btn btn-neutral font-bold">View</button>
                             <button class="btn btn-outline btn-success font-bold">Resolve</button>
                             <button class="btn btn-outline btn-error font-bold">Dismiss</button>
                         </div>
@@ -272,10 +267,7 @@
                             <span
                                 class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full shadow">Closed</span>
                         </div>
-                        <div>
-                            <span class="font-medium text-gray-700">Type:</span>
-                            <span class="text-gray-900">Volunteer</span>
-                        </div>
+                       
                         <div>
                             <span class="font-medium text-gray-700">Reason:</span>
                             <span class="text-gray-900">Late attendance</span>
@@ -286,15 +278,13 @@
                         </div>
                         <div>
                             <span class="font-medium text-gray-700">Details:</span>
-                            <span class="text-gray-900">Arrived late to scheduled activity.</span>
+                            <span class="text-gray-900">Did not start thge event on time , people had to wait for hours</span>
                         </div>
-                        <div class="flex gap-2 mt-2">
-                            <button class="btn btn-neutral font-bold">View</button>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="mt-8 flex justify-end">
-                    <button class="btn btn-error font-bold">Suspend Volunteer</button>
+                    <button class="btn btn-error font-bold">Suspend organization</button>
                 </div>
             </div>
         </div>
