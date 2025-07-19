@@ -24,9 +24,9 @@
             'description' => 'All registered users'
         ],
         [
-            'icon' => 'user-check',
-            'title' => 'Active Users',
-            'value' => '1,850',
+            'icon' => 'ban',
+            'title' => 'suspended Users',
+            'value' => '10',
             'description' => 'Last 30 days'
         ],
         [
