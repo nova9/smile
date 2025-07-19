@@ -48,11 +48,15 @@ import {
     UserPlus,
     Navigation,
     FileClock,
+    Mail,
+    Contact,
+    BookOpenText,
     CalendarDays,
     Info,
     Crosshair,
     Loader,
     RefreshCw
+
 } from 'lucide';
 
 function registerIcons() {
@@ -106,11 +110,15 @@ function registerIcons() {
             UserPlus,
             Navigation,
             FileClock,
+            Mail,
+            Contact,
+            BookOpenText,
             CalendarDays,
             Info,
             Crosshair,
             Loader,
             RefreshCw
+
         }
     });
 }
