@@ -60,7 +60,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Badge::class);
     }
 
-    public function createdEvents(): HasMany
+    public function organizingEvents(): HasMany
     {
         return $this->hasMany(Event::class);
     }

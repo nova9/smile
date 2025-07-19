@@ -35,15 +35,27 @@ class UserSeeder extends Seeder
 
         $roleRequester = Role::where('name', 'requester')->first();
         User::factory()->count(3)->recycle($roleRequester)->create();
+        User::query()->create([
+            'name' => 'Requester',
+            'email' => 'r@s.com',
+            'password' => 'password',
+            'role_id' => $roleRequester->id
+        ]);
 
         $roleVolunteer = Role::where('name', 'volunteer')->first();
+        User::query()->create([
+            'name' => 'Volunteer',
+            'email' => 'v@s.com',
+            'password' => 'password',
+            'role_id' => $roleVolunteer->id
+        ]);
         $existingBadges = Badge::all();
         User::factory()
             ->count(15)
             ->recycle($roleVolunteer)
             ->has(Event::factory()
                 ->has(Tag::factory()->count(3))
-                ->count(2), 'createdEvents')
+                ->count(2), 'organizingEvents')
             ->create()
             ->each(function (User $user) use ($existingBadges) {
                 $randomBadges = $existingBadges->random(rand(0, $existingBadges->count()));

@@ -3,6 +3,7 @@
 namespace App\Livewire\Requester\Dashboard\MyEvents;
 
 use App\Models\Category;
+use App\Models\Chat;
 use App\Models\Tag;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -58,9 +59,9 @@ class Create extends Component
             'tags' => 'array',
             'starts_at' => 'required|date|after_or_equal:today',
             'ends_at' => 'required|date|after:starts_at',
-            'latitude' => 'numeric',
-            'longitude' => 'numeric',
-            'skills' => 'array',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'skills' => 'required|string|max:500',
             'notes' => 'nullable|string|max:500',
             'minimum_age' => 'integer|min:0|max:120',
         ];
@@ -68,10 +69,13 @@ class Create extends Component
 
     public function save()
     {
-        dd($this->latitude);
         $this->validate();
 
-        $validated = auth()->user()->events()->create([
+        $chat = Chat::query()->create([
+            'is_group' => true,
+        ]);
+
+        $event = auth()->user()->organizingEvents()->create([
             'name' => $this->name,
             'category_id' => $this->category_id,
             'maximum_participants' => $this->maximum_participants,
@@ -82,9 +86,10 @@ class Create extends Component
             'longitude' => $this->longitude,
             'notes' => $this->notes,
             'minimum_age' => $this->minimum_age,
+            'skills' => $this->skills,
+            'chat_id' => $chat->id,
         ]);
 
-        dd($validated);
 
         // create new tags if they don't exist
         $tagIds = [];
@@ -93,8 +98,9 @@ class Create extends Component
             $tagIds[] = $tag->id;
         }
 
+
         if (!empty($this->tags)) {
-            $validated->tags()->sync($tagIds);
+            $event->tags()->sync($tagIds);
         }
 
         return redirect('/requester/dashboard/my-events')
@@ -102,12 +108,10 @@ class Create extends Component
     }
 
     #[On('coordinates')]
-    public function handleNewPost($latitude, $longitude)
+    public function handleNewPost($lat, $lng)
     {
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-
-        dd($latitude, $longitude);
+        $this->latitude = $lat;
+        $this->longitude = $lng;
     }
 
     public function addTag()

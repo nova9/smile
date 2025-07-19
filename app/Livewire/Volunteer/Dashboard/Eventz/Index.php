@@ -25,7 +25,7 @@ class Index extends Component
                 ->when($this->search, function ($query) {
                     $query->where('name', 'like', '%' . $this->search . '%');
                 })
-                ->orderBy('created_at', 'asc')
+                ->orderBy('created_at', 'desc')
                 ->paginate(12)
         ]);
     }
