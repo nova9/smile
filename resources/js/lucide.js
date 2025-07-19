@@ -50,7 +50,13 @@ import {
     FileClock,
     Mail,
     Contact,
-    BookOpenText
+    BookOpenText,
+    CalendarDays,
+    Info,
+    Crosshair,
+    Loader,
+    RefreshCw
+
 } from 'lucide';
 
 function registerIcons() {
@@ -106,7 +112,12 @@ function registerIcons() {
             FileClock,
             Mail,
             Contact,
-            BookOpenText
+            BookOpenText,
+            CalendarDays,
+            Info,
+            Crosshair,
+            Loader,
+            RefreshCw
 
         }
     });

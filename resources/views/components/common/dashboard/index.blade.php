@@ -36,7 +36,7 @@
 
 
                 <div x-show="open"
-                     class="absolute bottom-0 z-500 -right-1 translate-x-full bg-white rounded-box border border-gray-200 shadow-lg w-fit">
+                     class="absolute min-w-56 bottom-0 z-500 -right-1 translate-x-full bg-white rounded-box border border-gray-200 shadow-lg w-fit">
                     <div class="flex items-center py-1 gap-2 m-2">
                         <div class="size-8">
                             <img src="https://picsum.photos/300/300" class="rounded-lg" alt="">
@@ -52,22 +52,9 @@
 
                     <ul class="menu w-full space-y-1">
                         <li>
-                            <a href="/requester/upgrade" class="hover:bg-gray-100">
-                                <i data-lucide="sparkles" class="size-5"></i>
-                                <span class="text-nowrap">Upgrade to Pro</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/volunteer/dashboard/profile" class="hover:bg-gray-100">
+                            <a href="/profile" class="hover:bg-gray-100">
                                 <i data-lucide="circle-user" class="size-5"></i>
                                 <span>Profile</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/requester/setting" class="hover:bg-gray-100">
-                                <i data-lucide="settings"></i>
-                                <span>Settings</span>
                             </a>
                         </li>
                     </ul>
