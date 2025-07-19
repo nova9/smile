@@ -5,8 +5,8 @@
 
     <div class="flex flex-col justify-around">
         <div class="flex flex-col gap-2">
-            <h1 class="text-3xl font-bold text-primary ">{{$title}}</h1>
-            <p class="xl:text-xl lg:text-base text-primary">{{$des}}</p>
+            <h1 class="text-3xl font-bold text-accent ">{{$title}}</h1>
+            <p class="xl:text-xl lg:text-base text-accent">{{$des}}</p>
         </div>
         <div class="flex justify-between">
             <div class="text-base text-gray-500 flex flex-col gap-3 ">
@@ -19,7 +19,7 @@
                     {{$detail2}}
                 </div>
             </div>
-            <x-common.landing.buttons.button1 class="btn-primary w-3xs">
+            <x-common.landing.buttons.button1 class="btn-accent w-3xs">
                 <i data-lucide="mouse-pointer-2"></i>
                 Apply now
             </x-common.landing.buttons.button1>

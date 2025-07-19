@@ -42,12 +42,33 @@ import {
     Ban,
     Tractor,
     Timer,
-
+    Search,
+    MapPin,
+    Star,
+    UserPlus,
+    Navigation,
+    FileClock,
+    Mail,
+    Contact,
+    BookOpenText,
+    CalendarDays,
+    Info,
+    Crosshair,
+    Loader,
+    RefreshCw,
+    UserCheck,
+    ArrowLeft,
+    Map,
+    CalendarPlus,
+    X
 } from 'lucide';
 
-document.addEventListener('livewire:navigated', () => {
+function registerIcons() {
     createIcons({
         icons: {
+            X,
+            CalendarPlus,
+            Map,
             Menu,
             ArrowRight,
             Globe,
@@ -70,6 +91,7 @@ document.addEventListener('livewire:navigated', () => {
             Share,
             SquarePen,
             ImageUp,
+            Search,
             Instagram,
             Linkedin,
             Twitter,
@@ -89,11 +111,35 @@ document.addEventListener('livewire:navigated', () => {
             Ban,
             Tractor,
             Timer,
-            ShieldCheck
-
-
+            ShieldCheck,
+            MapPin,
+            Star,
+            UserPlus,
+            Navigation,
+            FileClock,
+            Mail,
+            Contact,
+            BookOpenText,
+            CalendarDays,
+            Info,
+            Crosshair,
+            Loader,
+            RefreshCw,
+            UserCheck,
+            ArrowLeft
         }
     });
+}
+
+document.addEventListener('livewire:navigated', () => {
+    registerIcons()
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    registerIcons()
 })
 
 
+Livewire.hook('morph.added',  ({ el }) => {
+    registerIcons()
+})

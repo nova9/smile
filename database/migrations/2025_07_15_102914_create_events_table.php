@@ -18,7 +18,15 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Chat::class);
             $table->foreignIdFor(\App\Models\User::class);
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('description');
+            $table->timestamp('starts_at');
+            $table->timestamp('ends_at');
+            $table->integer('maximum_participants');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->text('skills')->nullable();
+            $table->integer('minimum_age');
+            $table->text('notes')->nullable();
         });
     }
 
