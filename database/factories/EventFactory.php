@@ -34,6 +34,9 @@ class EventFactory extends Factory
             'max_participants' => fake()->numberBetween(1, 100),
             'latitude' => fake()->latitude(),
             'longitude' => fake()->longitude(),
+            'skills' => fake()->words(3, true),
+            'minimum_age' => fake()->numberBetween(13, 65),
+            'notes' => fake()->optional()->paragraph(),
         ];
     }
 }

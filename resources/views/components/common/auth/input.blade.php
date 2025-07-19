@@ -10,7 +10,7 @@
 
 <div>
     @if($label)
-        <label for="{{ $name }}" class="block text-sm font-medium text-gray-500">{{ $label }}</label>
+        <label for="{{ $name }}" class="block text-sm font-medium text-gray-700">{{ $label }}</label>
     @endif
 
     <input

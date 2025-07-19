@@ -52,12 +52,20 @@ import {
     Info,
     Crosshair,
     Loader,
-    RefreshCw
+    RefreshCw,
+    UserCheck,
+    ArrowLeft,
+    Map,
+    CalendarPlus,
+    X
 } from 'lucide';
 
 function registerIcons() {
     createIcons({
         icons: {
+            X,
+            CalendarPlus,
+            Map,
             Menu,
             ArrowRight,
             Globe,
@@ -110,7 +118,9 @@ function registerIcons() {
             Info,
             Crosshair,
             Loader,
-            RefreshCw
+            RefreshCw,
+            UserCheck,
+            ArrowLeft
         }
     });
 }
