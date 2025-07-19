@@ -85,6 +85,9 @@
                                 </button>
                             </div>
 
+{{--                            @error('tags') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror--}}
+
+
                             <!-- Existing Tags (if any) -->
                             @if($availableTags && count($availableTags) > 0)
                                 <div class="mt-3">
@@ -151,7 +154,8 @@
 
 
                     <!-- Map Location Picker -->
-                    <div class="mb-6">
+
+                    <div class="mb-6" wire:ignore>
                         <div class="border border-gray-300 rounded-lg overflow-hidden">
                             <div id="map" class="w-full h-96 bg-gray-100 relative">
                                 <!-- Map will be initialized here -->
@@ -230,6 +234,8 @@
                         <div class="md:col-span-2">
                             <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Skills Required</label>
                             <textarea wire:model="skills" id="skills" rows="3" class="textarea textarea-bordered w-full" placeholder="List any specific skills, experience, or qualifications needed..."></textarea>
+                            @error('skills') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+
                         </div>
 
                         <!-- Age Requirements -->
@@ -243,6 +249,8 @@
                         <div class="md:col-span-2">
                             <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
                             <textarea wire:model="notes" id="notes" rows="3" class="textarea textarea-bordered w-full" placeholder="Any other important information for volunteers..."></textarea>
+                            @error('notes') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+
                         </div>
                     </div>
                 </div>
@@ -265,91 +273,95 @@
         </form>
     </div>
 
-    <script>
-        let map;
-        let marker;
-
-        function initializeMap() {
-            // Initialize the map
-            const mapOptions = {
-                center: { lat: 7.8731, lng: 80.7718 },
-                zoom: 7,
-                mapId: "198a0e442491558328ee7d20"
-            };
-
-            map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-            // Add a click listener to the map
-            map.addListener("click", (event) => {
-                const pos = {
-                    lat: event.latLng.lat(),
-                    lng: event.latLng.lng()
-                };
-                placeMarker(pos);
-            });
-        }
-
-        function placeMarker(pos) {
-            // If a marker already exists, remove it
-            if (marker) {
-                marker.setMap(null);
-            }
-
-            console.log(google)
-
-            // Create a new marker
-            marker = new google.maps.marker.AdvancedMarkerElement({
-                map,
-                position: pos,
-                title: "Hello, Sri Lanka!"
-            });
-
-            // Set the latitude and longitude input values
-            document.getElementById("latitude").value = pos.lat;
-            document.getElementById("longitude").value = pos.lng;
-
-            $wire.dispatch('coordinates', pos);
-
-            // Update the coordinates display
-            document.getElementById("lat-display").innerText = `Lat: ${pos.lat.toFixed(6)}`;
-            document.getElementById("lng-display").innerText = `Lng: ${pos.lng.toFixed(6)}`;
-            document.getElementById("coordinates-display").classList.remove("hidden");
-            document.getElementById("no-location").classList.add("hidden");
-        }
-
-        function getCurrentLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        console.log("Latitude:", latitude);
-                        console.log("Longitude:", longitude);
-                        // Set the map center to the current location
-                        const pos = {
-                            lat: latitude,
-                            lng: longitude
-                        }
-                        map.setCenter(pos);
-                        placeMarker(pos)
-                    },
-                    function (error) {
-                        console.error("Error getting location:", error.message);
-                    }
-                );
-            } else {
-                console.log("Geolocation is not supported by this browser.");
-            }
-        }
-
-        // Load the Google Maps script
-        function loadScript() {
-            const script = document.createElement("script");
-            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
-            script.async = true;
-            document.head.appendChild(script);
-        }
-
-        window.addEventListener("load", loadScript);
-    </script>
 </x-requester.dashboard-layout>
+
+@assets
+<script>
+    let map;
+    let marker;
+
+    function initializeMap() {
+        // Initialize the map
+        const mapOptions = {
+            center: { lat: 7.8731, lng: 80.7718 },
+            zoom: 7,
+            mapId: "198a0e442491558328ee7d20"
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        // Add a click listener to the map
+        map.addListener("click", (event) => {
+            const pos = {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng()
+            };
+            placeMarker(pos);
+        });
+    }
+
+    function placeMarker(pos) {
+        // If a marker already exists, remove it
+        if (marker) {
+            marker.setMap(null);
+        }
+
+        console.log(google)
+
+        // Create a new marker
+        marker = new google.maps.marker.AdvancedMarkerElement({
+            map,
+            position: pos,
+            title: "Hello, Sri Lanka!"
+        });
+
+        // Set the latitude and longitude input values
+        document.getElementById("latitude").value = pos.lat;
+        document.getElementById("longitude").value = pos.lng;
+
+        Livewire.dispatch('coordinates', pos);
+
+        // Update the coordinates display
+        document.getElementById("lat-display").innerText = `Lat: ${pos.lat.toFixed(6)}`;
+        document.getElementById("lng-display").innerText = `Lng: ${pos.lng.toFixed(6)}`;
+        document.getElementById("coordinates-display").classList.remove("hidden");
+        document.getElementById("no-location").classList.add("hidden");
+    }
+
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    console.log("Latitude:", latitude);
+                    console.log("Longitude:", longitude);
+                    // Set the map center to the current location
+                    const pos = {
+                        lat: latitude,
+                        lng: longitude
+                    }
+                    map.setCenter(pos);
+                    placeMarker(pos)
+                },
+                function (error) {
+                    console.error("Error getting location:", error.message);
+                }
+            );
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    }
+
+    // Load the Google Maps script
+    function loadScript() {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
+        script.async = true;
+        document.head.appendChild(script);
+    }
+
+    window.addEventListener("load", loadScript);
+</script>
+
+@endassets
