@@ -14,10 +14,11 @@
                         </p>
                     </div>
 
-                    <div>
+                    <div class="flex flex-col gap-2">
                         @if($contract->status === 'pending')
+                            {{-- Livewire Upload --}}
                             <form wire:submit.prevent="uploadDocument({{ $contract->id }})" enctype="multipart/form-data">
-                                <input type="file" wire:model="file.{{ $contract->id }}" class="border border-gray-300 rounded px-2 py-1 mb-2" />
+                                <input type="file" wire:model="file.{{ $contract->id }}" class="border border-gray-300 rounded px-2 py-1 mb-2">
                                 @error("file.$contract->id")
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
@@ -26,6 +27,14 @@
                                     Upload Contract
                                 </button>
                             </form>
+
+                            {{-- Approve Button --}}
+                            <button wire:click="approve({{ $contract->id }})" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+                                Mark as Approved
+                            </button>
+
+
+
                         @elseif($contract->status === 'approved' && $contract->contract_document)
                             <a href="{{ Storage::url($contract->contract_document) }}" target="_blank" class="text-blue-600 underline hover:text-blue-800">
                                 View Contract
