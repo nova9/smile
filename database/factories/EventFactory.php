@@ -30,10 +30,13 @@ class EventFactory extends Factory
             'description' => fake()->paragraph(),
             'starts_at' => fake()->dateTimeBetween('now', '+1 hour'),
             'ends_at' => fake()->dateTimeBetween('now', '+7 days'),
-            'address_id' => Address::factory(),
-            'max_participants' => fake()->numberBetween(1, 100),
+//            'address_id' => Address::factory(),
+            'maximum_participants' => fake()->numberBetween(1, 100),
             'latitude' => fake()->latitude(),
             'longitude' => fake()->longitude(),
+            'skills' => fake()->words(3, true),
+            'minimum_age' => fake()->numberBetween(13, 65),
+            'notes' => fake()->optional()->paragraph(),
         ];
     }
 }

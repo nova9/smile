@@ -12,10 +12,10 @@ class ProfileController extends Controller
     public function __invoke(Request $request)
     {
         $roleRoutes = [
-            'requester' => '/requester/profile',
-            'volunteer' => '/volunteer/profile',
-            'lawyer' => '/lawyer/profile',
-            'admin' => '/admin/profile',
+            'requester' => '/requester/dashboard/profile',
+            'volunteer' => '/volunteer/dashboard/profile',
+            'lawyer' => '/lawyer/dashboard/profile',
+            'admin' => '/admin/dashboard/profile',
         ];
 
         $role = auth()->user()->role->name;
