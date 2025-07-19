@@ -96,7 +96,8 @@
                                     <td class="px-6 py-4 text-gray-700">{{ $vol['badges'] }}</td>
                                     <td class="px-6 py-4">
                                         <div class="flex flex-wrap gap-2">
-                                            <a href="{{ url('http://127.0.0.1:8000/admin/dashboard/volunteer-details') }}" class="btn btn-neutral font-bold">View</a>
+                                            <a href="{{ url('/admin/dashboard/volunteer-details') }}" class="btn btn-neutral font-bold">View</a>
+
                                             <button class="btn btn-outline btn-error font-bold">Delete</button>
                                             {{-- Add other actions here if needed --}}
                                         </div>
