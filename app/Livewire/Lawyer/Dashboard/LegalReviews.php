@@ -11,31 +11,47 @@ class LegalReviews extends Component
     use WithFileUploads;
 
     public $contracts;
-    public $file = []; // Use array for multiple files by contract ID
+    public $file = [];
 
     public function mount()
     {
         $this->contracts = Contract::with('requester')->get();
+
+
     }
 
-    public function uploadDocument($id)
+    public function setCurrentContract($contractId)
+    {
+        $this->currentContractId = $contractId;
+    }
+
+
+    public function uploadDocument($contractId)
     {
         $this->validate([
-            "file.$id" => 'required|file|mimes:pdf,doc,docx|max:2048',
+            "file.$contractId" => 'required|file|mimes:pdf|max:5120',
         ]);
 
-        $uploadedFile = $this->file[$id];
-
+        $uploadedFile = $this->file[$contractId];
         $path = $uploadedFile->store('contracts', 'public');
 
-        $contract = Contract::find($id);
-        if ($contract) {
-            $contract->contract_document = $path;
-            $contract->status = 'approved';
-            $contract->save();
-        }
+        $contract = Contract::findOrFail($contractId);
+        $contract->contract_document = $path;
+        $contract->status = 'approved';
+        $contract->save();
 
-        session()->flash('success', 'Document uploaded successfully!');
+        // Refresh the list
+        $this->mount();
+        session()->flash('success', 'Contract uploaded successfully!');
+    }
+
+    public function approve($contractId)
+    {
+        $contract = Contract::findOrFail($contractId);
+        $contract->status = 'approved';
+        $contract->save();
+
+        $this->mount(); // Refresh data
     }
 
     public function render()
