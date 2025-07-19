@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             ResourceSeeder::class,
             BadgeSeeder::class,
             CategorySeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            AttributeSeeder::class,
         ]);
     }
 }
