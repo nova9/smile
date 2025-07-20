@@ -59,8 +59,13 @@ import {
     UserCheck,
     ArrowLeft,
     Map,
+    Eye,
     CalendarPlus,
-    X
+    Trash2,
+    X,
+    CheckCircle,
+    XCircle,
+    Gavel
 } from 'lucide';
 
 function registerIcons() {
@@ -126,7 +131,12 @@ function registerIcons() {
             Loader,
             RefreshCw,
             UserCheck,
-            ArrowLeft
+            Eye,
+            ArrowLeft,
+            XCircle,
+            CheckCircle,
+            Gavel,
+            Trash2
         }
     });
 }
