@@ -3,27 +3,66 @@
 namespace App\Livewire\Requester\Dashboard;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
 
 class Profile extends Component
+
 {
-    public $name, $email;
+    public $attribute;
+    public $completion;
+    public $name;
+    public $email;
+    public $contact_number;
+    public $logo;
+    
+
+
 
     public function mount()
     {
-        $user = Auth::user();
+        $user = auth()->user();
+
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->attribute = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
+
+
+        $this->completion = $user->isProfileCompletionPercentage(
+            $this->attribute['contact_number'] ?? '',
+            $this->attribute['logo'] ?? '',
+            
+        );
+
+
+        $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
+        $this->logo = $user->attributes()->where('name', 'logo')->get()->pluck('pivot.value')->first();
     }
 
-    public function update()
+
+    public function save()
     {
-        $user = Auth::user();
-        $user->name = $this->name;
-        $user->email = $this->email;
-        $user->save();
-        session()->flash('success', 'Profile updated!');
+        // Update user basic info
+        auth()->user()->update([
+            'name' => $this->name,
+            'email' => $this->email,
+        ]);
+        $this->logo = $this->logo ?? '';
+
+
+
+
+        auth()->user()->attributes()->syncWithoutDetaching([
+            5 => ['value' => $this->contact_number],
+            7 => ['value' => $this->logo],
+        ]);
+
+
+
+        session()->flash('success', 'Profile updated successfully!');
+        return redirect()->route('profile');
     }
+
+
+
 
     public function render()
     {
