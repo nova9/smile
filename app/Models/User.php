@@ -79,20 +79,47 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Event::class);
     }
-    public function isProfileComplete($contact_number, $skills, $location, $gender, $profile_picture)
+    public function isProfileCompletionPercentage($contact_number, $skills, $latitude,$longitude, $gender, $profile_picture,$age)
     {
-        if (
-            empty($contact_number) ||
-            empty($skills) ||
-            empty($location) ||
-            empty($gender) ||
-            empty($profile_picture)
-        ) {
-            return false;
+        $initialPercentage= 0.3;
+        $points=[
+        
+            [
+                'name'=>$contact_number,
+                'points' => 0.1
+            ],
+            [
+                'name'=>$skills,
+                'points' => 0.1
+            ],
+            [
+                'name'=>$latitude,
+                'points' => 0.1
+            ],
+            [
+                'name'=>$longitude,
+                'points' => 0.1
+            ],
+            [
+                'name'=>$gender,
+                'points' => 0.1
+            ],
+            [
+                'name'=>$profile_picture,
+                'points' => 0.1
+            ],
+            [
+                'name'=>$age,
+                'points' => 0.1
+            ]
+
+        ];
+        foreach ($points as $point) {
+            if(!empty($point['name'])){
+                $initialPercentage+=$point['points'];
+            }
         }
-
-        return true;
+        return $initialPercentage;
     }
-
 
 }

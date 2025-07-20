@@ -15,30 +15,24 @@
                     <tr class="bg-base-200 text-base-content/80">
                         <th class="py-3 px-4 text-left">Event</th>
                         <th class="py-3 px-4 text-left">Description</th>
-                        <th class="py-3 px-4 text-left">Status</th>
-                        <th class="py-3 px-4 text-left">Volunteers</th>
                         <th class="py-3 px-4 text-left">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="hover:bg-base-300/40 transition">
-                        <td class="py-3 px-4 font-semibold text-primary">Community Clean-Up</td>
-                        <td class="py-3 px-4 text-base-content">Help us clean the local park. Volunteers needed for various tasks.</td>
-                        <td class="py-3 px-4"><span class="badge badge-success">Open</span></td>
-                        <td class="py-3 px-4">12</td>
-                        <td class="py-3 px-4">
-                            <a href="#" class="btn btn-outline btn-xs">View</a>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-base-300/40 transition">
-                        <td class="py-3 px-4 font-semibold text-primary">Food Drive</td>
-                        <td class="py-3 px-4 text-base-content">Join our food drive to support families in need.</td>
-                        <td class="py-3 px-4"><span class="badge badge-warning">In Progress</span></td>
-                        <td class="py-3 px-4">8</td>
-                        <td class="py-3 px-4">
-                            <a href="#" class="btn btn-outline btn-xs">View</a>
-                        </td>
-                    </tr>
+                    @foreach($events as $event)
+
+                        <tr class="hover:bg-base-300/40 transition">
+                            <td class="py-3 px-4 font-semibold text-primary">{{$event->name}}</td>
+                            <td class="py-3 px-4 text-base-content">{{$event->description}}</td>
+                            <td class="py-3 px-4">
+                                <div class="flex gap-2 mt-4 justify-end">
+                                    <a href="{{ route('requester.event.show', $event->id) }}" wire:navigate class="btn btn-neutral btn-sm">View</a>
+
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+
                     <!-- End example rows -->
                 </tbody>
             </table>
