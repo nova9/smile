@@ -11,6 +11,8 @@
 
     <meta name="theme-color" content="#31881C">
 
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&libraries=marker"></script>
+
     <title>{{ $title ?? config('app.name') }}</title>
 </head>
 <body>
