@@ -20,7 +20,18 @@ class AttributeSeeder extends Seeder
                 'updated_at'=>now(),
             ],
             [
-                'name' => 'location',
+                'name' => 'age',
+                'created_at'=>now(),
+                'updated_at'=>now(),
+            ],
+            [
+                'name' => 'latitude',
+                'created_at'=>now(),
+                'updated_at'=>now(),
+            ],
+
+            [
+                'name' => 'longitude',
                 'created_at'=>now(),
                 'updated_at'=>now(),
             ],
