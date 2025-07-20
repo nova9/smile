@@ -37,10 +37,11 @@
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
                 <!-- Search & Filters -->
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 w-full md:w-auto">
                         <input id="orgSearch" type="text" placeholder="Search organizations..."
-                            class="input input-bordered w-full md:w-64" />
-                        <select id="orgStatusFilter" class="select select-bordered">
+                            class="input input-bordered w-full md:w-64 rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent" />
+                        <select id="orgStatusFilter"
+                            class="select select-bordered rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent">
                             <option value="">All Status</option>
                             <option value="Pending">Pending</option>
                             <option value="Registered">Registered</option>
@@ -74,10 +75,9 @@
                                 <td class="px-6 py-4">2025-06-10</td>
                                 <td class="px-6 py-4">5</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <a href="{{ url('/admin/dashboard/organization-details') }}"
-                                        class="btn btn-neutral font-bold">View</a>
-
-
+                                    <x-admin.action-button type="view"
+                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                    <x-admin.action-button type="delete" />
                                 </td>
                             </tr>
                             <tr>
@@ -90,9 +90,9 @@
                                 <td class="px-6 py-4">2025-07-01</td>
                                 <td class="px-6 py-4">0</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <a href="{{ url('/admin/dashboard/organization-details') }}"
-                                        class="btn btn-neutral font-bold">View</a>
-
+                                    <x-admin.action-button type="view"
+                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                    <x-admin.action-button type="delete" />
                                 </td>
                             </tr>
                             <tr>
@@ -105,8 +105,9 @@
                                 <td class="px-6 py-4">2025-05-20</td>
                                 <td class="px-6 py-4">2</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <a href="{{ url('/admin/dashboard/organization-details') }}"
-                                        class="btn btn-neutral font-bold">View</a>
+                                    <x-admin.action-button type="view"
+                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                    <x-admin.action-button type="delete" />
                                 </td>
                             </tr>
                         </tbody>
@@ -122,10 +123,11 @@
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
                 <!-- Search & Filters for New Registrations -->
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 w-full md:w-auto">
                         <input id="newOrgSearch" type="text" placeholder="Search new registrations..."
-                            class="input input-bordered w-full md:w-64" />
-                        <select id="newOrgStatusFilter" class="select select-bordered">
+                            class="input input-bordered w-full md:w-64 rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent" />
+                        <select id="newOrgStatusFilter"
+                            class="select select-bordered rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent">
                             <option value="">All Status</option>
                             <option value="Pending">Pending</option>
                             <option value="Registered">Registered</option>
@@ -161,10 +163,11 @@
                                 <td class="px-6 py-4 text-gray-700">2025-07-01</td>
                                 <td class="px-6 py-4 text-gray-700">0</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <a href="{{ url('/admin/dashboard/organization-details') }}"
-                                        class="btn btn-neutral font-bold">View</a>
-                                    <button class="btn btn-outline btn-success font-bold">Approve</button>
-                                    <button class="btn btn-outline btn-error font-bold">Reject</button>
+                                    <x-admin.action-button type="view"
+                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                    <x-admin.action-button type="approve" />
+
+                                    <x-admin.action-button type="delete" />
                                 </td>
                             </tr>
                         </tbody>

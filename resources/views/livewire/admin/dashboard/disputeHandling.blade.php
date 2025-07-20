@@ -10,15 +10,17 @@
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
                 <!-- Search & Filters -->
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 w-full md:w-auto">
                         <input id="reportSearch" type="text" placeholder="Search reports..."
-                            class="input input-bordered w-full md:w-64" />
-                        <select id="reportTypeFilter" class="select select-bordered">
+                            class="input input-bordered w-full md:w-64 rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent" />
+                        <select id="reportTypeFilter"
+                            class="select select-bordered rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent">
                             <option value="">All Types</option>
                             <option value="Volunteer">Volunteer</option>
                             <option value="Organization">Organization</option>
                         </select>
-                        <select id="reportStatusFilter" class="select select-bordered">
+                        <select id="reportStatusFilter"
+                            class="select select-bordered rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent">
                             <option value="">All Status</option>
                             <option value="Open">Open</option>
                             <option value="Closed">Closed</option>
@@ -47,11 +49,16 @@
                                 <td class="px-6 py-4">Inappropriate behavior</td>
                                 <td class="px-6 py-4">2024-06-20</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <a href="{{ url('/admin/dashboard/volunteer-details') }}"
-                                        class="btn btn-neutral font-bold">View</a> <button
-                                        class="btn btn-outline btn-success font-bold resolve-btn"
+                                    <x-admin.action-button type="view"
+                                        url="{{ url('/admin/dashboard/volunteer-details') }}" />
+                                    <button
+                                        class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group"
                                         data-report-id="RPT-001" data-user="john fernando" data-type="Volunteer"
-                                        data-reason="Inappropriate behavior" data-date="2024-06-20">Resolve</button>
+                                        data-reason="Inappropriate behavior" data-date="2024-06-20" title="Resolve">
+                                        <i data-lucide="gavel" class="w-5 h-5"></i>
+                                        <span
+                                            class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Resolve</span>
+                                    </button>
                                 </td>
                             </tr>
                             <tr>
@@ -61,12 +68,17 @@
                                 <td class="px-6 py-4">Spam activity</td>
                                 <td class="px-6 py-4">2024-06-19</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <a href="{{ url('/admin/dashboard/organization-details') }}"
-                                        class="btn btn-neutral font-bold">View</a> <button
-                                        class="btn btn-outline btn-success font-bold resolve-btn"
+                                    <x-admin.action-button type="view"
+                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                    <button
+                                        class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group"
                                         data-report-id="RPT-002" data-user="GreenHope Foundation"
-                                        data-type="Organization" data-reason="Spam activity"
-                                        data-date="2024-06-19">Resolve</button>
+                                        data-type="Organization" data-reason="Spam activity" data-date="2024-06-19"
+                                        title="Resolve">
+                                        <i data-lucide="gavel" class="w-5 h-5"></i>
+                                        <span
+                                            class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Resolve</span>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -83,10 +95,11 @@
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
                 <!-- Search & Filters -->
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 w-full md:w-auto">
                         <input id="requestSearch" type="text" placeholder="Search requests..."
-                            class="input input-bordered w-full md:w-64" />
-                        <select id="requestTypeFilter" class="select select-bordered">
+                            class="input input-bordered w-full md:w-64 rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent" />
+                        <select id="requestTypeFilter"
+                            class="select select-bordered rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent">
                             <option value="">All Types</option>
                             <option value="Volunteer">Volunteer</option>
                             <option value="Organization">Organization</option>
@@ -115,10 +128,10 @@
                                 <td class="px-6 py-4">Appeal suspension</td>
                                 <td class="px-6 py-4">2024-06-18</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <a href="{{ url('/admin/dashboard/volunteer-details') }}"
-                                        class="btn btn-neutral font-bold">View</a> <button
-                                        class="btn btn-outline btn-success font-bold">Approve</button>
-                                    <button class="btn btn-outline btn-error font-bold">Reject</button>
+                                    <x-admin.action-button type="view"
+                                        url="{{ url('/admin/dashboard/volunteer-details') }}" />
+                                    <x-admin.action-button type="approve" />
+                                    <x-admin.action-button type="reject" />
                                 </td>
                             </tr>
                             <tr>
@@ -128,9 +141,74 @@
                                 <td class="px-6 py-4">Account review</td>
                                 <td class="px-6 py-4">2024-06-17</td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <button class="btn btn-neutral font-bold">View</button>
-                                    <button class="btn btn-outline btn-success font-bold">Approve</button>
-                                    <button class="btn btn-outline btn-error font-bold">Reject</button>
+                                    <x-admin.action-button type="view"
+                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                    <x-admin.action-button type="approve" />
+                                    <x-admin.action-button type="reject" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Feedback Tab -->
+            <label class="tab flex gap-1">
+                <input type="radio" name="dispute_tabs" />
+                <i class="fas fa-comment-dots mr-2 text-warning"></i>
+                <span class="font-semibold">Feedback</span>
+            </label>
+            <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
+                <!-- Search & Filters -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <input id="feedbackSearch" type="text" placeholder="Search feedback..."
+                            class="input input-bordered w-full md:w-64 rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent" />
+                        <select id="feedbackTypeFilter"
+                            class="select select-bordered rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent">
+                            <option value="">All Types</option>
+                            <option value="Volunteer">Volunteer</option>
+                        </select>
+                        <select id="feedbackCategoryFilter"
+                            class="select select-bordered rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent">
+                            <option value="">All Categories</option>
+                            <option value="App Experience">App Experience</option>
+                            <option value="Support">Support</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Feedback Table -->
+                <div class="overflow-x-auto">
+                    <table id="feedbackTable" class="min-w-full bg-white rounded-3xl shadow-xl">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">
+                                    Feedback ID</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Event Name</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Comments</th>
+
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-6 py-4">FB-201</td>
+                                <td class="px-6 py-4">Beach Cleanup</td>
+                                <td class="px-6 py-4">It was really impactful</td>
+
+                                <td class="px-6 py-4 flex gap-2">
+                                    <x-admin.action-button type="view" />
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4">FB-202</td>
+                                <td class="px-6 py-4">Elder's home renovations</td>
+                                <td class="px-6 py-4">it was a great experience</td>
+
+                                <td class="px-6 py-4 flex gap-2">
+                                    <x-admin.action-button type="view" />
                                 </td>
                             </tr>
                         </tbody>
