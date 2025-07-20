@@ -27,6 +27,7 @@
                             />
                         </div>
 
+
                         <!-- Category -->
                         <div>
                             <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
@@ -58,12 +59,12 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
 
                             <!-- Selected Tags Display -->
-                            @if(count($storedtags) > 0)
+                            @if(count($tags) > 0)
                                 <div class="flex flex-wrap gap-2 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                    @foreach($storedtags as $index => $tag)
+                                    @foreach($tags as $tag)
                                         <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary rounded-full">
-                                            {{ $tag['name'] }}
-                                            <button type="button" wire:click="removeTag({{ $index }})" class="ml-2 text-white hover:cursor-pointer">
+                                            {{ $tag }}
+                                            <button type="button" wire:click="removeTag('{{ $tag }}')" class="ml-2 text-white hover:cursor-pointer">
                                                 <i data-lucide="x" class="w-3 h-3 hover:cursor-pointer"></i>
                                             </button>
                                         </span>
@@ -285,8 +286,8 @@
         const initialLng = Number({{ $longitude ?? '80.7718' }});
         const mapOptions = {
             center: {
-                lat: !isNaN(initialLat) ? initialLat : 7.8731,
-                lng: !isNaN(initialLng) ? initialLng : 80.7718
+                lat: initialLat,
+                lng: initialLng
             },
             zoom: 7,
             mapId: "198a0e442491558328ee7d20"
@@ -333,7 +334,9 @@
         document.getElementById("latitude").value = pos.lat;
         document.getElementById("longitude").value = pos.lng;
 
-        Livewire.dispatch('coordinates', pos.lat, pos.lng);
+        // console.log("Marker placed at:", pos);
+        Livewire.dispatch('coordinates', pos);
+
 
 
         // Update the coordinates display
@@ -369,14 +372,16 @@
     }
 
     // Load the Google Maps script
-    function loadScript() {
-        const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
-        script.async = true;
-        document.head.appendChild(script);
-    }
+    // function loadScript() {
+    //     const script = document.createElement("script");
+    //     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
+    //     script.async = true;
+    //     document.head.appendChild(script);
+    // }
 
-    window.addEventListener("load", loadScript);
+    window.addEventListener("load", initializeMap);
 </script>
 
 @endassets
+
+
