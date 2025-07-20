@@ -4,20 +4,19 @@
         [
             'icon' => 'users',
             'title' => 'Total Volunteers',
-            'value' => '2,350',
-            'description' => 'Active as of today'
+            'value' => number_format($stats['total_volunteers']),
+            'description' => 'Registered volunteers'
         ],
-       
         [
             'icon' => 'award',
             'title' => 'Badges Awarded',
-            'value' => '1,120',
-            'description' => 'Total this year'
+            'value' => number_format($stats['total_badges']),
+            'description' => 'Total badges earned'
         ],
         [
             'icon' => 'clock',
             'title' => 'Hours Logged',
-            'value' => '6,800',
+            'value' => number_format($stats['total_hours']),
             'description' => 'Across all volunteers'
         ]
     ]" />
@@ -25,83 +24,77 @@
     <div class="px-4 sm:px-6 lg:px-8 py-8">
         <!-- Search & Filters -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-            <div class="flex gap-2">
-                <input id="volSearch" type="text" placeholder="Search volunteers..." class="input input-bordered w-full md:w-64" />
-                <select id="volStatusFilter" class="select select-bordered">
+            <div class="flex gap-2 w-full md:w-auto">
+                <input type="text" placeholder="Search volunteers..."
+                    class="input input-bordered w-full md:w-64 rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent"
+                    wire:model.live="search" />
+                <select
+                    class="select select-bordered rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent"
+                    wire:model.live="statusFilter" style="height: 44px;">
                     <option value="">All Status</option>
-                    <option value="Active">Active</option>
-                    <option value="Suspended">Suspended</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="suspended">Suspended</option>
+                    <option value="pending">Pending</option>
                 </select>
             </div>
         </div>
         <div class="overflow-x-auto mt-8">
-            <table id="volTable" class="min-w-full bg-white rounded-3xl shadow-xl">
+            <table class="min-w-full bg-white rounded-3xl shadow-xl">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">Id</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Name</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Email</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Status</th>
-                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Hours</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Badges</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Activities</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Joined</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    @foreach([
-                            [
-                                'id' => '1',
-                                'name' => 'John Perera',
-                                'email' => 'johnperera20@email.com',
-                                'status' => ['class' => 'badge-success', 'text' => 'Active'],
-                                'hours' => '54',
-                                'badges' => '3',
-                                'actions' => [
-                                    ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
-
-                                    ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
-                                ]
-                            ],
-                            [
-                                'id' => '2',
-                                'name' => 'Jane Fernando',
-                                'email' => 'janefdo12@email.com',
-                                'status' => ['class' => 'badge-warning', 'text' => 'Suspended'],
-                                'applications' => '5',
-                                'hours' => '22',
-                                'badges' => '1',
-                                'actions' => [
-                                    ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
-
-                                    ['type' => 'button', 'class' => 'btn-error', 'text' => 'Delete']
-                                ]
-                            ]
-
-                        ] as $vol)
+                    @forelse($volunteers as $volunteer)
                                     <tr class="hover:bg-accent/10 transition-all duration-200">
-                                        <td class="px-6 py-4 font-semibold text-gray-900">{{ $vol['id'] }}</td>
-                                        <td class="px-6 py-4 font-bold text-primary">{{ $vol['name'] }}</td>
-                                        <td class="px-6 py-4 text-gray-700">{{ $vol['email'] }}</td>
+                                        <td class="px-6 py-4 font-semibold text-gray-900">{{ $volunteer->id }}</td>
+                                        <td class="px-6 py-4 font-bold text-primary">{{ $volunteer->name }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ $volunteer->email }}</td>
                                         <td class="px-6 py-4">
-                                            <span class="badge {{ $vol['status']['class'] }} px-4 py-2 text-base font-semibold rounded-full">
-                                                {{ $vol['status']['text'] }}
+                                            <span
+                                                class="badge 
+                                                                                                                                                                                    {{ $volunteer->status === 'active' ? 'badge-success' :
+                        ($volunteer->status === 'suspended' ? 'badge-warning' :
+                            ($volunteer->status === 'inactive' ? 'badge-error' : 'badge-info')) }} 
+                                                                                                                                                                                    px-4 py-2 text-base font-semibold rounded-full">
+                                                {{ ucfirst($volunteer->status ?? 'Active') }}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 text-gray-700">{{ $vol['hours'] }}</td>
-                                        <td class="px-6 py-4 text-gray-700">{{ $vol['badges'] }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ $volunteer->badges->count() }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ $volunteer->participatingEvents->count() }}</td>
+                                        <td class="px-6 py-4 text-gray-700">{{ $volunteer->created_at->format('M d, Y') }}</td>
                                         <td class="px-6 py-4">
                                             <div class="flex flex-wrap gap-2">
-                                                <a href="{{ url('/admin/dashboard/volunteer-details') }}" class="btn btn-neutral font-bold">View</a>
-
-                                                <button class="btn btn-outline btn-error font-bold">Delete</button>
-                                                {{-- Add other actions here if needed --}}
+                                                <x-admin.action-button type="view"
+                                                    url="{{ url('/admin/dashboard/volunteer-details') }}" />
+                                                <x-admin.action-button type="delete" />
                                             </div>
                                         </td>
                                     </tr>
-
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="8" class="px-6 py-8 text-center">
+                                <div class="flex flex-col items-center gap-2">
+                                    <i data-lucide="users-x" class="w-12 h-12 text-gray-400"></i>
+                                    <p class="text-gray-500">No volunteers found</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="mt-6">
+            {{ $volunteers->links() }}
         </div>
     </div>
 
@@ -165,7 +158,7 @@
         function filterVolTable() {
             const search = document.getElementById('volSearch').value.toLowerCase();
             const status = document.getElementById('volStatusFilter').value;
-            document.querySelectorAll('#volTable tbody tr').forEach(function(row) {
+            document.querySelectorAll('#volTable tbody tr').forEach(function (row) {
                 let text = row.textContent.toLowerCase();
                 let matchesSearch = text.includes(search);
                 let matchesStatus = !status || (row.querySelector('.badge') && row.querySelector('.badge').textContent.trim() === status);
@@ -176,4 +169,3 @@
         document.getElementById('volStatusFilter').addEventListener('change', filterVolTable);
     </script>
 </x-admin.dashboard-layout>
-
