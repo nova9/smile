@@ -200,67 +200,18 @@
                                     </div>
 
                                     <div class="w-full ">
-                                        <label class="text-sm font-medium text-gray-700 flex gap-1">
-                                            <i data-lucide="book-open-text" class="size-4 "></i>
-                                            <span>Skills</span>
-                                        </label>
+                                        <fieldset class="border border-gray-300 rounded-md p-4">
+                                            <legend class=" flex gap-1 text-sm font-medium text-gray-700 px-2">
+                                                <i data-lucide="book-open-text" class="size-4 "></i>
+                                                <span >Skills</span>
+                                            </legend>
+                                            <textarea id="skills" wire:model="skills" name="skills" placeholder="Communication, Teamwork, Problem Solving"
+                                                      class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200" rows="3" autocomplete="off" oninput="showSkillSuggestions(this)"></textarea>
+                                            <div id="skill-suggestions" class="bg-white border border-gray-300 rounded-md shadow-md mt-1 hidden z-10"></div>
+                                        </fieldset>
                                         <div id="skillsList" class="flex flex-wrap gap-2 mt-2">
                                             <div class="md:col-span-2">
-
-                                                <!-- Selected Skills Display -->
-                                                @if(count($skills) > 0)
-                                                    <div
-                                                        class="flex flex-wrap gap-2 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                                        @foreach($skills as $index => $skill)
-                                                            <span
-                                                                class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-accent rounded-full">
-                                            {{ $skill }}
-                                            <button type="button" wire:click="removeSkill{{ $index }})"
-                                                    class="ml-2 text-white hover:cursor-pointer">
-                                                <i data-lucide="x" class="w-3 h-3 hover:cursor-pointer"></i>
-                                            </button>
-                                        </span>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
-                                                <!-- Add New Skill Input -->
-                                                <div class="flex gap-2 mb-4">
-                                                    <input wire:model="newSkill" wire:keydown.enter.prevent="addSkill"
-                                                           type="text"
-                                                           class="input input-bordered flex-1 focus:border-green-600 focus:ring focus:ring-green-200 transition-all"
-                                                           placeholder="Type a skill and press Enter">
-                                                    <button type="button" wire:click="addSkill"
-                                                            class="btn btn-accent text-white border-none shadow-sm hover:shadow-md transition-all">
-                                                        <i data-lucide="plus" class="w-4 h-4"></i>
-                                                        Add
-                                                    </button>
-                                                </div>
-
-                                                @if($availableSkills && count($availableSkills) > 0)
-                                                    <div class="mt-3">
-                                                        <p class="text-xs text-gray-600 mb-2">Or choose from existing
-                                                            skills:</p>
-                                                        <div class="flex flex-wrap gap-2">
-                                                            @foreach($availableSkills as $availableSkill)
-                                                                @if(!in_array($availableSkill, $skills))
-                                                                    <button
-                                                                        type="button"
-                                                                        wire:click="addExistingSkill('{{ $availableSkill }}')"
-                                                                        class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
-                                                                    >
-                                                                        <i data-lucide="plus" class="w-3 h-3 mr-1"></i>
-                                                                        {{ $availableSkill }}
-                                                                    </button>
-                                                                @endif
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                @endif
-
-                                                <p class="text-xs text-gray-500 mt-2">Skills help volunteers find events
-                                                    that match
-                                                    their interests</p>
+                                            <p class="text-xs text-gray-500 mt-2">Skills help you find events that match your interests</p>
                                             </div>
                                         </div>
                                     </div>
@@ -276,6 +227,37 @@
 </x-volunteer.dashboard-layout>
 @assets
 <script>
+    // Basic skill suggestions for autocomplete
+    const skillList = [
+        "Communication", "Teamwork", "Problem Solving", "Leadership", "Time Management", "Adaptability", "Creativity", "Critical Thinking", "Collaboration", "Empathy", "Conflict Resolution", "Organization", "Technical Skills", "Project Management", "Public Speaking"
+    ];
+
+    function showSkillSuggestions(textarea) {
+        const input = textarea.value.split(/,|\n/).pop().trim().toLowerCase();
+        const suggestions = skillList.filter(skill => skill.toLowerCase().startsWith(input) && input.length > 0);
+        const suggestionBox = document.getElementById('skill-suggestions');
+        if (suggestions.length > 0) {
+            suggestionBox.innerHTML = suggestions.map(skill => `<div class='px-3 py-2 cursor-pointer hover:bg-green-100' onclick='addSkillToTextarea("${skill}")'>${skill}</div>`).join('');
+            suggestionBox.style.display = 'block';
+            const rect = textarea.getBoundingClientRect();
+            suggestionBox.style.left = rect.left + 'px';
+            suggestionBox.style.top = (rect.bottom + window.scrollY) + 'px';
+            suggestionBox.style.width = rect.width + 'px';
+        } else {
+            suggestionBox.style.display = 'none';
+        }
+    }
+
+    function addSkillToTextarea(skill) {
+        const textarea = document.getElementById('skills');
+        let skills = textarea.value.split(/,|\n/).map(s => s.trim()).filter(s => s);
+        if (!skills.includes(skill)) {
+            skills.push(skill);
+        }
+        textarea.value = skills.join(', ');
+        textarea.dispatchEvent(new Event('input'));
+        document.getElementById('skill-suggestions').style.display = 'none';
+    }
     let map;
     let marker;
     function initializeMap() {
