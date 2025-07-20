@@ -10,7 +10,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Carbon\Carbon;
 
-class Show extends Component
+class Edit extends Component
 {
     #[Validate]
     public $name;
@@ -35,7 +35,7 @@ class Show extends Component
     public $skills;
 
 
-    public $storedtags;
+//    public $storedtags;
     public $tags = [];
     public $availableTags;
     public $newTag = '';
@@ -47,9 +47,10 @@ class Show extends Component
 
     public function mount($id)
     {
+        $this->event = auth()->user()->organizingEvents()->find($id);
         $this->categories = Category::all();
         $this->availableTags = Tag::all();
-        $this->event = auth()->user()->organizingEvents()->find($id);
+
         $this->name = $this->event['name'];
         $this->description = $this->event['description'];
         $this->starts_at = $this->event->starts_at
@@ -62,12 +63,12 @@ class Show extends Component
         $this->latitude = $this->event['latitude'];
         $this->longitude = $this->event['longitude'];
         $this->skills = $this->event['skills'];
-        $this->storedtags = $this->event->tags()->wherePivot('event_id',$id)->get();
+//        $this->storedtags = $this->event->tags()->wherePivot('event_id',$id)->get();
         $this->notes = $this->event['notes'];
         $this->minimum_age = $this->event['minimum_age'];
         $this->maximum_participants = $this->event['maximum_participants'];
         $this->category_id = $this->event['category_id'];
-
+        $this->tags = $this->event->tags->pluck('name')->toArray();
     }
 
     protected function rules()
@@ -92,11 +93,7 @@ class Show extends Component
     {
         $this->validate();
 
-        $chat = Chat::query()->create([
-            'is_group' => true,
-        ]);
-
-        $event = auth()->user()->organizingEvents()->update([
+        $this->event->update([
             'name' => $this->name,
             'category_id' => $this->category_id,
             'maximum_participants' => $this->maximum_participants,
@@ -107,9 +104,9 @@ class Show extends Component
             'longitude' => $this->longitude,
             'notes' => $this->notes,
             'minimum_age' => $this->minimum_age,
-            'skills' => $this->skills,
-            'chat_id' => $chat->id,
+            'skills' => $this->skills
         ]);
+
 
 
         // create new tags if they don't exist
@@ -121,7 +118,7 @@ class Show extends Component
 
 
         if (!empty($this->tags)) {
-            $event->tags()->sync($tagIds);
+            $this->event->tags()->sync($tagIds);
         }
 
 
@@ -152,14 +149,6 @@ class Show extends Component
         $this->newTag = '';
     }
 
-    public function removeTag($index)
-    {
-        if (isset($this->tags[$index])) {
-            unset($this->tags[$index]);
-            $this->tags = array_values($this->tags); // Re-index array
-        }
-    }
-
     public function addExistingTag($tagName)
     {
         if (!in_array($tagName, $this->tags)) {
@@ -167,8 +156,17 @@ class Show extends Component
         }
     }
 
+    public function removeTag($tag)
+    {
+        $index = array_search($tag, $this->tags);
+        if ($index !== false) {
+            unset($this->tags[$index]);
+            $this->tags = array_values($this->tags); // Re-index array
+        }
+    }
+
     public function render()
     {
-        return view('livewire.requester.dashboard.my-events.show');
+        return view('livewire.requester.dashboard.my-events.edit');
     }
 }
