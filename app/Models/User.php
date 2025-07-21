@@ -72,22 +72,34 @@ class User extends Authenticatable
     public function participatingEvents(): BelongsToMany
     {
         return $this->belongsToMany(Event::class)
-            ->withTimestamps()->withPivot('status');
-        ;
+            ->withTimestamps()->withPivot('status');;
     }
 
     public function events()
     {
         return $this->hasMany(\App\Models\Event::class);
     }
-    
+
     public function isProfileCompletionPercentage()
     {
+        $requiredskills = [
+            'skills',
+            'age',
+            'latitude',
+            'longitude',
+            'contact_number',
+            'gender',
+            'profile_picture'
+        ];
+
         $initialPercentage = 0.3;
-        $user=auth()->user();
-        $attributes=$user->attributes()->get()->pluck('pivot.value','name')->all();
-        foreach($attributes as $attribute){
-            if(!empty($attribute)){
+
+        $user = auth()->user();
+        $attributes = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
+        // dd($attributes);
+        foreach ($requiredskills as $requiredskill) {
+            // dd($attributes[$requiredskill]);
+            if (!empty($attributes[$requiredskill])) {
                 $initialPercentage += 0.1;
             }
         }
