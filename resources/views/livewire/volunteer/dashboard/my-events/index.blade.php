@@ -250,7 +250,7 @@
 
             <!-- Events List Items -->
             <div class="divide-y divide-slate-200/50">
-                @for($i=0;$i < count($participatingEvents);$i++)
+                @foreach($participatingEvents as $item)
                     <div class="px-6 py-5 hover:bg-white/60 transition-all duration-200 group">
                         <div class="grid grid-cols-12 gap-4 items-center">
                             <!-- Event Details -->
@@ -258,55 +258,55 @@
                                 <div class="flex items-start gap-4">
                                     <div class="relative">
                                         @php
-                                             $gradientClass = $participatingEvents[$i]->category->id ?? 'from-slate-400 to-slate-600';
+                                             $gradientClass = $item->category->id ?? 'from-slate-400 to-slate-600';
                                         @endphp
                                         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br {{ $gradientClass }} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                                            @if($participatingEvents[$i]->category->id == '1')
+                                            @if($item->category->id == '1')
                                                 <i data-lucide="leaf" class="w-7 h-7 text-white"></i>
-                                            @elseif($participatingEvents[$i]->category->id == '2')
+                                            @elseif($item->category->id == '2')
                                                 <i data-lucide="users" class="w-7 h-7 text-white"></i>
-                                            @elseif($participatingEvents[$i]->category->id == '3')
+                                            @elseif($item->category->id == '3')
                                                 <i data-lucide="book" class="w-7 h-7 text-white"></i>
-                                            @elseif($participatingEvents[$i]->category->id == '4')
+                                            @elseif($item->category->id == '4')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
-                                            @elseif($participatingEvents[$i]->category->id == '5')
+                                            @elseif($item->category->id == '5')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
-                                            @elseif($participatingEvents[$i]->category->id == '6')
+                                            @elseif($item->category->id == '6')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
-                                            @elseif($participatingEvents[$i]->category->id == '7')
+                                            @elseif($item->category->id == '7')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
-                                                
+
                                             @endif
                                         </div>
                                         <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                            @if($participatingEvents[$i]->pivot->status == 'confirmed')
+                                            @if($item->pivot->status == 'confirmed')
                                                 <i data-lucide="check" class="w-3 h-3 text-emerald-500"></i>
-                                            @elseif($participatingEvents[$i]->pivot->status === 'pending')
+                                            @elseif($item->pivot->status === 'pending')
                                                 <i data-lucide="clock" class="w-3 h-3 text-amber-500"></i>
-                                            @elseif($participatingEvents[$i]->pivot->status === 'completed')
+                                            @elseif($item->pivot->status === 'completed')
                                                 <i data-lucide="trophy" class="w-3 h-3 text-violet-500"></i>
-                                            @elseif($participatingEvents[$i]->pivot->status === 'cancelled')
+                                            @elseif($item->pivot->status === 'cancelled')
                                                 <i data-lucide="x" class="w-3 h-3 text-rose-500"></i>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <h3 class="font-bold text-slate-900 mb-2 text-lg group-hover:text-blue-600 transition-colors duration-200">{{$participatingEvents[$i]->name}}</h3>
-                                        <p class="text-sm text-slate-600 line-clamp-2 mb-3">{{$participatingEvents[$i]->description}}</p>
+                                        <h3 class="font-bold text-slate-900 mb-2 text-lg group-hover:text-blue-600 transition-colors duration-200">{{$item->name}}</h3>
+                                        <p class="text-sm text-slate-600 line-clamp-2 mb-3">{{$item->description}}</p>
                                         <div class="flex items-center gap-3 text-xs">
                                             @php
-                                                
-                                                $badgeClass = $participatingEvents[$i]->category->color ?? 'from-slate-100 to-slate-200 text-slate-700';
+
+                                                $badgeClass = $item->category->color ?? 'from-slate-100 to-slate-200 text-slate-700';
                                             @endphp
                                             <span class="px-3 py-1.5 bg-gradient-to-r {{ $badgeClass }} rounded-full font-medium"></span>
                                             <span class="flex items-center gap-1 text-slate-500">
                                                 <i data-lucide="clock" class="w-3 h-3"></i>
-                                                {{($participatingEvents[$i]->starts_at) -($participatingEvents[$i]->ends_at)}}
-                                            
+                                                {{$item->starts_at->diffForHumans($item->ends_at)}}
+
                                             </span>
                                             <span class="flex items-center gap-1 text-slate-500">
                                                 <i data-lucide="users" class="w-3 h-3"></i>
-                                            {{$participatingEvents[$i]->maximum_participants}}
+                                            {{$item->maximum_participants}}
                                             </span>
                                         </div>
                                     </div>
@@ -427,7 +427,7 @@
                             </div> --}}
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
         </div>
 
