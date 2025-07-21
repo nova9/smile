@@ -5,7 +5,7 @@
             <x-common.dashboard.item to="/admin/dashboard/volunteer-management" icon="users" title="Volunteers" />
             <x-common.dashboard.item to="/admin/dashboard/organization-management" icon="building-2"
                 title="Organizations" />
-            <x-common.dashboard.item to="/admin/dashboard/announcements" icon="megaphone" title="Announcements" />
+            <x-common.dashboard.item to="/admin/dashboard/analytics" icon="chart-spline" title="Analytics" />
             <x-common.dashboard.item to="/admin/dashboard/dispute-handling" icon="handshake" title="Dispute Handling" />
 
         </x-slot>

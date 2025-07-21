@@ -65,6 +65,7 @@ import {
     X,
     CheckCircle,
     XCircle,
+    ChartSpline,
     Gavel
 } from 'lucide';
 
@@ -136,6 +137,7 @@ function registerIcons() {
             XCircle,
             CheckCircle,
             Gavel,
+            ChartSpline,
             Trash2
         }
     });
