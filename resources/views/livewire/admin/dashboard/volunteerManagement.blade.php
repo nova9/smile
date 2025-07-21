@@ -62,10 +62,10 @@
                                         <td class="px-6 py-4">
                                             <span
                                                 class="badge 
-                                                                                                                                                                                    {{ $volunteer->status === 'active' ? 'badge-success' :
+                                                                                                                                                                                                    {{ $volunteer->status === 'active' ? 'badge-success' :
                         ($volunteer->status === 'suspended' ? 'badge-warning' :
                             ($volunteer->status === 'inactive' ? 'badge-error' : 'badge-info')) }} 
-                                                                                                                                                                                    px-4 py-2 text-base font-semibold rounded-full">
+                                                                                                                                                                                                    px-4 py-2 text-base font-semibold rounded-full">
                                                 {{ ucfirst($volunteer->status ?? 'Active') }}
                                             </span>
                                         </td>
@@ -75,7 +75,7 @@
                                         <td class="px-6 py-4">
                                             <div class="flex flex-wrap gap-2">
                                                 <x-admin.action-button type="view"
-                                                    url="{{ url('/admin/dashboard/volunteer-details') }}" />
+                                                    url="{{ url('/admin/dashboard/volunteer-details/' . $volunteer->id) }}" />
                                                 <x-admin.action-button type="delete" />
                                             </div>
                                         </td>

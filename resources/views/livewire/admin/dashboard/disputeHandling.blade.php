@@ -44,17 +44,22 @@
                         <tbody>
                             <tr>
                                 <td class="px-6 py-4">RPT-001</td>
-                                <td class="px-6 py-4">john fernando</td>
+                                <td class="px-6 py-4">Libbie Konopelski</td>
                                 <td class="px-6 py-4">Volunteer</td>
                                 <td class="px-6 py-4">Inappropriate behavior</td>
                                 <td class="px-6 py-4">2024-06-20</td>
                                 <td class="px-6 py-4 flex gap-2">
                                     <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/volunteer-details') }}" />
-                                    <button
+                                        url="{{ url('/admin/dashboard/volunteer-details/8') }}" />
+                                    <button wire:click="$set('showResolveModal', true); $set('resolveReport', {
+                                            id: 'RPT-001',
+                                            user: 'Libbie Konopelski',
+                                            type: 'Volunteer',
+                                            reason: 'Inappropriate behavior',
+                                            date: '2024-06-20'
+                                        })"
                                         class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group"
-                                        data-report-id="RPT-001" data-user="john fernando" data-type="Volunteer"
-                                        data-reason="Inappropriate behavior" data-date="2024-06-20" title="Resolve">
+                                        title="Resolve">
                                         <i data-lucide="gavel" class="w-5 h-5"></i>
                                         <span
                                             class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Resolve</span>
@@ -220,98 +225,73 @@
 
 
     <!-- Resolve Modal -->
-    <div id="resolveModal" class="modal hidden">
-        <div class="modal-box w-11/12 max-w-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-bold text-lg">Resolve Report</h3>
-                <button onclick="closeResolveModal()" class="btn btn-sm btn-circle btn-ghost">✕</button>
-            </div>
-            <!-- Report Details -->
-            <div class="mb-4">
-                <h4 class="font-semibold text-base-content mb-2">Report Details</h4>
-                <div class="bg-base-200 p-4 rounded-lg">
-                    <div class="space-y-1">
-                        <p class="text-sm"><span class="font-medium">Report ID:</span> <span id="modalReportId"></span>
-                        </p>
-                        <p class="text-sm"><span class="font-medium">User/Organization:</span> <span
-                                id="modalUser"></span>
-                        </p>
-                        <p class="text-sm"><span class="font-medium">Type:</span> <span id="modalType"></span></p>
-                        <p class="text-sm"><span class="font-medium">Reason:</span> <span id="modalReason"></span></p>
-                        <p class="text-sm"><span class="font-medium">Date:</span> <span id="modalDate"></span></p>
+    @if($showResolveModal)
+        <div id="resolveModal" class="modal modal-open">
+            <div class="modal-box w-11/12 max-w-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg">Resolve Report</h3>
+                    <button wire:click="$set('showResolveModal', false)" class="btn btn-sm btn-circle btn-ghost">✕</button>
+                </div>
+                <!-- Report Details -->
+                <div class="mb-4">
+                    <h4 class="font-semibold text-base-content mb-2">Report Details</h4>
+                    <div class="bg-base-200 p-4 rounded-lg">
+                        <div class="space-y-1">
+                            <p class="text-sm"><span class="font-medium">Report ID:</span>
+                                <span>{{ $resolveReport['id'] ?? '' }}</span>
+                            </p>
+                            <p class="text-sm"><span class="font-medium">User/Organization:</span>
+                                <span>{{ $resolveReport['user'] ?? '' }}</span>
+                            </p>
+                            <p class="text-sm"><span class="font-medium">Type:</span>
+                                <span>{{ $resolveReport['type'] ?? '' }}</span>
+                            </p>
+                            <p class="text-sm"><span class="font-medium">Reason:</span>
+                                <span>{{ $resolveReport['reason'] ?? '' }}</span>
+                            </p>
+                            <p class="text-sm"><span class="font-medium">Date:</span>
+                                <span>{{ $resolveReport['date'] ?? '' }}</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Profile & Status -->
-            <div class="mb-4">
-                <h4 class="font-semibold text-base-content mb-2">Profile & Status</h4>
-                <div class="bg-base-200 p-4 rounded-lg">
-                    <p class="text-sm"><span class="font-medium">Total volunteer hours:</span> 50</p>
-                    <p class="text-sm"><span class="font-medium">Badges:</span> 1</p>
-                    <p class="text-sm"><span class="font-medium">Completed work :</span> Community development project
-                    </p>
+                <!-- Profile & Status -->
+                <div class="mb-4">
+                    <h4 class="font-semibold text-base-content mb-2">Profile & Status</h4>
+                    <div class="bg-base-200 p-4 rounded-lg">
+                        <p class="text-sm"><span class="font-medium">Total volunteer hours:</span> 50</p>
+                        <p class="text-sm"><span class="font-medium">Badges:</span> 1</p>
+                        <p class="text-sm"><span class="font-medium">Completed work :</span> Community development project
+                        </p>
+                    </div>
+                </div>
+                <!-- History -->
+                <div class="mb-4">
+                    <h4 class="font-semibold text-base-content mb-2">History</h4>
+                    <div class="bg-base-200 p-4 rounded-lg">
+                        <p class="text-sm">Total number of reports : 1</p>
+                        <p class="text-sm">Previous report: Late attendance (2024-05-10)</p>
+                    </div>
+                </div>
+                <!-- Admin Notes -->
+                <div class="mb-6">
+                    <label for="adminNotes" class="label">
+                        <span class="label-text font-medium">Admin Notes</span>
+                    </label>
+                    <textarea id="adminNotes" class="textarea textarea-bordered w-full h-24"
+                        placeholder="Optional notes..."></textarea>
+                </div>
+                <!-- Action Buttons -->
+                <div class="modal-action flex gap-2">
+                    <button wire:click="suspendAccount" class="btn btn-outline btn-error">Suspend Account</button>
+                    <button wire:click="dismissReport" class="btn btn-outline btn-black">Dismiss Report</button>
                 </div>
             </div>
-            <!-- History -->
-            <div class="mb-4">
-                <h4 class="font-semibold text-base-content mb-2">History</h4>
-                <div class="bg-base-200 p-4 rounded-lg">
-                    <p class="text-sm">Total number of reports : 1</p>
-                    <p class="text-sm">Previous report: Late attendance (2024-05-10)</p>
-                </div>
-            </div>
-            <!-- Admin Notes -->
-            <div class="mb-6">
-                <label for="adminNotes" class="label">
-                    <span class="label-text font-medium">Admin Notes</span>
-                </label>
-                <textarea id="adminNotes" class="textarea textarea-bordered w-full h-24"
-                    placeholder="Optional notes..."></textarea>
-            </div>
-            <!-- Action Buttons -->
-            <div class="modal-action flex gap-2">
-                <button onclick="suspendAccount()" class="btn btn-error">Suspend Account</button>
-                <button onclick="markResolved()" class="btn btn-success">Mark as Resolved</button>
-                <button onclick="dismissReport()" class="btn btn-outline">Dismiss Report</button>
-            </div>
+            <div class="modal-backdrop" wire:click="$set('showResolveModal', false)"></div>
         </div>
-        <div class="modal-backdrop" onclick="closeResolveModal()"></div>
-    </div>
+    @endif
 
     <script>
-        document.addEventListener('click', function (e) {
-            if (e.target.classList.contains('resolve-btn')) {
-                const btn = e.target;
-                document.getElementById('modalReportId').textContent = btn.dataset.reportId;
-                document.getElementById('modalUser').textContent = btn.dataset.user;
-                document.getElementById('modalType').textContent = btn.dataset.type;
-                document.getElementById('modalReason').textContent = btn.dataset.reason;
-                document.getElementById('modalDate').textContent = btn.dataset.date;
-                document.getElementById('adminNotes').value = '';
-                const modal = document.getElementById('resolveModal');
-                modal.classList.remove('hidden');
-                modal.classList.add('modal-open');
-            }
-        });
-
-        function closeResolveModal() {
-            const modal = document.getElementById('resolveModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('modal-open');
-        }
-        function suspendAccount() {
-            alert('Account will be suspended.');
-            closeResolveModal();
-        }
-        function markResolved() {
-            alert('Report marked as resolved.');
-            closeResolveModal();
-        }
-        function dismissReport() {
-            alert('Report dismissed.');
-            closeResolveModal();
-        }
-
         // Search & Filter logic for Account Reports
         function filterReportsTable() {
             const search = document.getElementById('reportSearch').value.toLowerCase();
