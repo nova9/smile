@@ -4,19 +4,21 @@
         <div class="px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex items-center justify-between flex-wrap gap-6">
                 <div class="flex items-center space-x-4">
-
                     <div>
                         <h1
                             class="text-3xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-                            GreenHope Foundation</h1>
-                        <p class="text-gray-600 font-medium">ID: ORG-001</p>
-                        <p class="text-gray-600 font-medium">Registered: June 10, 2025</p>
+                            {{ $organization->name }}
+                        </h1>
+                        <p class="text-gray-600 font-medium">ID: ORG-{{ $organization->id }}</p>
+                        <p class="text-gray-600 font-medium">Registered:
+                            {{ $organization->created_at->format('F d, Y') }}
+                        </p>
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-2 items-end sm:items-center">
-                    <span
-                        class="px-4 py-1 bg-yellow-100 text-yellow-800 text-sm font-semibold rounded-full shadow">Pending
-                        Approval</span>
+                    <span class="px-4 py-1 bg-yellow-100 text-yellow-800 text-sm font-semibold rounded-full shadow">
+                        {{ ucfirst($organization->status ?? 'Pending Approval') }}
+                    </span>
                     <div class="flex gap-2 mt-2 sm:mt-0">
                         <button class="btn btn-neutral font-bold">Approve</button>
                         <button class="btn btn-outline btn-error font-bold">Reject</button>
@@ -42,30 +44,34 @@
                             <h2
                                 class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
                                 Organization Details</h2>
-
                         </div>
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Organization Name</label>
-                                <p class="text-gray-900 font-medium">GreenHope Foundation</p>
+                                <p class="text-gray-900 font-medium">{{ $organization->name }}</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
-                                <p class="text-gray-900 font-medium">info@greenhope.org</p>
+                                <p class="text-gray-900 font-medium">{{ $organization->email }}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Phone</label>
-                                <p class="text-gray-900 font-medium">+1 (555) 123-4567</p>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
+                                <p class="text-gray-900 font-medium">{{ $attributes['contact_number'] ?? '-' }}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Address</label>
-                                <p class="text-gray-900 font-medium">123 Green Street, Eco City, EC 12345</p>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Logo</label>
+                                <p class="text-gray-900 font-medium">
+                                    @if(!empty($attributes['logo']))
+                                        <img src="{{ asset('storage/' . $attributes['logo']) }}" alt="Logo"
+                                            class="h-12 w-12 rounded-full object-cover">
+                                    @else
+                                        -
+                                    @endif
+                                </p>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1">Description</label>
-                                <p class="text-gray-900 font-medium">A non-profit organization dedicated to
-                                    environmental
-                                    conservation and sustainable development practices.</p>
+                                <p class="text-gray-900 font-medium">{{ $attributes['description'] ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -111,44 +117,49 @@
                 <!-- Opportunities Tab -->
                 <h2
                     class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
-                    Volunteer Opportunities</h2>
-                <x-admin.data-table :columns=" [
-        ['key' => 'id', 'label' => 'Id', 'type' => 'text'],
-        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
-        ['key' => 'status', 'label' => 'Status', 'type' => 'badge'],
-        ['key' => 'start_date', 'label' => 'Start Date', 'type' => 'text'],
-        ['key' => 'end_date', 'label' => 'End Date', 'type' => 'text'],
-        ['key' => 'volunteers', 'label' => 'Volunteers', 'type' => 'text'],
-        ['key' => 'promotions', 'label' => 'Promotions', 'type' => 'custom'],
-        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions']
-    ]" :data=" [
-        [
-            'id' => '1',
-            'title' => 'Tree Planting 2025',
-            'status' => ['class' => 'badge-success', 'text' => 'Active'],
-            'start_date' => '2025-08-01',
-            'end_date' => '2025-08-10',
-            'volunteers' => '20',
-            'promotions' => 'boosted',
-            'actions' => [
-                ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
-                ['type' => 'button', 'class' => 'btn-error', 'text' => 'Reject']
-            ]
-        ],
-        [
-            'id' => '2',
-            'title' => 'Beach Cleanup Drive',
-            'status' => ['class' => 'badge-warning', 'text' => 'Draft'],
-            'start_date' => '2025-09-15',
-            'end_date' => '2025-09-15',
-            'volunteers' => '0',
-            'promotions' => 'boosted',
-            'actions' => [
-                ['type' => 'button', 'class' => 'btn-info', 'text' => 'View'],
-                ['type' => 'button', 'class' => 'btn-error', 'text' => 'Reject']
-            ]
-        ]
-    ]" />
+                    Volunteer Events</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-2xl shadow-xl">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Id</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Title</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Status</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Start Date</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">End Date</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Volunteers</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($events as $event)
+                                <tr>
+                                    <td class="px-6 py-4">{{ $event->id }}</td>
+                                    <td class="px-6 py-4">{{ $event->name }}</td>
+                                    <td class="px-6 py-4">
+                                        <span class="badge badge-info">{{ ucfirst($event->status ?? 'Draft') }}</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $event->starts_at ? \Carbon\Carbon::parse($event->starts_at)->format('Y-m-d') : '-' }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $event->ends_at ? \Carbon\Carbon::parse($event->ends_at)->format('Y-m-d') : '-' }}
+                                    </td>
+                                    <td class="px-6 py-4">{{ $event->users_count }}</td>
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <x-admin.action-button type="view"
+                                            url="{{ url('/admin/dashboard/event-details/' . $event->id) }}" />
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="px-6 py-8 text-center text-gray-500">No events found for this
+                                        organization.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <label class="tab flex gap-1">
@@ -242,7 +253,7 @@
                             <span
                                 class="px-3 py-1 bg-red-100 text-red-800 text-xs font-bold rounded-full shadow">Open</span>
                         </div>
-                        
+
                         <div>
                             <span class="font-medium text-gray-700">Reason:</span>
                             <span class="text-gray-900">Financial misconduct</span>
@@ -267,7 +278,7 @@
                             <span
                                 class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full shadow">Closed</span>
                         </div>
-                       
+
                         <div>
                             <span class="font-medium text-gray-700">Reason:</span>
                             <span class="text-gray-900">Late attendance</span>
@@ -278,9 +289,10 @@
                         </div>
                         <div>
                             <span class="font-medium text-gray-700">Details:</span>
-                            <span class="text-gray-900">Did not start thge event on time , people had to wait for hours</span>
+                            <span class="text-gray-900">Did not start thge event on time , people had to wait for
+                                hours</span>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="mt-8 flex justify-end">

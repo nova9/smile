@@ -1,3 +1,3 @@
 <x-admin.dashboard-layout>
-Announcements
+Analytics
 </x-admin.dashboard-layout>
