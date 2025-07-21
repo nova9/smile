@@ -78,6 +78,7 @@ import {
     Filter,
     User,
     ScrollText,
+    Save,
 } from "lucide";
 
 function registerIcons() {
@@ -161,6 +162,7 @@ function registerIcons() {
             Filter,
             User,
             ScrollText,
+            Save,
         },
     });
 }

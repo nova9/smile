@@ -22,7 +22,7 @@
 
             <!-- Action Bar -->
             <div class="flex justify-between items-center">
-                <button class="btn btn-accent">
+                <button class="btn btn-accent" onclick="openContractModal()">
                     <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
                     New Contract
                 </button>
@@ -89,4 +89,183 @@
             </div>
         </div>
     </main>
+
+    <!-- Contract Template Modal -->
+    <div id="contractModal" class="fixed inset-0 bg-white/95 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-gray-200">
+            <!-- Modal Header -->
+            <div class="bg-green-600 text-white p-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">New Contract Template</h2>
+                    <button onclick="closeContractModal()" class="text-white hover:text-gray-200 transition-colors">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <p class="text-green-100 mt-2">Service Agreement Template</p>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6 overflow-y-auto max-h-[70vh]">
+                <!-- Contract Form -->
+                <form class="space-y-6">
+                    <!-- Client Information Section -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="building-2" class="w-5 h-5 text-green-600"></i>
+                            Client Information
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Client Name</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Enter client name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Enter company name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="client@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                                <input type="tel" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="+1 (555) 123-4567">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contract Details Section -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="file-text" class="w-5 h-5 text-green-600"></i>
+                            Contract Details
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Contract Type</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                    <option>Service Agreement</option>
+                                    <option>Employment Contract</option>
+                                    <option>NDA</option>
+                                    <option>Partnership Agreement</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Contract Value</label>
+                                <input type="number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="$0.00">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+                                <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+                                <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contract Template Preview -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="eye" class="w-5 h-5 text-green-600"></i>
+                            Contract Template Preview
+                        </h3>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                            <div class="prose max-w-none">
+                                <div class="text-center mb-6">
+                                    <h2 class="text-2xl font-bold text-gray-800">SERVICE AGREEMENT</h2>
+                                    <p class="text-gray-600 mt-2">Contract No: SA-2024-001</p>
+                                </div>
+
+                                <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
+                                    <p><strong>This Service Agreement</strong> ("Agreement") is entered into on <span class="bg-yellow-200 px-1 rounded">[START_DATE]</span> between:</p>
+
+                                    <div class="ml-4">
+                                        <p><strong>Service Provider:</strong> [Your Law Firm]<br>
+                                            Address: [Your Address]<br>
+                                            Email: [Your Email]</p>
+
+                                        <p class="mt-3"><strong>Client:</strong> <span class="bg-yellow-200 px-1 rounded">[CLIENT_NAME]</span><br>
+                                            Company: <span class="bg-yellow-200 px-1 rounded">[COMPANY_NAME]</span><br>
+                                            Email: <span class="bg-yellow-200 px-1 rounded">[CLIENT_EMAIL]</span></p>
+                                    </div>
+
+                                    <p><strong>1. SERVICES TO BE PROVIDED</strong></p>
+                                    <p class="ml-4">The Service Provider agrees to provide legal consultation and advisory services as mutually agreed upon by both parties.</p>
+
+                                    <p><strong>2. COMPENSATION</strong></p>
+                                    <p class="ml-4">The Client agrees to pay <span class="bg-yellow-200 px-1 rounded">[CONTRACT_VALUE]</span> for the services outlined in this agreement.</p>
+
+                                    <p><strong>3. TERM</strong></p>
+                                    <p class="ml-4">This agreement shall commence on <span class="bg-yellow-200 px-1 rounded">[START_DATE]</span> and shall continue until <span class="bg-yellow-200 px-1 rounded">[END_DATE]</span>.</p>
+
+                                    <p><strong>4. CONFIDENTIALITY</strong></p>
+                                    <p class="ml-4">Both parties agree to maintain strict confidentiality regarding all information shared during the course of this agreement.</p>
+                                </div>
+
+                                <div class="mt-8 grid grid-cols-2 gap-8">
+                                    <div class="text-center">
+                                        <div class="border-t border-gray-400 pt-2">
+                                            <p class="text-sm font-medium">Service Provider Signature</p>
+                                            <p class="text-xs text-gray-500">Date: _______________</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="border-t border-gray-400 pt-2">
+                                            <p class="text-sm font-medium">Client Signature</p>
+                                            <p class="text-xs text-gray-500">Date: _______________</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-t border-gray-200">
+                <button onclick="closeContractModal()" class="btn btn-outline">
+                    Cancel
+                </button>
+                <div class="flex gap-3">
+                    <button class="btn btn-outline">
+                        <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                        Preview
+                    </button>
+                    <button class="btn btn-accent">
+                        <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                        Save Draft
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-lawyer.dashboard-layout>
+
+<script>
+    function openContractModal() {
+        document.getElementById('contractModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeContractModal() {
+        document.getElementById('contractModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('contractModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeContractModal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeContractModal();
+        }
+    });
+</script>
