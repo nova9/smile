@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto space-y-8">
             <!-- Header Section -->
             <div class="text-center space-y-6">
-                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500/10 to-orange-600/10 text-black rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-orange-500/20">
-                    <i data-lucide="workflow" class="w-5 h-5 mr-2 text-orange-600"></i>
+                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500/10 to-red-600/10 text-black rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-red-500/20">
+                    <i data-lucide="workflow" class="w-5 h-5 mr-2 text-red-600"></i>
                     Approval Workflow
                 </div>
                 <div class="space-y-4">
@@ -35,11 +35,11 @@
                             <div class="flex gap-2">
                                 <span class="px-3 py-1 text-xs font-medium rounded-full 
                                     @if($approval['priority'] == 'high') bg-red-100 text-red-700
-                                    @elseif($approval['priority'] == 'medium') bg-orange-100 text-orange-700
+                                    @elseif($approval['priority'] == 'medium') bg-gray-100 text-gray-700
                                     @else bg-green-100 text-green-700 @endif">
                                     {{ ucfirst($approval['priority']) }} Priority
                                 </span>
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-700">
+                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700">
                                     {{ ucfirst(str_replace('_', ' ', $approval['status'])) }}
                                 </span>
                             </div>
@@ -47,7 +47,7 @@
                         <div class="flex gap-3">
                             <button class="btn btn-accent btn-sm">Approve</button>
                             <button class="btn btn-outline btn-sm">Request Changes</button>
-                            <button class="btn btn-error btn-sm">Reject</button>
+                            <button class="btn bg-red-600 text-white btn-sm hover:bg-red-700">Reject</button>
                         </div>
                     </div>
                     @endforeach
