@@ -144,7 +144,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Contract Type</label>
                                 <select id="contractType" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                                    <option>Service Agreement</option>
+                                    <option>Volunteer Service Agreement</option>
                                     <option>Employment Contract</option>
                                     <option>NDA</option>
                                     <option>Partnership Agreement</option>
@@ -181,42 +181,98 @@
                                 <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
                                     <p><strong>This Service Agreement</strong> ("Agreement") is entered into on <span class="bg-yellow-200 px-1 rounded preview-start-date">[START_DATE]</span> between:</p>
 
-                                    <div class="ml-4">
-                                        <p><strong>Service Provider:</strong> [Your Law Firm]<br>
-                                            Address: [Your Address]<br>
-                                            Email: [Your Email]</p>
+                                    <div class="ml-4 space-y-4 mb-6">
+                                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                                            <p class="font-semibold text-green-800 mb-3">REQUESTING ORGANIZATION (Pre-filled):</p>
+                                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                                <div>
+                                                    <p><strong>Organization:</strong> <span class="bg-green-200 px-1 rounded font-medium">[ORGANIZATION_NAME]</span></p>
+                                                    <p><strong>Representative:</strong> <span class="bg-green-200 px-1 rounded font-medium">[ORGANIZATION_HEAD]</span></p>
+                                                </div>
+                                                <div>
+                                                    <p><strong>Email:</strong> <span class="bg-green-200 px-1 rounded font-medium">[ORGANIZATION_EMAIL]</span></p>
+                                                    <p><strong>Phone:</strong> <span class="bg-green-200 px-1 rounded font-medium">[ORGANIZATION_PHONE]</span></p>
+                                                </div>
+                                            </div>
+                                            <p class="mt-2"><strong>Service Type:</strong> <span class="bg-green-200 px-1 rounded font-medium">[SERVICE_TYPE]</span></p>
+                                            <p><strong>Duration:</strong> <span class="bg-green-200 px-1 rounded font-medium">[DURATION]</span></p>
+                                        </div>
 
-                                        <p class="mt-3"><strong>Client:</strong> <span class="bg-yellow-200 px-1 rounded preview-client-name">[CLIENT_NAME]</span><br>
-                                            Company: <span class="bg-yellow-200 px-1 rounded preview-company">[COMPANY_NAME]</span><br>
-                                            Email: <span class="bg-yellow-200 px-1 rounded preview-email">[CLIENT_EMAIL]</span></p>
+                                        <div class="p-4 bg-gray-100 border border-gray-300 rounded-lg">
+                                            <p class="font-semibold text-gray-700 mb-3">VOLUNTEER INFORMATION (To be completed by volunteer):</p>
+                                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                                <div>
+                                                    <p><strong>Full Name:</strong> <span class="bg-yellow-200 px-1 rounded preview-client-name">____________________</span></p>
+                                                    <p><strong>Email:</strong> <span class="bg-yellow-200 px-1 rounded preview-email">____________________</span></p>
+                                                    <p><strong>Emergency Contact:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                                </div>
+                                                <div>
+                                                    <p><strong>Phone:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                                    <p><strong>Address:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                                    <p><strong>Date of Birth:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <p><strong>1. SERVICES TO BE PROVIDED</strong></p>
-                                    <p class="ml-4">The Service Provider agrees to provide legal consultation and advisory services as mutually agreed upon by both parties.</p>
+                                    <p><strong>1. SERVICE DESCRIPTION</strong></p>
+                                    <p class="ml-4">The Volunteer agrees to provide voluntary services as described: <span class="bg-green-200 px-1 rounded">[SERVICE_DESCRIPTION]</span></p>
 
-                                    <p><strong>2. COMPENSATION</strong></p>
-                                    <p class="ml-4">The Client agrees to pay <span class="bg-yellow-200 px-1 rounded preview-value">[CONTRACT_VALUE]</span> for the services outlined in this agreement.</p>
+                                    <p><strong>2. DURATION AND COMMITMENT</strong></p>
+                                    <p class="ml-4">Service Period: From <span class="bg-yellow-200 px-1 rounded preview-start-date">[START_DATE]</span> to <span class="bg-yellow-200 px-1 rounded preview-end-date">[END_DATE]</span></p>
 
-                                    <p><strong>3. TERM</strong></p>
-                                    <p class="ml-4">This agreement shall commence on <span class="bg-yellow-200 px-1 rounded preview-start-date">[START_DATE]</span> and shall continue until <span class="bg-yellow-200 px-1 rounded preview-end-date">[END_DATE]</span>.</p>
+                                    <p><strong>3. VOLUNTEER RESPONSIBILITIES</strong></p>
+                                    <p class="ml-4">• Attend scheduled volunteer activities punctually<br>
+                                        • Follow all organizational guidelines and safety protocols<br>
+                                        • Maintain confidentiality of sensitive information<br>
+                                        • Notify the organization of any absences in advance<br>
+                                        • Complete any required training sessions</p>
 
-                                    <p><strong>4. CONFIDENTIALITY</strong></p>
-                                    <p class="ml-4">Both parties agree to maintain strict confidentiality regarding all information shared during the course of this agreement.</p>
+                                    <p><strong>4. ORGANIZATION RESPONSIBILITIES</strong></p>
+                                    <p class="ml-4">• Provide necessary training, materials, and supervision<br>
+                                        • Ensure a safe working environment for volunteers<br>
+                                        • Provide liability insurance coverage during service activities<br>
+                                        • Issue certificate of completion upon successful service<br>
+                                        • Maintain volunteer records and provide references when requested</p>
+
+                                    <p><strong>5. COMPENSATION</strong></p>
+                                    <p class="ml-4">This is a voluntary service agreement. No monetary compensation will be provided. The organization may provide non-monetary recognition, certificates, meals during service, or transportation reimbursement as applicable.</p>
+
+                                    <p><strong>6. LIABILITY AND INSURANCE</strong></p>
+                                    <p class="ml-4">The Organization shall provide appropriate liability coverage for volunteers during service activities. Volunteers must disclose any medical conditions that may affect their ability to perform duties safely.</p>
+
+                                    <p><strong>7. TERMINATION</strong></p>
+                                    <p class="ml-4">Either party may terminate this agreement with 7 days written notice. The Organization may terminate immediately for cause, including violation of policies or unsafe behavior.</p>
+
+                                    <p><strong>8. CONFIDENTIALITY</strong></p>
+                                    <p class="ml-4">All parties agree to maintain strict confidentiality regarding sensitive information shared during the course of this agreement.</p>
                                 </div>
 
-                                <div class="mt-8 grid grid-cols-2 gap-8">
-                                    <div class="text-center">
-                                        <div class="border-t border-gray-400 pt-2">
-                                            <p class="text-sm font-medium">Service Provider Signature</p>
-                                            <p class="text-xs text-gray-500">Date: _______________</p>
+                                <div class="mt-8 border-t-2 border-gray-300 pt-6">
+                                    <div class="grid grid-cols-2 gap-8">
+                                        <div class="text-center">
+                                            <p class="text-sm font-medium mb-8 text-gray-700">LEGAL WITNESS</p>
+                                            <div class="border-b-2 border-gray-400 mb-3 h-12"></div>
+                                            <p class="text-xs text-gray-600 font-medium">Lawyer Signature & Date</p>
+                                            <p class="text-xs text-gray-500 mt-1">[LAWYER_NAME]</p>
+                                            <p class="text-xs text-gray-400 mt-1">License No: [LICENSE_NUMBER]</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-sm font-medium mb-8 text-gray-700">VOLUNTEER</p>
+                                            <div class="border-b-2 border-gray-400 mb-3 h-12"></div>
+                                            <p class="text-xs text-gray-600 font-medium">Volunteer Signature & Date</p>
+                                            <p class="text-xs text-gray-500 mt-1">(To be signed by volunteer)</p>
                                         </div>
                                     </div>
-                                    <div class="text-center">
-                                        <div class="border-t border-gray-400 pt-2">
-                                            <p class="text-sm font-medium">Client Signature</p>
-                                            <p class="text-xs text-gray-500">Date: _______________</p>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                                    <p class="text-sm font-semibold text-blue-800">Signing Process:</p>
+                                    <ol class="text-xs text-blue-700 mt-2 ml-4 list-decimal space-y-1">
+                                        <li>Volunteer completes personal information section above</li>
+                                        <li>Volunteer signs in designated area</li>
+                                        <li>Lawyer reviews and provides legal witness signature</li>
+                                        <li>Organization receives completed agreement for records</li>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
@@ -247,12 +303,14 @@
 <script>
     let currentMode = 'edit';
     let currentContractType = 'Service Agreement';
+    let isTemplate = false; // Track if using a template
 
     function openContractModal() {
         // Clear form for new contract
         clearContractForm();
         setModalMode('edit');
-        currentContractType = 'Service Agreement';
+        currentContractType = 'Volunteer Service Agreement';
+        isTemplate = false; // Not using a template
         updateContractPreview();
         document.getElementById('contractModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
@@ -262,11 +320,12 @@
         // Clear form for new contract
         clearContractForm();
         setModalMode('edit');
+        isTemplate = true; // Using a template
 
         // Extract contract type from template name
-        if (templateName.includes('Service Agreement')) {
-            currentContractType = 'Service Agreement';
-            document.getElementById('contractType').value = 'Service Agreement';
+        if (templateName.includes('Service Agreement') || templateName.includes('Volunteer Service Agreement')) {
+            currentContractType = 'Volunteer Service Agreement';
+            document.getElementById('contractType').value = 'Volunteer Service Agreement';
         } else if (templateName.includes('Employment Contract')) {
             currentContractType = 'Employment Contract';
             document.getElementById('contractType').value = 'Employment Contract';
@@ -277,6 +336,10 @@
             currentContractType = 'Partnership Agreement';
             document.getElementById('contractType').value = 'Partnership Agreement';
         }
+
+        // Disable contract type field when using template
+        document.getElementById('contractType').disabled = true;
+        document.getElementById('contractType').classList.add('bg-gray-100', 'cursor-not-allowed');
 
         // Update modal title and subtitle
         document.getElementById('modalTitle').textContent = `New Contract - ${templateName}`;
@@ -290,6 +353,7 @@
     function openContractModalWithData(contractData, mode = 'edit') {
         currentMode = mode;
         currentContractType = contractData.type;
+        isTemplate = true; // Existing contracts are like templates - type shouldn't change
         // Pre-fill form with existing contract data
         fillContractForm(contractData);
         setModalMode(mode);
@@ -303,11 +367,17 @@
         // Get all form inputs
         const inputs = document.querySelectorAll('#contractModal input, #contractModal select');
         inputs.forEach(input => {
-            input.disabled = isViewMode;
-            if (isViewMode) {
+            if (input.id === 'contractType' && (isTemplate || isViewMode)) {
+                // Keep contract type disabled for templates and view mode
+                input.disabled = true;
                 input.classList.add('bg-gray-100', 'cursor-not-allowed');
             } else {
-                input.classList.remove('bg-gray-100', 'cursor-not-allowed');
+                input.disabled = isViewMode;
+                if (isViewMode) {
+                    input.classList.add('bg-gray-100', 'cursor-not-allowed');
+                } else {
+                    input.classList.remove('bg-gray-100', 'cursor-not-allowed');
+                }
             }
         });
 
@@ -334,39 +404,43 @@
         document.getElementById('company').value = '';
         document.getElementById('email').value = '';
         document.getElementById('phone').value = '';
-        document.getElementById('contractType').value = 'Service Agreement';
+        document.getElementById('contractType').value = 'Volunteer Service Agreement';
         document.getElementById('contractValue').value = '';
         document.getElementById('startDate').value = '';
         document.getElementById('endDate').value = '';
 
+        // Re-enable contract type field for new contracts
+        document.getElementById('contractType').disabled = false;
+        document.getElementById('contractType').classList.remove('bg-gray-100', 'cursor-not-allowed');
+
         // Update header
         document.getElementById('modalTitle').textContent = 'New Contract Template';
-        document.getElementById('modalSubtitle').textContent = 'Service Agreement Template';
-    }
-
-    function fillContractForm(contractData) {
-        // Fill form with dummy data based on contract
-        const dummyData = getDummyDataForContract(contractData);
-
-        document.getElementById('clientName').value = dummyData.clientName;
-        document.getElementById('company').value = dummyData.company;
-        document.getElementById('email').value = dummyData.email;
-        document.getElementById('phone').value = dummyData.phone;
-        document.getElementById('contractType').value = contractData.type;
-        document.getElementById('contractValue').value = dummyData.contractValue;
-        document.getElementById('startDate').value = dummyData.startDate;
-        document.getElementById('endDate').value = dummyData.endDate;
-
-        // Update header based on mode
-        const modeText = currentMode === 'view' ? 'View Contract' : 'Edit Contract';
-        document.getElementById('modalTitle').textContent = `${modeText} - ${contractData.title}`;
-        document.getElementById('modalSubtitle').textContent = contractData.type;
-
-        // Update preview with filled data
-        updateContractPreview();
+        document.getElementById('modalSubtitle').textContent = 'Volunteer Service Agreement Template';
     }
 
     function getDummyDataForContract(contractData) {
+        // Handle service agreements differently with organization details pre-filled
+        if (contractData.contract_type === 'service_agreement') {
+            return {
+                // Organization details (pre-filled from approval)
+                organizationName: contractData.organization,
+                organizationHead: contractData.organization_head,
+                organizationEmail: contractData.organization_email,
+                organizationPhone: contractData.organization_phone,
+                serviceType: contractData.service_type,
+                duration: contractData.duration,
+                description: contractData.description,
+                // Form values for editing (volunteer details - blank)
+                clientName: '[Volunteer Name - To be completed]',
+                company: contractData.organization,
+                email: '[volunteer@email.com]',
+                phone: '[Volunteer Phone]',
+                contractValue: 'Volunteer Service (No monetary compensation)',
+                startDate: '2024-02-01',
+                endDate: '2024-12-31'
+            };
+        }
+
         const dummyDataMap = {
             'Service Agreement - TechCorp Ltd': {
                 clientName: 'TechCorp Ltd',
@@ -408,40 +482,77 @@
         };
     }
 
-    function updateContractPreview() {
-        const clientName = document.getElementById('clientName').value || '[CLIENT_NAME]';
-        const company = document.getElementById('company').value || '[COMPANY_NAME]';
-        const email = document.getElementById('email').value || '[CLIENT_EMAIL]';
-        const contractValue = document.getElementById('contractValue').value || '[CONTRACT_VALUE]';
-        const startDate = document.getElementById('startDate').value || '[START_DATE]';
-        const endDate = document.getElementById('endDate').value || '[END_DATE]';
-
-        // Get current contract type
-        const selectedType = document.getElementById('contractType').value;
-        currentContractType = selectedType;
-
-        // Update contract preview based on type
-        const previewContainer = document.querySelector('.bg-gray-50.border.border-gray-200.rounded-lg.p-6');
-        previewContainer.innerHTML = generateContractPreview(selectedType, clientName, company, email, contractValue, startDate, endDate);
-    }
-
-    function generateContractPreview(contractType, clientName, company, email, contractValue, startDate, endDate) {
+    function generateContractPreview(contractType, clientName, company, email, contractValue, startDate, endDate, contractData = null) {
         const contractTemplates = {
-            'Service Agreement': {
-                title: 'SERVICE AGREEMENT',
-                number: 'SA-2024-001',
+            'Volunteer Service Agreement': {
+                title: 'VOLUNTEER SERVICE AGREEMENT',
+                number: 'VSA-2024-001',
                 content: `
-                    <p><strong>This Service Agreement</strong> ("Agreement") is entered into on <span class="bg-yellow-200 px-1 rounded">${startDate}</span> between:</p>
-                    <div class="ml-4">
-                        <p><strong>Service Provider:</strong> [Your Law Firm]<br>Address: [Your Address]<br>Email: [Your Email]</p>
-                        <p class="mt-3"><strong>Client:</strong> <span class="bg-yellow-200 px-1 rounded">${clientName}</span><br>Company: <span class="bg-yellow-200 px-1 rounded">${company}</span><br>Email: <span class="bg-yellow-200 px-1 rounded">${email}</span></p>
+                    <p><strong>This Volunteer Service Agreement</strong> ("Agreement") is entered into on <span class="bg-yellow-200 px-1 rounded">${startDate}</span> for volunteer services between:</p>
+                    
+                    <div class="ml-4 space-y-4 mb-6">
+                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <p class="font-semibold text-green-800 mb-3">REQUESTING ORGANIZATION (Pre-filled):</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p><strong>Organization:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('name', contractData) || company}</span></p>
+                                    <p><strong>Representative:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('head', contractData)}</span></p>
+                                </div>
+                                <div>
+                                    <p><strong>Email:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('email', contractData)}</span></p>
+                                    <p><strong>Phone:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('phone', contractData)}</span></p>
+                                </div>
+                            </div>
+                            <p class="mt-2"><strong>Service Type:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('serviceType', contractData)}</span></p>
+                            <p><strong>Duration:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('duration', contractData)}</span></p>
+                        </div>
+                        
+                        <div class="p-4 bg-gray-100 border border-gray-300 rounded-lg">
+                            <p class="font-semibold text-gray-700 mb-3">VOLUNTEER INFORMATION (To be completed by volunteer):</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p><strong>Full Name:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">${clientName.includes('Volunteer') ? '____________________' : clientName}</span></p>
+                                    <p><strong>Email:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">${email.includes('volunteer') ? '____________________' : email}</span></p>
+                                    <p><strong>Emergency Contact:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                </div>
+                                <div>
+                                    <p><strong>Phone:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">${document.getElementById('phone')?.value?.includes('Volunteer') ? '____________________' : (document.getElementById('phone')?.value || '____________________')}</span></p>
+                                    <p><strong>Address:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                    <p><strong>Date of Birth:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p><strong>1. SERVICES TO BE PROVIDED</strong></p>
-                    <p class="ml-4">The Service Provider agrees to provide legal consultation and advisory services as mutually agreed upon by both parties.</p>
-                    <p><strong>2. COMPENSATION</strong></p>
-                    <p class="ml-4">The Client agrees to pay <span class="bg-yellow-200 px-1 rounded">${contractValue ? '$' + contractValue : '[CONTRACT_VALUE]'}</span> for the services outlined in this agreement.</p>
-                    <p><strong>3. TERM</strong></p>
-                    <p class="ml-4">This agreement shall commence on <span class="bg-yellow-200 px-1 rounded">${startDate}</span> and shall continue until <span class="bg-yellow-200 px-1 rounded">${endDate}</span>.</p>
+                    
+                    <p><strong>1. SERVICE DESCRIPTION</strong></p>
+                    <p class="ml-4">The Volunteer agrees to provide voluntary services as described: <span class="bg-green-200 px-1 rounded">${getOrgData('description', contractData)}</span></p>
+                    
+                    <p><strong>2. DURATION AND COMMITMENT</strong></p>
+                    <p class="ml-4">Service Period: From <span class="bg-yellow-200 px-1 rounded">${startDate}</span> to <span class="bg-yellow-200 px-1 rounded">${endDate}</span><br>
+                    Service Duration: <span class="bg-green-200 px-1 rounded">${getOrgData('duration', contractData)}</span></p>
+                    
+                    <p><strong>3. VOLUNTEER RESPONSIBILITIES</strong></p>
+                    <p class="ml-4">• Attend scheduled volunteer activities punctually<br>
+                    • Follow all organizational guidelines and safety protocols<br>
+                    • Maintain confidentiality of sensitive information<br>
+                    • Notify the organization of any absences in advance<br>
+                    • Complete any required training sessions</p>
+                    
+                    <p><strong>4. ORGANIZATION RESPONSIBILITIES</strong></p>
+                    <p class="ml-4">• Provide necessary training, materials, and supervision<br>
+                    • Ensure a safe working environment for volunteers<br>
+                    • Provide liability insurance coverage during service activities<br>
+                    • Issue certificate of completion upon successful service<br>
+                    • Maintain volunteer records and provide references when requested</p>
+                    
+                    <p><strong>5. COMPENSATION</strong></p>
+                    <p class="ml-4">This is a voluntary service agreement. No monetary compensation will be provided. The organization may provide non-monetary recognition, certificates, meals during service, or transportation reimbursement as applicable.</p>
+                    
+                    <p><strong>6. LIABILITY AND INSURANCE</strong></p>
+                    <p class="ml-4">The Organization shall provide appropriate liability coverage for volunteers during service activities. Volunteers must disclose any medical conditions that may affect their ability to perform duties safely.</p>
+                    
+                    <p><strong>7. TERMINATION</strong></p>
+                    <p class="ml-4">Either party may terminate this agreement with 7 days written notice. The Organization may terminate immediately for cause, including violation of policies or unsafe behavior.</p>
                 `
             },
             'Employment Contract': {
@@ -494,10 +605,129 @@
                     <p><strong>3. TERM</strong></p>
                     <p class="ml-4">This partnership shall commence on <span class="bg-yellow-200 px-1 rounded">${startDate}</span> and continue until <span class="bg-yellow-200 px-1 rounded">${endDate}</span>.</p>
                 `
+            },
+            'Volunteer Service Agreement': {
+                title: 'VOLUNTEER SERVICE AGREEMENT',
+                number: 'VSA-2024-001',
+                content: `
+                    <p><strong>This Volunteer Service Agreement</strong> ("Agreement") is entered into on <span class="bg-yellow-200 px-1 rounded">${startDate}</span> for volunteer services between:</p>
+                    
+                    <div class="ml-4 space-y-4 mb-6">
+                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <p class="font-semibold text-green-800 mb-3">REQUESTING ORGANIZATION (Pre-filled):</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p><strong>Organization:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('name', contractData) || company}</span></p>
+                                    <p><strong>Representative:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('head', contractData)}</span></p>
+                                </div>
+                                <div>
+                                    <p><strong>Email:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('email', contractData)}</span></p>
+                                    <p><strong>Phone:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('phone', contractData)}</span></p>
+                                </div>
+                            </div>
+                            <p class="mt-2"><strong>Service Type:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('serviceType', contractData)}</span></p>
+                            <p><strong>Duration:</strong> <span class="bg-green-200 px-1 rounded font-medium">${getOrgData('duration', contractData)}</span></p>
+                        </div>
+                        
+                        <div class="p-4 bg-gray-100 border border-gray-300 rounded-lg">
+                            <p class="font-semibold text-gray-700 mb-3">VOLUNTEER INFORMATION (To be completed by volunteer):</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p><strong>Full Name:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">${clientName.includes('Volunteer') ? '____________________' : clientName}</span></p>
+                                    <p><strong>Email:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">${email.includes('volunteer') ? '____________________' : email}</span></p>
+                                    <p><strong>Emergency Contact:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                </div>
+                                <div>
+                                    <p><strong>Phone:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">${document.getElementById('phone')?.value?.includes('Volunteer') ? '____________________' : (document.getElementById('phone')?.value || '____________________')}</span></p>
+                                    <p><strong>Address:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                    <p><strong>Date of Birth:</strong> <span class="inline-block bg-gray-300 px-3 py-1 rounded min-w-[150px]">____________________</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p><strong>1. SERVICE DESCRIPTION</strong></p>
+                    <p class="ml-4">The Volunteer agrees to provide voluntary services as described: <span class="bg-green-200 px-1 rounded">${getOrgData('description', contractData)}</span></p>
+                    
+                    <p><strong>2. DURATION AND COMMITMENT</strong></p>
+                    <p class="ml-4">Service Period: From <span class="bg-yellow-200 px-1 rounded">${startDate}</span> to <span class="bg-yellow-200 px-1 rounded">${endDate}</span><br>
+                    Service Duration: <span class="bg-green-200 px-1 rounded">${getOrgData('duration', contractData)}</span></p>
+                    
+                    <p><strong>3. VOLUNTEER RESPONSIBILITIES</strong></p>
+                    <p class="ml-4">• Attend scheduled volunteer activities punctually<br>
+                    • Follow all organizational guidelines and safety protocols<br>
+                    • Maintain confidentiality of sensitive information<br>
+                    • Notify the organization of any absences in advance<br>
+                    • Complete any required training sessions</p>
+                    
+                    <p><strong>4. ORGANIZATION RESPONSIBILITIES</strong></p>
+                    <p class="ml-4">• Provide necessary training, materials, and supervision<br>
+                    • Ensure a safe working environment for volunteers<br>
+                    • Provide liability insurance coverage during service activities<br>
+                    • Issue certificate of completion upon successful service<br>
+                    • Maintain volunteer records and provide references when requested</p>
+                    
+                    <p><strong>5. COMPENSATION</strong></p>
+                    <p class="ml-4">This is a voluntary service agreement. No monetary compensation will be provided. The organization may provide non-monetary recognition, certificates, meals during service, or transportation reimbursement as applicable.</p>
+                    
+                    <p><strong>6. LIABILITY AND INSURANCE</strong></p>
+                    <p class="ml-4">The Organization shall provide appropriate liability coverage for volunteers during service activities. Volunteers must disclose any medical conditions that may affect their ability to perform duties safely.</p>
+                    
+                    <p><strong>7. TERMINATION</strong></p>
+                    <p class="ml-4">Either party may terminate this agreement with 7 days written notice. The Organization may terminate immediately for cause, including violation of policies or unsafe behavior.</p>
+                    
+                    <p><strong>8. CONFIDENTIALITY</strong></p>
+                    <p class="ml-4">All parties agree to maintain strict confidentiality regarding sensitive information shared during the course of this agreement.</p>
+                `
             }
         };
 
-        const template = contractTemplates[contractType] || contractTemplates['Service Agreement'];
+        const template = contractTemplates[contractType] || contractTemplates['Volunteer Service Agreement'];
+
+        // Different signature sections based on contract type
+        const signatureSection = contractType === 'Volunteer Service Agreement' ? `
+            <div class="mt-8 border-t-2 border-gray-300 pt-6">
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <p class="text-sm font-medium mb-8 text-gray-700">LEGAL WITNESS</p>
+                        <div class="border-b-2 border-gray-400 mb-3 h-12"></div>
+                        <p class="text-xs text-gray-600 font-medium">Lawyer Signature & Date</p>
+                        <p class="text-xs text-gray-500 mt-1">[LAWYER_NAME]</p>
+                        <p class="text-xs text-gray-400 mt-1">License No: [LICENSE_NUMBER]</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-sm font-medium mb-8 text-gray-700">VOLUNTEER</p>
+                        <div class="border-b-2 border-gray-400 mb-3 h-12"></div>
+                        <p class="text-xs text-gray-600 font-medium">Volunteer Signature & Date</p>
+                        <p class="text-xs text-gray-500 mt-1">(To be signed by volunteer)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                <p class="text-sm font-semibold text-blue-800">Signing Process:</p>
+                <ol class="text-xs text-blue-700 mt-2 ml-4 list-decimal space-y-1">
+                    <li>Volunteer completes personal information section above</li>
+                    <li>Volunteer signs in designated area</li>
+                    <li>Lawyer reviews and provides legal witness signature</li>
+                    <li>Organization receives completed agreement for records</li>
+                </ol>
+            </div>
+        ` : `
+            <div class="mt-8 grid grid-cols-2 gap-8">
+                <div class="text-center">
+                    <div class="border-t border-gray-400 pt-2">
+                        <p class="text-sm font-medium">Party 1 Signature</p>
+                        <p class="text-xs text-gray-500">Date: _______________</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="border-t border-gray-400 pt-2">
+                        <p class="text-sm font-medium">Party 2 Signature</p>
+                        <p class="text-xs text-gray-500">Date: _______________</p>
+                    </div>
+                </div>
+            </div>
+        `;
 
         return `
             <div class="prose max-w-none">
@@ -507,29 +737,81 @@
                 </div>
                 <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
                     ${template.content}
-                    <p><strong>4. CONFIDENTIALITY</strong></p>
-                    <p class="ml-4">Both parties agree to maintain strict confidentiality regarding all information shared during the course of this agreement.</p>
+                    <p><strong>${contractType === 'Volunteer Service Agreement' ? '8' : '4'}. CONFIDENTIALITY</strong></p>
+                    <p class="ml-4">All parties agree to maintain strict confidentiality regarding sensitive information shared during the course of this agreement.</p>
                 </div>
-                <div class="mt-8 grid grid-cols-2 gap-8">
-                    <div class="text-center">
-                        <div class="border-t border-gray-400 pt-2">
-                            <p class="text-sm font-medium">Party 1 Signature</p>
-                            <p class="text-xs text-gray-500">Date: _______________</p>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <div class="border-t border-gray-400 pt-2">
-                            <p class="text-sm font-medium">Party 2 Signature</p>
-                            <p class="text-xs text-gray-500">Date: _______________</p>
-                        </div>
-                    </div>
-                </div>
+                ${signatureSection}
             </div>
         `;
     }
 
-    // Add event listeners to form fields to update preview in real-time
+    // Helper function to get organization data
+    function getOrgData(field, contractData) {
+        if (!contractData || !contractData.contract_type || contractData.contract_type !== 'service_agreement') {
+            return `[${field.toUpperCase()}]`;
+        }
+
+        const mapping = {
+            name: contractData.organization || '[ORGANIZATION_NAME]',
+            head: contractData.organization_head || '[ORGANIZATION_HEAD]',
+            email: contractData.organization_email || '[ORGANIZATION_EMAIL]',
+            phone: contractData.organization_phone || '[ORGANIZATION_PHONE]',
+            serviceType: contractData.service_type || '[SERVICE_TYPE]',
+            duration: contractData.duration || '[DURATION]',
+            description: contractData.description || '[SERVICE_DESCRIPTION]'
+        };
+
+        return mapping[field] || `[${field.toUpperCase()}]`;
+    }
+
+    function updateContractPreview() {
+        const clientName = document.getElementById('clientName').value || '[CLIENT_NAME]';
+        const company = document.getElementById('company').value || '[COMPANY_NAME]';
+        const email = document.getElementById('email').value || '[CLIENT_EMAIL]';
+        const contractValue = document.getElementById('contractValue').value || '[CONTRACT_VALUE]';
+        const startDate = document.getElementById('startDate').value || '[START_DATE]';
+        const endDate = document.getElementById('endDate').value || '[END_DATE]';
+
+        // Get current contract type
+        const selectedType = document.getElementById('contractType').value;
+        currentContractType = selectedType;
+
+        // Pass current contract data for organization details
+        const contractData = window.currentContractData || null;
+
+        // Update contract preview based on type
+        const previewContainer = document.querySelector('.bg-gray-50.border.border-gray-200.rounded-lg.p-6');
+        previewContainer.innerHTML = generateContractPreview(selectedType, clientName, company, email, contractValue, startDate, endDate, contractData);
+    }
+
+    function fillContractForm(contractData) {
+        // Store contract data globally for preview updates
+        window.currentContractData = contractData;
+
+        // Fill form with dummy data based on contract
+        const dummyData = getDummyDataForContract(contractData);
+
+        document.getElementById('clientName').value = dummyData.clientName;
+        document.getElementById('company').value = dummyData.company;
+        document.getElementById('email').value = dummyData.email;
+        document.getElementById('phone').value = dummyData.phone;
+        document.getElementById('contractType').value = contractData.type;
+        document.getElementById('contractValue').value = dummyData.contractValue;
+        document.getElementById('startDate').value = dummyData.startDate;
+        document.getElementById('endDate').value = dummyData.endDate;
+
+        // Update header based on mode
+        const modeText = currentMode === 'view' ? 'View Contract' : 'Edit Contract';
+        document.getElementById('modalTitle').textContent = `${modeText} - ${contractData.title}`;
+        document.getElementById('modalSubtitle').textContent = contractData.type;
+
+        // Update preview with filled data
+        updateContractPreview();
+    }
+
+    // Update contract type options to include Volunteer Service Agreement
     document.addEventListener('DOMContentLoaded', function() {
+        // Add event listeners to form fields to update preview in real-time
         const formFields = ['clientName', 'company', 'email', 'contractValue', 'startDate', 'endDate', 'contractType'];
         formFields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
@@ -550,6 +832,9 @@
             input.disabled = false;
             input.classList.remove('bg-gray-100', 'cursor-not-allowed');
         });
+
+        // Reset template flag
+        isTemplate = false;
 
         // Reset buttons
         const saveBtn = document.querySelector('#contractModal .btn-accent');
