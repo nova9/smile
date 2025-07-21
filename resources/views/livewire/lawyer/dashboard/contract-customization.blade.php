@@ -9,7 +9,7 @@
                 </div>
                 <div class="space-y-4">
                     <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-800 leading-tight relative">
-                        Template <span class="text-accent">Management</span>
+                        Contract <span class="text-accent">Customization</span>
                         <svg class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-40 h-4 text-green-500/30" viewBox="0 0 100 12" fill="none">
                             <path d="M2 6C20 1 40 1 50 6C60 11 80 11 98 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                         </svg>
@@ -95,7 +95,7 @@
                 </button>
             </div>
 
-            <!-- Template Management -->
+            <!-- Contract Customization -->
             <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-xl font-semibold text-gray-800">Contract Templates</h3>
