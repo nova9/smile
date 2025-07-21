@@ -4,25 +4,25 @@
         [
             'icon' => 'building-2',
             'title' => 'Total Organizations',
-            'value' => '3',
+            'value' => number_format($stats['total_organizations']),
             'description' => 'Registered NGOs'
         ],
         [
             'icon' => 'shield-check',
-            'title' => 'Verified',
-            'value' => '85',
-            'description' => 'Active & Approved'
+            'title' => 'Total Events',
+            'value' => number_format($stats['total_events']),
+            'description' => 'Events by organizations'
         ],
         [
             'icon' => 'clock',
             'title' => 'Pending Approval',
-            'value' => '1',
+            'value' => '6',
             'description' => 'Awaiting Review'
         ],
         [
             'icon' => 'ban',
             'title' => 'Suspended',
-            'value' => '13',
+            'value' => '0',
             'description' => 'Restricted Access'
         ]
     ]" />
@@ -52,64 +52,37 @@
                     <table id="orgTable" class="min-w-full bg-white rounded-3xl shadow-xl">
                         <thead>
                             <tr class="bg-gray-100">
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">Id
-                                </th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Organization Name
-                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tl-3xl">Id</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Organization Name</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Email</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Status</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Registered On</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Opportunities</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">
-                                    Actions</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent rounded-tr-3xl">Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="px-6 py-4">1</td>
-                                <td class="px-6 py-4">GreenHope Foundation</td>
-                                <td class="px-6 py-4">info@greenhope.org</td>
-                                <td class="px-6 py-4">
-                                    <span class="badge badge-warning">Pending</span>
-                                </td>
-                                <td class="px-6 py-4">2025-06-10</td>
-                                <td class="px-6 py-4">5</td>
-                                <td class="px-6 py-4 flex gap-2">
-                                    <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/organization-details') }}" />
-                                    <x-admin.action-button type="delete" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4">2</td>
-                                <td class="px-6 py-4">EcoFuture Org</td>
-                                <td class="px-6 py-4">contact@ecofuture.org</td>
-                                <td class="px-6 py-4">
-                                    <span class="badge badge-warning">Pending</span>
-                                </td>
-                                <td class="px-6 py-4">2025-07-01</td>
-                                <td class="px-6 py-4">0</td>
-                                <td class="px-6 py-4 flex gap-2">
-                                    <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/organization-details') }}" />
-                                    <x-admin.action-button type="delete" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4">3</td>
-                                <td class="px-6 py-4">RiverCare Trust</td>
-                                <td class="px-6 py-4">info@rivercare.org</td>
-                                <td class="px-6 py-4">
-                                    <span class="badge badge-success">Registered</span>
-                                </td>
-                                <td class="px-6 py-4">2025-05-20</td>
-                                <td class="px-6 py-4">2</td>
-                                <td class="px-6 py-4 flex gap-2">
-                                    <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/organization-details') }}" />
-                                    <x-admin.action-button type="delete" />
-                                </td>
-                            </tr>
+                            @foreach($organizations as $org)
+                                <tr>
+                                    <td class="px-6 py-4">{{ $org->id }}</td>
+                                    <td class="px-6 py-4">{{ $org->name }}</td>
+                                    <td class="px-6 py-4">{{ $org->email }}</td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="badge {{ $org->status === 'active' ? 'badge-success' : 'badge-warning' }}">
+                                            {{ ucfirst($org->status ?? 'Pending') }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">{{ $org->created_at->format('Y-m-d') }}</td>
+                                    <td class="px-6 py-4">{{ $org->organizing_events_count }}</td>
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <x-admin.action-button type="view"
+                                            url="{{ url('/admin/dashboard/organization-details/' . $org->id) }}" />
+                                        <x-admin.action-button type="delete" />
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
