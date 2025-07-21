@@ -40,10 +40,10 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-600">Pending</p>
-                            <p class="text-3xl font-bold text-orange-600">{{ $stats['pending_approval'] }}</p>
+                            <p class="text-3xl font-bold text-red-600">{{ $stats['pending_approval'] }}</p>
                         </div>
-                        <div class="p-3 bg-orange-100 rounded-full">
-                            <i data-lucide="clock" class="w-6 h-6 text-orange-600"></i>
+                        <div class="p-3 bg-red-100 rounded-full">
+                            <i data-lucide="clock" class="w-6 h-6 text-red-600"></i>
                         </div>
                     </div>
                 </div>
@@ -64,10 +64,10 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-600">This Month</p>
-                            <p class="text-3xl font-bold text-accent">{{ $stats['completed_this_month'] }}</p>
+                            <p class="text-3xl font-bold text-black">{{ $stats['completed_this_month'] }}</p>
                         </div>
-                        <div class="p-3 bg-green-100 rounded-full">
-                            <i data-lucide="trending-up" class="w-6 h-6 text-accent"></i>
+                        <div class="p-3 bg-gray-100 rounded-full">
+                            <i data-lucide="trending-up" class="w-6 h-6 text-black"></i>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                 <h3 class="text-xl font-semibold text-gray-800 mb-6">Legal Services</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Contract Drafting -->
-                    <div class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
+                    <a href="/lawyer/contract-drafting" class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-green-100 rounded-full">
                                 <i data-lucide="edit-3" class="w-5 h-5 text-green-600"></i>
@@ -87,22 +87,22 @@
                         </div>
                         <p class="text-sm text-gray-600 mb-2">Create legal contracts</p>
                         <span class="text-xs text-green-600 font-medium">15 in progress</span>
-                    </div>
+                    </a>
 
                     <!-- Contract Approval Workflow -->
-                    <div class="p-4 border border-gray-200 rounded-lg hover:bg-orange-50 hover:border-orange-300 transition-all duration-200 cursor-pointer">
+                    <a href="/lawyer/approval-workflow" class="p-4 border border-gray-200 rounded-lg hover:bg-red-50 hover:border-red-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="p-2 bg-orange-100 rounded-full">
-                                <i data-lucide="workflow" class="w-5 h-5 text-orange-600"></i>
+                            <div class="p-2 bg-red-100 rounded-full">
+                                <i data-lucide="workflow" class="w-5 h-5 text-red-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Approval Workflow</h4>
                         </div>
                         <p class="text-sm text-gray-600 mb-2">Manage approvals</p>
-                        <span class="text-xs text-orange-600 font-medium">8 pending</span>
-                    </div>
+                        <span class="text-xs text-red-600 font-medium">8 pending</span>
+                    </a>
 
                     <!-- Digital Signature -->
-                    <div class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
+                    <a href="/lawyer/digital-signature" class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-green-100 rounded-full">
                                 <i data-lucide="pen-tool" class="w-5 h-5 text-green-600"></i>
@@ -111,43 +111,43 @@
                         </div>
                         <p class="text-sm text-gray-600 mb-2">Handle signatures</p>
                         <span class="text-xs text-green-600 font-medium">12 awaiting</span>
-                    </div>
+                    </a>
 
                     <!-- Contract Archive -->
-                    <div class="p-4 border border-gray-200 rounded-lg hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 cursor-pointer">
+                    <a href="/lawyer/contract-archive" class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="p-2 bg-purple-100 rounded-full">
-                                <i data-lucide="archive" class="w-5 h-5 text-purple-600"></i>
+                            <div class="p-2 bg-gray-100 rounded-full">
+                                <i data-lucide="archive" class="w-5 h-5 text-gray-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Contract Archive</h4>
                         </div>
                         <p class="text-sm text-gray-600 mb-2">View archived contracts</p>
-                        <span class="text-xs text-purple-600 font-medium">127 archived</span>
-                    </div>
+                        <span class="text-xs text-gray-600 font-medium">127 archived</span>
+                    </a>
 
                     <!-- Contract Customization -->
-                    <div class="p-4 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 cursor-pointer">
+                    <a href="/lawyer/contract-customization" class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="p-2 bg-blue-100 rounded-full">
-                                <i data-lucide="settings" class="w-5 h-5 text-blue-600"></i>
+                            <div class="p-2 bg-green-100 rounded-full">
+                                <i data-lucide="settings" class="w-5 h-5 text-green-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Contract Customization</h4>
                         </div>
                         <p class="text-sm text-gray-600 mb-2">Customize templates</p>
-                        <span class="text-xs text-blue-600 font-medium">25 templates</span>
-                    </div>
+                        <span class="text-xs text-green-600 font-medium">25 templates</span>
+                    </a>
 
                     <!-- Legal Q&A Support -->
-                    <div class="p-4 border border-gray-200 rounded-lg hover:bg-teal-50 hover:border-teal-300 transition-all duration-200 cursor-pointer">
+                    <a href="/lawyer/legal-qa" class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="p-2 bg-teal-100 rounded-full">
-                                <i data-lucide="help-circle" class="w-5 h-5 text-teal-600"></i>
+                            <div class="p-2 bg-gray-100 rounded-full">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-gray-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Legal Q&A Support</h4>
                         </div>
                         <p class="text-sm text-gray-600 mb-2">Provide consultation</p>
-                        <span class="text-xs text-teal-600 font-medium">5 pending</span>
-                    </div>
+                        <span class="text-xs text-gray-600 font-medium">5 pending</span>
+                    </a>
                 </div>
             </div>
 
@@ -162,15 +162,15 @@
                     <div class="flex items-center gap-3 p-3 hover:bg-green-50 rounded-lg transition-colors">
                         <div class="p-2 rounded-full 
                             @if($activity['status'] == 'completed') bg-green-100 
-                            @elseif($activity['status'] == 'pending') bg-orange-100 
-                            @else bg-green-100 @endif">
+                            @elseif($activity['status'] == 'pending') bg-red-100 
+                            @else bg-gray-100 @endif">
                             <i data-lucide="
-                            @if($activity['status'] == 'completed') check 
+                            @if($activity['status'] == 'completed') check-circle 
                             @elseif($activity['status'] == 'pending') clock 
                             @else activity @endif" class="w-4 h-4 
                             @if($activity['status'] == 'completed') text-green-600 
-                            @elseif($activity['status'] == 'pending') text-orange-600 
-                            @else text-green-600 @endif"></i>
+                            @elseif($activity['status'] == 'pending') text-red-600 
+                            @else text-gray-600 @endif"></i>
                         </div>
                         <div class="flex-1">
                             <p class="font-medium text-gray-800 text-sm">{{ $activity['title'] }}</p>

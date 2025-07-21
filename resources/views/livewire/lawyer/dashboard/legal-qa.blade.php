@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto space-y-8">
             <!-- Header Section -->
             <div class="text-center space-y-6">
-                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-500/10 to-teal-600/10 text-black rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-teal-500/20">
-                    <i data-lucide="help-circle" class="w-5 h-5 mr-2 text-teal-600"></i>
+                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-500/10 to-gray-600/10 text-black rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-gray-500/20">
+                    <i data-lucide="help-circle" class="w-5 h-5 mr-2 text-gray-600"></i>
                     Legal Q&A Support
                 </div>
                 <div class="space-y-4">
@@ -37,7 +37,7 @@
                             </div>
                             <span class="px-3 py-1 text-xs font-medium rounded-full 
                                 @if($question['priority'] == 'high') bg-red-100 text-red-700
-                                @elseif($question['priority'] == 'medium') bg-orange-100 text-orange-700
+                                @elseif($question['priority'] == 'medium') bg-gray-100 text-gray-700
                                 @else bg-green-100 text-green-700 @endif">
                                 {{ ucfirst($question['priority']) }} Priority
                             </span>
@@ -68,7 +68,7 @@
                         <div class="flex items-center gap-3">
                             <span class="px-3 py-1 text-xs font-medium rounded-full 
                                 @if($answered['status'] == 'satisfied') bg-green-100 text-green-700
-                                @else bg-orange-100 text-orange-700 @endif">
+                                @else bg-red-100 text-red-700 @endif">
                                 {{ ucfirst(str_replace('_', ' ', $answered['status'])) }}
                             </span>
                             <button class="btn btn-outline btn-sm">View</button>
