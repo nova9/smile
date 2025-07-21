@@ -26,11 +26,7 @@ class Profile extends Component
         $this->attribute = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
 
 
-        $this->completion = $user->isProfileCompletionPercentage(
-            $this->attribute['contact_number'] ?? '',
-            $this->attribute['logo'] ?? '',
-            
-        );
+        $this->completion = $user->isProfileCompletionPercentage();
 
 
         $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
