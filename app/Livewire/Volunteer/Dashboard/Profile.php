@@ -33,15 +33,7 @@ class Profile extends Component
         $this->attribute = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
 
 
-        $this->completion = $user->isProfileCompletionPercentage(
-            $this->attribute['contact_number'] ?? '',
-            $this->attribute['skills'] ?? '',
-            $this->attribute['latitude'] ?? '',
-            $this->attribute['longitude'] ?? '',
-            $this->attribute['gender'] ?? '',
-            $this->attribute['profile_picture'] ?? '',
-            $this->attribute['age'] ?? ''
-        );
+        $this->completion = $user->isProfileCompletionPercentage();
 
 
         $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
@@ -69,11 +61,8 @@ class Profile extends Component
             'name' => $this->name,
             'email' => $this->email,
         ]);
-        $this->profile_picture = $this->profile_picture ?? '';
-
-
-
-
+        $this->profile_picture = $this->profile_picture ?? 'IMG';
+        
         auth()->user()->attributes()->syncWithoutDetaching([
             1 => ['value' => json_encode($this->skills)],
             2 => ['value' => $this->age], // Age added as the second attribute

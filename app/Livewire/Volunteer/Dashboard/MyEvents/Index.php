@@ -10,7 +10,10 @@ class Index extends Component
 
     public function mount()
     {
-        $this->participatingEvents = auth()->user()->participatingEvents;
+        $this->participatingEvents = auth()->user()->participatingEvents()->get();
+        // dd($this->participatingEvents[0]->category->color);
+        
+
     }
 
     public function render()

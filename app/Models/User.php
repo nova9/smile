@@ -61,7 +61,7 @@ class User extends Authenticatable
     }
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class, 'attribute_user', 'user_id', 'attribute_id')->withPivot('value');
+        return $this->belongsToMany(Attribute::class)->withPivot('value');
     }
 
     public function organizingEvents(): HasMany
@@ -72,7 +72,7 @@ class User extends Authenticatable
     public function participatingEvents(): BelongsToMany
     {
         return $this->belongsToMany(Event::class)
-            ->withTimestamps()
+            ->withTimestamps()->withPivot('status');
         ;
     }
 
@@ -81,31 +81,14 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Event::class);
     }
     
-    public function isProfileCompletionPercentage(...$args)
+    public function isProfileCompletionPercentage()
     {
         $initialPercentage = 0.3;
-        $points = [];
-        if (count($args) === 7) {
-            // Volunteer: 7 fields
-            $points = [
-                ['name' => $args[0], 'points' => 0.1], // contact_number
-                ['name' => $args[1], 'points' => 0.1], // skills
-                ['name' => $args[2], 'points' => 0.1], // latitude
-                ['name' => $args[3], 'points' => 0.1], // longitude
-                ['name' => $args[4], 'points' => 0.1], // gender
-                ['name' => $args[5], 'points' => 0.1], // profile_picture
-                ['name' => $args[6], 'points' => 0.1], // age
-            ];
-        } elseif (count($args) === 2) {
-            // Requester: 2 fields
-            $points = [
-                ['name' => $args[0], 'points' => 0.35],//contact_number
-                ['name' => $args[1], 'points' => 0.35],//logo
-            ];
-        }
-        foreach ($points as $point) {
-            if (!empty($point['name'])) {
-                $initialPercentage += $point['points'];
+        $user=auth()->user();
+        $attributes=$user->attributes()->get()->pluck('pivot.value','name')->all();
+        foreach($attributes as $attribute){
+            if(!empty($attribute)){
+                $initialPercentage += 0.1;
             }
         }
         return $initialPercentage;
