@@ -137,7 +137,7 @@
                                 <td class="px-6 py-4 text-gray-700">0</td>
                                 <td class="px-6 py-4 flex gap-2">
                                     <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                        url="{{ url('/admin/dashboard/organization-details/25') }}" />
                                     <x-admin.action-button type="approve" />
 
                                     <x-admin.action-button type="delete" />
