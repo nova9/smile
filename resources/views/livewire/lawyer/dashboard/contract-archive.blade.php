@@ -76,6 +76,12 @@
                 <div class="flex flex-wrap gap-4 items-center justify-between">
                     <h3 class="text-lg font-semibold text-gray-800">Archive Filters</h3>
                     <div class="flex flex-wrap gap-4">
+                        <div class="relative">
+                            <input type="text" id="searchFilter" placeholder="Search contracts..."
+                                class="input input-bordered input-sm pl-10 w-64"
+                                oninput="applyFilters()">
+                            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
                         <select id="contractTypeFilter" class="select select-bordered select-sm" onchange="applyFilters()">
                             <option value="">All Types</option>
                             <option value="Volunteer Service Agreement">Volunteer Service Agreement</option>
@@ -300,6 +306,7 @@
     }
 
     function applyFilters() {
+        const searchQuery = document.getElementById('searchFilter').value.toLowerCase();
         const typeFilter = document.getElementById('contractTypeFilter').value;
         const yearFilter = document.getElementById('yearFilter').value;
 
@@ -309,11 +316,16 @@
         contractCards.forEach(card => {
             const cardType = card.getAttribute('data-type');
             const cardYear = card.getAttribute('data-year');
+            const cardTitle = card.querySelector('h4').textContent.toLowerCase();
+            const cardOrganization = card.querySelector('.text-gray-600').textContent.toLowerCase();
 
+            const searchMatch = !searchQuery ||
+                cardTitle.includes(searchQuery) ||
+                cardOrganization.includes(searchQuery);
             const typeMatch = !typeFilter || cardType === typeFilter;
             const yearMatch = !yearFilter || cardYear === yearFilter;
 
-            if (typeMatch && yearMatch) {
+            if (searchMatch && typeMatch && yearMatch) {
                 card.style.display = 'block';
                 visibleCount++;
             } else {
@@ -334,6 +346,7 @@
     }
 
     function resetFilters() {
+        document.getElementById('searchFilter').value = '';
         document.getElementById('contractTypeFilter').value = '';
         document.getElementById('yearFilter').value = '';
         applyFilters();
