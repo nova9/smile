@@ -250,7 +250,7 @@
 
             <!-- Events List Items -->
             <div class="divide-y divide-slate-200/50">
-                @foreach($participatingEvents as $event)
+                @for($i=0;$i < count($participatingEvents);$i++)
                     <div class="px-6 py-5 hover:bg-white/60 transition-all duration-200 group">
                         <div class="grid grid-cols-12 gap-4 items-center">
                             <!-- Event Details -->
@@ -258,62 +258,62 @@
                                 <div class="flex items-start gap-4">
                                     <div class="relative">
                                         @php
-                                            
-                                            $gradientClass = $event->category->color ?? 'from-slate-400 to-slate-600';
+                                             $gradientClass = $participatingEvents[$i]->category->id ?? 'from-slate-400 to-slate-600';
                                         @endphp
-                                        {{-- <div class="w-14 h-14 rounded-2xl bg-gradient-to-br {{ $gradientClass }} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                                            @if($event['category_id'] === '1')
+                                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br {{ $gradientClass }} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                            @if($participatingEvents[$i]->category->id == '1')
                                                 <i data-lucide="leaf" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category_id'] === '2')
+                                            @elseif($participatingEvents[$i]->category->id == '2')
                                                 <i data-lucide="users" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category_id'] === '3')
+                                            @elseif($participatingEvents[$i]->category->id == '3')
                                                 <i data-lucide="book" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category_id'] === '4')
+                                            @elseif($participatingEvents[$i]->category->id == '4')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category_id'] === '5')
+                                            @elseif($participatingEvents[$i]->category->id == '5')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category_id'] === '6')
+                                            @elseif($participatingEvents[$i]->category->id == '6')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category_id'] === '7')
+                                            @elseif($participatingEvents[$i]->category->id == '7')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
                                                 
                                             @endif
-                                        </div> --}}
+                                        </div>
                                         <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                            @if($event->pivot->status === 'confirmed')
+                                            @if($participatingEvents[$i]->pivot->status == 'confirmed')
                                                 <i data-lucide="check" class="w-3 h-3 text-emerald-500"></i>
-                                            @elseif($event->pivot->status === 'pending')
+                                            @elseif($participatingEvents[$i]->pivot->status === 'pending')
                                                 <i data-lucide="clock" class="w-3 h-3 text-amber-500"></i>
-                                            @elseif($event->pivot->status === 'completed')
+                                            @elseif($participatingEvents[$i]->pivot->status === 'completed')
                                                 <i data-lucide="trophy" class="w-3 h-3 text-violet-500"></i>
-                                            @elseif($event->pivot->status === 'cancelled')
+                                            @elseif($participatingEvents[$i]->pivot->status === 'cancelled')
                                                 <i data-lucide="x" class="w-3 h-3 text-rose-500"></i>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <h3 class="font-bold text-slate-900 mb-2 text-lg group-hover:text-blue-600 transition-colors duration-200">{{ $event['name'] }}</h3>
-                                        <p class="text-sm text-slate-600 line-clamp-2 mb-3">{{ $event->pivot }}</p>
+                                        <h3 class="font-bold text-slate-900 mb-2 text-lg group-hover:text-blue-600 transition-colors duration-200">{{$participatingEvents[$i]->name}}</h3>
+                                        <p class="text-sm text-slate-600 line-clamp-2 mb-3">{{$participatingEvents[$i]->description}}</p>
                                         <div class="flex items-center gap-3 text-xs">
                                             @php
                                                 
-                                                $badgeClass = $event->category->color ?? 'from-slate-100 to-slate-200 text-slate-700';
+                                                $badgeClass = $participatingEvents[$i]->category->color ?? 'from-slate-100 to-slate-200 text-slate-700';
                                             @endphp
-                                            <span class="px-3 py-1.5 bg-gradient-to-r {{ $badgeClass }} rounded-full font-medium">{{ $event['category'] }}</span>
+                                            <span class="px-3 py-1.5 bg-gradient-to-r {{ $badgeClass }} rounded-full font-medium"></span>
                                             <span class="flex items-center gap-1 text-slate-500">
                                                 <i data-lucide="clock" class="w-3 h-3"></i>
-                                                {{ $event->starts_at }}
+                                                {{($participatingEvents[$i]->starts_at) -($participatingEvents[$i]->ends_at)}}
+                                            
                                             </span>
                                             <span class="flex items-center gap-1 text-slate-500">
                                                 <i data-lucide="users" class="w-3 h-3"></i>
-                                                {{ $event->name }}
+                                            {{$participatingEvents[$i]->maximum_participants}}
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Date & Time -->
+                            {{-- <!-- Date & Time -->
                             <div class="col-span-2">
                                 <div class="bg-white/50 rounded-xl p-3 border border-slate-100">
                                     <div class="text-sm font-bold text-slate-900 mb-1">
@@ -338,10 +338,10 @@
                                     </div>
                                     <span class="font-medium">{{ $event['location'] }}</span>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <!-- Status -->
-                            <div class="col-span-1">
+                            {{-- <div class="col-span-1">
                                 @if($event['status'] === 'confirmed')
                                     <span
                                         class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 shadow-sm">
@@ -367,10 +367,10 @@
                                         Cancelled
                                     </span>
                                 @endif
-                            </div>
+                            </div> --}}
 
                             <!-- Organizer -->
-                            <div class="col-span-2">
+                            {{-- <div class="col-span-2">
                                 <div class="flex items-center gap-3 bg-white/50 rounded-xl p-3 border border-slate-100">
                                     <div class="relative">
                                         <div
@@ -384,10 +384,10 @@
                                         <div class="text-xs text-slate-500">Event Organizer</div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <!-- Actions -->
-                            <div class="col-span-1">
+                            {{-- <div class="col-span-1">
                                 <div class="flex items-center gap-2">
                                     @if($event['status'] === 'pending')
                                         <button class="group relative p-2.5 text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl transition-all duration-200 hover:shadow-lg" title="Cancel">
@@ -424,10 +424,10 @@
                                         </button>
                                     @endif
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
-                @endforeach
+                @endfor
             </div>
         </div>
 
