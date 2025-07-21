@@ -7,5 +7,5 @@ use App\Livewire\Lawyer\Dashboard\LegalReviews;
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardIndex::class)->name('lawyer.dashboard');
     Route::get('/legal-reviews', LegalReviews::class)->name('lawyer.legal-reviews');
+    Route::get('/dashboard/profile', \App\Livewire\Lawyer\Dashboard\Profile::class)->name('lawyer.profile');
 });
-
