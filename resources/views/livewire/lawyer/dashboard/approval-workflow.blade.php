@@ -25,30 +25,25 @@
                 <h3 class="text-xl font-semibold text-gray-800 mb-6">Pending Service Agreement Reviews</h3>
                 <div class="space-y-4">
                     @foreach($pendingApprovals as $approval)
-                    <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all duration-200">
+                    <div class="bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300">
                         <div class="flex justify-between items-start mb-4">
                             <div class="flex-1">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <h4 class="font-semibold text-gray-800 text-lg">{{ $approval['title'] }}</h4>
-                                    <span class="px-3 py-1 text-xs font-medium rounded-full 
-                                        @if($approval['priority'] == 'high') bg-red-100 text-red-700
-                                        @elseif($approval['priority'] == 'medium') bg-gray-100 text-gray-700
-                                        @else bg-green-100 text-green-700 @endif">
-                                        {{ ucfirst($approval['priority']) }} Priority
-                                    </span>
-                                </div>
-                                <div class="grid grid-cols-3 gap-4 text-sm text-gray-600">
-                                    <div>
-                                        <span class="font-medium">Organization:</span> {{ $approval['organization'] }}
-                                    </div>
-                                    <div>
-                                        <span class="font-medium">Service Type:</span> {{ $approval['service_type'] }}
-                                    </div>
-                                    <div>
-                                        <span class="font-medium">Submitted:</span> {{ $approval['submitted_at'] }}
+                                <h4 class="font-semibold text-gray-800 text-lg">{{ $approval['title'] }}</h4>
+                                <div class="flex items-center gap-3 mt-2">
+                                    <p class="text-sm text-gray-600">{{ $approval['organization'] }}</p>
+                                    <span class="text-gray-400">•</span>
+                                    <div class="flex items-center gap-1">
+                                        <i data-lucide="scroll-text" class="w-3 h-3 text-green-600"></i>
+                                        <span class="text-sm text-green-600 font-medium">Volunteer Service Agreement</span>
                                     </div>
                                 </div>
                             </div>
+                            <span class="px-3 py-1 text-xs font-medium rounded-full 
+                                @if($approval['status'] == 'pending') bg-yellow-100 text-yellow-700
+                                @elseif($approval['status'] == 'approved') bg-green-100 text-green-700
+                                @else bg-red-100 text-red-700 @endif">
+                                {{ ucfirst($approval['status']) }}
+                            </span>
                         </div>
                         <div class="flex gap-3">
                             <button class="btn btn-accent btn-sm" onclick="openApprovalModal({{ json_encode($approval) }}, 'approve')">
