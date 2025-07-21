@@ -33,8 +33,8 @@
                                 <p class="text-xs text-gray-500">Sent: {{ $signature['sent_date'] }}</p>
                             </div>
                             <span class="px-3 py-1 text-xs font-medium rounded-full 
-                                @if($signature['status'] == 'awaiting_signature') bg-orange-100 text-orange-700
-                                @else bg-blue-100 text-blue-700 @endif">
+                                @if($signature['status'] == 'awaiting_signature') bg-red-100 text-red-700
+                                @else bg-gray-100 text-gray-700 @endif">
                                 {{ ucfirst(str_replace('_', ' ', $signature['status'])) }}
                             </span>
                         </div>
