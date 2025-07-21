@@ -66,8 +66,10 @@ import {
     CheckCircle,
     XCircle,
     ChartSpline,
-    Gavel
-} from 'lucide';
+    Gavel,
+    FileText,
+    TrendingUp
+} from "lucide";
 
 function registerIcons() {
     createIcons({
@@ -138,20 +140,21 @@ function registerIcons() {
             CheckCircle,
             Gavel,
             ChartSpline,
-            Trash2
-        }
+            Trash2,
+            FileText,
+            TrendingUp,
+        },
     });
 }
 
-document.addEventListener('livewire:navigated', () => {
-    registerIcons()
-})
+document.addEventListener("livewire:navigated", () => {
+    registerIcons();
+});
 
-document.addEventListener('DOMContentLoaded', () => {
-    registerIcons()
-})
+document.addEventListener("DOMContentLoaded", () => {
+    registerIcons();
+});
 
-
-Livewire.hook('morph.added',  ({ el }) => {
-    registerIcons()
-})
+Livewire.hook("morph.added", ({ el }) => {
+    registerIcons();
+});
