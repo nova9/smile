@@ -23,6 +23,13 @@
         </div>
     </div>
 @endif
+@if (session('error'))
+    <div class="toast">
+        <div class="alert alert-error">
+            <span>{{ session('error') }}</span>
+        </div>
+    </div>
+@endif
 
 {{ $slot }}
 
