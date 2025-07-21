@@ -68,7 +68,17 @@ import {
     ChartSpline,
     Gavel,
     FileText,
-    TrendingUp
+    TrendingUp,
+    Edit3,
+    Workflow,
+    PenTool,
+    Archive,
+    HelpCircle,
+    Activity,
+    Filter,
+    User,
+    ScrollText,
+    Save,
 } from "lucide";
 
 function registerIcons() {
@@ -143,6 +153,16 @@ function registerIcons() {
             Trash2,
             FileText,
             TrendingUp,
+            Edit3,
+            Workflow,
+            PenTool,
+            Archive,
+            HelpCircle,
+            Activity,
+            Filter,
+            User,
+            ScrollText,
+            Save,
         },
     });
 }
