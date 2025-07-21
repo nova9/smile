@@ -50,15 +50,15 @@
                                 <td class="px-6 py-4">2024-06-20</td>
                                 <td class="px-6 py-4 flex gap-2">
                                     <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/volunteer-details/8') }}" />
+                                        url="{{ url('/admin/dashboard/volunteer-details/8') }}?tab=reports"
+                                        title="View Reports/Complaints" />
                                     <button wire:click="$set('showResolveModal', true); $set('resolveReport', {
-                                            id: 'RPT-001',
-                                            user: 'Libbie Konopelski',
-                                            type: 'Volunteer',
-                                            reason: 'Inappropriate behavior',
-                                            date: '2024-06-20'
-                                        })"
-                                        class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group"
+                                        id: 'RPT-001',
+                                        user: 'Libbie Konopelski',
+                                        type: 'Volunteer',
+                                        reason: 'Inappropriate behavior',
+                                        date: '2024-06-20'
+                                    })" class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group"
                                         title="Resolve">
                                         <i data-lucide="gavel" class="w-5 h-5"></i>
                                         <span
@@ -128,13 +128,13 @@
                         <tbody>
                             <tr>
                                 <td class="px-6 py-4">REQ-101</td>
-                                <td class="px-6 py-4">John Perera</td>
+                                <td class="px-6 py-4">Jeanie Muller</td>
                                 <td class="px-6 py-4">Volunteer</td>
                                 <td class="px-6 py-4">Appeal suspension</td>
                                 <td class="px-6 py-4">2024-06-18</td>
                                 <td class="px-6 py-4 flex gap-2">
                                     <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/volunteer-details') }}" />
+                                        url="{{ url('/admin/dashboard/volunteer-details/15') }}" />
                                     <x-admin.action-button type="approve" />
                                     <x-admin.action-button type="reject" />
                                 </td>
@@ -147,7 +147,7 @@
                                 <td class="px-6 py-4">2024-06-17</td>
                                 <td class="px-6 py-4 flex gap-2">
                                     <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                        url="{{ url('/admin/dashboard/organization-details/25') }}" />
                                     <x-admin.action-button type="approve" />
                                     <x-admin.action-button type="reject" />
                                 </td>
