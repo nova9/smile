@@ -13,5 +13,3 @@
         {{ $slot }}
     </x-common.dashboard>
 </div>
-</x-common.dashboard>
-</div>
