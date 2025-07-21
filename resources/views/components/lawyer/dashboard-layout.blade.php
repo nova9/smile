@@ -12,4 +12,39 @@
 
         {{ $slot }}
     </x-common.dashboard>
+
+    <style>
+        /* Override any z-index issues with dropdown */
+        .dropdown {
+            z-index: 10000 !important;
+        }
+
+        .dropdown-content {
+            z-index: 10001 !important;
+            position: absolute !important;
+        }
+
+        .dropdown.dropdown-open .dropdown-content {
+            z-index: 10001 !important;
+        }
+
+        /* Ensure main content stays below dropdowns */
+        main {
+            z-index: 1 !important;
+        }
+
+        /* Override any high z-index elements in content */
+        .bg-white,
+        .backdrop-blur-lg,
+        .shadow-xl,
+        .rounded-2xl,
+        .rounded-3xl {
+            z-index: auto !important;
+        }
+
+        /* Specific fix for Recent Activities section */
+        .space-y-8>div {
+            z-index: auto !important;
+        }
+    </style>
 </div>
