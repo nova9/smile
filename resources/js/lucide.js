@@ -79,6 +79,8 @@ import {
     User,
     ScrollText,
     Save,
+    MessageSquare,
+    Check,
 } from "lucide";
 
 function registerIcons() {
@@ -163,6 +165,8 @@ function registerIcons() {
             User,
             ScrollText,
             Save,
+            MessageSquare,
+            Check,
         },
     });
 }
