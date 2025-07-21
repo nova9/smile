@@ -72,7 +72,7 @@
                         <div id="completionBar" class="bg-black h-2.5 rounded-full"
                              style="width:{{$completion * 100}}%"></div>
                     </div>
-                        <form wire:submit.prevent="save" wire:ignore class="space-y-4 sm:space-y-6" method="post">
+                        <form wire:submit.prevent="save" class="space-y-4 sm:space-y-6" method="post">
                             <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 ">
 
                             <div class="w-full">
@@ -167,33 +167,54 @@
                             <div class="flex flex-col gap-10 ">
                                 <div class=" w-full flex flex-col gap-6 ">
                                     <div class="space-y-6">
-
+                                        
                                         <fieldset class="border border-gray-300 rounded-md p-4">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Name</legend>
                                             <input id="name" wire:model="name" name="name" type="text"
                                                    class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
+                                            @error('name')
+                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            @enderror
                                         </fieldset>
                                         <fieldset class="border border-gray-300 rounded-md p-4">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Email</legend>
                                             <input id="email" wire:model="email" name="email" type="email"
                                                    class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
+                                            @error('email')
+                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            @enderror
                                         </fieldset>
-                                         <fieldset class="border border-gray-300 rounded-md p-4">
+                                        <fieldset class="border border-gray-300 rounded-md p-4">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Age</legend>
                                             <input id="age" wire:model="age" name="age" type="text"
                                                    class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
+                                            @error('age')
+                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            @enderror
                                         </fieldset>
-                                        
+                                                                                
                                         <fieldset class="border border-gray-300 rounded-md p-4">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Contact</legend>
                                             <input id="contact_number" wire:model="contact_number"
                                                    name="contact_number" type="text"
                                                    class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
+                                            @error('contact_number')
+                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            @enderror
                                         </fieldset>
                                         <fieldset class="border border-gray-300 rounded-md p-4">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Gender</legend>
-                                            <input id="gender" wire:model="gender" name="gender" type="text"
-                                                   class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
+                                            <select id="gender" wire:model="gender" name="gender"
+                                                    class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
+                                                <option value="">Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                                <option value="prefer_not_to_say">Prefer not to say</option>
+                                            </select>
+                                            @error('gender')
+                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            @enderror
                                         </fieldset>
                                     </div>
 

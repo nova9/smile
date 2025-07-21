@@ -9,7 +9,7 @@ class Profile extends Component
 
 {
     public $attribute;
-    public $skills = [];
+    public $skills;
     public $completion;
     public $profile;
     public $name;
@@ -37,15 +37,15 @@ class Profile extends Component
 
 
         $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
-        
+
         $skillsRaw = $user->attributes()->where('name', 'skills')->get()->pluck('pivot.value')->first();
         $this->skills = $skillsRaw ? json_decode($skillsRaw, true) ?? [] : [];
-        
+
         if ($this->latitude === null) {
             $this->latitude = $user->attributes()->where('name', 'latitude')->get()->pluck('pivot.value')->first();
         }
         if ($this->longitude === null) {
-            
+
             $this->longitude = $user->attributes()->where('name', 'longitude')->get()->pluck('pivot.value')->first();
         }
         $this->gender = $user->attributes()->where('name', 'gender')->get()->pluck('pivot.value')->first();
@@ -56,24 +56,58 @@ class Profile extends Component
 
     public function save()
     {
+        // Validation
+        $validated = $this->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'skills' => 'nullable|array',
+            'age' => 'nullable|integer|min:1|max:120',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'contact_number' => 'nullable|string|max:20',
+            'gender' => 'nullable|string|in:male,female,other,prefer_not_to_say',
+            'profile_picture' => 'nullable|string|max:255',
+        ]);
+
         // Update user basic info
         auth()->user()->update([
             'name' => $this->name,
             'email' => $this->email,
         ]);
         $this->profile_picture = $this->profile_picture ?? 'IMG';
-        
-        auth()->user()->attributes()->syncWithoutDetaching([
-            1 => ['value' => json_encode($this->skills)],
-            2 => ['value' => $this->age], // Age added as the second attribute
-            3 => ['value' => $this->latitude],
-            4 => ['value' => $this->longitude],
-            5 => ['value' => $this->contact_number],
-            6 => ['value' => $this->gender],
-            7 => ['value' => $this->profile_picture],
-        ]);
+
+        $skillsValue = (is_array($this->skills) && count($this->skills) > 0) ? json_encode($this->skills) : null;
+        $newattributes = [
+            'skills' => $skillsValue,
+            'age' => $this->age,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'contact_number' => $this->contact_number,
+            'gender' => $this->gender,
+            'profile_picture' => $this->profile_picture,
+        ];
 
 
+        $this->insertUserAttributes($newattributes);
+    }
+
+    /**
+     * Insert or update user attributes (only non-empty values).
+     * @param array $attributes
+     */
+    protected function insertUserAttributes(array $attributes)
+    {
+        $attributesToSync = [];
+        $i = 1;
+        foreach ($attributes as $val) {
+            if (!empty($val)) {
+                $attributesToSync[$i] = ['value' => $val];
+            }
+            $i++;
+        }
+        if (!empty($attributesToSync)) {
+            auth()->user()->attributes()->syncWithoutDetaching($attributesToSync);
+        }
 
         session()->flash('success', 'Profile updated successfully!');
         return redirect()->route('profile');
