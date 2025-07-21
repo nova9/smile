@@ -28,10 +28,8 @@
             </div>
 
             <!-- Profile Card -->
-            <div class="relative group">
-                <div
-                    class="absolute inset-0 bg-gradient-to-br from-green-500/20 via-green-500/10 to-gray-800/20 rounded-3xl transform rotate-1 group-hover:rotate-0 transition-transform duration-300"></div>
-                <div class="relative bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
+            <div class="group">
+                <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                     <div class="flex flex-col md:flex-row items-start justify-between gap-6">
                         <div class="flex items-center gap-6">
                             <div class="relative">

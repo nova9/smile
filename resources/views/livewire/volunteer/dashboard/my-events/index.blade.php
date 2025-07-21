@@ -1,4 +1,14 @@
 @php
+    function hexToRgba($hex, $opacity = 0.2)
+    {
+        $hex = str_replace('#', '', $hex);
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+        return "rgba($r, $g, $b, $opacity)";
+    }
+@endphp
+@php
     // Dummy data for demonstration
     $myEvents = [
         [
@@ -240,7 +250,7 @@
 
             <!-- Events List Items -->
             <div class="divide-y divide-slate-200/50">
-                @foreach($myEvents as $event)
+                @foreach($participatingEvents as $event)
                     <div class="px-6 py-5 hover:bg-white/60 transition-all duration-200 group">
                         <div class="grid grid-cols-12 gap-4 items-center">
                             <!-- Event Details -->
@@ -248,58 +258,55 @@
                                 <div class="flex items-start gap-4">
                                     <div class="relative">
                                         @php
-                                            $categoryColors = [
-                                                'Environment' => 'from-emerald-400 to-teal-600',
-                                                'Community' => 'from-blue-400 to-indigo-600',
-                                                'Education' => 'from-violet-400 to-purple-600',
-                                                'Healthcare' => 'from-rose-400 to-pink-600'
-                                            ];
-                                            $gradientClass = $categoryColors[$event['category']] ?? 'from-slate-400 to-slate-600';
+                                            
+                                            $gradientClass = $event->category->color ?? 'from-slate-400 to-slate-600';
                                         @endphp
-                                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br {{ $gradientClass }} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                                            @if($event['category'] === 'Environment')
+                                        {{-- <div class="w-14 h-14 rounded-2xl bg-gradient-to-br {{ $gradientClass }} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                            @if($event['category_id'] === '1')
                                                 <i data-lucide="leaf" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category'] === 'Community')
+                                            @elseif($event['category_id'] === '2')
                                                 <i data-lucide="users" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category'] === 'Education')
+                                            @elseif($event['category_id'] === '3')
                                                 <i data-lucide="book" class="w-7 h-7 text-white"></i>
-                                            @elseif($event['category'] === 'Healthcare')
+                                            @elseif($event['category_id'] === '4')
                                                 <i data-lucide="heart" class="w-7 h-7 text-white"></i>
+                                            @elseif($event['category_id'] === '5')
+                                                <i data-lucide="heart" class="w-7 h-7 text-white"></i>
+                                            @elseif($event['category_id'] === '6')
+                                                <i data-lucide="heart" class="w-7 h-7 text-white"></i>
+                                            @elseif($event['category_id'] === '7')
+                                                <i data-lucide="heart" class="w-7 h-7 text-white"></i>
+                                                
                                             @endif
-                                        </div>
+                                        </div> --}}
                                         <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                            @if($event['status'] === 'confirmed')
+                                            @if($event->pivot->status === 'confirmed')
                                                 <i data-lucide="check" class="w-3 h-3 text-emerald-500"></i>
-                                            @elseif($event['status'] === 'pending')
+                                            @elseif($event->pivot->status === 'pending')
                                                 <i data-lucide="clock" class="w-3 h-3 text-amber-500"></i>
-                                            @elseif($event['status'] === 'completed')
+                                            @elseif($event->pivot->status === 'completed')
                                                 <i data-lucide="trophy" class="w-3 h-3 text-violet-500"></i>
-                                            @elseif($event['status'] === 'cancelled')
+                                            @elseif($event->pivot->status === 'cancelled')
                                                 <i data-lucide="x" class="w-3 h-3 text-rose-500"></i>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <h3 class="font-bold text-slate-900 mb-2 text-lg group-hover:text-blue-600 transition-colors duration-200">{{ $event['name'] }}</h3>
-                                        <p class="text-sm text-slate-600 line-clamp-2 mb-3">{{ $event['description'] }}</p>
+                                        <p class="text-sm text-slate-600 line-clamp-2 mb-3">{{ $event->pivot }}</p>
                                         <div class="flex items-center gap-3 text-xs">
                                             @php
-                                                $badgeColors = [
-                                                    'Environment' => 'from-emerald-100 to-teal-100 text-emerald-700',
-                                                    'Community' => 'from-blue-100 to-indigo-100 text-blue-700',
-                                                    'Education' => 'from-violet-100 to-purple-100 text-violet-700',
-                                                    'Healthcare' => 'from-rose-100 to-pink-100 text-rose-700'
-                                                ];
-                                                $badgeClass = $badgeColors[$event['category']] ?? 'from-slate-100 to-slate-200 text-slate-700';
+                                                
+                                                $badgeClass = $event->category->color ?? 'from-slate-100 to-slate-200 text-slate-700';
                                             @endphp
                                             <span class="px-3 py-1.5 bg-gradient-to-r {{ $badgeClass }} rounded-full font-medium">{{ $event['category'] }}</span>
                                             <span class="flex items-center gap-1 text-slate-500">
                                                 <i data-lucide="clock" class="w-3 h-3"></i>
-                                                {{ $event['duration'] }}
+                                                {{ $event->starts_at }}
                                             </span>
                                             <span class="flex items-center gap-1 text-slate-500">
                                                 <i data-lucide="users" class="w-3 h-3"></i>
-                                                {{ $event['volunteers'] }}
+                                                {{ $event->name }}
                                             </span>
                                         </div>
                                     </div>
