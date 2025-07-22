@@ -82,6 +82,7 @@ import {
     Check,
     Download,
     MapPin,
+    CircleAlert,
 } from "lucide";
 
 function registerIcons() {
@@ -172,6 +173,7 @@ function registerIcons() {
             Calendar,
             TrendingUp,
             Clock,
+            CircleAlert,
         },
     });
 }
