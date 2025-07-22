@@ -13,6 +13,7 @@ Route::middleware(['auth', 'role:volunteer'])->group(function () {
         Route::get('/events/{id}', \App\Livewire\Volunteer\Dashboard\Eventz\Show::class);
 
         Route::get('/my-events', \App\Livewire\Volunteer\Dashboard\MyEvents\Index::class);
+        Route::get('/my-events/{id}', \App\Livewire\Volunteer\Dashboard\MyEvents\Show::class);
 
         Route::get('/feedback', \App\Livewire\Volunteer\Dashboard\Feedback::class)->name('volunteer.feedback');
         Route::get('/community', \App\Livewire\Volunteer\Dashboard\Community::class)->name('community.space');
