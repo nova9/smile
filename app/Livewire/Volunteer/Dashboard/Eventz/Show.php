@@ -11,7 +11,7 @@ class Show extends Component
 
     public function join()
     {
-        if (auth()->user()->isProfileCompletionPercentage() != 1) {
+        if (round(auth()->user()->isProfileCompletionPercentage(), 2) != 1.0) {
             return redirect('/volunteer/dashboard/profile')->with('error', 'Please complete your profile before joining an event.');
         }
         $this->event->users()->attach(auth()->user()->id);

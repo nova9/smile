@@ -20,7 +20,7 @@
                         class="w-full h-full object-cover opacity-80">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     <div class="absolute bottom-6 left-6 text-white">
-                        <h1 class="text-4xl font-bold mb-2">Beach Cleanup Drive</h1>
+                        <h1 class="text-4xl font-bold mb-2">{{ $event->name }}</h1>
                         <div class="flex items-center gap-4 text-white/90">
                             <span class="flex items-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,129 +128,55 @@
                                 </div>
                                 Approved Volunteers
                             </h2>
-                            <span class="px-3 py-1 bg-success/10 text-success rounded-full text-sm font-medium">18
+                            <span class="px-3 py-1 bg-success/10 text-success rounded-full text-sm font-medium">{{ $acceptedUsers->count() }}
                                 confirmed</span>
                         </div>
                     </div>
 
                     <div class="p-6 space-y-4 max-h-96 overflow-y-auto">
                         <!-- Volunteer Card -->
-                        <div
-                            class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                            <div class="relative">
-                                <img src="https://picsum.photos/seed/volunteer1/120/120" alt="Sarah Johnson"
-                                    class="w-12 h-12 rounded-full object-cover border-2 border-success">
-                                <div
-                                    class="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
-                                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
+                        @foreach($acceptedUsers as $item)
+                            <div
+                                class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                                <div class="relative">
+                                    <img src="https://picsum.photos/seed/volunteer1/120/120" alt="Sarah Johnson"
+                                         class="w-12 h-12 rounded-full object-cover border-2 border-success">
+                                    <div
+                                        class="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-accent">Sarah Johnson</h3>
-                                <p class="text-sm text-gray-600">Environmental Activist • 4.9★</p>
-                                <div class="flex gap-2 mt-1">
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-accent">Sarah Johnson</h3>
+                                    <p class="text-sm text-gray-600">Environmental Activist • 4.9★</p>
+                                    <div class="flex gap-2 mt-1">
                                     <span
                                         class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Experienced</span>
-                                    <span
-                                        class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Local</span>
+                                        <span
+                                            class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Local</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-end gap-2">
+                                    <button class="p-2 bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors">
+                                        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor"
+                                             viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                        </svg>
+                                    </button>
+                                    <span class="text-xs text-gray-500">Joined 2h ago</span>
                                 </div>
                             </div>
-                            <div class="flex flex-col items-end gap-2">
-                                <button class="p-2 bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors">
-                                    <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                    </svg>
-                                </button>
-                                <span class="text-xs text-gray-500">Joined 2h ago</span>
-                            </div>
-                        </div>
 
-                        <!-- More volunteer cards... -->
-                        <div
-                            class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                            <div class="relative">
-                                <img src="https://picsum.photos/seed/volunteer2/120/120" alt="Mike Chen"
-                                    class="w-12 h-12 rounded-full object-cover border-2 border-success">
-                                <div
-                                    class="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
-                                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-accent">Mike Chen</h3>
-                                <p class="text-sm text-gray-600">Marine Biologist • 4.8★</p>
-                                <div class="flex gap-2 mt-1">
-                                    <span
-                                        class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Expert</span>
-                                    <span
-                                        class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Research</span>
-                                </div>
-                            </div>
-                            <div class="flex flex-col items-end gap-2">
-                                <button class="p-2 bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors">
-                                    <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                    </svg>
-                                </button>
-                                <span class="text-xs text-gray-500">Joined 5h ago</span>
-                            </div>
-                        </div>
+                        @endforeach
 
-                        <div
-                            class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                            <div class="relative">
-                                <img src="https://picsum.photos/seed/volunteer3/120/120" alt="Emma Wilson"
-                                    class="w-12 h-12 rounded-full object-cover border-2 border-success">
-                                <div
-                                    class="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
-                                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-accent">Emma Wilson</h3>
-                                <p class="text-sm text-gray-600">College Student • 4.7★</p>
-                                <div class="flex gap-2 mt-1">
-                                    <span
-                                        class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Enthusiastic</span>
-                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">First
-                                        Timer</span>
-                                </div>
-                            </div>
-                            <div class="flex flex-col items-end gap-2">
-                                <button class="p-2 bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors">
-                                    <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                    </svg>
-                                </button>
-                                <span class="text-xs text-gray-500">Joined 1d ago</span>
-                            </div>
-                        </div>
 
-                        <!-- Show more button -->
-                        <div class="pt-4 border-t border-gray-200">
-                            <button
-                                class="w-full text-center text-primary hover:text-primary/80 font-medium text-sm py-2">
-                                View all 18 approved volunteers →
-                            </button>
-                        </div>
+
+
                     </div>
                 </div>
 
@@ -268,149 +194,62 @@
                                 </div>
                                 Pending Approval
                             </h2>
-                            <span class="px-3 py-1 bg-warning/10 text-warning rounded-full text-sm font-medium">6
+                            <span class="px-3 py-1 bg-warning/10 text-warning rounded-full text-sm font-medium">{{ $pendingUsers->count() }}
                                 waiting</span>
                         </div>
                     </div>
 
                     <div class="p-6 space-y-4 max-h-96 overflow-y-auto">
                         <!-- Pending Volunteer Card -->
-                        <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
-                            <div class="relative">
-                                <img src="https://picsum.photos/seed/pending1/120/120" alt="Alex Rodriguez"
-                                    class="w-12 h-12 rounded-full object-cover border-2 border-warning">
-                                <div
-                                    class="absolute -bottom-1 -right-1 w-5 h-5 bg-warning rounded-full flex items-center justify-center">
-                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                        @foreach($pendingUsers as $item)
+                            <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
+                                <div class="relative">
+                                    <img src="https://picsum.photos/seed/pending1/120/120" alt="Alex Rodriguez"
+                                         class="w-12 h-12 rounded-full object-cover border-2 border-warning">
+                                    <div
+                                        class="absolute -bottom-1 -right-1 w-5 h-5 bg-warning rounded-full flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor"
+                                             viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-accent">Alex Rodriguez</h3>
-                                <p class="text-sm text-gray-600">Community Organizer • 4.6★</p>
-                                <div class="flex gap-2 mt-1">
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-accent">{{ $item->name }}</h3>
+{{--                                    <p class="text-sm text-gray-600">Community Organizer • 4.6★</p>--}}
+                                    <div class="flex gap-2 mt-1">
                                     <span
                                         class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Leadership</span>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">3
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">3
                                         Events</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex gap-2">
+                                        <button
+                                            wire:click="approve({{ $item->id }})"
+                                            class="px-3 py-1 bg-success hover:bg-success/80 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            Approve
+                                        </button>
+                                        <button
+                                            class="px-3 py-1 bg-error hover:bg-error/80 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                            Decline
+                                        </button>
+                                    </div>
+                                    <span class="text-xs text-gray-500 text-center">Applied 3h ago</span>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <div class="flex gap-2">
-                                    <button
-                                        class="px-3 py-1 bg-success hover:bg-success/80 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        Approve
-                                    </button>
-                                    <button
-                                        class="px-3 py-1 bg-error hover:bg-error/80 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                        Decline
-                                    </button>
-                                </div>
-                                <span class="text-xs text-gray-500 text-center">Applied 3h ago</span>
-                            </div>
-                        </div>
 
-                        <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
-                            <div class="relative">
-                                <img src="https://picsum.photos/seed/pending2/120/120" alt="Lisa Park"
-                                    class="w-12 h-12 rounded-full object-cover border-2 border-warning">
-                                <div
-                                    class="absolute -bottom-1 -right-1 w-5 h-5 bg-warning rounded-full flex items-center justify-center">
-                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-accent">Lisa Park</h3>
-                                <p class="text-sm text-gray-600">Teacher • 4.9★</p>
-                                <div class="flex gap-2 mt-1">
-                                    <span
-                                        class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Education</span>
-                                    <span
-                                        class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Mentor</span>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <div class="flex gap-2">
-                                    <button
-                                        class="px-3 py-1 bg-success hover:bg-success/80 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        Approve
-                                    </button>
-                                    <button
-                                        class="px-3 py-1 bg-error hover:bg-error/80 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                        Decline
-                                    </button>
-                                </div>
-                                <span class="text-xs text-gray-500 text-center">Applied 6h ago</span>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
-                            <div class="relative">
-                                <img src="https://picsum.photos/seed/pending3/120/120" alt="David Kim"
-                                    class="w-12 h-12 rounded-full object-cover border-2 border-warning">
-                                <div
-                                    class="absolute -bottom-1 -right-1 w-5 h-5 bg-warning rounded-full flex items-center justify-center">
-                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-accent">David Kim</h3>
-                                <p class="text-sm text-gray-600">Software Engineer • 4.8★</p>
-                                <div class="flex gap-2 mt-1">
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Tech</span>
-                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">New
-                                        Member</span>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <div class="flex gap-2">
-                                    <button
-                                        class="px-3 py-1 bg-success hover:bg-success/80 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        Approve
-                                    </button>
-                                    <button
-                                        class="px-3 py-1 bg-error hover:bg-error/80 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                        Decline
-                                    </button>
-                                </div>
-                                <span class="text-xs text-gray-500 text-center">Applied 1d ago</span>
-                            </div>
-                        </div>
+                        @endforeach
 
                         <!-- Bulk Actions -->
                         <div class="pt-4 border-t border-gray-200">
@@ -423,10 +262,10 @@
                                     </svg>
                                     Approve All
                                 </button>
-                                <button
-                                    class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors">
-                                    Review Later
-                                </button>
+{{--                                <button--}}
+{{--                                    class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors">--}}
+{{--                                    Review Later--}}
+{{--                                </button>--}}
                             </div>
                         </div>
                     </div>

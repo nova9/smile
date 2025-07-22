@@ -21,7 +21,9 @@ class Show extends Component
 
     public function mount($id)
     {
-        $this->event = Event::query()->with(['address', 'users', 'category','tags'])->find($id);
+        $this->event = Event::query()
+            ->with(['address', 'users', 'category','tags'])
+            ->find($id);
         // dd($this->event);
         $this->status = $this->event->users->where('id', auth()->id())->first()?->pivot->status;
 
