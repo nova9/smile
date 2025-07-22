@@ -17,7 +17,7 @@ Route::middleware(['auth', 'role:volunteer'])->group(function () {
 
         Route::get('/feedback', \App\Livewire\Volunteer\Dashboard\Feedback::class)->name('volunteer.feedback');
         Route::get('/community', \App\Livewire\Volunteer\Dashboard\Community::class)->name('community.space');
-        Route::get('/activities', \App\Livewire\Volunteer\Dashboard\Activities::class);
+        Route::get('/achievements', \App\Livewire\Volunteer\Dashboard\Achievements::class);
         Route::get('/certificate/{id}', \App\Livewire\Volunteer\Dashboard\Certificate::class)->name('volunteer.certificate.show');
     });
 });

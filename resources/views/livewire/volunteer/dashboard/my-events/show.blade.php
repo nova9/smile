@@ -11,6 +11,15 @@
 
 <x-volunteer.dashboard-layout>
     <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
+       <!-- Community Space Link -->
+                <div class="mt-2">
+                    <a href="{{ route('community.space') }}" class="inline-flex items-center px-4 py-2 bg-accent text-white rounded-full font-semibold shadow hover:bg-primary transition-colors duration-200">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                        Go to Community Space
+                    </a>
+                </div>
         <!-- Hero Section with Event Image and Organizer Side by Side -->
         <div class="p-6">
             <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden flex flex-col lg:flex-row">

@@ -88,6 +88,7 @@ import {
     Archive as ArchiveIcon,
     TrendingUp as TrendingUpIcon,
     Clock as ClockIcon,
+    Trophy
 } from "lucide";
 
 function registerIcons() {
@@ -180,6 +181,7 @@ function registerIcons() {
             ArchiveIcon,
             TrendingUpIcon,
             ClockIcon,
+            Trophy
         },
     });
 }
