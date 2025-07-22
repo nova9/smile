@@ -84,13 +84,13 @@ class User extends Authenticatable
     public function isProfileCompletionPercentage()
     {
         $requiredskills = [
-            'skills',
-            'age',
-            'latitude',
-            'longitude',
-            'contact_number',
-            'gender',
-            'profile_picture'
+            'skills'=> 0.1,
+            'age' => 0.1,
+            'latitude' => 0.1,
+            'longitude' => 0.1,
+            'contact_number' => 0.1,
+            'gender' => 0.1,
+            'profile_picture' => 0.1
         ];
 
         $initialPercentage = 0.3;
@@ -98,10 +98,10 @@ class User extends Authenticatable
         $user = auth()->user();
         $attributes = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
         // dd($attributes);
-        foreach ($requiredskills as $requiredskill) {
+        foreach ($requiredskills as $key => $value) {
             // dd($attributes[$requiredskill]);
-            if (!empty($attributes[$requiredskill])) {
-                $initialPercentage += 0.1;
+            if (!empty($attributes[$key])) {
+                $initialPercentage += $value;
             }
         }
         return $initialPercentage;
