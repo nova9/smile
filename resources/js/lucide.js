@@ -85,6 +85,7 @@ import {
     CircleAlert,
 } from "lucide";
 
+
 function registerIcons() {
     createIcons({
         icons: {
@@ -175,6 +176,7 @@ function registerIcons() {
             Clock,
             CircleAlert,
         },
+        
     });
 }
 

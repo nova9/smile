@@ -190,6 +190,10 @@
                     <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow">
                         <div class="flex items-center space-x-3">
                             <i class="fas fa-file-pdf text-red-500"></i>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">tax.pdf</p>
+                                <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
+                            </div>
 
                         </div>
                         <div class="flex items-center space-x-2">

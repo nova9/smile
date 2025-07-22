@@ -58,9 +58,9 @@
                                         type: 'Volunteer',
                                         reason: 'Inappropriate behavior',
                                         date: '2024-06-20'
-                                    })" class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group"
+                                    })" class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group relative"
                                         title="Resolve">
-                                        <i data-lucide="gavel" class="w-5 h-5"></i>
+                                        <i data-lucide="circle-alert" class="w-5 h-5"></i>
                                         <span
                                             class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Resolve</span>
                                     </button>
@@ -74,13 +74,13 @@
                                 <td class="px-6 py-4">2024-06-19</td>
                                 <td class="px-6 py-4 flex gap-2">
                                     <x-admin.action-button type="view"
-                                        url="{{ url('/admin/dashboard/organization-details') }}" />
+                                        url="{{ url('/admin/dashboard/organization-details/25') }}" />
                                     <button
-                                        class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group"
+                                        class="resolve-btn font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group relative"
                                         data-report-id="RPT-002" data-user="GreenHope Foundation"
                                         data-type="Organization" data-reason="Spam activity" data-date="2024-06-19"
                                         title="Resolve">
-                                        <i data-lucide="gavel" class="w-5 h-5"></i>
+                                        <i data-lucide="circle-alert" class="w-5 h-5"></i>
                                         <span
                                             class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Resolve</span>
                                     </button>
