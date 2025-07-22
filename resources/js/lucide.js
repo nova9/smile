@@ -157,7 +157,6 @@ function registerIcons() {
             ChartSpline,
             Trash2,
             FileText,
-            TrendingUp,
             Edit3,
             Workflow,
             PenTool,
@@ -171,12 +170,10 @@ function registerIcons() {
             MessageSquare,
             Check,
             Download,
-            Calendar,
             TrendingUp,
-            Clock,
             CircleAlert,
         },
-        
+
     });
 }
 
