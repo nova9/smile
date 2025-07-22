@@ -11,6 +11,13 @@
 
 <x-volunteer.dashboard-layout>
     <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
+        <div class="inline-flex items-center mb-10 px-6 py-3 bg-gradient-to-r from-green-100 to-blue-100 text-green-700 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-green-200">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12l2 2 4-4" />
+            </svg>
+            Discover New Volunteer Opportunities
+        </div>
         <!-- Header Section -->
         <div class="mb-4">
             <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">

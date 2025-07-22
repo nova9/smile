@@ -14,11 +14,9 @@ Route::middleware(['auth', 'role:volunteer'])->group(function () {
 
         Route::get('/my-events', \App\Livewire\Volunteer\Dashboard\MyEvents\Index::class);
 
-        Route::get('/feedback', \App\Livewire\Volunteer\Dashboard\Feedback::class);
-        Route::get('/community', \App\Livewire\Volunteer\Dashboard\Community::class);
+        Route::get('/feedback', \App\Livewire\Volunteer\Dashboard\Feedback::class)->name('volunteer.feedback');
+        Route::get('/community', \App\Livewire\Volunteer\Dashboard\Community::class)->name('community.space');
         Route::get('/activities', \App\Livewire\Volunteer\Dashboard\Activities::class);
         Route::get('/certificate/{id}', \App\Livewire\Volunteer\Dashboard\Certificate::class)->name('volunteer.certificate.show');
-
     });
-
 });
