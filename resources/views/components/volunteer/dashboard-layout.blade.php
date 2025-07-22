@@ -9,7 +9,6 @@
             {{-- <x-common.dashboard.item to="/volunteer/dashboard/feedback" icon="message-square-quote" title="Feedback"/> --}}
             {{-- <x-common.dashboard.item to="/volunteer/dashboard/community" icon="orbit" title="Community"/> --}}
 
-
         </x-slot>
 
         {{ $slot }}
