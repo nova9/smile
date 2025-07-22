@@ -43,7 +43,6 @@ import {
     Tractor,
     Timer,
     Search,
-    MapPin,
     Star,
     UserPlus,
     Navigation,
@@ -82,14 +81,8 @@ import {
     MessageSquare,
     Check,
     Download,
+    MapPin,
     CircleAlert,
-    // Additional icons needed
-    // TODO: Remove tdhese names
-    MapPin as Map2,
-    Calendar as CalendarIcon,
-    Archive as ArchiveIcon,
-    TrendingUp as TrendingUpIcon,
-    Clock as ClockIcon,
 } from "lucide";
 
 
@@ -162,6 +155,7 @@ function registerIcons() {
             CheckCircle,
             Gavel,
             ChartSpline,
+            Trash2,
             FileText,
             TrendingUp,
             Edit3,
@@ -177,15 +171,12 @@ function registerIcons() {
             MessageSquare,
             Check,
             Download,
-            Map2,
-            CalendarIcon,
-            ArchiveIcon,
-            TrendingUpIcon,
-            ClockIcon,
+            Calendar,
+            TrendingUp,
+            Clock,
             CircleAlert,
-            Trash2
         },
-
+        
     });
 }
 
