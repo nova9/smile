@@ -15,7 +15,7 @@
                     <tr class="bg-base-200 text-base-content/80">
                         <th class="py-3 px-4 text-left">Event</th>
                         <th class="py-3 px-4 text-left">Description</th>
-                        <th class="py-3 px-4 text-left">Actions</th>
+                        <th class="py-3 px-4 text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,11 +24,13 @@
                         <tr class="hover:bg-base-300/40 transition">
                             <td class="py-3 px-4 font-semibold text-primary">{{$event->name}}</td>
                             <td class="py-3 px-4 text-base-content">{{$event->description}}</td>
-                            <td class="py-3 px-4">
-                                <div class="flex gap-2 mt-4 justify-end">
-                                    <a href="{{ route('requester.event.show', $event->id) }}" wire:navigate class="btn btn-neutral btn-sm">View</a>
-
-                                </div>
+                            <td class=" flex gap-2 justify-end">
+                                <button class="btn btn-sm">
+                                    <a href="{{ route('requester.event.edit', $event->id) }}" wire:navigate>Edit</a>
+                                </button>
+                                <button class="btn btn-sm">
+                                    <a href="{{ route('requester.event.show', $event->id) }}" wire:navigate>Show</a>
+                                </button>
                             </td>
                         </tr>
                     @endforeach

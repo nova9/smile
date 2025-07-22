@@ -83,8 +83,8 @@ import {
     Check,
     Download,
     CircleAlert,
-    Gavel,
     // Additional icons needed
+    // TODO: Remove tdhese names
     MapPin as Map2,
     Calendar as CalendarIcon,
     Archive as ArchiveIcon,
@@ -162,7 +162,6 @@ function registerIcons() {
             CheckCircle,
             Gavel,
             ChartSpline,
-            Trash2,
             FileText,
             TrendingUp,
             Edit3,
@@ -186,7 +185,7 @@ function registerIcons() {
             CircleAlert,
             Trash2
         },
-        
+
     });
 }
 
