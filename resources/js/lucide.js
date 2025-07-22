@@ -82,6 +82,8 @@ import {
     MessageSquare,
     Check,
     Download,
+    CircleAlert,
+    Gavel,
     // Additional icons needed
     MapPin as Map2,
     Calendar as CalendarIcon,
@@ -89,6 +91,7 @@ import {
     TrendingUp as TrendingUpIcon,
     Clock as ClockIcon,
 } from "lucide";
+
 
 function registerIcons() {
     createIcons({
@@ -180,7 +183,10 @@ function registerIcons() {
             ArchiveIcon,
             TrendingUpIcon,
             ClockIcon,
+            CircleAlert,
+            Trash2
         },
+        
     });
 }
 
