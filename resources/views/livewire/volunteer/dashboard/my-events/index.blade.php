@@ -37,7 +37,7 @@
             <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-white/20 p-6 hover:shadow-lg hover:bg-white transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div>
-                        <div class="text-3xl font-bold text-slate-800">5</div>
+                        <div class="text-3xl font-bold text-slate-800">{{count($participatingEvents)}}</div>
                         <div class="text-sm text-slate-500 font-medium">Total Events</div>
                     </div>
                     <div class="w-12 h-12 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl flex items-center justify-center">
@@ -48,7 +48,7 @@
             <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-white/20 p-6 hover:shadow-lg hover:bg-white transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div>
-                        <div class="text-3xl font-bold text-emerald-600">2</div>
+                        <div class="text-3xl font-bold text-emerald-600">{{count($confirmedEvents)}}</div>
                         <div class="text-sm text-slate-500 font-medium">Confirmed</div>
                     </div>
                     <div class="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-xl flex items-center justify-center">
@@ -59,7 +59,7 @@
             <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-white/20 p-6 hover:shadow-lg hover:bg-white transition-all duration-300">
                 <div class="flex items-center justify-between">
                     <div>
-                        <div class="text-3xl font-bold text-amber-600">1</div>
+                        <div class="text-3xl font-bold text-amber-600">{{count($pendingEvents)}}</div>
                         <div class="text-sm text-slate-500 font-medium">Pending</div>
                     </div>
                     <div class="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 rounded-xl flex items-center justify-center">
@@ -177,6 +177,7 @@
                 @foreach($participatingEvents as $item)
                     <div class="px-6 py-5 hover:bg-white/60 transition-all duration-200 group">
                         <div class="grid grid-cols-12 gap-4 items-center">
+                            
                             <!-- Event Details -->
                             <div class="col-span-4">
                                 <div class="flex items-start gap-4">
@@ -215,7 +216,9 @@
                                         </div>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <h3 class="font-bold text-slate-900 mb-2 text-lg group-hover:text-blue-600 transition-colors duration-200">{{$item->name}}</h3>
+                                        <a href="/volunteer/dashboard/my-events/{{ $item->id }}" class="font-bold text-slate-900 mb-2 text-lg group-hover:text-blue-600 transition-colors duration-200 hover:underline">
+                                            {{$item->name}}
+                                        </a>
                                         <p class="text-sm text-slate-600 line-clamp-2 mb-3">{{$item->description}}</p>
                                         <div class="flex items-center gap-3 text-xs">
                                             @php
@@ -266,25 +269,27 @@
 
                             <!-- Status -->
                             <div class="col-span-1">
-                                @if($item->pivot->status === 'confirmed')
-                                    <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 shadow-sm">
-                                        <div class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
-                                        Confirmed
-                                    </span>
+                                @if($item->pivot->status === 'accepted')
+                                    @if($item->ends_at < now())
+                                        <span
+                                            class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 shadow-sm">
+                                            <i data-lucide="check-circle" class="w-3 h-3 mr-2"></i>
+                                            Completed
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 shadow-sm">
+                                            <div class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
+                                            Confirmed
+                                        </span>
+                                    @endif
                                 @elseif($item->pivot->status === 'pending')
                                     <span
                                         class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 shadow-sm">
                                         <div class="w-2 h-2 bg-amber-500 rounded-full mr-2 animate-pulse"></div>
                                         Pending
                                     </span>
-                                @elseif($item->pivot->status === 'completed')
-                                    <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 shadow-sm">
-                                        <i data-lucide="check-circle" class="w-3 h-3 mr-2"></i>
-                                        Completed
-                                    </span>
-                                @elseif($item->pivot->status === 'cancelled')
+                                @elseif($item->pivot->status === 'rejected' || $item->pivot->status === 'cancelled')
                                     <span
                                         class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-rose-100 to-red-100 text-rose-700 shadow-sm">
                                         <i data-lucide="x-circle" class="w-3 h-3 mr-2"></i>
@@ -321,7 +326,7 @@
                                             <i data-lucide="message-circle" class="w-4 h-4"></i>
                                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Message</div>
                                         </button>
-                                    @elseif($item->pivot->status === 'confirmed')
+                                    @elseif($item->pivot->status === 'accepted')
                                         <button class="group relative p-2.5 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-xl transition-all duration-200 hover:shadow-lg" title="View Details">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                             <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Details</div>
@@ -382,7 +387,9 @@
                                 @endif
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h3 class="font-bold text-slate-900 text-lg mb-1">{{ $item->name }}</h3>
+                                <a href="/volunteer/dashboard/events/{{ $item->id }}" class="font-bold text-slate-900 text-lg mb-1 hover:underline block">
+                                    {{ $item->name }}
+                                </a>
                                 <p class="text-sm text-slate-600 line-clamp-2">{{ $item->description }}</p>
                             </div>
                             @if($item->pivot->status === 'confirmed')
