@@ -43,7 +43,6 @@ import {
     Tractor,
     Timer,
     Search,
-    MapPin,
     Star,
     UserPlus,
     Navigation,
@@ -82,14 +81,19 @@ import {
     MessageSquare,
     Check,
     Download,
+
     // Additional icons needed
     MapPin as Map2,
     Calendar as CalendarIcon,
     Archive as ArchiveIcon,
     TrendingUp as TrendingUpIcon,
     Clock as ClockIcon,
-    Trophy
+    Trophy,
+    MapPin,
+    CircleAlert,
+
 } from "lucide";
+
 
 function registerIcons() {
     createIcons({
@@ -162,7 +166,6 @@ function registerIcons() {
             ChartSpline,
             Trash2,
             FileText,
-            TrendingUp,
             Edit3,
             Workflow,
             PenTool,
@@ -181,8 +184,12 @@ function registerIcons() {
             ArchiveIcon,
             TrendingUpIcon,
             ClockIcon,
-            Trophy
+            Trophy,
+            TrendingUp,
+            CircleAlert,
+
         },
+
     });
 }
 
