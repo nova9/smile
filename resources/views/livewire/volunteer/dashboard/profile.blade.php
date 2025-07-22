@@ -168,21 +168,13 @@
                                 <div class=" w-full flex flex-col gap-6 ">
                                     <div class="space-y-6">
                                         
-                                        <fieldset class="border border-gray-300 rounded-md p-4">
+                                        <fieldset class="border border-gray-300 rounded-md p-4 bg-gray-50">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Name</legend>
-                                            <input id="name" wire:model="name" name="name" type="text"
-                                                   class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
-                                            @error('name')
-                                                <span class="text-xs text-red-500">{{ $message }}</span>
-                                            @enderror
+                                            <div class="w-full p-2 text-gray-800">{{ $name }}</div>
                                         </fieldset>
-                                        <fieldset class="border border-gray-300 rounded-md p-4">
+                                        <fieldset class="border border-gray-300 rounded-md p-4 bg-gray-50">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Email</legend>
-                                            <input id="email" wire:model="email" name="email" type="email"
-                                                   class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
-                                            @error('email')
-                                                <span class="text-xs text-red-500">{{ $message }}</span>
-                                            @enderror
+                                            <div class="w-full p-2 text-gray-800">{{ $email }}</div>
                                         </fieldset>
                                         <fieldset class="border border-gray-300 rounded-md p-4">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Age</legend>

@@ -3,6 +3,7 @@
     <main class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto space-y-8">
             <!-- Header Section -->
+
             <div class="text-center space-y-6">
                 <!-- Badge -->
                 <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 to-green-600/10 text-primary rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-primary/20">
@@ -12,6 +13,15 @@
                             clip-rule="evenodd"></path>
                     </svg>
                     Celebrating Our Top Smilers
+                </div>
+                <!-- Community Space Link -->
+                <div class="mt-2">
+                    <a href="{{ route('community.space') }}" class="inline-flex items-center px-4 py-2 bg-accent text-white rounded-full font-semibold shadow hover:bg-primary transition-colors duration-200">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                        Go to Community Space
+                    </a>
                 </div>
 
 
