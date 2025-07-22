@@ -82,7 +82,7 @@ import {
     Check,
     Download,
     MapPin,
-    CircleAlert,
+    CircleAlert
 } from "lucide";
 
 
