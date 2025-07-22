@@ -48,6 +48,12 @@
                                     <p class="text-gray-700 text-sm">{{ $activity->description ?? 'No description available.' }}</p>
                                     <div class="flex justify-between text-xs text-gray-500 mt-2">
                                         <span>{{ \Carbon\Carbon::parse($activity->created_at)->format('M d, Y') }}</span>
+                                        <a href="{{ route('volunteer.feedback') }}" class="ml-2 inline-flex items-center px-3 py-1 bg-accent text-white rounded-full text-xs font-semibold shadow hover:bg-primary transition-colors duration-200">
+                                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8zm-9 4h.01" />
+                                            </svg>
+                                            Feedback
+                                        </a>
                                     </div>
                                 </div>
                             @empty

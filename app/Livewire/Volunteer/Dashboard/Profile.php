@@ -70,10 +70,10 @@ class Profile extends Component
         ]);
 
         // Update user basic info
-        auth()->user()->update([
-            'name' => $this->name,
-            'email' => $this->email,
-        ]);
+        // auth()->user()->update([
+        //     'name' => $this->name,
+        //     'email' => $this->email,
+        // ]);
         $this->profile_picture = $this->profile_picture ?? 'IMG';
 
         $skillsValue = (is_array($this->skills) && count($this->skills) > 0) ? json_encode($this->skills) : null;
