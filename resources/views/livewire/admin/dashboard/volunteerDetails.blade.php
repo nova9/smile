@@ -311,4 +311,15 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('tab') === 'reports') {
+                document.querySelectorAll('input[name="vol_tabs"]').forEach((el, idx) => {
+                    // Assuming Reports/Complaints is the 4th tab (index 3)
+                    if (idx === 3) el.checked = true;
+                });
+            }
+        });
+    </script>
 </x-admin.dashboard-layout>

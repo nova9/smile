@@ -66,8 +66,29 @@ import {
     CheckCircle,
     XCircle,
     ChartSpline,
-    Gavel
-} from 'lucide';
+    Gavel,
+    FileText,
+    TrendingUp,
+    Edit3,
+    Workflow,
+    PenTool,
+    Archive,
+    HelpCircle,
+    Activity,
+    Filter,
+    User,
+    ScrollText,
+    Save,
+    MessageSquare,
+    Check,
+    Download,
+    // Additional icons needed
+    MapPin as Map2,
+    Calendar as CalendarIcon,
+    Archive as ArchiveIcon,
+    TrendingUp as TrendingUpIcon,
+    Clock as ClockIcon,
+} from "lucide";
 
 function registerIcons() {
     createIcons({
@@ -138,20 +159,39 @@ function registerIcons() {
             CheckCircle,
             Gavel,
             ChartSpline,
-            Trash2
-        }
+            Trash2,
+            FileText,
+            TrendingUp,
+            Edit3,
+            Workflow,
+            PenTool,
+            Archive,
+            HelpCircle,
+            Activity,
+            Filter,
+            User,
+            ScrollText,
+            Save,
+            MessageSquare,
+            Check,
+            Download,
+            Map2,
+            CalendarIcon,
+            ArchiveIcon,
+            TrendingUpIcon,
+            ClockIcon,
+        },
     });
 }
 
-document.addEventListener('livewire:navigated', () => {
-    registerIcons()
-})
+document.addEventListener("livewire:navigated", () => {
+    registerIcons();
+});
 
-document.addEventListener('DOMContentLoaded', () => {
-    registerIcons()
-})
+document.addEventListener("DOMContentLoaded", () => {
+    registerIcons();
+});
 
-
-Livewire.hook('morph.added',  ({ el }) => {
-    registerIcons()
-})
+Livewire.hook("morph.added", ({ el }) => {
+    registerIcons();
+});

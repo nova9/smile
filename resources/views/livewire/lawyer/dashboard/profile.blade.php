@@ -3,8 +3,7 @@
         <div class="max-w-7xl mx-auto space-y-8">
             <!-- Header Section -->
             <div class="text-center space-y-6">
-                <div
-                    class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500/10 to-blue-600/10 text-black rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-blue-500/20">
+                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500/10 to-green-600/10 text-black rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-green-500/20">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -14,8 +13,8 @@
                 </div>
                 <div class="space-y-4">
                     <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-800 leading-tight relative">
-                        My <span class="text-blue-600">Profile</span>
-                        <svg class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-40 h-4 text-blue-500/30"
+                        My <span class="text-accent">Profile</span>
+                        <svg class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-40 h-4 text-green-500/30"
                             viewBox="0 0 100 12" fill="none">
                             <path d="M2 6C20 1 40 1 50 6C60 11 80 11 98 6" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" />
@@ -34,18 +33,17 @@
                         <div class="flex items-center gap-6">
                             <div class="relative">
                                 <div class="avatar">
-                                    <div class="mask mask-squircle h-20 w-20 ring-4 ring-blue-500/20">
+                                    <div class="mask mask-squircle h-20 w-20 ring-4 ring-green-500/20">
                                         <img id="profilePhoto"
                                             src="https://img.daisyui.com/images/profile/demo/2@94.webp" alt="Profile" />
                                     </div>
                                 </div>
                                 <div
-                                    class="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                                    class="absolute -bottom-1 -right-1 w-6 h-6 bg-black rounded-full flex items-center justify-center">
                                     <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                             clip-rule="evenodd"></path>
-                                    </svg>
                                 </div>
                             </div>
                             <div class="space-y-1">
@@ -59,13 +57,13 @@
                                     <p id="completionText"
                                         class="text-3xl font-bold">{{$completion * 100}}%</p>
                                     <div
-                                        class="absolute -inset-2 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-lg -z-10 opacity-50"></div>
+                                        class="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-lg -z-10 opacity-50"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="mt-6 w-full bg-gray-200 rounded-full h-2.5">
-                        <div id="completionBar" class="bg-blue-600 h-2.5 rounded-full"
+                        <div id="completionBar" class="bg-black h-2.5 rounded-full"
                             style="width:{{$completion * 100}}%"></div>
                     </div>
 
@@ -87,7 +85,7 @@
                                             <div id="map" class="w-full h-96 bg-gray-100 relative">
                                                 <div class="absolute inset-0 flex items-center justify-center">
                                                     <div class="flex items-center gap-2">
-                                                        <button class="btn btn-sm btn-primary"
+                                                        <button class="btn btn-sm btn-accent"
                                                             onclick="initializeMap()"
                                                             type="button">
                                                             <i data-lucide="refresh-cw" class="size-4"></i>
@@ -99,10 +97,10 @@
                                         </div>
 
                                         <!-- Location display -->
-                                        <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                        <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
                                             <div class="flex items-center justify-between mb-3">
                                                 <div class="flex items-center gap-2">
-                                                    <i data-lucide="navigation" class="size-4 text-blue-600"></i>
+                                                    <i data-lucide="navigation" class="size-4 text-accent"></i>
                                                     <h4 class="text-sm font-medium text-gray-700">Location</h4>
                                                 </div>
                                             </div>
@@ -110,9 +108,9 @@
                                             @if($latitude && $longitude)
                                             <div id="coordinates-display">
                                                 <div
-                                                    class="flex items-center gap-4 p-3 bg-white/50 rounded-lg border border-blue-100">
+                                                    class="flex items-center gap-4 p-3 bg-white/50 rounded-lg border border-green-100">
                                                     <div class="flex items-center gap-2 text-sm text-gray-600">
-                                                        <i data-lucide="map-pin" class="size-4 text-blue-600"></i>
+                                                        <i data-lucide="map-pin" class="size-4 text-accent"></i>
                                                         <span class="font-medium">Coordinates:</span>
                                                     </div>
                                                     <div class="flex items-center gap-4 text-sm font-mono">
@@ -125,7 +123,7 @@
                                             @else
                                             <div class="flex items-center justify-center text-gray-500">
                                                 <div class="text-center">
-                                                    <i data-lucide="map" class="size-8 mx-auto mb-2 text-blue-600"></i>
+                                                    <i data-lucide="map" class="size-8 mx-auto mb-2 text-accent"></i>
                                                     <p class="text-sm">No location set</p>
                                                 </div>
                                             </div>
@@ -202,7 +200,7 @@
                                             @if(is_array($skills) && count($skills) > 0)
                                             <div class="flex flex-wrap gap-2">
                                                 @foreach($skills as $skill)
-                                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">{{ $skill }}</span>
+                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">{{ $skill }}</span>
                                                 @endforeach
                                             </div>
                                             @else
