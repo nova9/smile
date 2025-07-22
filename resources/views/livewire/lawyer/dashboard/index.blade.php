@@ -1,5 +1,5 @@
 <x-lawyer.dashboard-layout>
-    <main class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
+    <main class=" px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto space-y-8">
             <!-- Header Section -->
             <div class="text-center space-y-6">
@@ -152,7 +152,7 @@
             </div>
 
             <!-- Recent Activities -->
-            <div class="bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/50">
+            <div class="bg-white/95  rounded-2xl p-6 shadow-lg border border-white/50">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Recent Activities</h3>
                     <button class="btn btn-accent btn-sm">View All</button>
