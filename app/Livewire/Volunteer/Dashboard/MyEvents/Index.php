@@ -7,10 +7,20 @@ use Livewire\Component;
 class Index extends Component
 {
     public $participatingEvents;
+    public $confirmedEvents;
+    public $pendingEvents;
 
     public function mount()
     {
         $this->participatingEvents = auth()->user()->participatingEvents()->get();
+        // dd($this->participatingEvents[0]->pivot->status);
+        $this->confirmedEvents =$this->participatingEvents->filter(function($event){
+            return $event->pivot->status === 'accepted';
+        });
+        $this->pendingEvents =$this->participatingEvents->filter(function($event){
+            return $event->pivot->status === 'pending';
+        });
+        
         // dd($this->participatingEvents[0]->category->color);
         
 
