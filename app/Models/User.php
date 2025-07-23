@@ -84,8 +84,8 @@ class User extends Authenticatable
     public function isProfileCompletionPercentage()
     {
         $requiredskills = [
-            'skills'=> 0.1,
-            'age' => 0.1,
+//            'skills'=> 0.1,
+            'age' => 0.2,
             'latitude' => 0.1,
             'longitude' => 0.1,
             'contact_number' => 0.1,

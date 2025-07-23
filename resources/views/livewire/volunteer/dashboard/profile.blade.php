@@ -167,7 +167,7 @@
                             <div class="flex flex-col gap-10 ">
                                 <div class=" w-full flex flex-col gap-6 ">
                                     <div class="space-y-6">
-                                        
+
                                         <fieldset class="border border-gray-300 rounded-md p-4 bg-gray-50">
 
                                             <legend class="text-sm font-medium text-gray-700 px-2">Name</legend>
@@ -211,22 +211,25 @@
                                         </fieldset>
                                     </div>
 
-                                    <div class="w-full ">
-                                        <fieldset class="border border-gray-300 rounded-md p-4">
-                                            <legend class=" flex gap-1 text-sm font-medium text-gray-700 px-2">
-                                                <i data-lucide="book-open-text" class="size-4 "></i>
-                                                <span >Skills</span>
-                                            </legend>
-                                            <textarea id="skills" wire:model="skills" name="skills" placeholder="Communication, Teamwork, Problem Solving"
-                                                      class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200" rows="3" autocomplete="off" oninput="showSkillSuggestions(this)"></textarea>
-                                            <div id="skill-suggestions" class="bg-white border border-gray-300 rounded-md shadow-md mt-1 hidden z-10"></div>
-                                        </fieldset>
-                                        <div id="skillsList" class="flex flex-wrap gap-2 mt-2">
-                                            <div class="md:col-span-2">
-                                            <p class="text-xs text-gray-500 mt-2">Skills help you find events that match your interests</p>
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <div class="w-full ">--}}
+{{--                                        <fieldset class="border border-gray-300 rounded-md p-4">--}}
+{{--                                            <legend class=" flex gap-1 text-sm font-medium text-gray-700 px-2">--}}
+{{--                                                <i data-lucide="book-open-text" class="size-4 "></i>--}}
+{{--                                                <span >Skills</span>--}}
+{{--                                            </legend>--}}
+{{--                                            <textarea id="skills" wire:model="skills" name="skills" placeholder="Communication, Teamwork, Problem Solving"--}}
+{{--                                                      class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200" rows="3" autocomplete="off" oninput="showSkillSuggestions(this)"></textarea>--}}
+{{--                                            <div id="skill-suggestions" class="bg-white border border-gray-300 rounded-md shadow-md mt-1 hidden z-10"></div>--}}
+{{--                                        </fieldset>--}}
+{{--                                        <div id="skillsList" class="flex flex-wrap gap-2 mt-2">--}}
+{{--                                            <div class="md:col-span-2">--}}
+{{--                                            <p class="text-xs text-gray-500 mt-2">Skills help you find events that match your interests</p>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        @error('skills') <p--}}
+{{--                                            class="text-xs text-red-500 mt-1">{{ $message }}</p>--}}
+{{--                                        @enderror--}}
+{{--                                    </div>--}}
                                     <button type="submit" class="btn btn-accent">Save Changes</button>
                                 </div>
                             </div>
@@ -361,14 +364,14 @@
     }
 
     // Load the Google Maps script
-    function loadScript() {
-        const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
-        script.async = true;
-        document.head.appendChild(script);
-    }
+    // function loadScript() {
+    //     const script = document.createElement("script");
+    //     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
+    //     script.async = true;
+    //     document.head.appendChild(script);
+    // }
 
-    window.addEventListener("load", loadScript);
+    window.addEventListener("load", initializeMap);
 </script>
 
 @endassets
