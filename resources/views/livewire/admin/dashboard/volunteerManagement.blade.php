@@ -1,6 +1,22 @@
 <x-admin.dashboard-layout>
+    <!-- Header Section (Volunteer my-events style) -->
+    <div class="mb-8 mt-8 ml-4 lg:ml-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
+                    Volunteer
+                    <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
+                        Activities
+                    </span>
+                </h1>
+                <p class="text-slate-600 text-lg">Track and manage all volunteer activities</p>
+            </div>
+            <!-- Optionally, you can add a badge or quick action here if needed -->
+        </div>
+    </div>
     <!-- Stats Section -->
-    <x-admin.stats-card :stats="[
+    <div class="ml-4 lg:ml-8">
+        <x-admin.stats-card :stats="[
         [
             'icon' => 'users',
             'title' => 'Total Volunteers',
@@ -20,8 +36,9 @@
             'description' => 'Across all volunteers'
         ]
     ]" />
+    </div>
 
-    <div class="px-4 sm:px-6 lg:px-8 py-8">
+    <div class="px-4 sm:px-6 lg:px-8 py-8 ml-4 lg:ml-8">
         <!-- Search & Filters -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div class="flex gap-2 w-full md:w-auto">
@@ -62,10 +79,10 @@
                                         <td class="px-6 py-4">
                                             <span
                                                 class="badge 
-                                                                                                                                                                                                    {{ $volunteer->status === 'active' ? 'badge-success' :
+                                                                                                                                                                                                                                                                    {{ $volunteer->status === 'active' ? 'badge-success' :
                         ($volunteer->status === 'suspended' ? 'badge-warning' :
                             ($volunteer->status === 'inactive' ? 'badge-error' : 'badge-info')) }} 
-                                                                                                                                                                                                    px-4 py-2 text-base font-semibold rounded-full">
+                                                                                                                                                                                                                                                                    px-4 py-2 text-base font-semibold rounded-full">
                                                 {{ ucfirst($volunteer->status ?? 'Active') }}
                                             </span>
                                         </td>
