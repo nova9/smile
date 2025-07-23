@@ -18,7 +18,7 @@
                         {{ ucfirst($volunteer->status ?? 'Active') }}
                     </span>
                     <div class="flex gap-2 mt-2 sm:mt-0">
-                        <button class="btn btn-neutral font-bold">Suspend</button>
+                        <button class="btn btn-outline btn-warning font-bold">Suspend</button>
                         <button class="btn btn-outline btn-error font-bold">Remove</button>
                     </div>
                 </div>
@@ -169,38 +169,56 @@
                 <h2
                     class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
                     Participated Events</h2>
-                <x-admin.data-table :columns=" [
-        ['key' => 'id', 'label' => 'Id', 'type' => 'text'],
-        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
-        ['key' => 'status', 'label' => 'Status', 'type' => 'badge'],
-        ['key' => 'start_date', 'label' => 'Start Date', 'type' => 'text'],
-        ['key' => 'end_date', 'label' => 'End Date', 'type' => 'text'],
-        ['key' => 'role', 'label' => 'Role', 'type' => 'text'],
-        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions']
-    ]" :data=" [
-        [
-            'id' => '1',
-            'title' => 'Tree Planting 2025',
-            'status' => ['class' => 'badge-success', 'text' => 'Completed'],
-            'start_date' => '2025-08-01',
-            'end_date' => '2025-08-10',
-            'role' => 'Volunteer',
-            'actions' => [
-                ['type' => 'button', 'class' => 'btn-info', 'text' => 'View']
-            ]
-        ],
-        [
-            'id' => '2',
-            'title' => 'Beach Cleanup Drive',
-            'status' => ['class' => 'badge-warning', 'text' => 'Ongoing'],
-            'start_date' => '2025-09-15',
-            'end_date' => '2025-09-15',
-            'role' => 'Team Lead',
-            'actions' => [
-                ['type' => 'button', 'class' => 'btn-info', 'text' => 'View']
-            ]
-        ]
-    ]" />
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-2xl shadow-xl">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Id</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Title</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Status</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Start Date</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">End Date</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Role</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($events as $event)
+                                <tr>
+                                    <td class="px-6 py-4">{{ $event->id }}</td>
+                                    <td class="px-6 py-4">{{ $event->name }}</td>
+                                    <td class="px-6 py-4">
+                                        <span class="badge 
+                                                @if(optional($event->pivot)->status === 'accepted') badge-success
+                                                @elseif(optional($event->pivot)->status === 'pending') badge-warning
+                                                @elseif(optional($event->pivot)->status === 'rejected' || optional($event->pivot)->status === 'cancelled') badge-error
+                                                @else badge-info @endif">
+                                            {{ ucfirst(optional($event->pivot)->status ?? 'N/A') }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $event->starts_at ? \Carbon\Carbon::parse($event->starts_at)->format('Y-m-d') : '-' }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $event->ends_at ? \Carbon\Carbon::parse($event->ends_at)->format('Y-m-d') : '-' }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ optional($event->pivot)->role ?? '-' }}
+                                    </td>
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <x-admin.action-button type="view"
+                                            url="{{ url('/admin/dashboard/event-details/' . $event->id) }}" />
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="px-6 py-8 text-center text-gray-500">No events found for this
+                                        volunteer.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <label class="tab flex gap-1">
@@ -243,6 +261,7 @@
                 <span class="font-semibold">Reports/Complaints</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
+                <!-- Reports/Complaints Tab -->
                 <h2
                     class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
                     Reports for Volunteer: John Perera
@@ -272,9 +291,8 @@
                             <span class="text-gray-900">Did not submit required report on time.</span>
                         </div>
                         <div class="flex gap-2 mt-2">
-                            <button class="btn btn-neutral font-bold">View</button>
                             <button class="btn btn-outline btn-success font-bold">Resolve</button>
-                            <button class="btn btn-outline btn-error font-bold">Dismiss</button>
+                            <button class="btn btn-outline btn-warning font-bold">Suspend</button>
                         </div>
                     </div>
                     <!-- Report Card 2 -->
@@ -300,14 +318,10 @@
                             <span class="font-medium text-gray-700">Details:</span>
                             <span class="text-gray-900">Arrived late to scheduled activity.</span>
                         </div>
-                        <div class="flex gap-2 mt-2">
-                            <button class="btn btn-neutral font-bold">View</button>
-                        </div>
+
                     </div>
                 </div>
-                <div class="mt-8 flex justify-end">
-                    <button class="btn btn-error font-bold">Suspend Volunteer</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -321,5 +335,6 @@
                 });
             }
         });
+
     </script>
 </x-admin.dashboard-layout>

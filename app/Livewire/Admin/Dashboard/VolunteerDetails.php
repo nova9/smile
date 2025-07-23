@@ -8,6 +8,7 @@ use App\Models\User;
 class VolunteerDetails extends Component
 {
     public $volunteer;
+    public $events;
 
     public function mount($id)
     {
@@ -15,6 +16,9 @@ class VolunteerDetails extends Component
         $attributes = $this->volunteer->attributes()->get()->pluck('pivot.value', 'name')->all();
 
         $this->setAttributesForView($attributes);
+
+        // Get all events the volunteer participated in
+        $this->events = $this->volunteer->participatingEvents()->withCount('users')->get();
     }
 
     protected $attributesForView = [];
@@ -29,6 +33,7 @@ class VolunteerDetails extends Component
         return view('livewire.admin.dashboard.volunteerDetails', [
             'volunteer' => $this->volunteer,
             'attributes' => $this->attributesForView,
+            'events' => $this->events,
         ]);
     }
 }
