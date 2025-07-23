@@ -13,6 +13,7 @@ class OrganizationManagement extends Component
             $query->where('name', 'requester');
         })
             ->withCount('organizingEvents')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $total_organizations = $organizations->count();
