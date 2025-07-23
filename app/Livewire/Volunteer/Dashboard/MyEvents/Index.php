@@ -12,7 +12,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->participatingEvents = auth()->user()->participatingEvents()->get();
+        $this->participatingEvents = auth()->user()->participatingEvents()->orderBy('created_at', 'desc')->get();
         // dd($this->participatingEvents[0]->pivot->status);
         $this->confirmedEvents =$this->participatingEvents->filter(function($event){
             return $event->pivot->status === 'accepted';
@@ -20,9 +20,9 @@ class Index extends Component
         $this->pendingEvents =$this->participatingEvents->filter(function($event){
             return $event->pivot->status === 'pending';
         });
-        
+
         // dd($this->participatingEvents[0]->category->color);
-        
+
 
     }
 

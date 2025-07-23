@@ -81,17 +81,8 @@ import {
     MessageSquare,
     Check,
     Download,
-
-    // Additional icons needed
-    MapPin as Map2,
-    Calendar as CalendarIcon,
-    Archive as ArchiveIcon,
-    TrendingUp as TrendingUpIcon,
-    Clock as ClockIcon,
-    Trophy,
     MapPin,
     CircleAlert,
-
 } from "lucide";
 
 
@@ -179,15 +170,8 @@ function registerIcons() {
             MessageSquare,
             Check,
             Download,
-            Map2,
-            CalendarIcon,
-            ArchiveIcon,
-            TrendingUpIcon,
-            ClockIcon,
-            Trophy,
             TrendingUp,
             CircleAlert,
-
         },
 
     });
