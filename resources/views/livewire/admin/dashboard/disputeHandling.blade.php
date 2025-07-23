@@ -1,5 +1,22 @@
 <x-admin.dashboard-layout>
-    <div class="px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header Section (Dispute Handling style) -->
+    <div class="mb-8 mt-8 ml-4 lg:ml-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
+                    Dispute
+                    <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
+                        Handling
+                    </span>
+                </h1>
+                <p class="text-slate-600 text-lg">Manage and resolve all account reports, reactivation requests, and
+                    feedback
+                </p>
+            </div>
+            <!-- Optionally, you can add a badge or quick action here if needed -->
+        </div>
+    </div>
+    <div class="px-4 sm:px-6 lg:px-8 py-8 ml-4 lg:ml-8">
         <div class="tabs tabs-lift">
             <!-- Account Reports Tab -->
             <label class="tab flex gap-1">
