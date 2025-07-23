@@ -58,13 +58,13 @@ class Profile extends Component
     {
         // Validation
         $validated = $this->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'skills' => 'nullable|array',
+//            'name' => 'required|string|max:255',
+//            'email' => 'required|email|max:255',
+//            'skills' => 'nullable|array',
             'age' => 'nullable|integer|min:1|max:120',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            'contact_number' => 'nullable|string|max:20',
+            'contact_number' => 'nullable|string|max:10|min:10', // Adjust max length as needed
             'gender' => 'nullable|string|in:male,female,other,prefer_not_to_say',
             'profile_picture' => 'nullable|string|max:255',
         ]);
