@@ -6,7 +6,7 @@ use App\Models\Event;
 use App\Models\User;
 use Livewire\Component;
 
-class Activities extends Component
+class Achievements extends Component
 {
     public $activities;
     public $certificates;
@@ -20,7 +20,7 @@ class Activities extends Component
         //pivottable=event_user
         $this->certificates = auth()->user()->participatingEvents()
             ->wherePivot('ends_at', '!=', null)
-            ->wherePivot('ends_at', '<=', now())
+            // ->wherePivot('ends_at', '<=', now())
             ->get();
 
         $this->badges = auth()->user()->badges;
@@ -28,6 +28,6 @@ class Activities extends Component
 
     public function render()
     {
-        return view('livewire.volunteer.dashboard.activities');
+        return view('livewire.volunteer.dashboard.achievements');
     }
 }

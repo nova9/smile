@@ -11,7 +11,6 @@ import {
     MessageCircle,
     Bell,
     LogOut,
-    Trophy,
     CircleUser,
     Sparkles,
     CircleArrowRight,
@@ -84,23 +83,12 @@ import {
     Download,
     MapPin,
     CircleAlert,
-    List,
-    CalendarCheck,
-    ChevronLeft,
-    ChevronRight,
-    Grid3X3
 } from "lucide";
 
 
 function registerIcons() {
     createIcons({
         icons: {
-            Grid3X3,
-            CalendarCheck,
-            ChevronLeft,
-            ChevronRight,
-            List,
-            Trophy,
             X,
             CalendarPlus,
             Map,

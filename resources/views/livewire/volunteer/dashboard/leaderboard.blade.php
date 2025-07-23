@@ -14,17 +14,6 @@
                     </svg>
                     Celebrating Our Top Smilers
                 </div>
-                <!-- Community Space Link -->
-                <div class="mt-2">
-                    <a href="{{ route('community.space') }}" class="inline-flex items-center px-4 py-2 bg-accent text-white rounded-full font-semibold shadow hover:bg-primary transition-colors duration-200">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                        Go to Community Space
-                    </a>
-                </div>
-
-
                 <!-- Title -->
                 <div class="space-y-4">
                     <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-accent leading-tight relative">

@@ -1,10 +1,10 @@
 <x-volunteer.dashboard-layout>
-    <main class="px-4 sm:px-6 lg:px-8 py-8">
+    <main class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto space-y-8">
             <!-- Header Section -->
             <div class="text-center space-y-6">
                 <div
-                    class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500/10 to-green-600/10 text-black rounded-full text-sm font-medium shadow-lg border border-green-500/20">
+                    class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500/10 to-green-600/10 text-black rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-green-500/20">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
                               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -13,7 +13,7 @@
                     Your Profile
                 </div>
                 <div class="space-y-4">
-                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-800 leading-tight">
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-800 leading-tight relative">
                         My <span class="text-accent">Profile</span>
                         <svg class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-40 h-4 text-green-500/30"
                              viewBox="0 0 100 12" fill="none">
@@ -29,10 +29,10 @@
 
             <!-- Profile Card -->
             <div class="group">
-                <div class="bg-white/95 rounded-3xl p-8 shadow-xl border border-white/50">
+                <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                     <div class="flex flex-col md:flex-row items-start justify-between gap-6">
                         <div class="flex items-center gap-6">
-                            <div class="">
+                            <div class="relative">
                                 <div class="avatar">
                                     <div class="mask mask-squircle h-20 w-20 ring-4 ring-green-500/20">
                                         <img id="profilePhoto"
@@ -58,11 +58,11 @@
                         </div>
                         <div class="flex items-center gap-8">
                             <div class="text-center">
-                                <div class="">
+                                <div class="relative">
                                     <p id="completionText"
                                        class="text-3xl font-bold">{{$completion * 100}}%</p>
-{{--                                    <div--}}
-{{--                                        class="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-lg -z-10 opacity-50"></div>--}}
+                                    <div
+                                        class="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-lg -z-10 opacity-50"></div>
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@
                                         <!-- Map Location Picker -->
                                         <div class="mb-6" wire:ignore>
                                             <div class="border border-gray-300 rounded-lg overflow-hidden">
-                                                <div id="map" class="w-full h-96 bg-gray-100">
+                                                <div id="map" class="w-full h-96 bg-gray-100 relative">
                                                     <!-- Map will be initialized here -->
                                                     <div class="absolute inset-0 flex items-center justify-center">
                                                         {{--                                    loading state--}}
@@ -169,7 +169,6 @@
                                     <div class="space-y-6">
 
                                         <fieldset class="border border-gray-300 rounded-md p-4 bg-gray-50">
-
                                             <legend class="text-sm font-medium text-gray-700 px-2">Name</legend>
                                             <div class="w-full p-2 text-gray-800">{{ $name }}</div>
                                         </fieldset>
@@ -185,7 +184,7 @@
                                                 <span class="text-xs text-red-500">{{ $message }}</span>
                                             @enderror
                                         </fieldset>
-
+                                                                                
                                         <fieldset class="border border-gray-300 rounded-md p-4">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Contact</legend>
                                             <input id="contact_number" wire:model="contact_number"
