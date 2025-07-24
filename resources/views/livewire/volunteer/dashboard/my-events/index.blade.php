@@ -101,19 +101,19 @@
                     <span class="text-sm font-semibold text-slate-700">Filters</span>
                 </div>
                 <div class="flex flex-wrap gap-3 flex-1">
-                    <select class="select">
-                        <option>All Status</option>
-                        <option>Confirmed</option>
-                        <option>Pending</option>
-                        <option>Completed</option>
-                        <option>Cancelled</option>
+                    <select class="select" wire:model.change="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="accepted">Confirmed</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
                     </select>
-                    <select class="select">
-                        <option>All Categories</option>
-                        <option>Environment</option>
-                        <option>Community</option>
-                        <option>Education</option>
-                        <option>Healthcare</option>
+                    <select class="select" wire:model.change="categoryFilter">
+                        <option value="">All Categories</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
+                        @endforeach
+                        
                     </select>
                     <div class="flex gap-1 flex-1">
                         <label class="input w-full">
