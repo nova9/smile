@@ -73,7 +73,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Event::class)
             ->withTimestamps()
-            ->withPivot('status', 'created_at');
+            ->withPivot('status', 'created_at','ends_at');
     }
 
     public function events()
