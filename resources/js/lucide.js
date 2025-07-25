@@ -83,6 +83,7 @@ import {
     Download,
     MapPin,
     CircleAlert,
+    Trophy,
 } from "lucide";
 
 
@@ -172,6 +173,7 @@ function registerIcons() {
             Download,
             TrendingUp,
             CircleAlert,
+            Trophy
         },
 
     });
