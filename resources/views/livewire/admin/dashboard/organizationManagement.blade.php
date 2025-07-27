@@ -1,6 +1,23 @@
 <x-admin.dashboard-layout>
+    <!-- Header Section (Organization Management style) -->
+    <div class="mb-8 mt-8 ml-4 lg:ml-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
+                    Organization
+                    <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
+                        Management
+                    </span>
+                </h1>
+                <p class="text-slate-600 text-lg">Track and manage all organizations and their activities
+                </p>
+            </div>
+            <!-- Optionally, you can add a badge or quick action here if needed -->
+        </div>
+    </div>
     <!-- Stats Section -->
-    <x-admin.stats-card :stats="[
+    <div class="ml-4 lg:ml-8">
+        <x-admin.stats-card :stats="[
         [
             'icon' => 'building-2',
             'title' => 'Total Organizations',
@@ -26,8 +43,9 @@
             'description' => 'Restricted Access'
         ]
     ]" />
+    </div>
 
-    <div class="px-4 sm:px-6 lg:px-8 py-8">
+    <div class="px-4 sm:px-6 lg:px-8 py-8 ml-4 lg:ml-8">
         <div class="tabs tabs-lift">
             <label class="tab flex gap-1">
                 <input type="radio" name="org_mgmt_tabs" checked="checked" />

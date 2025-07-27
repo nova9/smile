@@ -1,77 +1,151 @@
+@php
+    function hexToRgba($hex, $opacity = 0.2)
+    {
+        $hex = str_replace('#', '', $hex);
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+        return "rgba($r, $g, $b, $opacity)";
+    }
+@endphp
+
+
 <x-volunteer.dashboard-layout>
-    <main class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
-        <div class="max-w-4xl mx-auto space-y-8">
-            <!-- Header Section -->
-            <div class="text-center space-y-6">
-                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500/10 to-green-600/10 text-blue-600 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-blue-500/20">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    Connect with Volunteers
-                </div>
-                <div class="space-y-4">
-                    <h1 class="text-5xl sm:text-6xl font-bold text-gray-800 leading-tight relative">
-                        Community <span class="bg-gradient-to-r from-blue-500 to-green-600 bg-clip-text text-transparent">Space</span>
-                        <svg class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-40 h-4 text-blue-500/30" viewBox="0 0 100 12" fill="none">
-                            <path d="M2 6C20 1 40 1 50 6C60 11 80 11 98 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                        </svg>
+    <div class="min-h-screen  via-white to-primary/10">
+        <div class="container mx-auto px-4 py-10">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-5xl font-extrabold text-accent mb-2 tracking-tight">
+                        Community
+                        <span class="bg-clip-text ">Space</span>
                     </h1>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Join discussions and share ideas for events and projects
-                    </p>
+                    <p class="text-lg text-gray-500">Connect, collaborate, and make an impact together.</p>
                 </div>
             </div>
-
-            <!-- Volunteer Discussions Section -->
-            <div class="relative group">
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-green-500/10 to-gray-800/20 rounded-3xl transform rotate-1 group-hover:rotate-0 transition-transform duration-300"></div>
-                <div class="relative bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
-                    <h2 class="text-2xl font-bold bg-gradient-to-r from-gray-800 to-blue-500 bg-clip-text text-transparent mb-4">Volunteer Discussions</h2>
-                    <p class="text-gray-600 mb-4">Share updates and ideas for events and projects</p>
-                    <div class="space-y-4">
-                        <label class="relative block">
-                            <input id="nameInput" type="text" placeholder="Your Name" class="input input-md w-full bg-gray-50 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500/20 transition-all duration-200" />
-                        </label>
-                        <label class="relative block">
-                            <input id="eventInput" type="text" placeholder="Event/Project Name" class="input input-md w-full bg-gray-50 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500/20 transition-all duration-200" />
-                        </label>
-                        <div class="flex flex-col space-y-4">
-                            <textarea id="messageInput" placeholder="Your Message" class="textarea textarea-md w-full bg-gray-50 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-500/20 transition-all duration-200" rows="4"></textarea>
-                            <button onclick="postMessage()" class="btn bg-accent text-white px-4 py-2 rounded-md hover:from-blue-600 hover:to-green-700 transition-all duration-200">Post Message</button>
+            @isset($event)
+                <div class="bg-white rounded-3xl shadow-2xl  overflow-hidden">
+                    <!-- Hero/Event Header -->
+                    <div class="relative h-72 sm:h-96">
+                        <img src="https://picsum.photos/seed/{{ $event->id }}/1200/800" alt="Event Image"
+                            class="w-full h-full object-cover opacity-80">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <h1 class="text-4xl sm:text-5xl font-bold text-white drop-shadow-xl">{{ $event->name }}
+                                </h1>
+                                <div
+                                    class="mt-3 px-5 py-2 bg-white/80 rounded-full text-base font-semibold text-amber-800 inline-block shadow">
+                                    {{ $event->category->name }}</div>
+                            </div>
                         </div>
                     </div>
-                    <div id="discussionThread" class="mt-6 space-y-4 max-h-96 overflow-y-auto">
-                        <!-- Messages will be appended here -->
-                    </div>
-                </div>
-            </div>
+                    <!-- Main Content -->
+                    <div class="p-8 sm:p-12">
+                        <!-- Event Overview -->
+                        <div class="mb-10">
+                            <p class="text-gray-700 text-xl text-center max-w-3xl mx-auto leading-relaxed">
+                                {{ Str::limit($event->description, 220) }}</p>
+                        </div>
+                        <!-- Quick Info Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                            <div class="bg-gray-50 rounded-xl p-5 text-center shadow">
+                                <i data-lucide="calendar" class="w-8 h-8 text-amber-600 mx-auto mb-2"></i>
+                                <div class="text-sm text-gray-500">Date</div>
+                                <div class="font-bold text-gray-800 text-lg">{{ $event->starts_at->format('M j') }} -
+                                    {{ $event->ends_at->format('M j') }}</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl p-5 text-center shadow">
+                                <i data-lucide="clock" class="w-8 h-8 text-amber-600 mx-auto mb-2"></i>
+                                <div class="text-sm text-gray-500">Time</div>
+                                <div class="font-bold text-gray-800 text-lg">{{ $event->starts_at->format('h:i A') }}</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl p-5 text-center shadow">
+                                <i data-lucide="map-pin" class="w-8 h-8 text-amber-600 mx-auto mb-2"></i>
+                                <div class="text-sm text-gray-500">Location</div>
+                                <div class="font-bold text-gray-800 text-lg">{{ $event->location ?? 'TBD' }}</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl p-5 text-center shadow">
+                                <i data-lucide="users" class="w-8 h-8 text-amber-600 mx-auto mb-2"></i>
+                                <div class="text-sm text-gray-500">Spots</div>
+                                <div class="font-bold text-gray-800 text-lg">{{ $event->users->count() }} /
+                                    {{ $event->maximum_participants ?? 'Unlimited' }}</div>
+                            </div>
+                        </div>
+                        <!-- Main Content Grid -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <!-- Left Column -->
+                            <div class="lg:col-span-2 space-y-8">
 
-            <!-- Past Discussions Section -->
-            <div class="relative group">
-                <div class="relative bg-white/95 backdrop-blur-lg rounded-3xl shadow-xl overflow-hidden">
-                    <div class="bg-blue-500/10 px-8 py-6 border-b border-gray-100">
-                        <h2 class="text-2xl font-bold bg-gradient-to-r from-gray-800 to-blue-500 bg-clip-text text-transparent">Past Discussions</h2>
-                        <p class="text-gray-600 mt-1">Review previous event and project discussions</p>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table id="pastDiscussionTable" class="table w-full">
-                            <thead>
-                            <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                                <th class="px-8 py-4 text-left font-semibold text-gray-800">Volunteer</th>
-                                <th class="px-8 py-4 text-left font-semibold text-gray-800">Event/Project</th>
-                                <th class="px-8 py-4 text-left font-semibold text-gray-800">Message</th>
-                                <th class="px-8 py-4 text-left font-semibold text-gray-800">Date</th>
-                            </tr>
-                            </thead>
-                            <tbody id="pastDiscussionBody" class="divide-y divide-gray-100">
-                            <!-- Past discussion entries will be appended here -->
-                            </tbody>
-                        </table>
+                                <!-- Community Chat -->
+                                <div class="mt-12 rounded-xl p-8 bg-gray-50 shadow">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Community Chat</h2>
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+                                        id="chatThread">
+                                        <div class="avatar-group -space-x-6 flex flex-row">
+                                            <div class="avatar">
+                                                <div class="w-14">
+                                                    <img
+                                                        src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
+                                                </div>
+                                            </div>
+                                            <div class="avatar">
+                                                <div class="w-14">
+                                                    <img
+                                                        src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                                                </div>
+                                            </div>
+                                            <div class="avatar">
+                                                <div class="w-14">
+                                                    <img
+                                                        src="https://img.daisyui.com/images/profile/demo/averagebulk@192.webp" />
+                                                </div>
+                                            </div>
+                                            <div class="avatar avatar-placeholder">
+                                                <div
+                                                    class="bg-amber-400 text-neutral-content w-14 flex items-center justify-center text-lg font-bold">
+                                                    <span>+99</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-center sm:mt-0 mt-8">
+                                            <button class="w-full btn btn-outline btn-lg font-semibold">
+
+                                                <i data-lucide="users" class="w-6 h-6 mr-2"></i>
+                                                Join the Community
+                                            </button>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Right Column -->
+                            <div class="space-y-8">
+                                <!-- Organizer Card -->
+                                <div class="bg-gray-50 rounded-xl p-8 shadow">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-5">Hosted By</h3>
+                                    <div class="flex items-center gap-5 mb-5">
+                                        <div
+                                            class="w-14 h-14 rounded-full bg-amber-400 text-white flex items-center justify-center text-2xl font-extrabold">
+                                            {{ strtoupper(substr($event->user->name, 0, 1)) }}</div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-800 text-lg">{{ $event->user->name }}</h4>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Action Buttons -->
+                                <div class="space-y-4">
+                                    <button class="w-full btn btn-outline btn-lg font-semibold">
+                                        <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
+                                        Message Host
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
+            @endisset
         </div>
-    </main>
-
-
+    </div>
 </x-volunteer.dashboard-layout>
