@@ -20,25 +20,25 @@
         [
             'icon' => 'users',
             'title' => 'Total Users',
-            'value' => '3,240',
+            'value' => '32',
             'description' => 'All registered users'
         ],
         [
             'icon' => 'ban',
             'title' => 'suspended Users',
-            'value' => '10',
+            'value' => '0',
             'description' => 'Last 30 days'
         ],
         [
             'icon' => 'user-plus',
             'title' => 'New Registrations',
-            'value' => '125',
+            'value' => '15',
             'description' => 'This month'
         ],
         [
             'icon' => 'shield-check',
             'title' => 'Pending Verifications',
-            'value' => '42',
+            'value' => '15',
             'description' => 'Awaiting approval'
         ]
     ]" />
@@ -105,8 +105,8 @@
                             <i class="fas fa-clock text-yellow-600 text-lg"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="text-base font-semibold text-gray-900">Hours Approved</p>
-                            <p class="text-xs text-gray-500">45 volunteer hours approved - 6 hours ago</p>
+                            <p class="text-base font-semibold text-gray-900">Handle Disputes</p>
+                            <p class="text-xs text-gray-500"> Suspended 3 accounts - 6 hours ago</p>
                         </div>
                     </div>
                 </div>

@@ -29,6 +29,7 @@ class VolunteerManagement extends Component
                 $query->where('status', $this->statusFilter);
             })
             ->with(['badges', 'participatingEvents'])
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         //  total badges earned by all volunteers
