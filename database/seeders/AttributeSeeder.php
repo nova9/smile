@@ -14,45 +14,26 @@ class AttributeSeeder extends Seeder
     public function run(): void
     {
         $attributes = [
-            [
-               'name' => 'skills',
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ],
-            [
-                'name' => 'age',
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ],
-            [
-                'name' => 'latitude',
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ],
-
-            [
-                'name' => 'longitude',
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ],
-            [
-                'name' => 'contact_number',
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ],
-            [
-                'name' => 'gender',
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ]
-            ,
-            [
-                'name' => 'profile_picture',
-                'created_at'=>now(),
-                'updated_at'=>now(),
-           ]
-
+            'skills',
+            'age',
+            'latitude',
+            'longitude',
+            'contact_number',
+            'gender',
+            'profile_picture',
+            'front_image',
+            'back_image',
+            'selfie',
+            'document_type',
         ];
+
+        $attributes = array_map(function($item) {
+            return [
+                'name' => $item,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }, $attributes);
         Attribute::query()->insert($attributes);
 
     }
