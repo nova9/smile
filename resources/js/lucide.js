@@ -84,12 +84,16 @@ import {
     MapPin,
     CircleAlert,
     Trophy,
+    Aperture,
+    RotateCw
 } from "lucide";
 
 
 function registerIcons() {
     createIcons({
         icons: {
+            RotateCw,
+            Aperture,
             X,
             CalendarPlus,
             Map,
