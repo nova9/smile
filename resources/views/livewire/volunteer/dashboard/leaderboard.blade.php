@@ -5,15 +5,6 @@
             <!-- Header Section -->
 
             <div class="text-center space-y-6">
-                <!-- Badge -->
-                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 to-green-600/10 text-primary rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-primary/20">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    Celebrating Our Top Smilers
-                </div>
                 <!-- Title -->
                 <div class="space-y-4">
                     <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-accent leading-tight relative">
@@ -27,6 +18,15 @@
                     <p class="text-lg text-gray-600 max-w-2xl mx-auto">
                         Recognizing our amazing volunteers who spread joy and make a difference in their communities
                     </p>
+                </div>
+                <!-- Badge -->
+                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 to-green-600/10 text-primary rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-primary/20">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    Celebrating Our Top Smilers
                 </div>
             </div>
 
@@ -69,16 +69,16 @@
                             <div class="text-center">
                                 <div class="relative">
                                     <p class="text-3xl font-bold bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
-                                        {{ $currentUser->badges_sum_points ?? 0 }}
+                                        {{ $users->firstWhere('id', auth()->user()->id)->badges_sum_points ?? 0 }}
                                     </p>
                                     <div class="absolute -inset-2 bg-gradient-to-r from-primary/20 to-green-600/20 rounded-lg -z-10 opacity-50"></div>
                                 </div>
-                                <p class="text-sm text-gray-600 font-medium mt-1">Points</p>
+                                <p class="text-sm text-gray-600 font-medium mt-2">Points</p>
                             </div>
                             <div class="text-center">
                                 <div class="relative">
-                                    <span class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-accent to-gray-800 text-white font-bold text-xl rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-200">
-                                        {{ $currentUserPosition }}
+                                    <span class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-accent to-gray-800 text-white font-bold text-xl rounded-2xl shadow-lg transform transition-transform duration-200">
+                                        {{ $users->firstWhere('id', auth()->user()->id)->rank ?? "-" }}
                                     </span>
                                 </div>
                                 <p class="text-sm text-gray-600 font-medium mt-2">Rank</p>

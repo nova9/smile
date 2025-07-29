@@ -21,7 +21,7 @@
         value="{{ $value ?? old($name) }}"
         @if($placeholder) placeholder="{{ $placeholder }}" @endif
         class="input input-bordered w-full mt-2 input-focus @error($name) input-error @enderror"
-        @if($required) required @endif
+{{--        @if($required) required @endif--}}
     />
 
     @error($name)
