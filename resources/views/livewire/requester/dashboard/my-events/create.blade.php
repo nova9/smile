@@ -28,8 +28,10 @@
 
                         <!-- Category -->
                         <div>
-                            <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-                            <select wire:model="category_id" id="category_id" class="select select-bordered w-full @error('category_id') select-error @enderror">
+                            <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Category
+                                *</label>
+                            <select wire:model="category_id" id="category_id"
+                                    class="select select-bordered w-full @error('category_id') select-error @enderror">
                                 <option value="">Select a category</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -40,76 +42,100 @@
 
                         <!-- Max Participants -->
                         <div>
-                            <label for="maximum_participants" class="block text-sm font-medium text-gray-700 mb-2">Maximum Participants</label>
-                            <input wire:model="maximum_participants" type="number" id="maximum_participants" class="input input-bordered w-full" placeholder="e.g., 50" min="1">
-                            @error('maximum_participants') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                            <label for="maximum_participants" class="block text-sm font-medium text-gray-700 mb-2">Maximum
+                                Participants</label>
+                            <input wire:model="maximum_participants" type="number" id="maximum_participants"
+                                   class="input input-bordered w-full" placeholder="e.g., 50" min="1">
+                            @error('maximum_participants') <p
+                                class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <!-- Description -->
                         <div class="md:col-span-2">
-                            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
-                            <textarea wire:model="description" id="description" rows="4" class="textarea textarea-bordered w-full @error('description') textarea-error @enderror" placeholder="Describe the event, activities, and what volunteers will be doing..."></textarea>
+                            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description
+                                *</label>
+                            <textarea wire:model="description" id="description" rows="4"
+                                      class="textarea textarea-bordered w-full @error('description') textarea-error @enderror"
+                                      placeholder="Describe the event, activities, and what volunteers will be doing..."></textarea>
                             @error('description') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <!-- Tags -->
-                        <div class="md:col-span-2">
+                        <div class="md:col-span-2"
+                             x-data="{
+                                    availableTags: ['Hello', 'World'],
+                                    tags: [],
+                                    query: '',
+                                    addTag(tag) {
+                                        const trimmedQuery = tag.trim();
+                                        if (trimmedQuery === '') return;
+                                        this.tags.push(trimmedQuery);
+                                        this.tags = [...new Set(this.tags)]; // Remove duplicates
+                                        $wire.tags = this.tags; // Update Livewire property
+                                    },
+                                    addTypedTag() {
+                                        this.addTag(this.query);
+                                        this.query = '';
+                                    },
+                                    addExistingTag(tag) {
+                                        this.addTag(tag)
+                                    },
+                                    removeTag(tag) {
+                                        this.tags = this.tags.filter(t => t !== tag);
+                                    }
+                                }"
+                        >
                             <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
-
-                            <!-- Selected Tags Display -->
-                            @if(count($tags) > 0)
+                            <template x-if="tags.length > 0">
                                 <div class="flex flex-wrap gap-2 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                    @foreach($tags as $index => $tag)
-                                        <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary rounded-full">
-                                            {{ $tag }}
-                                            <button type="button" wire:click="removeTag({{ $index }})" class="ml-2 text-white hover:cursor-pointer">
-                                                <i data-lucide="x" class="w-3 h-3 hover:cursor-pointer"></i>
+                                    <template x-for="(tag, index) in tags" :key="tag">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary rounded-full">
+                                            <span x-text="tag"></span>
+                                            <button type="button" class="ml-2 text-white hover:cursor-pointer" x-on:click="removeTag(tag)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                     class="size-3 hover:cursor-pointer lucide lucide-x-icon lucide-x"><path
+                                                        d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                                             </button>
                                         </span>
-                                    @endforeach
+                                    </template>
                                 </div>
-                            @endif
+                            </template>
 
-                            <!-- Add New Tag Input -->
                             <div class="flex gap-2 mb-3">
                                 <input
-                                    wire:model="newTag"
-                                    wire:keydown.enter.prevent="addTag"
+                                    x-model="query"
                                     type="text"
                                     class="input input-bordered flex-1"
                                     placeholder="Type a tag name and press Enter"
                                 >
-                                <button type="button" wire:click="addTag" class="btn btn-primary">
+                                <button type="button" x-on:click="addTypedTag()" class="btn btn-primary">
                                     <i data-lucide="plus" class="w-4 h-4"></i>
                                     Add
                                 </button>
                             </div>
 
-{{--                            @error('tags') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror--}}
-
-
-                            <!-- Existing Tags (if any) -->
-                            @if($availableTags && count($availableTags) > 0)
+                            <template x-if="availableTags.length !== 0">
                                 <div class="mt-3">
                                     <p class="text-xs text-gray-600 mb-2">Or choose from existing tags:</p>
                                     <div class="flex flex-wrap gap-2">
-                                        @foreach($availableTags as $availableTag)
-                                            @if(!in_array($availableTag->name, $tags))
+                                        <template x-for="availableTag in availableTags" :key="availableTag">
+                                            <template x-if="!tags.includes(availableTag)">
                                                 <button
                                                     type="button"
-                                                    wire:click="addExistingTag('{{ $availableTag->name }}')"
+                                                    x-on:click="addExistingTag(availableTag)"
                                                     class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
                                                 >
                                                     <i data-lucide="plus" class="w-3 h-3 mr-1"></i>
-                                                    {{ $availableTag->name }}
+                                                    <span x-text="availableTag"></span>
                                                 </button>
-                                            @endif
-                                        @endforeach
+                                            </template>
+                                        </template>
                                     </div>
                                 </div>
-                            @endif
-
-                            <p class="text-xs text-gray-500 mt-2">Tags help volunteers find events that match their interests</p>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -127,15 +153,19 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Start Date & Time -->
                         <div>
-                            <label for="starts_at" class="block text-sm font-medium text-gray-700 mb-2">Start Date & Time *</label>
-                            <input wire:model="starts_at" type="datetime-local" id="starts_at" class="input input-bordered w-full @error('starts_at') input-error @enderror">
+                            <label for="starts_at" class="block text-sm font-medium text-gray-700 mb-2">Start Date &
+                                Time *</label>
+                            <input wire:model="starts_at" type="datetime-local" id="starts_at"
+                                   class="input input-bordered w-full @error('starts_at') input-error @enderror">
                             @error('starts_at') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <!-- End Date & Time -->
                         <div>
-                            <label for="ends_at" class="block text-sm font-medium text-gray-700 mb-2">End Date & Time *</label>
-                            <input wire:model="ends_at" type="datetime-local" id="ends_at" class="input input-bordered w-full @error('ends_at') input-error @enderror">
+                            <label for="ends_at" class="block text-sm font-medium text-gray-700 mb-2">End Date & Time
+                                *</label>
+                            <input wire:model="ends_at" type="datetime-local" id="ends_at"
+                                   class="input input-bordered w-full @error('ends_at') input-error @enderror">
                             @error('ends_at') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
                     </div>
@@ -152,7 +182,6 @@
                     </h2>
 
 
-
                     <!-- Map Location Picker -->
 
                     <div class="mb-6" wire:ignore>
@@ -160,7 +189,7 @@
                             <div id="map" class="w-full h-96 bg-gray-100 relative">
                                 <!-- Map will be initialized here -->
                                 <div class="absolute inset-0 flex items-center justify-center">
-{{--                                    loading state--}}
+                                    {{--                                    loading state--}}
                                     <div class="flex items-center gap-2">
                                         <button class="btn btn-sm btn-primary" onclick="initializeMap()"
                                                 type="button"
@@ -184,7 +213,8 @@
                                         onclick="getCurrentLocation()"
                                         class="btn btn-sm bg-primary hover:bg-green-700 text-white border-none shadow-sm hover:shadow-md transition-all duration-200 group"
                                         title="Use my current location">
-                                    <i data-lucide="crosshair" class="size-4 group-hover:rotate-90 transition-transform duration-200"></i>
+                                    <i data-lucide="crosshair"
+                                       class="size-4 group-hover:rotate-90 transition-transform duration-200"></i>
                                     <span class="hidden sm:inline ml-1">Current Location</span>
                                 </button>
                             </div>
@@ -232,23 +262,29 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Skills Required -->
                         <div class="md:col-span-2">
-                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Skills Required</label>
-                            <textarea wire:model="skills" id="skills" rows="3" class="textarea textarea-bordered w-full" placeholder="List any specific skills, experience, or qualifications needed..."></textarea>
+                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Skills
+                                Required</label>
+                            <textarea wire:model="skills" id="skills" rows="3" class="textarea textarea-bordered w-full"
+                                      placeholder="List any specific skills, experience, or qualifications needed..."></textarea>
                             @error('skills') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
 
                         </div>
 
                         <!-- Age Requirements -->
                         <div>
-                            <label for="minimum_age" class="block text-sm font-medium text-gray-700 mb-2">Minimum Age</label>
-                            <input wire:model="minimum_age" type="number" id="minimum_age" class="input input-bordered w-full" placeholder="e.g., 13" min="13">
+                            <label for="minimum_age" class="block text-sm font-medium text-gray-700 mb-2">Minimum
+                                Age</label>
+                            <input wire:model="minimum_age" type="number" id="minimum_age"
+                                   class="input input-bordered w-full" placeholder="e.g., 13" min="13">
                             @error('minimum_age') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <!-- Additional Notes -->
                         <div class="md:col-span-2">
-                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
-                            <textarea wire:model="notes" id="notes" rows="3" class="textarea textarea-bordered w-full" placeholder="Any other important information for volunteers..."></textarea>
+                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Additional
+                                Notes</label>
+                            <textarea wire:model="notes" id="notes" rows="3" class="textarea textarea-bordered w-full"
+                                      placeholder="Any other important information for volunteers..."></textarea>
                             @error('notes') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
 
                         </div>
@@ -283,7 +319,7 @@
     function initializeMap() {
         // Initialize the map
         const mapOptions = {
-            center: { lat: 7.8731, lng: 80.7718 },
+            center: {lat: 7.8731, lng: 80.7718},
             zoom: 7,
             mapId: "198a0e442491558328ee7d20"
         };
@@ -354,14 +390,14 @@
     }
 
     // Load the Google Maps script
-    function loadScript() {
-        const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
-        script.async = true;
-        document.head.appendChild(script);
-    }
+    // function loadScript() {
+    //     const script = document.createElement("script");
+    //     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
+    //     script.async = true;
+    //     document.head.appendChild(script);
+    // }
 
-    window.addEventListener("load", loadScript);
+    window.addEventListener("load", initializeMap);
 </script>
 
 @endassets
