@@ -1,7 +1,7 @@
 <div class="relative group h-full">
     <!-- Background gradient and shadow -->
     <div
-        class="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-white rounded-3xl transform rotate-1 group-hover:rotate-0 transition-transform duration-300 shadow-lg group-hover:shadow-2xl">
+        class="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-white rounded-3xl transform rotate-1 transition-transform duration-300 ">
     </div>
 
     <!-- Card content -->
