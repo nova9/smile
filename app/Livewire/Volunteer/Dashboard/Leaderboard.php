@@ -8,53 +8,27 @@ use Livewire\Component;
 class Leaderboard extends Component
 {
     public $users;
-    public $currentUser;
-    public $currentUserId;
-    public $currentUserPosition;
 
     public function mount()
-    {        $this->users = User::has('badges')
-        ->withSum('badges', 'points')
-        ->orderBy('badges_sum_points', 'desc')
-        ->get();
-
-        $this->currentUserId = auth()->check() ? auth()->user()->id : null;
-        $this->currentUser = $this->users->firstWhere('id', $this->currentUserId);
-        $this->currentUserPosition = 'No Rank';
-
-        // Calculate ranks for all users
-        $rank = 1;
-        $previousPoints = null;
-        $sameRankCount = 0;
-        $hasAssignedRankTwo = false;
-
-        foreach ($this->users as $index => $user) {
-            $currentPoints = $user->badges_sum_points ?? 0;
-
-            if ($previousPoints !== null && $currentPoints < $previousPoints) {
-                // If we've just finished assigning rank 1, the next rank is 2
-                if ($rank == 1 && !$hasAssignedRankTwo) {
-                    $rank = 2;
-                    $hasAssignedRankTwo = true;
-                } else {
-                    // For subsequent ranks, increment normally
-                    $rank += $sameRankCount;
-                }
-                $sameRankCount = 1;
-            } else {
-                $sameRankCount++;
-            }
-
-            // Attach rank to the user object
-            $this->users[$index]->rank = $rank;
-
-            // Set current user's rank
-            if ($this->currentUser && $user->id === $this->currentUserId) {
-                $this->currentUserPosition = $rank;
-            }
-
-            $previousPoints = $currentPoints;
-        }
+    {
+        $this->users = User::has('badges')
+            ->withSum('badges', 'points')
+            ->orderByDesc('badges_sum_points')
+            ->get()
+            ->groupBy('badges_sum_points')
+            ->sortKeysDesc()
+            ->values()
+            ->map(function ($group, $index) {
+                return [$index, $group];
+            })
+            ->flatMap(function ($pair) {
+                [$index, $group] = $pair;
+                $rank = $index + 1; // rank increments by 1 for each group
+                return $group->map(function ($user) use ($rank) {
+                    $user->rank = $rank;
+                    return $user;
+                });
+            });
     }
 
     public function render()

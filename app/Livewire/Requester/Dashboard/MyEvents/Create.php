@@ -69,7 +69,10 @@ class Create extends Component
 
     public function save()
     {
+        dd($this->all());
+
         $this->validate();
+
 
         $chat = Chat::query()->create([
             'is_group' => true,
@@ -112,37 +115,6 @@ class Create extends Component
     {
         $this->latitude = $lat;
         $this->longitude = $lng;
-    }
-
-    public function addTag()
-    {
-        if (empty(trim($this->newTag))) {
-            return;
-        }
-
-        $tagName = trim($this->newTag);
-
-        // Check if tag already exists in the selected tags
-        if (!in_array($tagName, $this->tags)) {
-            $this->tags[] = $tagName;
-        }
-
-        $this->newTag = '';
-    }
-
-    public function removeTag($index)
-    {
-        if (isset($this->tags[$index])) {
-            unset($this->tags[$index]);
-            $this->tags = array_values($this->tags); // Re-index array
-        }
-    }
-
-    public function addExistingTag($tagName)
-    {
-        if (!in_array($tagName, $this->tags)) {
-            $this->tags[] = $tagName;
-        }
     }
 
     public function render()
