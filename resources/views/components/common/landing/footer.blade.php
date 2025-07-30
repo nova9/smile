@@ -112,27 +112,27 @@
                 </h4>
                 <div class="space-y-3">
                     <a href="#about"
-                        class="block text-gray-300 hover:text-primary transition-colors duration-300 hover:translate-x-2 transform">
+                        class="block text-gray-300 hover:text-primary transition-colors duration-300 ">
                         About Us
                     </a>
                     <a href="#opportunities"
-                        class="block text-gray-300 hover:text-primary transition-colors duration-300 hover:translate-x-2 transform">
+                        class="block text-gray-300 hover:text-primary transition-colors duration-300 ">
                         Volunteer Opportunities
                     </a>
                     <a href="#involved"
-                        class="block text-gray-300 hover:text-primary transition-colors duration-300 hover:translate-x-2 transform">
+                        class="block text-gray-300 hover:text-primary transition-colors duration-300 ">
                         Get Involved
                     </a>
                     <a href="#donate"
-                        class="block text-gray-300 hover:text-primary transition-colors duration-300 hover:translate-x-2 transform">
+                        class="block text-gray-300 hover:text-primary transition-colors duration-300 ">
                         Donate
                     </a>
                     <a href="#testimonials"
-                        class="block text-gray-300 hover:text-primary transition-colors duration-300 hover:translate-x-2 transform">
+                        class="block text-gray-300 hover:text-primary transition-colors duration-300 ">
                         Testimonials
                     </a>
                     <a href="/contact"
-                        class="block text-gray-300 hover:text-primary transition-colors duration-300 hover:translate-x-2 transform">
+                        class="block text-gray-300 hover:text-primary transition-colors duration-300 ">
                         Contact
                     </a>
                 </div>

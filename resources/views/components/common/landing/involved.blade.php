@@ -1,6 +1,6 @@
 <!-- Get Involved Section -->
 <section
-    class="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 py-20 lg:py-32 overflow-hidden">
+    class="relative min-h-screen  py-20 lg:py-32 overflow-hidden">
     <!-- Background Decorative Elements -->
     <div class="absolute inset-0 overflow-hidden">
         <div class="absolute -top-40 -right-40 w-80 h-80 bg-accent/5 rounded-full blur-3xl"></div>
