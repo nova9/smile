@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('ends_at')->nullable();
             $table->foreignIdFor(\App\Models\Event::class);
             $table->foreignIdFor(\App\Models\User::class);
-            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'accepted', 'rejected', 'completed'])->default('pending');
         });
     }
 

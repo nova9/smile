@@ -103,7 +103,8 @@
                 <div class="flex flex-wrap gap-3 flex-1">
                     <select class="select" wire:model.change="statusFilter">
                         <option value="">All Status</option>
-                        <option value="accepted">Confirmed & Completed</option>
+                        <option value="accepted">Confirmed</option>
+                        <option value="completed">Completed</option>
                         <option value="pending">Pending</option>
                         <option value="rejected">Cancelled</option>
                     </select>
@@ -271,24 +272,22 @@
                             <!-- Status -->
                             <div class="col-span-1">
                                 @if ($item->pivot->status === 'accepted')
-                                    @if ($item->ends_at < now() && !$confirmedEvents->contains($item))
-                                        <span
-                                            class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 shadow-sm">
-                                            <i data-lucide="check-circle" class="w-3 h-3 mr-2"></i>
-                                            Completed
-                                        </span>
-                                    @else
                                         <span
                                             class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 shadow-sm">
                                             <div class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
                                             Confirmed
                                         </span>
-                                    @endif
                                 @elseif($item->pivot->status === 'pending')
                                     <span
                                         class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 shadow-sm">
                                         <div class="w-2 h-2 bg-amber-500 rounded-full mr-2 animate-pulse"></div>
                                         Pending
+                                    </span>
+                                @elseif($item->pivot->status === 'completed')
+                                    <span
+                                            class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 shadow-sm">
+                                            <i data-lucide="check-circle" class="w-3 h-3 mr-2"></i>
+                                            Completed
                                     </span>
                                 @elseif($item->pivot->status === 'rejected' || $item->pivot->status === 'cancelled')
                                     <span
