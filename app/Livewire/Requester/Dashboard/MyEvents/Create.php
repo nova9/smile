@@ -4,6 +4,7 @@ namespace App\Livewire\Requester\Dashboard\MyEvents;
 
 use App\Models\Category;
 use App\Models\Chat;
+use App\Models\Resource;
 use App\Models\Tag;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -36,8 +37,7 @@ class Create extends Component
 
     public $tags = [];
     public $availableTags;
-    public $newTag = '';
-
+    public $resources;
 
     public $notes;
 
@@ -46,7 +46,8 @@ class Create extends Component
     public function mount()
     {
         $this->categories = Category::all();
-        $this->availableTags = Tag::all();
+        $this->availableTags = Tag::all()->pluck('name')->sort()->values();
+        $this->resources = Resource::all();
     }
 
     protected function rules()

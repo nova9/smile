@@ -9,17 +9,17 @@
                 </button>
             </a>
         </div>
-        <div class="overflow-x-auto bg-base-100 rounded-lg shadow border border-base-200">
+        <div class="overflow-x-auto bg-base-100 rounded-lg shadow border border-gray-50">
             <table class="table w-full">
                 <thead>
-                    <tr class="bg-base-200 text-base-content/80">
+                    <tr class="bg-gray-100 text-base-content/80">
                         <th class="py-3 px-4 text-left">Event</th>
                         <th class="py-3 px-4 text-left">Description</th>
                         <th class="py-3 px-4 text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($events as $event)
+                    @forelse($events as $event)
 
                         <tr class="hover:bg-base-300/40 transition">
                             <td class="py-3 px-4 font-semibold text-primary">{{$event->name}}</td>
@@ -33,7 +33,15 @@
                                 </button>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="3" class="py-6 text-center text-base-content/60">
+                                <p class="text-lg">No events found.</p>
+                                <p class="text-sm">You haven't created any events yet. Click "Create New Event" to get started!</p>
+                            </td>
+                        </tr>
+
+                    @endforelse
 
                     <!-- End example rows -->
                 </tbody>

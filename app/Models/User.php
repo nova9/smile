@@ -81,7 +81,7 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Event::class);
     }
 
-    public function isProfileCompletionPercentage()
+    public function profileCompletionPercentage()
     {
         $requiredskills = [
 //            'skills'=> 0.1,
@@ -106,4 +106,19 @@ class User extends Authenticatable
         }
         return $initialPercentage;
     }
+
+    public function setOrUpdateAttribute($attributeName, $value)
+    {
+        $attribute = Attribute::query()->where('name', $attributeName)->first();
+
+        $existingAttribute = $this->attributes()->where('name', $attributeName)->first();
+
+        if ($existingAttribute) {
+            $this->attributes()->updateExistingPivot($attribute->id, ['value' => $value]);
+        } else {
+            $this->attributes()->attach($attribute->id, ['value' => $value]);
+        }
+    }
+
+
 }
