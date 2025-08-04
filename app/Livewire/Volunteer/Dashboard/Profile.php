@@ -9,7 +9,8 @@ class Profile extends Component
 
 {
     public $attribute;
-    public $skills;
+    public $skills = [];
+    public $interests = [];
     public $completion;
     public $profile;
     public $name;
@@ -33,13 +34,13 @@ class Profile extends Component
         $this->attribute = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
 
 
-        $this->completion = $user->isProfileCompletionPercentage();
+        $this->completion = $user->profileCompletionPercentage();
 
 
         $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
 
-        $skillsRaw = $user->attributes()->where('name', 'skills')->get()->pluck('pivot.value')->first();
-        $this->skills = $skillsRaw ? json_decode($skillsRaw, true) ?? [] : [];
+        $this->skills = json_decode($user->attributes()->where('name', 'skills')->get()->pluck('pivot.value')->first(), true);
+        $this->interests = json_decode($user->attributes()->where('name', 'interests')->get()->pluck('pivot.value')->first(), true);
 
         if ($this->latitude === null) {
             $this->latitude = $user->attributes()->where('name', 'latitude')->get()->pluck('pivot.value')->first();
@@ -60,7 +61,8 @@ class Profile extends Component
         $validated = $this->validate([
 //            'name' => 'required|string|max:255',
 //            'email' => 'required|email|max:255',
-//            'skills' => 'nullable|array',
+            'skills' => 'nullable|array',
+            'interests' => 'nullable|array',
             'age' => 'nullable|integer|min:1|max:120',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
@@ -68,6 +70,8 @@ class Profile extends Component
             'gender' => 'nullable|string|in:male,female,other,prefer_not_to_say',
             'profile_picture' => 'nullable|string|max:255',
         ]);
+
+//        dd($validated);
 
         // Update user basic info
         // auth()->user()->update([
@@ -89,6 +93,9 @@ class Profile extends Component
 
 
         $this->insertUserAttributes($newattributes);
+
+
+        auth()->user()->setOrUpdateAttribute('interests', json_encode($this->interests));
     }
 
     /**

@@ -85,13 +85,17 @@ import {
     CircleAlert,
     Trophy,
     Aperture,
-    RotateCw
+    RotateCw,
+    Box,
+    ArrowLeftCircle
 } from "lucide";
 
 
 function registerIcons() {
     createIcons({
         icons: {
+            ArrowLeftCircle,
+            Box,
             RotateCw,
             Aperture,
             X,

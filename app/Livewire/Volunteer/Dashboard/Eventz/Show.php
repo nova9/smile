@@ -8,19 +8,18 @@ use Livewire\Component;
 class Show extends Component
 {
     public $event;
-
-    public function join()
-    {
-        if (round(auth()->user()->isProfileCompletionPercentage(), 2) != 1.0) {
-            return redirect('/volunteer/dashboard/profile')->with('error', 'Please complete your profile before joining an event.');
-        }
-        $this->event->users()->attach(auth()->user()->id);
-        return redirect('/volunteer/dashboard/my-events');
-    }
+    public $profileCompletionPercentage;
 
     public function mount($id)
     {
+        $this->profileCompletionPercentage = auth()->user()->profileCompletionPercentage();
         $this->event = Event::query()->with(['address', 'users'])->find($id);
+    }
+
+    public function join()
+    {
+        $this->event->users()->attach(auth()->user()->id);
+        return redirect('/volunteer/dashboard/my-events');
     }
 
     public function render()

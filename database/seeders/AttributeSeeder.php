@@ -25,6 +25,7 @@ class AttributeSeeder extends Seeder
             'back_image',
             'selfie',
             'document_type',
+            'interests',
         ];
 
         $attributes = array_map(function($item) {

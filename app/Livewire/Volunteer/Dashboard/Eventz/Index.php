@@ -3,6 +3,7 @@
 namespace App\Livewire\Volunteer\Dashboard\Eventz;
 
 use App\Models\Event;
+use App\Services\GoogleMaps;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,11 +12,10 @@ class Index extends Component
     use WithPagination;
 
     public $search = '';
-
-//    public function updatingSearch()
-//    {
-//        $this->resetPage();
-//    }
+    public function mount(GoogleMaps $googleMaps)
+    {
+        dd($googleMaps->getNearestCity('7.8731', '80.7718'));
+    }
 
     public function render()
     {

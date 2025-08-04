@@ -72,8 +72,8 @@
                         <div id="completionBar" class="bg-black h-2.5 rounded-full"
                              style="width:{{$completion * 100}}%"></div>
                     </div>
-                        <form wire:submit.prevent="save" class="space-y-4 sm:space-y-6" method="post">
-                            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 ">
+                    <form wire:submit.prevent="save" class="space-y-4 sm:space-y-6" method="post">
+                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 ">
 
                             <div class="w-full">
                                 <label class="text-sm font-medium text-gray-700 flex gap-1">
@@ -168,6 +168,7 @@
                                 <div class=" w-full flex flex-col gap-6 ">
                                     <div class="space-y-6">
 
+                                        {{-- Name--}}
                                         <fieldset class="border border-gray-300 rounded-md p-4 bg-gray-50">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Name</legend>
                                             <div class="w-full p-2 text-gray-800">{{ $name }}</div>
@@ -181,23 +182,23 @@
                                             <input id="age" wire:model="age" name="age" type="text"
                                                    class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
                                             @error('age')
-                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            <span class="text-xs text-red-500">{{ $message }}</span>
                                             @enderror
                                         </fieldset>
-                                                                                
+
                                         <fieldset class="border border-gray-300 rounded-md p-4">
-                                            <legend class="text-sm font-medium text-gray-700 px-2">Contact</legend>
+                                            <legend class="text-sm font-medium text-gray-700 px-2">Contact Number
+                                            </legend>
                                             <input id="contact_number" wire:model="contact_number"
                                                    name="contact_number" type="text"
                                                    class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
                                             @error('contact_number')
-                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            <span class="text-xs text-red-500">{{ $message }}</span>
                                             @enderror
                                         </fieldset>
                                         <fieldset class="border border-gray-300 rounded-md p-4">
                                             <legend class="text-sm font-medium text-gray-700 px-2">Gender</legend>
-                                            <select id="gender" wire:model="gender" name="gender"
-                                                    class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200">
+                                            <select id="gender" wire:model="gender" name="gender" class="select w-full">
                                                 <option value="">Select Gender</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
@@ -205,40 +206,41 @@
                                                 <option value="prefer_not_to_say">Prefer not to say</option>
                                             </select>
                                             @error('gender')
-                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                            <span class="text-xs text-red-500">{{ $message }}</span>
                                             @enderror
                                         </fieldset>
                                     </div>
 
-{{--                                    <div class="w-full ">--}}
-{{--                                        <fieldset class="border border-gray-300 rounded-md p-4">--}}
-{{--                                            <legend class=" flex gap-1 text-sm font-medium text-gray-700 px-2">--}}
-{{--                                                <i data-lucide="book-open-text" class="size-4 "></i>--}}
-{{--                                                <span >Skills</span>--}}
-{{--                                            </legend>--}}
-{{--                                            <textarea id="skills" wire:model="skills" name="skills" placeholder="Communication, Teamwork, Problem Solving"--}}
-{{--                                                      class="w-full p-2 border border-gray-300 rounded-md focus:border-green-500 focus:ring focus:ring-green-200" rows="3" autocomplete="off" oninput="showSkillSuggestions(this)"></textarea>--}}
-{{--                                            <div id="skill-suggestions" class="bg-white border border-gray-300 rounded-md shadow-md mt-1 hidden z-10"></div>--}}
-{{--                                        </fieldset>--}}
-{{--                                        <div id="skillsList" class="flex flex-wrap gap-2 mt-2">--}}
-{{--                                            <div class="md:col-span-2">--}}
-{{--                                            <p class="text-xs text-gray-500 mt-2">Skills help you find events that match your interests</p>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        @error('skills') <p--}}
-{{--                                            class="text-xs text-red-500 mt-1">{{ $message }}</p>--}}
-{{--                                        @enderror--}}
-{{--                                    </div>--}}
-                                    <button type="submit" class="btn btn-accent">Save Changes</button>
+
                                 </div>
                             </div>
+
+                            <div class="col-span-2">
+                                <fieldset class="fieldset">
+                                    <legend class="fieldset-legend">Skills</legend>
+                                    <x-common.form.input-list variable="skills" />
+                                </fieldset>
+
+                                <fieldset class="fieldset">
+                                    <legend class="fieldset-legend">Interests</legend>
+                                    <x-common.form.input-list variable="interests" />
+                                </fieldset>
                             </div>
-                        </form>
+
+
+
+                        </div>
+
+                        <button type="submit" class="btn btn-accent w-full">Save Changes</button>
+
+                    </form>
                 </div>
             </div>
         </div>
     </main>
 </x-volunteer.dashboard-layout>
+
+
 @assets
 <script>
     // Basic skill suggestions for autocomplete
@@ -272,8 +274,10 @@
         textarea.dispatchEvent(new Event('input'));
         document.getElementById('skill-suggestions').style.display = 'none';
     }
+
     let map;
     let marker;
+
     function initializeMap() {
         const initialLat = Number({{ $latitude ?? '7.8731' }});
         const initialLng = Number({{ $longitude ?? '80.7718' }});
@@ -289,7 +293,7 @@
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
         if (!isNaN(initialLat) && !isNaN(initialLng)) {
-            const initialPos = { lat: initialLat, lng: initialLng };
+            const initialPos = {lat: initialLat, lng: initialLng};
             placeMarker(initialPos);
             document.getElementById("latitude").value = initialLat;
             document.getElementById("longitude").value = initialLng;
@@ -361,14 +365,6 @@
             console.log("Geolocation is not supported by this browser.");
         }
     }
-
-    // Load the Google Maps script
-    // function loadScript() {
-    //     const script = document.createElement("script");
-    //     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
-    //     script.async = true;
-    //     document.head.appendChild(script);
-    // }
 
     window.addEventListener("load", initializeMap);
 </script>
