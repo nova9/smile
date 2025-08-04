@@ -48,7 +48,24 @@
         </div>
 
         <!-- Opportunities Grid -->
-        <div class="grid lg:grid-cols-12 gap-4 items-stretch">
+
+        <div class="grid lg:grid-cols-12 gap-8 items-center">
+            <!-- Featured Image -->
+            <div class="lg:col-span-5">
+                <div class="relative group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform duration-300">
+                    </div>
+                    <div class="relative bg-white p-4 rounded-3xl shadow-xl">
+                        <img src="{{asset('storage/assets/3.webp')}}" class="max-w-full h-120 object-cover rounded-2xl"
+                            alt="Volunteers making a difference in the community" />
+                        <div class="absolute top-8 left-8 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                            <span class="text-sm font-semibold text-accent">🌟 Featured</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Opportunity Cards -->
             <!-- Card 1 -->
