@@ -11,13 +11,6 @@
 
 <x-volunteer.dashboard-layout>
     <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
-        <div class="inline-flex items-center mb-10 px-6 py-3 bg-gradient-to-r from-green-100 to-blue-100 text-green-700 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-green-200">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12l2 2 4-4" />
-            </svg>
-            Discover New Volunteer Opportunities
-        </div>
         <!-- Header Section -->
         <div class="mb-4">
             <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
@@ -34,41 +27,13 @@
         </div>
 
         <!-- Search and Filter Section -->
-        <div class="mb-8 bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-            <div class="flex flex-col lg:flex-row gap-4">
-                <!-- Search Bar -->
-                <label class="input flex-grow-1">
-                    <i data-lucide="search" class="opacity-50"></i>
-                    <input type="search" class="grow" placeholder="Search events..." wire:model.live.debounce.300ms="search" />
-                </label>
-
-{{--                <!-- Filters -->--}}
-{{--                <div class="flex flex-wrap gap-3">--}}
-{{--                    <select class="select">--}}
-{{--                        <option disabled selected>Pick a location</option>--}}
-{{--                        <option value="education">Education</option>--}}
-{{--                        <option value="healthcare">Healthcare</option>--}}
-{{--                        <option value="community">Community</option>--}}
-{{--                        <option value="technology">Technology</option>--}}
-{{--                    </select>--}}
-{{--                </div>--}}
-            </div>
-
-            <!-- Active Filters Display -->
-{{--            <div class="mt-4 flex flex-wrap gap-2">--}}
-{{--                <span class="text-sm text-gray-600">Active filters:</span>--}}
-{{--                <div class="flex flex-wrap gap-2">--}}
-{{--                    <!-- These would be dynamically generated based on active filters -->--}}
-{{--                    <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs flex items-center gap-1">--}}
-{{--                        Environment--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 cursor-pointer" fill="none"--}}
-{{--                             viewBox="0 0 24 24" stroke="currentColor">--}}
-{{--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
-{{--                                  d="M6 18L18 6M6 6l12 12" />--}}
-{{--                        </svg>--}}
-{{--                    </span>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+        <div class="flex flex-col lg:flex-row gap-4 my-8">
+            <!-- Search Bar -->
+            <label class="input flex-grow-1">
+                <i data-lucide="search" class="opacity-50"></i>
+                <input type="search" class="grow" placeholder="Search events..."
+                       wire:model.live.debounce.300ms="search"/>
+            </label>
         </div>
 
         <!-- Opportunities Grid -->
@@ -77,7 +42,7 @@
             @forelse($events as $item)
                 <div
                     class="flex flex-col bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 transform overflow-hidden">
-                    <img src="https://picsum.photos/seed/{{$item->id}}/350/200" alt="image" class="w-full">
+                    {{--                    <img src="https://picsum.photos/seed/{{$item->id}}/350/200" alt="image" class="w-full">--}}
                     <div class="p-6 flex flex-col grow">
                         <div class="flex justify-between items-center mb-2 flex-wrap">
                             <div class="px-3 py-1 bg-green-100 rounded-full text-sm font-medium"
@@ -91,7 +56,8 @@
 
                         <div class="flex flex-wrap gap-2 mb-4">
                             @foreach($item->tags as $tag)
-                                <div class="px-2 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs">{{ $tag->name }}</div>
+                                <div
+                                    class="px-2 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs">{{ $tag->name }}</div>
 
                             @endforeach
                         </div>
@@ -114,7 +80,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor"
                                      viewBox="0 0 24 24">
                                     <path
-                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                                 </svg>
                                 <span class="text-sm font-medium text-gray-700">4.8</span>
                             </div>
@@ -125,17 +91,17 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                      stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
-{{--                                {{ $item->address->city }}--}} City
+                                {{--                                {{ $item->address->city }}--}} City
                             </div>
                             <div class="flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                      stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                                 4 hours
                             </div>
@@ -164,7 +130,8 @@
                     </div>
                 </div>
             @empty
-                <div class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center p-6 bg-white rounded-xl shadow-md border border-gray-100">
+                <div
+                    class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center p-6 bg-white rounded-xl shadow-md border border-gray-100">
                     <h2 class="text-xl font-semibold text-gray-700 mb-2">No Opportunities Found</h2>
                     <p class="text-gray-500">Try adjusting your search or filters.</p>
                 </div>

@@ -11,25 +11,27 @@
 
     <meta name="theme-color" content="#31881C">
 
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&libraries=marker"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&loading=async&libraries=marker"></script>
 
     <title>{{ $title ?? config('app.name') }}</title>
 </head>
 <body>
-@if (session('success'))
-    <div class="toast">
-        <div class="alert alert-success">
-            <span>{{ session('success') }}</span>
+<div class="absolute z-100">
+    @if (session('success'))
+        <div class="toast">
+            <div class="alert alert-success">
+                <span>{{ session('success') }}</span>
+            </div>
         </div>
-    </div>
-@endif
-@if (session('error'))
-    <div class="toast">
-        <div class="alert alert-error">
-            <span>{{ session('error') }}</span>
+    @endif
+    @if (session('error'))
+        <div class="toast">
+            <div class="alert alert-error">
+                <span>{{ session('error') }}</span>
+            </div>
         </div>
-    </div>
-@endif
+    @endif
+</div>
 
 {{ $slot }}
 

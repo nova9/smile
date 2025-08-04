@@ -1,5 +1,6 @@
 <div x-data="{ navClosed: $persist(false) }" class="flex h-screen overflow-hidden">
-    <div class="border-r border-gray-200 bg-stone-50 flex flex-col p-1.5 sticky">
+{{--    Sidebar--}}
+    <div class="z-999 border-r border-gray-200 bg-stone-50 flex flex-col p-1.5 sticky">
         <div class="flex mb-4" :class="navClosed ? '' : 'w-64'">
             <div class="flex justify-center w-full mt-2" x-show="!navClosed">
                 <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-8 select-none">
@@ -78,6 +79,7 @@
     </div>
 
 
+{{--    Main content--}}
     <div class="flex flex-col flex-grow">
         <div class="h-12 px-3 shrink-0 flex items-center border-b border-gray-200">
             <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors" @click="navClosed = !navClosed">
