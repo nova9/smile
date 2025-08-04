@@ -70,7 +70,7 @@ class Create extends Component
 
     public function save()
     {
-        dd($this->all());
+        // dd($this->all());
 
         $this->validate();
 
