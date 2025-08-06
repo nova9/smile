@@ -14,7 +14,7 @@ class Index extends Component
     public $search = '';
     public function mount(GoogleMaps $googleMaps)
     {
-        dd($googleMaps->getNearestCity('7.8731', '80.7718'));
+        // dd($googleMaps->getNearestCity('7.8731', '80.7718'));
     }
 
     public function render()
