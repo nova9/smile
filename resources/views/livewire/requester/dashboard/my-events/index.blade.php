@@ -15,6 +15,7 @@
                     <tr class="bg-gray-100 text-base-content/80">
                         <th class="py-3 px-4 text-left">Event</th>
                         <th class="py-3 px-4 text-left">Description</th>
+                        <th class="py-3 px-4 text-left">Tags</th>
                         <th class="py-3 px-4 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -22,8 +23,17 @@
                     @forelse($events as $event)
 
                         <tr class="hover:bg-base-300/40 transition">
-                            <td class="py-3 px-4 font-semibold text-primary">{{$event->name}}</td>
-                            <td class="py-3 px-4 text-base-content">{{$event->description}}</td>
+                            <td class="py-3 px-4 font-semibold text-primary">{{ $event->name }}</td>
+                            <td class="py-3 px-4 text-base-content max-w-[350px]">
+                                <span class="line-clamp-3 overflow-hidden">{{ $event->description }}</span>
+                            </td>
+                            <td>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach ($event->tags->take(2) as $tag)
+                                        <span class="badge badge-primary">{{ $tag->name }}</span>
+                                    @endforeach
+                                </div>
+                            </td>
                             <td class=" flex gap-2 justify-end">
                                 <button class="btn btn-sm">
                                     <a href="{{ route('requester.event.edit', $event->id) }}" wire:navigate>Edit</a>
@@ -37,7 +47,8 @@
                         <tr>
                             <td colspan="3" class="py-6 text-center text-base-content/60">
                                 <p class="text-lg">No events found.</p>
-                                <p class="text-sm">You haven't created any events yet. Click "Create New Event" to get started!</p>
+                                <p class="text-sm">You haven't created any events yet. Click "Create New Event" to get
+                                    started!</p>
                             </td>
                         </tr>
 

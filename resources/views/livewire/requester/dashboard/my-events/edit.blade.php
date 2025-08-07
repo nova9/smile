@@ -1,5 +1,5 @@
 <x-requester.dashboard-layout>
-    <div class="p-6 max-w-4xl mx-auto">
+    <div class="p-6 max-xl mx-auto">
         <!-- Header -->
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-gray-900">Edit Event</h1>
@@ -15,26 +15,27 @@
                         Basic Information
                     </h2>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Event Name -->
                         <div class="md:col-span-2">
                             <x-common.auth.input
                                 name="name"
                                 label="Event Name"
-                                placeholder="e.g., Community Food Drive"
                                 wire:model="name"
+                                placeholder="e.g., Community Food Drive"
                                 required
                             />
                         </div>
 
-
                         <!-- Category -->
                         <div>
-                            <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-                            <select wire:model="category_id" id="category_id" class="select select-bordered w-full @error('category_id') select-error @enderror">
+                            <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Category
+                                *</label>
+                            <select wire:model="category_id" id="category_id"
+                                    class="select select-bordered w-full @error('category_id') select-error @enderror">
                                 <option value="">Select a category</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $category->id == $category_id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
                             @error('category_id') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
@@ -42,105 +43,225 @@
 
                         <!-- Max Participants -->
                         <div>
-                            <label for="maximum_participants" class="block text-sm font-medium text-gray-700 mb-2">Maximum Participants</label>
-                            <input wire:model="maximum_participants" type="number" id="maximum_participants" class="input input-bordered w-full" placeholder="e.g., 50" min="1">
-                            @error('maximum_participants') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                            <label for="maximum_participants" class="block text-sm font-medium text-gray-700 mb-2">Maximum
+                                Participants</label>
+                            <input wire:model="maximum_participants" type="number" id="maximum_participants"
+                                   class="input input-bordered w-full" placeholder="e.g., 50" min="1">
+                            @error('maximum_participants') <p
+                                class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <!-- Description -->
                         <div class="md:col-span-2">
-                            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
-                            <textarea wire:model="description" id="description" rows="4" class="textarea textarea-bordered w-full @error('description') textarea-error @enderror" placeholder="Describe the event, activities, and what volunteers will be doing..."></textarea>
+                            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description
+                                *</label>
+                            <textarea wire:model="description" id="description" rows="4"
+                                      class="textarea textarea-bordered w-full @error('description') textarea-error @enderror"
+                                      placeholder="Describe the event, activities, and what volunteers will be doing..."></textarea>
                             @error('description') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
 
-                        <!-- Tags -->
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
 
-                            <!-- Selected Tags Display -->
-                            @if(count($tags) > 0)
+                        <!-- Tags -->
+                        <div class="md:col-span-2"
+                             x-data="{
+                                    availableTags: $wire.availableTags,
+                                    tags: $wire.tags,
+                                    query: '',
+                                    init() {
+                                        $watch('query', (value) => {
+                                            this.refreshTags()
+                                        })
+
+                                        $watch('availableTags', (value) => {
+                                           console.log('availableTags changed', value)
+                                        })
+                                    },
+                                    refreshTags() {
+                                        if (this.query.trim() === '') {
+                                            this.availableTags = $wire.availableTags;
+                                        } else {
+                                            this.availableTags = $wire.availableTags.filter(t => t.toLowerCase().includes(this.query.toLowerCase()));
+                                        }
+                                    },
+                                    addTag(tag) {
+                                        const trimmedQuery = tag.trim();
+                                        if (trimmedQuery === '') return;
+                                        this.tags.push(trimmedQuery);
+                                        this.tags = [...new Set(this.tags)]; // Remove duplicates
+                                        $wire.tags = this.tags; // Update Livewire property
+                                    },
+                                    addTypedTag() {
+                                        this.addTag(this.query);
+                                        this.query = '';
+                                    },
+                                    addExistingTag(tag) {
+                                        this.addTag(tag)
+                                    },
+                                    removeTag(tag) {
+                                        this.tags = this.tags.filter(t => t !== tag);
+                                    },
+                                    getTagsToShow() {
+                                        return this.availableTags.filter(t => !this.tags.includes(t)).slice(0, 10);
+                                    }
+                                }"
+                        >
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+                            <template x-if="tags.length > 0">
                                 <div class="flex flex-wrap gap-2 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                    @foreach($tags as $tag)
-                                        <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary rounded-full">
-                                            {{ $tag }}
-                                            <button type="button" wire:click="removeTag('{{ $tag }}')" class="ml-2 text-white hover:cursor-pointer">
-                                                <i data-lucide="x" class="w-3 h-3 hover:cursor-pointer"></i>
+                                    <template x-for="tag in tags" :key="tag">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary rounded-full">
+                                            <span x-text="tag"></span>
+                                            <button type="button" class="ml-2 text-white hover:cursor-pointer"
+                                                    x-on:click="removeTag(tag)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                     class="size-3 hover:cursor-pointer lucide lucide-x-icon lucide-x"><path
+                                                        d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                                             </button>
                                         </span>
-                                    @endforeach
+                                    </template>
                                 </div>
-                            @endif
+                            </template>
 
-                            <!-- Add New Tag Input -->
                             <div class="flex gap-2 mb-3">
                                 <input
-                                    wire:model="newTag"
-                                    wire:keydown.enter.prevent="addTag"
+                                    x-on:keydown.enter.stop.prevent="addTypedTag()"
+                                    x-model="query"
                                     type="text"
                                     class="input input-bordered flex-1"
                                     placeholder="Type a tag name and press Enter"
                                 >
-                                <button type="button" wire:click="addTag" class="btn btn-primary">
+                                <button type="button" x-on:click="addTypedTag()" class="btn btn-primary">
                                     <i data-lucide="plus" class="w-4 h-4"></i>
                                     Add
                                 </button>
                             </div>
 
-                            {{--                            @error('tags') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror--}}
-
-
-                            <!-- Existing Tags (if any) -->
-                            @if($availableTags && count($availableTags) > 0)
+                            <template x-if="availableTags.length !== 0">
                                 <div class="mt-3">
                                     <p class="text-xs text-gray-600 mb-2">Or choose from existing tags:</p>
                                     <div class="flex flex-wrap gap-2">
-                                        @foreach($availableTags as $availableTag)
-                                            @if(!in_array($availableTag->name, $tags))
+                                        <template x-for="tag in getTagsToShow()" :key="tag">
                                                 <button
                                                     type="button"
-                                                    wire:click="addExistingTag('{{ $availableTag->name }}')"
-                                                    class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+                                                    x-on:click="addExistingTag(tag)"
+                                                    class="select-none inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
                                                 >
-                                                    <i data-lucide="plus" class="w-3 h-3 mr-1"></i>
-                                                    {{ $availableTag->name }}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                         class="size-3 mr-1">
+                                                        <path d="M5 12h14"/>
+                                                        <path d="M12 5v14"/>
+                                                    </svg>
+                                                    <span x-text="tag"></span>
                                                 </button>
-                                            @endif
-                                        @endforeach
+                                        </template>
                                     </div>
                                 </div>
-                            @endif
+                            </template>
+                        </div>
 
-                            <p class="text-xs text-gray-500 mt-2">Tags help volunteers find events that match their interests</p>
+                        <!-- Date & Time Card -->
+                        <div class="md:col-span-2"
+                             x-data="{
+                                    starts_at: @entangle('starts_at').defer,
+                                    ends_at: @entangle('ends_at').defer,
+
+                                    change_date(e) {
+                                        // FIXME: will time format be correct?
+                                        const value = e.target.value;
+                                        const [starts_at, ends_at] = value.split('/')
+                                        console.log(value, starts_at, ends_at)
+                                        $wire.starts_at = starts_at;
+                                        $wire.ends_at = ends_at;
+                                    }
+                             }"
+                        >
+                            <div class="text-black">
+                                <!-- Date Range -->
+                                <div class="card">
+                                    <label for="starts_at" class="block text-sm font-medium text-gray-700 mb-2">Event Timespan</label>
+                                    <calendar-range
+                                        x-on:change="change_date"
+                                        class="cally bg-base-100 border border-base-300 shadow-lg rounded-box"
+                                    >
+                                        <svg aria-label="Previous" class="fill-current size-4" slot="previous"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+                                        </svg>
+                                        <svg aria-label="Next" class="fill-current size-4" slot="next"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
+                                        </svg>
+                                        <calendar-month></calendar-month>
+                                    </calendar-range>
+                                    @error('starts_at') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                                    @error('ends_at') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-            <!-- Date & Time Card -->
+            <!-- Requirements & Skills Card -->
             <div class="card bg-white shadow-md">
                 <div class="card-body">
                     <h2 class="card-title text-xl mb-4 flex items-center">
-                        <i data-lucide="calendar" class="size-5 mr-2 text-primary"></i>
-                        Date & Time
+                        <i data-lucide="user-check" class="size-5 mr-2 text-primary"></i>
+                        Volunteer Requirements
                     </h2>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Start Date & Time -->
-                        <div>
-                            <label for="starts_at" class="block text-sm font-medium text-gray-700 mb-2">Start Date & Time *</label>
-                            <input wire:model="starts_at" type="datetime-local" id="starts_at" class="input input-bordered w-full @error('starts_at') input-error @enderror">
-                            @error('starts_at') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                        <!-- Skills Required -->
+                        <div class="md:col-span-2">
+                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Skills
+                                Required</label>
+                            <textarea wire:model="skills" id="skills" rows="3"
+                                      class="textarea textarea-bordered w-full"
+                                      placeholder="List any specific skills, experience, or qualifications needed..."></textarea>
+                            @error('skills') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+
                         </div>
 
-                        <!-- End Date & Time -->
+                        <!-- Age Requirements -->
                         <div>
-                            <label for="ends_at" class="block text-sm font-medium text-gray-700 mb-2">End Date & Time *</label>
-                            <input wire:model="ends_at" type="datetime-local" id="ends_at" class="input input-bordered w-full @error('ends_at') input-error @enderror">
-                            @error('ends_at') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                            <label for="minimum_age" class="block text-sm font-medium text-gray-700 mb-2">Minimum
+                                Age</label>
+                            <input wire:model="minimum_age" type="number" id="minimum_age"
+                                   class="input input-bordered w-full" placeholder="e.g., 16" min="16">
+                            @error('minimum_age') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        <!-- Additional Notes -->
+                        <div class="md:col-span-2">
+                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Additional
+                                Notes</label>
+                            <textarea wire:model="notes" id="notes" rows="3"
+                                      class="textarea textarea-bordered w-full"
+                                      placeholder="Any other important information for volunteers..."></textarea>
+                            @error('notes') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- What do you need -->
+            <div class="card bg-white shadow-md">
+                <div class="card-body">
+                    <h2 class="card-title text-xl mb-4 flex items-center">
+                        <i data-lucide="box" class="size-5 mr-2 text-primary"></i>
+                        What do you need for the event?
+                    </h2>
+
+                    <div></div>
                 </div>
             </div>
 
@@ -154,12 +275,11 @@
                     </h2>
 
 
-
                     <!-- Map Location Picker -->
 
                     <div class="mb-6" wire:ignore>
                         <div class="border border-gray-300 rounded-lg overflow-hidden">
-                            <div id="map" class="w-full h-96 bg-gray-100 relative">
+                            <div id="map" class="w-full h-[70vh] bg-gray-100 relative">
                                 <!-- Map will be initialized here -->
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     {{--                                    loading state--}}
@@ -186,7 +306,8 @@
                                         onclick="getCurrentLocation()"
                                         class="btn btn-sm bg-primary hover:bg-green-700 text-white border-none shadow-sm hover:shadow-md transition-all duration-200 group"
                                         title="Use my current location">
-                                    <i data-lucide="crosshair" class="size-4 group-hover:rotate-90 transition-transform duration-200"></i>
+                                    <i data-lucide="crosshair"
+                                       class="size-4 group-hover:rotate-90 transition-transform duration-200"></i>
                                     <span class="hidden sm:inline ml-1">Current Location</span>
                                 </button>
                             </div>
@@ -213,8 +334,8 @@
                             </div>
 
                             <!-- Hidden inputs for form submission -->
-                            <input wire:model="latitude"  type="hidden" id="latitude">
-                            <input wire:model="longitude"  type="hidden" id="longitude">
+                            <input wire:model="latitude" type="hidden" id="latitude">
+                            <input wire:model="longitude" type="hidden" id="longitude">
                         </div>
 
                         @error('latitude') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
@@ -223,43 +344,8 @@
                 </div>
             </div>
 
-            <!-- Requirements & Skills Card -->
-            <div class="card bg-white shadow-md">
-                <div class="card-body">
-                    <h2 class="card-title text-xl mb-4 flex items-center">
-                        <i data-lucide="user-check" class="size-5 mr-2 text-primary"></i>
-                        Volunteer Requirements
-                    </h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Skills Required -->
-                        <div class="md:col-span-2">
-                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Skills Required</label>
-                            <textarea wire:model="skills" id="skills" rows="3" class="textarea textarea-bordered w-full" placeholder="List any specific skills, experience, or qualifications needed..."></textarea>
-                            @error('skills') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-
-                        </div>
-
-                        <!-- Age Requirements -->
-                        <div>
-                            <label for="minimum_age" class="block text-sm font-medium text-gray-700 mb-2">Minimum Age</label>
-                            <input wire:model="minimum_age" type="number" id="minimum_age" class="input input-bordered w-full" placeholder="e.g., 13" min="13">
-                            @error('minimum_age') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-                        </div>
-
-                        <!-- Additional Notes -->
-                        <div class="md:col-span-2">
-                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
-                            <textarea wire:model="notes" id="notes" rows="3" class="textarea textarea-bordered w-full" placeholder="Any other important information for volunteers..."></textarea>
-                            @error('notes') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Form Actions -->
-            <div class="flex justify-between items-center pt-6 border-t">
+            <div class="flex justify-between items-center pt-6">
                 <a href="/requester/dashboard/my-events" class="btn btn-outline">
                     <i data-lucide="arrow-left" class="size-4 mr-2"></i>
                     Cancel
@@ -281,31 +367,18 @@
 <script>
     let map;
     let marker;
+
     function initializeMap() {
-        const initialLat = Number({{ $latitude ?? '7.8731' }});
-        const initialLng = Number({{ $longitude ?? '80.7718' }});
+        // Initialize the map
         const mapOptions = {
-            center: {
-                lat: initialLat,
-                lng: initialLng
-            },
+            center: {lat: 7.8731, lng: 80.7718},
             zoom: 7,
             mapId: "198a0e442491558328ee7d20"
         };
 
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-        if (!isNaN(initialLat) && !isNaN(initialLng)) {
-            const initialPos = { lat: initialLat, lng: initialLng };
-            placeMarker(initialPos);
-            document.getElementById("latitude").value = initialLat;
-            document.getElementById("longitude").value = initialLng;
-            document.getElementById("lat-display").innerText = `Lat: ${initialLat.toFixed(6)}`;
-            document.getElementById("lng-display").innerText = `Lng: ${initialLng.toFixed(6)}`;
-            document.getElementById("coordinates-display").classList.remove("hidden");
-            document.getElementById("no-location").classList.add("hidden");
-        }
-
+        // Add a click listener to the map
         map.addListener("click", (event) => {
             const pos = {
                 lat: event.latLng.lat(),
@@ -334,10 +407,7 @@
         document.getElementById("latitude").value = pos.lat;
         document.getElementById("longitude").value = pos.lng;
 
-        // console.log("Marker placed at:", pos);
         Livewire.dispatch('coordinates', pos);
-
-
 
         // Update the coordinates display
         document.getElementById("lat-display").innerText = `Lat: ${pos.lat.toFixed(6)}`;
@@ -383,5 +453,3 @@
 </script>
 
 @endassets
-
-

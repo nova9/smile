@@ -3,17 +3,27 @@
 namespace App\Livewire\Volunteer\Dashboard\Eventz;
 
 use App\Models\Event;
+use App\Models\User;
+use App\Services\GoogleMaps;
 use Livewire\Component;
 
 class Show extends Component
 {
     public $event;
     public $profileCompletionPercentage;
+    public $city;
+    public $organizer;
+    public $Volunteers;
 
-    public function mount($id)
+    public function mount($id, GoogleMaps $googleMaps)
     {
         $this->profileCompletionPercentage = auth()->user()->profileCompletionPercentage();
         $this->event = Event::query()->with(['address', 'users'])->find($id);
+        $this->Volunteers = $this->event->users;
+        // dd($this->event);
+        $this->organizer = User::find($this->event->user_id);
+        // dd($this->organizer);
+        $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude) ;
     }
 
     public function join()

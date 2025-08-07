@@ -50,9 +50,7 @@ class Index extends Component
             ->get();
 
         $this->completedEvents = auth()->user()->participatingEvents()
-            ->wherePivot('status', 'accepted')
-            ->wherePivot('ends_at','!=', null)
-            ->wherePivot('ends_at', '<', now())
+            ->wherePivot('status', 'completed')
             ->get();
 
         $this->pendingEvents = auth()->user()->participatingEvents()
