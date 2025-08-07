@@ -27,6 +27,8 @@ return new class extends Migration
             $table->text('skills')->nullable();
             $table->integer('minimum_age');
             $table->text('notes')->nullable();
+            $table->string('city');
+            $table->json('embedding')->nullable();
         });
     }
 

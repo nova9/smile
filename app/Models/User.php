@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'embedding',
     ];
 
     /**
@@ -107,17 +108,29 @@ class User extends Authenticatable
         return $initialPercentage;
     }
 
-    public function setOrUpdateAttribute($attributeName, $value)
+    public function deleteCustomAttributes($attributeName): void
     {
-        $attribute = Attribute::query()->where('name', $attributeName)->first();
+        $attribute = Attribute::where('name', $attributeName)->firstOrFail();
+        $this->attributes()->detach($attribute);
+    }
 
-        $existingAttribute = $this->attributes()->where('name', $attributeName)->first();
-
-        if ($existingAttribute) {
-            $this->attributes()->updateExistingPivot($attribute->id, ['value' => $value]);
-        } else {
-            $this->attributes()->attach($attribute->id, ['value' => $value]);
+    public function setCustomAttribute($attributeName, $value)
+    {
+        if (!$value) {
+            $this->deleteCustomAttributes($attributeName);
+            return;
         }
+        $attribute = Attribute::where('name', $attributeName)->firstOrFail();
+        $this->attributes()->syncWithoutDetaching([$attribute->id => ['value' => $value]]);
+    }
+
+    public function getCustomAttribute($attributeName) {
+        $attribute = $this->attributes()->where('name', $attributeName)->first();
+        return $attribute ? $attribute->pivot->value : null;
+    }
+
+    public function getAllAttributes() {
+        return $this->attributes()->get()->pluck('pivot.value', 'name')->all();
     }
 
 

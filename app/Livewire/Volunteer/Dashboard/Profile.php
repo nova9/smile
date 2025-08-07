@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Volunteer\Dashboard;
 
+use App\Jobs\GenerateEmbedding;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -59,8 +60,6 @@ class Profile extends Component
     {
         // Validation
         $validated = $this->validate([
-//            'name' => 'required|string|max:255',
-//            'email' => 'required|email|max:255',
             'skills' => 'nullable|array',
             'interests' => 'nullable|array',
             'age' => 'nullable|integer|min:1|max:120',
@@ -71,54 +70,51 @@ class Profile extends Component
             'profile_picture' => 'nullable|string|max:255',
         ]);
 
-//        dd($validated);
 
         // Update user basic info
         // auth()->user()->update([
         //     'name' => $this->name,
         //     'email' => $this->email,
         // ]);
-        $this->profile_picture = $this->profile_picture ?? 'IMG';
-
-        $skillsValue = (is_array($this->skills) && count($this->skills) > 0) ? json_encode($this->skills) : null;
-        $newattributes = [
-            'skills' => $skillsValue,
-            'age' => $this->age,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
-            'contact_number' => $this->contact_number,
-            'gender' => $this->gender,
-            'profile_picture' => $this->profile_picture,
-        ];
 
 
-        $this->insertUserAttributes($newattributes);
+
+//        $this->insertUserAttributes($newattributes);
+
+        auth()->user()->setCustomAttribute('skills', json_encode($this->skills));
+        auth()->user()->setCustomAttribute('age', $this->age);
+        auth()->user()->setCustomAttribute('latitude', $this->latitude);
+        auth()->user()->setCustomAttribute('longitude', $this->longitude);
+        auth()->user()->setCustomAttribute('contact_number', $this->contact_number);
+        auth()->user()->setCustomAttribute('gender', $this->gender);
+        auth()->user()->setCustomAttribute('profile_picture', $this->profile_picture);
+        auth()->user()->setCustomAttribute('interests', json_encode($this->interests));
 
 
-        auth()->user()->setOrUpdateAttribute('interests', json_encode($this->interests));
+        GenerateEmbedding::dispatch(auth()->user(), textToEmbed: json_encode(auth()->user()->getAllAttributes()));
     }
 
     /**
      * Insert or update user attributes (only non-empty values).
      * @param array $attributes
      */
-    protected function insertUserAttributes(array $attributes)
-    {
-        $attributesToSync = [];
-        $i = 1;
-        foreach ($attributes as $val) {
-            if (!empty($val)) {
-                $attributesToSync[$i] = ['value' => $val];
-            }
-            $i++;
-        }
-        if (!empty($attributesToSync)) {
-            auth()->user()->attributes()->syncWithoutDetaching($attributesToSync);
-        }
-
-        session()->flash('success', 'Profile updated successfully!');
-        return redirect()->route('profile');
-    }
+//    protected function insertUserAttributes(array $attributes)
+//    {
+//        $attributesToSync = [];
+//        $i = 1;
+//        foreach ($attributes as $val) {
+//            if (!empty($val)) {
+//                $attributesToSync[$i] = ['value' => $val];
+//            }
+//            $i++;
+//        }
+//        if (!empty($attributesToSync)) {
+//            auth()->user()->attributes()->syncWithoutDetaching($attributesToSync);
+//        }
+//
+//        session()->flash('success', 'Profile updated successfully!');
+//        return redirect()->route('profile');
+//    }
 
     #[On('coordinates')]
     public function handleNewPost($lat = null, $lng = null)

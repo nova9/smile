@@ -2,13 +2,17 @@
 
 namespace App\Livewire\Requester\Dashboard\MyEvents;
 
+use App\Jobs\GenerateEmbedding;
 use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Resource;
 use App\Models\Tag;
+use App\Services\EmbeddingService;
+use App\Services\GoogleMaps;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class Create extends Component
 {
@@ -68,10 +72,8 @@ class Create extends Component
         ];
     }
 
-    public function save()
+    public function save(GoogleMaps $googleMaps, EmbeddingService $embeddingService)
     {
-        // dd($this->all());
-
         $this->validate();
 
 
@@ -92,7 +94,12 @@ class Create extends Component
             'minimum_age' => $this->minimum_age,
             'skills' => $this->skills,
             'chat_id' => $chat->id,
+            'city' => $googleMaps->getNearestCity($this->latitude, $this->longitude)
         ]);
+
+
+        GenerateEmbedding::dispatch($event, ['name', 'description', 'skills', 'notes']);
+
 
 
         // create new tags if they don't exist
