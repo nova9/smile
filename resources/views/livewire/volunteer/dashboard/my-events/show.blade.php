@@ -54,8 +54,9 @@
                     </div>
 
                     <!-- Event Description -->
-                    <div class="mb-8 text-center">
-                        <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
+                    <div class="mb-8">
+                         <h2 class="text-2xl font-bold text-gray-800 mb-4">About This Event</h2>
+                        <p class="text-gray-600 text-lg  mx-auto leading-relaxed">
                             {{ $event->description }}
                         </p>
                     </div>
@@ -155,32 +156,23 @@
                         <div class="lg:col-span-2 space-y-8">
                             <!-- About Event -->
                             <div>
-                                <h2 class="text-2xl font-bold text-gray-800 mb-4">About This Event</h2>
+                                <h2 class="text-2xl font-bold text-gray-800 mb-4">Additional Notes</h2>
                                 <div class="prose prose-gray max-w-none">
-                                    <p class="text-gray-600 leading-relaxed">{{ $event->notes ?? $event->description }}</p>
+                                    <p class="text-gray-600 leading-relaxed">{{ $event->notes }}</p>
                                 </div>
                             </div>
 
-                            <!-- Schedule/Agenda -->
-                            @php
-                                $agenda = [
-                                    '9:00 AM - Welcome & Briefing',
-                                    '9:30 AM - Park Clean-Up Begins',
-                                    '11:00 AM - Tree Planting',
-                                    '11:30 AM - Games & Refreshments',
-                                    '12:00 PM - Closing Remarks',
-                                ];
-                            @endphp
-                            @if (!empty($agenda))
+                            <!-- Tasks and subtasks -->
+                          
                                 <div>
-                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Schedule</h2>
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Tasks</h2>
                                     <ul class="list-disc pl-6 text-gray-600">
-                                        @foreach ($agenda as $item)
-                                            <li class="mb-2">{{ $item }}</li>
+                                        @foreach ($tasks as $task)
+                                            <li class="mb-2">{{ $task->name }}</li>
                                         @endforeach
                                     </ul>
                                 </div>
-                            @endif
+                            
 
                             <!-- Gallery -->
                             @php
@@ -210,21 +202,27 @@
                                     <div class="flex items-start gap-3 mb-4">
                                         <i data-lucide="map-pin" class="w-5 h-5 text-gray-500 mt-1"></i>
                                         <div>
-                                            <p class="font-semibold text-gray-800">{{ $event->location ?? 'Central Park' }}</p>
-                                            <p class="text-gray-600 text-sm">Main Entrance, City Center</p>
+                                            <p class="font-semibold text-gray-800">{{ $city }}</p>
+                                          
                                         </div>
                                     </div>
-                                    <div class="rounded-lg overflow-hidden h-64">
-                                        <iframe
-                                            src="https://www.openstreetmap.org/export/embed.html?bbox=-0.128%2C51.507%2C-0.127%2C51.508&amp;layer=mapnik"
-                                            style="width:100%;height:100%;border:0;"></iframe>
-                                    </div>
-                                    <a href="https://maps.google.com/?q={{ urlencode($event->location ?? 'Central Park') }}"
-                                        target="_blank"
-                                        class="btn btn-outline btn-sm w-full mt-4 flex items-center justify-center gap-2">
-                                        <i data-lucide="navigation" class="w-4 h-4"></i>
-                                        Get Directions
-                                    </a>
+                                     <div
+                                            class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden mb-1">
+                                            <iframe width="100%" height="100%" frameborder="0"
+                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                                allowfullscreen>
+                                            </iframe>
+                                        </div>
+                                        
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
+                                            target="_blank"
+                                            class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                            <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
+                                            Open in Google Maps
+                                        </a>
+                                
+                                   
                                 </div>
                             </div>
                         </div>
