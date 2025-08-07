@@ -26,6 +26,7 @@ class Index extends Component
 //            ->with(['category', 'tags', 'address', 'user'])->get();
 //        dd(auth()->user());
 //        dd($eventRecommenderService->recommendEventsToUser(auth()->user(), $events, 10));
+        // dd($googleMaps->getNearestCity('7.8731', '80.7718'));
     }
 
     public function render(EventRecommenderService $eventRecommenderService)

@@ -69,6 +69,7 @@ class Edit extends Component
         $this->maximum_participants = $this->event['maximum_participants'];
         $this->category_id = $this->event['category_id'];
         $this->tags = $this->event->tags->pluck('name')->toArray();
+        $this->availableTags = Tag::all()->pluck('name')->sort()->values();
     }
 
     protected function rules()
