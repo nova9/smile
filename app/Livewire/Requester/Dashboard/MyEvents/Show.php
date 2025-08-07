@@ -51,7 +51,7 @@ class Show extends Component
             ]);
             
     // show the updated list of tasks
-        $this->tasks= Task::where('event_id', $this->event->id)->get();
+        $this->tasks= Task::where('event_id', $this->event->id)->where('parent_id', null)->get();
         session()->flash('success', 'Task added successfully.');
     //reset input fields
         $this->reset(['taskName', 'taskDescription', 'assignedVolunteer']);
@@ -81,7 +81,7 @@ class Show extends Component
         if($task){
             $task->delete();
             // to show the updated list of tasks
-            $this->tasks = Task::where('event_id', $this->event->id)->get();
+            $this->tasks = Task::where('event_id', $this->event->id)->where('parent_id', null)->get();
             session()->flash('success', 'Task deleted successfully.');
             
         }

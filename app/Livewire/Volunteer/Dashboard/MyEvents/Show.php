@@ -3,6 +3,7 @@
 namespace App\Livewire\Volunteer\Dashboard\MyEvents;
 
 use App\Models\Event;
+use App\Services\GoogleMaps;
 use Livewire\Component;
 
 class Show extends Component
@@ -10,6 +11,8 @@ class Show extends Component
     public $event;
     public $status;
     public $volunteers;
+    public $city;
+    public $tasks;
 
     // public function join()
     // {
@@ -20,7 +23,7 @@ class Show extends Component
     //     return redirect('/volunteer/dashboard/my-events');
     // }
 
-    public function mount($id)
+    public function mount($id,GoogleMaps $googleMaps)
     {
         // dd($this->event);
   
@@ -29,6 +32,9 @@ class Show extends Component
         ->find($id);
         $this->status = $this->event->users->where('id', auth()->id())->first()?->pivot->status;
         $this->volunteers=$this->event->users;
+        $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude);
+        $this->tasks = $this->event->tasks()->where('parent_id', null)->get();
+      
 
 
     }
