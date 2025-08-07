@@ -22,7 +22,7 @@ class GoogleMaps
 
         $response = Http::get($url, [
             'latlng' => "$latitude,$longitude",
-            'key'    => $this->apiKey,
+            'key' => $this->apiKey,
         ]);
 
         if ($response->failed()) {

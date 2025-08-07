@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Jobs\DetectFacesJob;
+use App\Jobs\GenerateEmbedding;
 use App\Models\Attribute;
 use App\Models\File;
 use Aws\Exception\AwsException;
@@ -148,7 +149,12 @@ class Signup extends Component
 
     public function save()
     {
-        $validated = $this->validate();
+        if ($this->document_type !== 'passport') {
+            $validated = $this->validate();
+        } else {
+            $this->validate(Arr::except($this->rules(), ['back_image',]));
+
+        }
 
         $fronImagePath = $this->front_image->store(path: 'files');
         $backImagePath = $this->back_image->store(path: 'files');
@@ -192,6 +198,9 @@ class Signup extends Component
                 'value' => $validated['document_type'],
             ],
         ]);
+
+        GenerateEmbedding::dispatch($user, textToEmbed: json_encode($user->getAllAttributes()));
+
 
         auth()->login($user);
 
