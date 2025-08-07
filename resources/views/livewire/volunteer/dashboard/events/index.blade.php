@@ -95,7 +95,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
-                                {{--                                {{ $item->address->city }}--}} City
+                                {{ $item->city }}
                             </div>
                             <div class="flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -103,7 +103,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                4 hours
+                                {{$item->starts_at->diffForHumans($item->ends_at, true)}}
                             </div>
                         </div>
 
@@ -133,7 +133,10 @@
                 <div
                     class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center p-6 bg-white rounded-xl shadow-md border border-gray-100">
                     <h2 class="text-xl font-semibold text-gray-700 mb-2">No Opportunities Found</h2>
-                    <p class="text-gray-500">Try adjusting your search or filters.</p>
+                    <p class="text-gray-500">Try adjusting your search or adding <b>Interests</b> to to your profile</p>
+                    <a class="btn btn-primary mt-4" href="/volunteer/dashboard/profile" wire:navigate>
+                        Profile
+                    </a>
                 </div>
             @endforelse
         </div>

@@ -22,7 +22,7 @@ class GoogleMaps
 
         $response = Http::get($url, [
             'latlng' => "$latitude,$longitude",
-            'key'    => $this->apiKey,
+            'key' => $this->apiKey,
         ]);
 
         if ($response->failed()) {
@@ -31,7 +31,6 @@ class GoogleMaps
 
         $results = $response->json('results');
 
-        dd($results);
 
         foreach ($results as $result) {
             foreach ($result['address_components'] as $component) {

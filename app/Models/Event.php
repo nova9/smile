@@ -26,6 +26,8 @@ class Event extends Model
         'address_id',
         'user_id',
         'chat_id',
+        'city',
+        'embedding',
     ];
 
 
@@ -37,6 +39,7 @@ class Event extends Model
     protected $casts = [
         'ends_at' => 'datetime',
         'starts_at' => 'datetime',
+        'embedding' => 'json',
     ];
 
     public function category(): BelongsTo
