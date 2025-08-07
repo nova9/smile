@@ -13,12 +13,12 @@
 
     <!-- Open the modal using ID.showModal() method -->
     <div x-data="{
-        profileCompletionPercentage: {{$profileCompletionPercentage}},
+        profileCompletionPercentage: {{ $profileCompletionPercentage }},
         openModal() {
             this.$refs.profile_completion_modal.showModal();
         },
         closeModal() {
-        console.log('closing modal');
+            console.log('closing modal');
             this.$refs.profile_completion_modal.close();
         },
         join() {
@@ -40,19 +40,15 @@
                     <h3 class="text-xl font-bold">Please Complete Your Profile</h3>
                 </div>
                 <p class="mb-6 text-base text-base-content/70">
-                    🚀 Almost there! Complete your profile to unlock this awesome event. We want every volunteer to shine
+                    🚀 Almost there! Complete your profile to unlock this awesome event. We want every volunteer to
+                    shine
                     and make a real splash together! 🌊✨
                 </p>
                 <div class="relative flex items-center justify-center">
-                    <progress
-                        class="progress w-full h-8 text-primary"
-                        x-bind:value="profileCompletionPercentage"
-                        max="1"
-                    ></progress>
-                    <span
-                        class="absolute text-white text-sm font-medium bg-primary px-1 rounded-sm"
-                        x-text="`${profileCompletionPercentage * 100}%`"
-                    ></span>
+                    <progress class="progress w-full h-8 text-primary" x-bind:value="profileCompletionPercentage"
+                        max="1"></progress>
+                    <span class="absolute text-white text-sm font-medium bg-primary px-1 rounded-sm"
+                        x-text="`${profileCompletionPercentage * 100}%`"></span>
                 </div>
                 <div class="modal-action flex gap-2">
                     <form method="dialog" class="basis-1/2">
@@ -73,11 +69,11 @@
             <!-- Back Button -->
             <div class="p-6 pb-0">
                 <a href="/volunteer/dashboard/events" wire:navigate
-                   class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
+                    class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                         class="h-5 w-5 group-hover:-translate-x-1 transition-transform"
-                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                     Back to Opportunities
                 </a>
@@ -88,11 +84,11 @@
                 <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                     <!-- Event Image -->
                     <div class="relative h-96 bg-gradient-to-r from-blue-500 to-purple-600">
-                        <img src="https://picsum.photos/seed/{{$event->id}}/1024/720" alt="Event Image"
-                             class="w-full h-full object-cover">
+                        <img src="https://picsum.photos/seed/{{ $event->id }}/1024/720" alt="Event Image"
+                            class="w-full h-full object-cover">
                         <div class="absolute top-6 left-6">
                             <div class="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium"
-                                 style="color: {{ $event->category->color }}">
+                                style="color: {{ $event->category->color }}">
                                 {{ $event->category->name }}
                             </div>
                         </div>
@@ -111,14 +107,11 @@
                             <h1 class="text-4xl font-bold text-accent mb-3">
                                 {{ $event->name }}
                             </h1>
-                            <p class="text-gray-600 text-lg leading-relaxed">
-                                Join us in making a difference for our marine ecosystem. Help clean up local beaches and
-                                learn about ocean conservation while connecting with like-minded volunteers.
-                            </p>
+
                         </div>
 
                         <!-- Quick Info Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                             <div class="bg-gray-50 rounded-xl p-4 text-center">
                                 <div
                                     class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
@@ -129,14 +122,7 @@
                                     - {{ $event->ends_at->format('F j') }}</div>
                             </div>
 
-                            <div class="bg-gray-50 rounded-xl p-4 text-center">
-                                <div
-                                    class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                                    <i data-lucide="clock" class="w-6 h-6 text-green-600"></i>
-                                </div>
-                                <div class="text-sm text-gray-500">Duration</div>
-                                <div class="font-semibold text-gray-700">4 hours</div>
-                            </div>
+
 
                             <div class="bg-gray-50 rounded-xl p-4 text-center">
                                 <div
@@ -144,7 +130,7 @@
                                     <i data-lucide="map-pin" class="w-6 h-6 text-purple-600"></i>
                                 </div>
                                 <div class="text-sm text-gray-500">Location</div>
-                                <div class="font-semibold text-gray-700">City</div>
+                                <div class="font-semibold text-gray-700">{{ $city }}</div>
                             </div>
 
                             <div class="bg-gray-50 rounded-xl p-4 text-center">
@@ -153,7 +139,8 @@
                                     <i data-lucide="users" class="w-6 h-6 text-orange-600"></i>
                                 </div>
                                 <div class="text-sm text-gray-500">Volunteers</div>
-                                <div class="font-semibold text-gray-700">24 / 50</div>
+                                <div class="font-semibold text-gray-700">{{ count($Volunteers) }} /
+                                    {{ $event->maximum_participants }}</div>
                             </div>
                         </div>
 
@@ -174,14 +161,38 @@
                                 <!-- Skills & Tags -->
                                 <div>
                                     <h2 class="text-2xl font-bold text-gray-800 mb-4">Tags</h2>
-                                    <div class="flex flex-wrap gap-2">
-                                        @foreach($event->tags as $tag)
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        @foreach ($event->tags as $tag)
                                             <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                                        {{ $tag->name }}
-                                    </span>
+                                                {{ $tag->name }}
+                                            </span>
                                         @endforeach
                                     </div>
+                                    @if (!empty($event->skills))
+                                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Skills</h2>
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            @foreach (explode(',', $event->skills) as $skill)
+                                                @if (trim($skill) !== '')
+                                                    <span
+                                                        class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                                        {{ trim($skill) }}
+                                                    </span>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
+
+                                <div class="mt-8">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Additional Notes</h2>
+                                    <div class=" p-4 space-y-2">
+                                        <p class="text-gray-700 text-base"><span class="font-semibold">Notes:</span>
+                                            {{ $event->notes }}</p>
+                                        <p class="text-gray-700 text-base"><span class="font-semibold">Minimum
+                                                Age:</span> {{ $event->minimum_age }}</p>
+                                    </div>
+                                </div>
+
 
                                 <!-- Location Card -->
                                 <div class="bg-white border border-gray-100 rounded-xl p-6">
@@ -190,18 +201,23 @@
                                         <div class="flex items-start gap-3">
                                             <i data-lucide="map-pin" class="w-5 h-5 text-gray-400 mt-0.5"></i>
                                             <div>
-                                                <p class="font-medium text-gray-800">Ocean Beach</p>
-                                                <p class="text-gray-600 text-sm">Great Highway, San Francisco, CA
-                                                    94121</p>
+                                                <p class="font-medium text-gray-800">{{ $city }}</p>
                                             </div>
                                         </div>
-                                        <div class="bg-gray-100 rounded-lg h-32 flex items-center justify-center">
-                                            <span class="text-gray-500 text-sm">Interactive Map</span>
+                                        <div
+                                            class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden">
+                                            <iframe width="100%" height="100%" frameborder="0"
+                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                                allowfullscreen>
+                                            </iframe>
                                         </div>
-                                        <button class="w-full btn btn-outline btn-sm">
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
+                                            target="_blank"
+                                            class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                             <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
-                                            Get Directions
-                                        </button>
+                                            Open in Google Maps
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -215,11 +231,11 @@
                                     <div class="flex items-center gap-4 mb-4">
                                         <div
                                             class="w-16 h-16 rounded-full aspect-square bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold">
-                                            E
+                                            {{ ucfirst(substr($organizer->name, 0, 1)) }}
                                         </div>
                                         <div>
-                                            <h4 class="font-semibold text-gray-800">EcoVolunteers SF</h4>
-                                            <p class="text-gray-600 text-sm">Environmental Organization</p>
+                                            <h4 class="font-semibold text-gray-800">{{ $organizer->name }}</h4>
+                                            {{-- <p class="text-gray-600 text-sm">Environmental Organization</p> --}}
                                             <div class="flex items-center gap-1 mt-1">
                                                 <div class="flex text-yellow-400">
                                                     <i data-lucide="star" class="w-4 h-4 fill-current"></i>
@@ -240,21 +256,21 @@
                                     <div class="space-y-2">
                                         <div class="flex items-center gap-2 text-sm text-gray-600">
                                             <i data-lucide="calendar" class="w-4 h-4"></i>
-                                            <span>34 events organized</span>
+                                            <span> events organized</span>
                                         </div>
                                         <div class="flex items-center gap-2 text-sm text-gray-600">
                                             <i data-lucide="users" class="w-4 h-4"></i>
-                                            <span>1,247 volunteers reached</span>
+                                            <span>{{ count($Volunteers) }} volunteers reached</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Action Buttons -->
                                 <div class="space-y-3">
-                                    @if($event->users->contains(auth()->user()))
+                                    @if ($event->users->contains(auth()->user()))
                                         <button class="w-full btn btn-secondary btn-lg" disabled>
                                             <i data-lucide="check" class="w-5 h-5 mr-2"></i>
-                                            {{--                                    get status from event_user table--}}
+                                            {{--                                    get status from event_user table --}}
                                             <span
                                                 class="capitalize">{{ $event->users->where('id', auth()->user()->id)->first()->pivot->status }}</span>
                                         </button>

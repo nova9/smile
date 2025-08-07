@@ -31,7 +31,7 @@ class GoogleMaps
 
         $results = $response->json('results');
 
-        dd($results);
+        // dd($results);
 
         foreach ($results as $result) {
             foreach ($result['address_components'] as $component) {
