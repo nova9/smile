@@ -60,6 +60,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Badge::class);
     }
+
     public function attributes(): BelongsToMany
     {
         return $this->belongsToMany(Attribute::class)->withPivot('value');
@@ -74,7 +75,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Event::class)
             ->withTimestamps()
-            ->withPivot('status', 'created_at','ends_at');
+            ->withPivot('status', 'created_at', 'ends_at');
     }
 
     public function events(): HasMany
@@ -119,7 +120,7 @@ class User extends Authenticatable
         $this->attributes()->detach($attribute);
     }
 
-    public function setCustomAttribute($attributeName, $value)
+    public function setCustomAttribute($attributeName, $value): void
     {
         if (!$value) {
             $this->deleteCustomAttributes($attributeName);
@@ -129,12 +130,14 @@ class User extends Authenticatable
         $this->attributes()->syncWithoutDetaching([$attribute->id => ['value' => $value]]);
     }
 
-    public function getCustomAttribute($attributeName) {
+    public function getCustomAttribute($attributeName)
+    {
         $attribute = $this->attributes()->where('name', $attributeName)->first();
         return $attribute ? $attribute->pivot->value : null;
     }
 
-    public function getAllAttributes() {
+    public function getAllAttributes()
+    {
         return $this->attributes()->get()->pluck('pivot.value', 'name')->all();
     }
 
