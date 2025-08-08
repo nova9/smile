@@ -3,12 +3,17 @@
 namespace App\Livewire\Volunteer\Dashboard;
 
 use App\Jobs\GenerateEmbedding;
+use App\Services\FileManager;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Profile extends Component
-
 {
+    use WithFileUploads;
     public $attribute;
     public $skills = [];
     public $interests = [];
@@ -18,13 +23,16 @@ class Profile extends Component
     public $email;
     public $contact_number;
     public $gender;
+
+    #[Validate]
     public $profile_picture;
+
+    public $profile_picture_url;
+
     public $location;
     public $latitude;
     public $longitude;
     public $age; // Age attribute
-
-
 
     public function mount()
     {
@@ -33,6 +41,10 @@ class Profile extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->attribute = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
+
+        $this->profile_picture_url = FileManager::getTemporaryUrl(auth()->user()->getCustomAttribute('profile_picture'));
+
+
 
 
         $this->completion = $user->profileCompletionPercentage();
@@ -51,15 +63,12 @@ class Profile extends Component
             $this->longitude = $user->attributes()->where('name', 'longitude')->get()->pluck('pivot.value')->first();
         }
         $this->gender = $user->attributes()->where('name', 'gender')->get()->pluck('pivot.value')->first();
-        $this->profile_picture = $user->attributes()->where('name', 'profile_picture')->get()->pluck('pivot.value')->first();
         $this->age = $user->attributes()->where('name', 'age')->get()->pluck('pivot.value')->first(); // Initialize age
     }
 
-
-    public function save()
+    public function rules()
     {
-        // Validation
-        $validated = $this->validate([
+        return [
             'skills' => 'nullable|array',
             'interests' => 'nullable|array',
             'age' => 'nullable|integer|min:1|max:120',
@@ -67,19 +76,22 @@ class Profile extends Component
             'longitude' => 'nullable|numeric',
             'contact_number' => 'nullable|string|max:10|min:10', // Adjust max length as needed
             'gender' => 'nullable|string|in:male,female,other,prefer_not_to_say',
-            'profile_picture' => 'nullable|string|max:255',
-        ]);
+            'profile_picture' => 'required|image|max:10240', // 10MB max size
+        ];
+    }
+
+    public function saveProfilePicture()
+    {
+        $this->validate(Arr::only($this->rules(), ['profile_picture']));
+        $file = FileManager::store($this->profile_picture);
+        auth()->user()->setCustomAttribute('profile_picture', $file->id);
+    }
 
 
-        // Update user basic info
-        // auth()->user()->update([
-        //     'name' => $this->name,
-        //     'email' => $this->email,
-        // ]);
+    public function save()
+    {
+        $this->validate(Arr::except($this->rules(), ['profile_picture',]));
 
-
-
-//        $this->insertUserAttributes($newattributes);
 
         auth()->user()->setCustomAttribute('skills', json_encode($this->skills));
         auth()->user()->setCustomAttribute('age', $this->age);
@@ -87,7 +99,6 @@ class Profile extends Component
         auth()->user()->setCustomAttribute('longitude', $this->longitude);
         auth()->user()->setCustomAttribute('contact_number', $this->contact_number);
         auth()->user()->setCustomAttribute('gender', $this->gender);
-        auth()->user()->setCustomAttribute('profile_picture', $this->profile_picture);
         auth()->user()->setCustomAttribute('interests', json_encode($this->interests));
 
 

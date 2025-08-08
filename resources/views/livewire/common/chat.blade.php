@@ -30,11 +30,13 @@
                             <div class="flex-1">
                                 <div
                                     class="font-medium">{{ \App\Services\Messaging::getDirectChatOtherParty($chat)->name }}</div>
-                                <div class="text-xs text-base-content/70 truncate user-select-none">Hey, are you
-                                    available for a call?
+                                <div class="text-xs text-base-content/70 truncate user-select-none">
+                                    @if(\App\Services\Messaging::getMessagesForChat($chat))
+                                        {{ \App\Services\Messaging::getMessagesForChat($chat)[0]->content }}
+                                    @endif
                                 </div>
                             </div>
-                            <span class="text-xs text-base-content/50">2m</span>
+                            <span class="text-xs text-base-content/50">{{ \App\Services\Messaging::getMessagesForChat($chat)[0]->created_at->diffForHumans() }}</span>
                         </a>
                     </li>
                 @empty

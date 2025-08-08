@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Jobs\DetectFacesJob;
 use App\Jobs\GenerateEmbedding;
 use App\Models\Attribute;
 use App\Models\File;
@@ -12,7 +11,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
