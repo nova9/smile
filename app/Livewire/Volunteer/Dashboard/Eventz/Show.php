@@ -5,6 +5,8 @@ namespace App\Livewire\Volunteer\Dashboard\Eventz;
 use App\Models\Event;
 use App\Models\User;
 use App\Services\GoogleMaps;
+use App\Services\Messaging;
+use Livewire\Attributes\Session;
 use Livewire\Component;
 
 class Show extends Component
@@ -35,5 +37,11 @@ class Show extends Component
     public function render()
     {
         return view('livewire.volunteer.dashboard.events.show');
+    }
+
+    public function chat()
+    {
+        $isSuccess = Messaging::initializeDirectChatTo(auth()->user(), $this->event->user);
+        $this->dispatch('openChat', chatId: Messaging::getDirectChatTo(auth()->user(), $this->event->user)->id);
     }
 }

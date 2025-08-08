@@ -1,5 +1,5 @@
 <div x-data="{ navClosed: $persist(false) }" class="flex h-screen overflow-hidden">
-{{--    Sidebar--}}
+    {{--    Sidebar--}}
     <div class="z-999 border-r border-gray-200 bg-stone-50 flex flex-col p-1.5 sticky">
         <div class="flex mb-4" :class="navClosed ? '' : 'w-64'">
             <div class="flex justify-center w-full mt-2" x-show="!navClosed">
@@ -79,21 +79,22 @@
     </div>
 
 
-{{--    Main content--}}
+    {{--    Main content--}}
     <div class="flex flex-col flex-grow">
+        {{-- Top Bar --}}
         <div class="h-12 px-3 shrink-0 flex items-center border-b border-gray-200">
             <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors" @click="navClosed = !navClosed">
                 <i data-lucide="panel-left" class="size-4 "></i>
             </div>
+
+            {{request()->path()}}
 
             <div class="flex-1">
                 {{--                    spacer--}}
             </div>
 
             <div class="flex items-center gap-2">
-                <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="messages">
-                    <i data-lucide="message-circle" class="size-5"></i>
-                </div>
+                <livewire:common.chat />
                 <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="notifications">
                     <i data-lucide="bell" class="size-5"></i>
                 </div>
