@@ -62,17 +62,19 @@
                     {{--                        divider --}}
                     <div class="border-[0.5px] border-gray-200"></div>
 
-                    <ul class="menu w-full space-y-1 text-error">
-                        <li>
-                            <form class="hover:bg-gray-100" method="POST" action="/logout">
+                    <form method="POST" action="/logout">
+
+                        <ul class="menu w-full space-y-1 text-error">
+                            <li>
                                 @csrf
                                 <button type="submit" class="flex items-center gap-2 hover:cursor-pointer">
                                     <i data-lucide="log-out" class="size-5"></i>
                                     <span>Log out</span>
                                 </button>
-                            </form>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -94,8 +96,10 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <livewire:common.chat />
-                <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="notifications">
+                <livewire:common.chat/>
+                <div
+                    class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom"
+                    data-tip="notifications">
                     <i data-lucide="bell" class="size-5"></i>
                 </div>
             </div>
