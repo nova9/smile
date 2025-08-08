@@ -280,7 +280,7 @@
                                             Join This Event
                                         </button>
                                     @endif
-                                    <button class="w-full btn btn-outline">
+                                    <button class="w-full btn btn-outline" wire:click="chat">
                                         <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
                                         Contact Organizer
                                     </button>
