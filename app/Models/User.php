@@ -77,9 +77,14 @@ class User extends Authenticatable
             ->withPivot('status', 'created_at','ends_at');
     }
 
-    public function events()
+    public function events(): HasMany
     {
-        return $this->hasMany(\App\Models\Event::class);
+        return $this->hasMany(Event::class);
+    }
+
+    public function chats(): BelongsToMany
+    {
+        return $this->belongsToMany(Chat::class);
     }
 
     public function profileCompletionPercentage()
