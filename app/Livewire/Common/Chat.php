@@ -4,6 +4,8 @@ namespace App\Livewire\Common;
 
 use App\Services\Messaging;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Session;
 use Livewire\Component;
 use App\Models\Chat as ModelsChat;
 
@@ -14,6 +16,7 @@ class Chat extends Component
      */
     public Collection $chats;
 
+    #[Session(key: 'currentChat')]
     public $currentChat;
 
     public $input;
@@ -25,6 +28,8 @@ class Chat extends Component
         $this->chats = Messaging::getAllDirectChats();
     }
 
+
+    #[On('openChat')]
     public function openChat($chatId)
     {
         $chat = auth()->user()->chats()->with('messages')->find($chatId);
