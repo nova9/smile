@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->foreignId('assigned_id')->nullable();
-            $table->string('status')->default('pending');
+            $table->enum('status', ['todo', 'doing', 'done'])->default('todo');
             $table->timestamps();
         });
     }
