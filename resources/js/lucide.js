@@ -87,7 +87,8 @@ import {
     Aperture,
     RotateCw,
     Box,
-    ArrowLeftCircle
+    ArrowLeftCircle,
+    BookPlus
 } from "lucide";
 
 
@@ -181,7 +182,8 @@ function registerIcons() {
             Download,
             TrendingUp,
             CircleAlert,
-            Trophy
+            Trophy,
+            BookPlus
         },
 
     });
