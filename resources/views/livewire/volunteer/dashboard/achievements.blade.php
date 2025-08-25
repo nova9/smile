@@ -77,9 +77,9 @@
                         <div class="bg-gradient-to-r from-accent to-primary rounded-full p-4 mb-4">
                             <i data-lucide="award" class="text-white size-10"></i>
                         </div>
-                        <h4 class="font-bold text-lg text-accent mb-1">{{ $certificate->name }}</h4>
-                        <p class="text-sm text-gray-500 text-center mb-4">{{ $certificate->description ?? 'Certificate' }}</p>
-                        <a href="{{ route('volunteer.certificate.show', $certificate->id) }}" wire:navigate class="btn btn-accent btn-sm mt-auto">View Certificate</a>
+                        <h4 class="font-bold text-lg text-accent mb-1">{{ $event_name }}</h4>
+                        <p class="text-sm text-gray-500 text-center mb-4">{{ $event_des ?? 'Certificate' }}</p>
+                        <a href="{{ route('volunteer.certificate.show', $certificate->event_id) }}" wire:navigate class="btn btn-accent btn-sm mt-auto">View Certificate</a>
                     </div>
                 @empty
                     <div class="bg-white/90 rounded-2xl p-8 flex flex-col items-center justify-center gap-4 col-span-3 shadow">

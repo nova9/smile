@@ -2,36 +2,36 @@
 
 namespace App\Livewire\Volunteer\Dashboard;
 
+
 use Livewire\Component;
 use App\Models\Event;
+use App\Models\User;
 
 class Certificate extends Component
 {
     public $certificate;
     public $requester;
+    public $volunteer_name;
+    public $event;
     public $id;
 
     public function mount($id)
     {
         $this->id = $id;
-        $event = Event::where('id', $id)->first();
-
-        if ($event) {
-            $this->certificate = [
-                'id' => $event->id,
-                'name' => $event->name,
-                'description' => $event->description,
-                'starts_at' => $event->starts_at,
-                'ends_at' => $event->ends_at,
-            ];
-
-            $this->requester = $event->user ? [
-                'name' => $event->user->name,
-            ] : null;
-        } else {
-            $this->certificate = null;
-            $this->requester = null;
+        $this->event = Event::where('id', $id)->first();
+        $certificate = \App\Models\Certificate::where('issued_to', auth()->id())
+            ->where('event_id', $id)
+            ->first();
+            
+        // Now $certificate is a single model or null
+        if($certificate){
+            $this->certificate = $certificate;
+            $this->requester = User::where('id', $certificate->issued_by)->first();
+            $this->volunteer_name = User::where('id', $certificate->issued_to)->first()->name;
         }
+
+
+
     }
 
     public function render()

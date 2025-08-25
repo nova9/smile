@@ -13,48 +13,76 @@ class Profile extends Component
     public $email;
     public $contact_number;
     public $logo;
-    
-
+    public $user;
+    public $is_verified = false;
+    public $address;
+    public $description;
+    public $verification_details;
+    public $registration_number;
+    public $legal_status;
+    public $credentials;
+    public $verification_document;
+    public $latitude;
+    public $longitude;
 
 
     public function mount()
     {
-        $user = auth()->user();
+        $this->user = auth()->user();
 
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->attribute = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
+        $this->name = $this->user->name;
+        $this->email = $this->user->email;
+        $this->attribute = $this->user->attributes()->get()->pluck('pivot.value', 'name')->all();
 
+        $requiredskills = [
+            'name' => 0.1,
+            'email' => 0.1,
+            'contact_number' => 0.1,
+            'address' => 0.1,
+            'description' => 0.1,
+            'verification_details' => 0.1,
+            'logo' => 0.05,
+            'latitude' => 0.1,
+            'longitude' => 0.1,
+        ];
 
-        $this->completion = $user->isProfileCompletionPercentage();
+        $this->completion = $this->user->profileCompletionPercentage($requiredskills);
+        
 
+        $this->contact_number = $this->user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
+        $this->logo = $this->user->attributes()->where('name', 'logo')->get()->pluck('pivot.value')->first();
+           if ($this->latitude === null) {
+            $this->latitude = $this->user->attributes()->where('name', 'latitude')->get()->pluck('pivot.value')->first();
+        }
+        if ($this->longitude === null) {
 
-        $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
-        $this->logo = $user->attributes()->where('name', 'logo')->get()->pluck('pivot.value')->first();
+            $this->longitude = $this->user->attributes()->where('name', 'longitude')->get()->pluck('pivot.value')->first();
+        }
+        $this->description = $this->user->attributes()->where('name', 'description')->get()->pluck('pivot.value')->first();
+        $verificationDetails = json_decode($this->user->attributes()->where('name', 'verification_details')->get()->pluck('pivot.value')->first() ?? '{}', true);
+        $this->registration_number = $verificationDetails['registration_number'] ?? '';
+        $this->legal_status = $verificationDetails['legal_status'] ?? '';
+        $this->credentials = $verificationDetails['credentials'] ?? '';
+        $this->verification_document = $verificationDetails['verification_document'] ?? null;
     }
 
 
     public function save()
     {
-        // Update user basic info
-        auth()->user()->update([
-            'name' => $this->name,
-            'email' => $this->email,
-        ]);
-        $this->logo = $this->logo ?? '';
 
+        $verificationDetails = [
+            'registration_number' => $this->registration_number,
+            'legal_status' => $this->legal_status,
+            'credentials' => $this->credentials,
+            'verification_document' => $this->verification_document, // handle file upload separately
+        ];
 
-
-
-        auth()->user()->attributes()->syncWithoutDetaching([
-            5 => ['value' => $this->contact_number],
-            7 => ['value' => $this->logo],
-        ]);
-
-
-
-        session()->flash('success', 'Profile updated successfully!');
-        return redirect()->route('profile');
+        auth()->user()->setCustomAttribute('contact_number', $this->contact_number);
+        // auth()->user()->setCustomAttribute('address', $this->address);
+        auth()->user()->setCustomAttribute('latitude', $this->latitude);
+        auth()->user()->setCustomAttribute('longitude', $this->longitude);
+        auth()->user()->setCustomAttribute('description', $this->description);
+        auth()->user()->setCustomAttribute('verification_details', json_encode($verificationDetails));
     }
 
 

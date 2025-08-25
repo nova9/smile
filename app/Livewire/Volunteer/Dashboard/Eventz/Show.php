@@ -19,7 +19,18 @@ class Show extends Component
 
     public function mount($id, GoogleMaps $googleMaps)
     {
-        $this->profileCompletionPercentage = auth()->user()->profileCompletionPercentage();
+        
+         $requiredskills = [
+//            'skills'=> 0.1,
+            'age' => 0.2,
+            'latitude' => 0.1,
+            'longitude' => 0.1,
+            'contact_number' => 0.1,
+            'gender' => 0.2,
+            // 'profile_picture' => 0.1
+        ];
+
+        $this->profileCompletionPercentage = auth()->user()->profileCompletionPercentage($requiredskills);
         $this->event = Event::query()->with(['address', 'users'])->find($id);
         $this->Volunteers = $this->event->users;
         // dd($this->event);
@@ -30,6 +41,8 @@ class Show extends Component
 
     public function join()
     {
+
+        $this->event->userJoinsNotify();
         $this->event->users()->attach(auth()->user()->id);
         return redirect('/volunteer/dashboard/my-events');
     }

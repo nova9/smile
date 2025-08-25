@@ -3,6 +3,7 @@
 namespace App\Livewire\Volunteer\Dashboard\MyEvents;
 
 use App\Models\Event;
+use App\Models\Task;
 use App\Services\GoogleMaps;
 use Livewire\Component;
 
@@ -23,24 +24,49 @@ class Show extends Component
     //     return redirect('/volunteer/dashboard/my-events');
     // }
 
-    public function mount($id,GoogleMaps $googleMaps)
+    public function mount($id, GoogleMaps $googleMaps)
     {
         // dd($this->event);
-  
-        $this->event=Event::query()
-        ->with(['address','users','category','tags'])
-        ->find($id);
+
+        $this->event = Event::query()
+            ->with(['address', 'users', 'category', 'tags'])
+            ->find($id);
         $this->status = $this->event->users->where('id', auth()->id())->first()?->pivot->status;
-        $this->volunteers=$this->event->users;
+        $this->volunteers = $this->event->users;
         $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude);
-        $this->tasks = $this->event->tasks()->where('parent_id', null)->get();
-      
-
-
+        $this->tasks = $this->event->tasks()->get();
     }
 
     public function render()
     {
         return view('livewire.volunteer.dashboard.my-events.show');
+    }
+
+    public function updateTaskStatus($taskId, $newStatus)
+    {
+        $task = $this->tasks->where('id', $taskId)->first();
+        if (!$task) {
+            session()->flash('error', 'Task not found.');
+            return;
+        }
+        if (!in_array($newStatus, ['todo', 'doing', 'done'])) {
+            session()->flash('error', 'Invalid status.');
+            return;
+        }
+        if ($newStatus == 'done') {
+            $task->status = 'done';
+            $task->save();
+            $task->TaskCompletion();
+            session()->flash('success', 'Task status updated to Done.');
+            // Optionally, reload tasks to reflect changes
+            $this->tasks = $this->event->tasks()->get();
+            return;
+        }
+
+        $task->status = $newStatus;
+        $task->save();
+        session()->flash('success', 'Task status updated to ' . ucfirst($newStatus) . '.');
+        // Optionally, reload tasks to reflect changes
+        $this->tasks = $this->event->tasks()->get();
     }
 }
