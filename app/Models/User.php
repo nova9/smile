@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -77,6 +76,10 @@ class User extends Authenticatable
             ->withTimestamps()
             ->withPivot('status', 'created_at', 'ends_at');
     }
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(Certificate::class,'issued_to');
+    }
 
     public function events(): HasMany
     {
@@ -88,17 +91,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Chat::class);
     }
 
-    public function profileCompletionPercentage()
+    public function profileCompletionPercentage($requiredskills)
     {
-        $requiredskills = [
-//            'skills'=> 0.1,
-            'age' => 0.2,
-            'latitude' => 0.1,
-            'longitude' => 0.1,
-            'contact_number' => 0.1,
-            'gender' => 0.1,
-            'profile_picture' => 0.1
-        ];
+       
 
         $initialPercentage = 0.3;
 

@@ -95,13 +95,9 @@
                 {{--                    spacer--}}
             </div>
 
-            <div class="flex items-center gap-2">
+            <div class="flex gap-2">
+                 <livewire:common.notification/>
                 <livewire:common.chat/>
-                <div
-                    class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom"
-                    data-tip="notifications">
-                    <i data-lucide="bell" class="size-5"></i>
-                </div>
             </div>
         </div>
         <div class="overflow-scroll">
