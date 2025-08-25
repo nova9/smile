@@ -1,11 +1,14 @@
 <x-volunteer.dashboard-layout>
     <style>
         @media print {
-            body, * {
+
+            body,
+            * {
                 visibility: hidden;
             }
 
-            #certificate, #certificate * {
+            #certificate,
+            #certificate * {
                 visibility: visible;
             }
 
@@ -14,7 +17,9 @@
                 top: 0;
                 left: 0;
                 margin: 0;
-                padding: 2cm;
+                padding: 0.5cm;
+                width: 100vw;
+                height: 100vh;
                 box-sizing: border-box;
                 box-shadow: none;
                 border-radius: 0;
@@ -25,69 +30,78 @@
         }
     </style>
 
-    <div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-accent/10 to-primary/10 py-16 print:bg-none">
+    <div
+        class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-accent/10 to-primary/10 py-16 print:bg-none">
         <div class="flex  mb-4 print-hidden">
             <button onclick="window.print()" class="btn btn-neutral btn-sm">
                 Print Certificate
             </button>
+
         </div>
-        <div id="certificate" class="bg-white  shadow-2xl p-40 max-w-5xl w-full relative">
 
-            <div class="flex flex-col items-center gap-10">
-                <img src="{{ asset('storage/assets/logo.svg') }}" alt="Smile Volunteer Logo"
-                     class="h-10 xl:h-12 select-none transition-transform duration-300 group-hover:scale-105">
-
-                <div>
-                    <h2 class="text-4xl sm:text-5xl font-bold text-accent leading-tight text-center relative">
-                        Certificate of Appreciation
-                        <svg class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-3 text-primary/30"
-                             viewBox="0 0 100 12" fill="none">
-                            <path d="M2 6C20 1 40 1 50 6C60 11 80 11 98 6" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round"/>
-                        </svg>
-                    </h2>
-
-
+        <div class="min-h-screen py-16 flex flex-col items-center justify-center print:bg-none">
+            <!-- Premium Certificate Card -->
+            <div id="certificate"
+                class="bg-white rounded-[2.5rem] shadow-2xl border-4 border-green-500 p-0 max-w-3xl w-full relative">
+                <!-- Logo or Gold Seal -->
+                <div class="flex flex-col items-center pt-12 pb-2">
+                    <svg class="w-20 h-20 text-green-500 mb-2" fill="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" fill="currentColor" />
+                        <text x="12" y="16" text-anchor="middle" font-size="12" fill="#fff"
+                            font-family="Arial">★</text>
+                    </svg>
+                    <h1 class="text-5xl font-serif font-bold text-green-700 text-center tracking-wide mb-2">Certificate
+                        of
+                        Appreciation</h1>
+                    <svg class="w-36 h-5 text-green-300 mb-2" viewBox="0 0 100 12" fill="none">
+                        <path d="M2 6C20 1 40 1 50 6C60 11 80 11 98 6" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                    </svg>
                 </div>
-
-                <div class="flex flex-col items-center">
-                    <span class="text-xl font-semibold text-primary mb-4">This is awarded to</span>
-                    <span class="text-3xl  text-accent mb-4">{{ auth()->user()->name }}</span>
-                    <span class="text-base text-gray-600 mb-4">for outstanding participation</span>
-                    <p class="text-base text-gray-600 text-center">In recognition of your outstanding dedication and
-                        selfless contribution as a volunteer in organizing and supporting our events. Your efforts have
+                <div class="px-10 sm:px-16 pb-12 pt-2 flex flex-col items-center gap-8">
+                    <span class="text-xl font-semibold text-green-700 mb-2 mt-2">This certificate is awarded to</span>
+                    <span
+                        class="text-4xl sm:text-5xl font-serif font-bold text-blue-900 mb-2">{{ $volunteer_name }}</span>
+                    <span class="text-lg text-gray-600 mb-2 italic">for outstanding participation</span>
+                    <p class="text-lg text-gray-700 text-center mb-4 px-2">In recognition of <span
+                            class="font-semibold text-green-700">{{ $volunteer_name }}</span>'s outstanding dedication
+                        and
+                        selfless contribution as a volunteer in organizing and supporting our events. Their efforts have
                         made a significant impact on our community.</p>
-                    <img src="{{ asset('storage/assets/cert.png') }}" alt="Smile Volunteer Logo"
-                         class="h-20 xl:h-20 select-none transition-transform duration-300 group-hover:scale-105">
+                    <div class="w-full border-t border-green-300 my-4"></div>
+                    <div class="flex flex-col items-center gap-2">
+                        <h2 class="text-lg font-bold text-blue-900 text-center">Event: <span
+                                class="text-green-700">{{ $event['name'] }}</span></h2>
+                        <p class="text-base text-gray-600 text-center mb-2">{{ $certificate['description'] }}</p>
+                        <h2 class="text-lg font-bold text-blue-900 text-center">Organized by <span
+                                class="text-green-700">{{ $requester['name'] }}</span></h2>
+                    </div>
+                    <div
+                        class="flex flex-col sm:flex-row justify-between items-center text-gray-500 text-base mt-8 mb-8 gap-4 w-full">
+                        <div class="bg-green-50 rounded-xl px-4 py-2 shadow-sm">
+                            <span class="font-semibold text-green-700">Start Date:</span>
+                            {{ \Carbon\Carbon::parse($event['starts_at'])->format('F d, Y') }}
+                        </div>
+                        <div class="bg-green-50 rounded-xl px-4 py-2 shadow-sm">
+                            <span class="font-semibold text-green-700">End Date:</span>
+                            {{ \Carbon\Carbon::parse($event['ends_at'])->format('F d, Y') }}
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row justify-between items-center mt-10 gap-4 w-full">
+                        <div class="flex flex-col items-center">
+                            <span class="font-bold text-blue-900 mb-1">Signature</span>
+                            <span class="text-lg text-green-700 font-[cursive] italic">Organization Coordinator</span>
+                            <img src="{{ $requester['signature_url'] ?? asset('storage/assets/signature-placeholder.png') }}"
+                                alt="Digital Signature" class="h-12 mt-2 select-none" style="max-width:180px;">
+                        </div>
+                        <span class="text-gray-400 text-xs">Generated on {{ now()->format('F d, Y') }}</span>
+                    </div>
                 </div>
+            </div>
 
-                <div class="flex flex-col items-center">
-
-                    <h1 class="text-lg text-accent mb-2 text-center">The event {{ $certificate['name'] }}</h1>
-                    <p class="text-lg text-gray-600 text-center mb-4">{{ $certificate['description'] }}</p>
-                    <h1 class="text-lg text-accent mb-2 text-center">Organized by {{ $requester['name'] }}</h1>
-                </div>
-            </div>
-            <div class="flex justify-between items-center text-gray-500 text-base mt-8 mb-8">
-                <div>
-                    <span class="font-semibold">Start Date:</span>
-                    {{ \Carbon\Carbon::parse($certificate['starts_at'])->format('F d, Y') }}
-                </div>
-                <div>
-                    <span class="font-semibold">End Date:</span>
-                    {{ \Carbon\Carbon::parse($certificate['ends_at'])->format('F d, Y') }}
-                </div>
-            </div>
-            <div class="flex justify-between items-center mt-10">
-                <div class="flex flex-col items-center">
-                    <span class="font-bold text-accent">Signature</span>
-                    <span class="text-xs text-gray-400">Organization Coordinator</span>
-                </div>
-                <span class="text-gray-400 text-xs">Generated on {{ now()->format('F d, Y') }}</span>
-            </div>
         </div>
+
+
     </div>
 
 </x-volunteer.dashboard-layout>
-
-

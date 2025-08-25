@@ -1,3 +1,4 @@
+
 @php
     function hexToRgba($hex, $opacity = 0.2)
     {
@@ -29,10 +30,10 @@
                         </div>
                     </div>
                     <div class="absolute top-4 right-4">
-                        <button
-                            class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
+                        <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
                             wire:click="toggleFavorite">
-                            <i data-lucide="heart" class="w-5 h-5 {{ $event->is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
+                            <i data-lucide="heart"
+                                class="w-5 h-5 {{ $event->is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
                         </button>
                     </div>
                 </div>
@@ -55,8 +56,8 @@
 
                     <!-- Event Description -->
                     <div class="mb-8">
-                         <h2 class="text-2xl font-bold text-gray-800 mb-4">About This Event</h2>
-                        <p class="text-gray-600 text-lg  mx-auto leading-relaxed">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">About This Event</h2>
+                        <p class="text-gray-600 text-lg mx-auto leading-relaxed">
                             {{ $event->description }}
                         </p>
                     </div>
@@ -78,12 +79,13 @@
                         <div class="bg-gray-50 rounded-xl p-5 text-center shadow-sm">
                             <i data-lucide="map-pin" class="w-8 h-8 text-purple-600 mx-auto mb-2"></i>
                             <div class="text-sm text-gray-500">Location</div>
-                            <div class="font-semibold text-gray-800">{{ $event->location ?? 'TBD' }}</div>
+                            <div class="font-semibold text-gray-800">{{ $city }}</div>
                         </div>
                         <div class="bg-gray-50 rounded-xl p-5 text-center shadow-sm">
                             <i data-lucide="users" class="w-8 h-8 text-orange-600 mx-auto mb-2"></i>
                             <div class="text-sm text-gray-500">Volunteers</div>
-                            <div class="font-semibold text-gray-800">{{ $event->volunteers_count ?? 0 }}/{{ $event->maximum_participants }}</div>
+                            <div class="font-semibold text-gray-800">
+                                {{ count($event->users) ?? 0 }}/{{ $event->maximum_participants }}</div>
                         </div>
                     </div>
 
@@ -94,13 +96,15 @@
                             $status = $user?->pivot->status;
                         @endphp
                         @if (!$event->users->contains(auth()->user()))
-                            <button class="btn btn-primary btn-lg rounded-full px-8 py-3 font-semibold shadow-lg hover:scale-105 transition"
+                            {{-- <button
+                                class="btn btn-primary btn-lg rounded-full px-8 py-3 font-semibold shadow-lg hover:scale-105 transition"
                                 wire:click="join">
                                 <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
                                 Join This Event
-                            </button>
+                            </button> --}}
                         @elseif ($event->ends_at < now() && $status == 'accepted')
-                            <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex items-center gap-4">
+                            <div
+                                class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex items-center gap-4">
                                 <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
                                 <div>
                                     <h3 class="text-lg font-bold text-green-700">Event Completed!</h3>
@@ -109,7 +113,7 @@
                             </div>
                             <div class="flex flex-col sm:flex-row gap-3 justify-center">
                                 <a href="{{ route('volunteer.feedback') }}"
-                                    class="btn btn-outline btn-lg px-6 py-3 flex items-center gap-2">
+                                    class="btn btn-outline btn-lg px-6 py-7 flex items-center gap-2">
                                     <i data-lucide="message-circle" class="w-5 h-5"></i>
                                     Leave Feedback
                                 </a>
@@ -124,7 +128,8 @@
                                 </button>
                             </div>
                         @elseif ($status == 'pending')
-                            <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6 flex items-center gap-4">
+                            <div
+                                class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6 flex items-center gap-4">
                                 <i data-lucide="clock" class="w-8 h-8 text-yellow-500"></i>
                                 <div>
                                     <h3 class="text-lg font-bold text-yellow-700">Pending Approval</h3>
@@ -136,7 +141,7 @@
                                 Share Event
                             </button>
                         @elseif ($status == 'accepted')
-                            <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex items-center gap-4">
+                            <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
                                 <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
                                 <div>
                                     <h3 class="text-lg font-bold text-green-700">You're In!</h3>
@@ -162,18 +167,6 @@
                                 </div>
                             </div>
 
-                            <!-- Tasks and subtasks -->
-                          
-                                <div>
-                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Tasks</h2>
-                                    <ul class="list-disc pl-6 text-gray-600">
-                                        @foreach ($tasks as $task)
-                                            <li class="mb-2">{{ $task->name }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            
-
                             <!-- Gallery -->
                             @php
                                 $images = [
@@ -188,8 +181,8 @@
                                     <h2 class="text-2xl font-bold text-gray-800 mb-4">Gallery</h2>
                                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                         @foreach ($images as $img)
-                                            <img src="{{ $img }}" class="rounded-lg shadow-sm object-cover w-full h-32"
-                                                alt="Event Image">
+                                            <img src="{{ $img }}"
+                                                class="rounded-lg shadow-sm object-cover w-full h-32" alt="Event Image">
                                         @endforeach
                                     </div>
                                 </div>
@@ -203,26 +196,22 @@
                                         <i data-lucide="map-pin" class="w-5 h-5 text-gray-500 mt-1"></i>
                                         <div>
                                             <p class="font-semibold text-gray-800">{{ $city }}</p>
-                                          
                                         </div>
                                     </div>
-                                     <div
-                                            class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden mb-1">
-                                            <iframe width="100%" height="100%" frameborder="0"
-                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                                allowfullscreen>
-                                            </iframe>
-                                        </div>
-                                        
-                                        <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                            target="_blank"
-                                            class="w-full btn btn-outline btn-sm flex items-center justify-center">
-                                            <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
-                                            Open in Google Maps
-                                        </a>
-                                
-                                   
+                                    <div
+                                        class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden mb-1">
+                                        <iframe width="100%" height="100%" frameborder="0"
+                                            style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                            src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                            allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
+                                        target="_blank"
+                                        class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                        <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
+                                        Open in Google Maps
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -233,12 +222,14 @@
                             <div class="bg-gray-50 rounded-lg p-6">
                                 <h2 class="text-xl font-bold text-gray-800 mb-4">Event Organizer</h2>
                                 <div class="flex items-center gap-4 mb-4">
-                                    <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center text-xl font-bold">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center text-xl font-bold">
                                         {{ substr($event->user->name, 0, 1) }}
                                     </div>
                                     <div>
                                         <h3 class="font-semibold text-gray-800">{{ $event->user->name }}</h3>
-                                        <p class="text-gray-600 text-sm">{{ $event->user->role->name ?? 'Community Organizer' }}</p>
+                                        <p class="text-gray-600 text-sm">
+                                            {{ $event->user->role->name ?? 'Community Organizer' }}</p>
                                         <div class="flex items-center gap-1 mt-1">
                                             <div class="flex text-yellow-400">
                                                 @for ($i = 0; $i < 5; $i++)
@@ -258,27 +249,6 @@
                                 </button>
                             </div>
 
-                            <!-- Volunteers -->
-                            <div class="bg-gray-50 rounded-lg p-6">
-                                <h2 class="text-xl font-bold text-gray-800 mb-4">Volunteers</h2>
-                                <div class="max-h-64 overflow-y-auto space-y-4">
-                                    @foreach ($volunteers as $volunteer)
-                                        <div class="flex items-center gap-4">
-                                            <img src="https://randomuser.me/api/portraits/men/{{ $volunteer->id }}.jpg"
-                                                class="w-10 h-10 rounded-full object-cover" alt="{{ $volunteer->name }}">
-                                            <div>
-                                                <p class="font-semibold text-gray-800">{{ $volunteer->name }}</p>
-                                                <p class="text-gray-600 text-sm">{{ $volunteer->role->name ?? 'Volunteer' }}</p>
-                                            </div>
-                                            <button class="btn btn-outline btn-sm ml-auto flex items-center gap-1">
-                                                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                                Message
-                                            </button>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
                             <!-- Tags -->
                             <div class="bg-gray-50 rounded-lg p-6">
                                 <h2 class="text-xl font-bold text-gray-800 mb-4">Tags</h2>
@@ -291,24 +261,167 @@
                                     @endforeach
                                 </div>
                             </div>
+
+                            <!-- Additional Info -->
+                            <div class="mt-10">
+                                <div class="bg-gray-50 rounded-xl p-6">
+                                    <h2 class="text-xl font-bold mb-4 flex text-left gap-2">
+                                        <i data-lucide="phone" class="w-6 h-6"></i>
+                                        Contact Information
+                                    </h2>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="mail" class="w-5 h-5 text-gray-500"></i>
+                                            <span class="text-gray-700 font-medium">Email:</span>
+                                            <span class="text-gray-600">{{ $event->user->email }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="smartphone" class="w-5 h-5 text-gray-500"></i>
+                                            <span class="text-gray-700 font-medium">Phone:</span>
+                                            <span
+                                                class="text-gray-600">{{ $event->user->contact_number ?? 'Not provided' }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="twitter" class="w-5 h-5 text-blue-400"></i>
+                                            <span class="text-gray-700 font-medium">Social:</span>
+                                            <a href="#"
+                                                class="text-blue-600 hover:underline font-medium">Twitter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trello-like Task Board -->
+            <div class="mt-8 bg-white rounded-3xl shadow-lg overflow-hidden p-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 px-4">Task Board</h2>
+                <div class="flex flex-col md:flex-row gap-4 overflow-x-auto pb-4 px-4">
+                    <!-- Todo Column -->
+                    <div class="flex-1 min-w-[280px] bg-gray-100 rounded-xl p-4 shadow-md">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-blue-700 flex items-center gap-2">
+                                <i data-lucide="list-todo" class="w-5 h-5 text-blue-500"></i>
+                                To Do
+                            </h3>
+                            <span class="text-sm text-gray-500">{{ $tasks->where('status', 'todo')->count() }}</span>
+                        </div>
+                        <div class="space-y-3 task-column" data-status="todo">
+                            @foreach ($tasks->where('status', 'todo') as $task)
+                                <div
+                                    class="task-card bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 cursor-move"
+                                    draggable="true" data-task-id="{{ $task->id }}">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="font-semibold text-gray-800 flex items-center gap-2">
+                                            <i data-lucide="circle" class="w-4 h-4 text-blue-500"></i>
+                                            {{ $task->name }}
+                                        </h4>
+                                        <span
+                                            class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">To Do</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-3">{{ $task->description }}</p>
+                                    @if ($task->assignedUser)
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <img src="{{ $task->assignedUser->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $task->assignedUser->id . '.jpg' }}"
+                                                class="w-6 h-6 rounded-full object-cover" alt="Assigned User">
+                                            <span class="text-xs text-gray-700">{{ $task->assignedUser->name }}</span>
+                                        </div>
+                                    @endif
+                                    <button
+                                        class="w-full flex items-center justify-center gap-2 bg-blue-500 text-white text-sm font-medium py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                                        wire:click="updateTaskStatus({{ $task->id }}, 'doing')">
+                                        <i data-lucide="arrow-right" class="w-4 h-4"></i> Move to Doing
+                                    </button>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
-                    <!-- Additional Info -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-                        <div>
-                            <h2 class="text-xl font-bold text-gray-800 mb-2">Contact Information</h2>
-                            <p class="text-gray-600">Email: {{ $event->user->email }}</p>
-                            <p class="text-gray-600">Phone: {{ $event->user->contact_number ?? 'Not provided' }}</p>
-                            <p class="text-gray-600">Social: <a href="#" class="text-blue-600 underline">Twitter</a></p>
+                    <!-- Doing Column -->
+                    <div class="flex-1 min-w-[280px] bg-gray-100 rounded-xl p-4 shadow-md">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-yellow-700 flex items-center gap-2">
+                                <i data-lucide="loader" class="w-5 h-5 text-yellow-500 animate-spin"></i>
+                                In Progress
+                            </h3>
+                            <span class="text-sm text-gray-500">{{ $tasks->where('status', 'doing')->count() }}</span>
                         </div>
-                        {{-- <div>
-                            <h2 class="text-xl font-bold text-gray-800 mb-2">Accessibility</h2>
-                            <p class="text-gray-600">Wheelchair accessible, sign language interpreters available.</p>
-                        </div> --}}
+                        <div class="space-y-3 task-column" data-status="doing">
+                            @foreach ($tasks->where('status', 'doing') as $task)
+                                <div
+                                    class="task-card bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 cursor-move"
+                                    draggable="true" data-task-id="{{ $task->id }}">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="font-semibold text-gray-800 flex items-center gap-2">
+                                            <i data-lucide="circle-dot" class="w-4 h-4 text-yellow-500"></i>
+                                            {{ $task->name }}
+                                        </h4>
+                                        <span
+                                            class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">In Progress</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-3">{{ $task->description }}</p>
+                                    @if ($task->assignedUser)
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <img src="{{ $task->assignedUser->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $task->assignedUser->id . '.jpg' }}"
+                                                class="w-6 h-6 rounded-full object-cover" alt="Assigned User">
+                                            <span class="text-xs text-gray-700">{{ $task->assignedUser->name }}</span>
+                                        </div>
+                                    @endif
+                                    <button
+                                        class="w-full flex items-center justify-center gap-2 bg-yellow-500 text-white text-sm font-medium py-2 rounded-lg hover:bg-yellow-600 transition-colors"
+                                        wire:click="updateTaskStatus({{ $task->id }}, 'done')">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4"></i> Mark as Done
+                                    </button>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Done Column -->
+                    <div class="flex-1 min-w-[280px] bg-gray-100 rounded-xl p-4 shadow-md">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-green-700 flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                Done
+                            </h3>
+                            <span class="text-sm text-gray-500">{{ $tasks->where('status', 'done')->count() }}</span>
+                        </div>
+                        <div class="space-y-3 task-column" data-status="done">
+                            @foreach ($tasks->where('status', 'done') as $task)
+                                <div
+                                    class="task-card bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 cursor-move"
+                                    draggable="true" data-task-id="{{ $task->id }}">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="font-semibold text-gray-800 flex items-center gap-2">
+                                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                                            {{ $task->name }}
+                                        </h4>
+                                        <span
+                                            class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Done</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-3">{{ $task->description }}</p>
+                                    @if ($task->assignedUser)
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <img src="{{ $task->assignedUser->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $task->assignedUser->id . '.jpg' }}"
+                                                class="w-6 h-6 rounded-full object-cover" alt="Assigned User">
+                                            <span class="text-xs text-gray-700">{{ $task->assignedUser->name }}</span>
+                                        </div>
+                                    @endif
+                                    <button
+                                        class="w-full flex items-center justify-center gap-2 bg-gray-300 text-gray-600 text-sm font-medium py-2 rounded-lg cursor-not-allowed"
+                                        disabled>
+                                        <i data-lucide="check-circle" class="w-4 h-4"></i> Completed
+                                    </button>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+  
 </x-volunteer.dashboard-layout>
