@@ -21,12 +21,15 @@ class AttributeSeeder extends Seeder
             'contact_number',
             'gender',
             'profile_picture',
+            'logo',
             'front_image',
             'back_image',
             'selfie',
             'document_type',
             'interests',
-            'city'
+            'city',
+            'verification_details',
+            'description'
         ];
 
         $attributes = array_map(function($item) {

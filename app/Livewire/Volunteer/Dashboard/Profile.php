@@ -45,10 +45,17 @@ class Profile extends Component
         $this->profile_picture_url = FileManager::getTemporaryUrl(auth()->user()->getCustomAttribute('profile_picture'));
 
 
+         $requiredskills = [
+//            'skills'=> 0.1,
+            'age' => 0.2,
+            'latitude' => 0.1,
+            'longitude' => 0.1,
+            'contact_number' => 0.1,
+            'gender' => 0.2,
+            // 'profile_picture' => 0.1
+        ];
 
-
-        $this->completion = $user->profileCompletionPercentage();
-
+        $this->completion = $user->profileCompletionPercentage($requiredskills);
 
         $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
 

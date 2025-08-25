@@ -3,7 +3,9 @@
 namespace App\Livewire\Requester\Dashboard\MyEvents;
 
 use App\Models\Task;
+use App\Models\User;
 use App\Services\GoogleMaps;
+use App\Services\Notifications\TaskCompletionNotification;
 use Livewire\Component;
 
 
@@ -14,6 +16,7 @@ class Show extends Component
     public $pendingUsers;
     public $acceptedUsers;
     public $tasks;
+    public $assignedtasks;
     public $subtasks;
     public $taskName;
     public $taskDescription = [];
@@ -22,11 +25,13 @@ class Show extends Component
     public $subtaskName = [];
     public $subtaskDescription = [];
     public $subtaskAssignedVolunteer = [];
+    
 
     public function mount($id, GoogleMaps $googleMaps)
     {
+
         $this->event = auth()->user()->organizingEvents()->with('users', 'category')->find($id);
-        // dd($this->event); // Debugging line, can be removed later
+        // dd($this->event->users); // Debugging line, can be removed later
         $this->location = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude);
         $this->pendingUsers = $this->event->users->where('pivot.status', 'pending');
         $this->acceptedUsers = $this->event->users->where('pivot.status', 'accepted');
@@ -37,6 +42,7 @@ class Show extends Component
     public function approve($userId)
     {
         $this->event->users()->updateExistingPivot($userId, ['status' => 'accepted']);
+        $this->event->approveUserNotify($userId);// notify the user
         $this->pendingUsers = $this->event->users->where('pivot.status', 'pending');
         $this->acceptedUsers = $this->event->users->where('pivot.status', 'accepted');
     }
@@ -77,13 +83,16 @@ class Show extends Component
         $task = Task::find($taskId);
 
         if ($task) {
-           $task->update([
+            $task->update([
                 'description' => $this->taskDescription[$taskId] ?? '',
                 'assigned_id' => $this->assignedVolunteer[$taskId] ?? null,
             ]);
+            // send the notification to assigned user
+            if ($this->assignedVolunteer[$taskId] != null){
+                $task->TaskAssignment();
+            }
             //status update
-            $task->status = $this->taskStatus[$taskId] ?? 'todo';
-            $task->save();
+
 
             $this->tasks = Task::where('event_id', $this->event->id)->get();
             session()->flash('success', 'Task updated successfully.');

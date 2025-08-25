@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Services\Notifications\ApprovalNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use App\Services\Notifications\EventJoinNotification;
 class Event extends Model
 {
     use HasFactory;
@@ -52,7 +53,7 @@ class Event extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
-    public function tasks():HasMany
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
     }
@@ -65,6 +66,31 @@ class Event extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function eventCreator()
+    {
+        // Return the user who created the event
+        return $this->user;
+    }
+
+    public function userJoinsNotify()
+    {
+        // Send notification to event creator
+        $eventCreator = $this->eventCreator();
+        // dd($eventCreator);
+        if ($eventCreator) {
+            $eventCreator->notify(new EventJoinNotification($this));
+            // dd("Notification sent to event creator: " . $eventCreator->name);
+        }
+
+        return $this;
+    }
+    public function approveUserNotify($userId)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            $user->notify(new ApprovalNotification($this));
+        }
     }
 
     // In App\Models\Event.php
