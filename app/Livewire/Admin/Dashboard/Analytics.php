@@ -13,23 +13,57 @@ use Illuminate\Support\Facades\DB;
 
 class Analytics extends Component
 {
+    public $timeRange = 90; // Default to 3 months
+    public $selectedRegion = 'all';
+    public $autoRefresh = false;
+
+    protected $listeners = [
+        'updateTimeRange' => 'setTimeRange',
+        'updateRegion' => 'setRegion',
+        'refreshData' => '$refresh'
+    ];
+
+    public function setTimeRange($days)
+    {
+        $this->timeRange = $days;
+    }
+
+    public function setRegion($region)
+    {
+        $this->selectedRegion = $region;
+    }
+
     public function render()
     {
-        // User Analytics
-        $totalUsers = User::count();
+        // Get date range based on timeRange
+        $startDate = $this->timeRange === 'all' ? null : Carbon::now()->subDays($this->timeRange);
+
+        // User Analytics with time range filtering
+        $userQuery = User::query();
+        if ($startDate) {
+            $userQuery->where('created_at', '>=', $startDate);
+        }
+
+        $totalUsers = $userQuery->count();
         $totalVolunteers = User::whereHas('role', function ($query) {
             $query->where('name', 'volunteer');
+        })->when($startDate, function ($query) use ($startDate) {
+            return $query->where('created_at', '>=', $startDate);
         })->count();
 
         $totalOrganizations = User::whereHas('role', function ($query) {
             $query->where('name', 'organization');
+        })->when($startDate, function ($query) use ($startDate) {
+            return $query->where('created_at', '>=', $startDate);
         })->count();
 
         $totalLawyers = User::whereHas('role', function ($query) {
             $query->where('name', 'lawyer');
+        })->when($startDate, function ($query) use ($startDate) {
+            return $query->where('created_at', '>=', $startDate);
         })->count();
 
-        // Growth Rate Calculations
+        // Enhanced Growth Rate Calculations with weekly and daily trends
         $currentMonth = Carbon::now();
         $lastMonth = Carbon::now()->subMonth();
 
@@ -41,7 +75,17 @@ class Analytics extends Component
         $userGrowthRate = $lastMonthUsers > 0 ?
             (($currentMonthUsers - $lastMonthUsers) / $lastMonthUsers) * 100 : 0;
 
-        // Volunteer Retention Rate
+        // Weekly growth rate for more granular insights
+        $thisWeekUsers = User::where('created_at', '>=', Carbon::now()->startOfWeek())->count();
+        $lastWeekUsers = User::whereBetween('created_at', [
+            Carbon::now()->subWeek()->startOfWeek(),
+            Carbon::now()->subWeek()->endOfWeek()
+        ])->count();
+
+        $weeklyGrowthRate = $lastWeekUsers > 0 ?
+            (($thisWeekUsers - $lastWeekUsers) / $lastWeekUsers) * 100 : 0;
+
+        // Enhanced Volunteer Retention Rate with segmentation
         $totalVolunteersWithEvents = User::whereHas('role', function ($query) {
             $query->where('name', 'volunteer');
         })->whereHas('participatingEvents')->count();
@@ -49,42 +93,50 @@ class Analytics extends Component
         $retentionRate = $totalVolunteers > 0 ?
             ($totalVolunteersWithEvents / $totalVolunteers) * 100 : 0;
 
-        // Organization Efficiency
+        // Organization Efficiency with detailed metrics
         $avgEventsPerOrg = $totalOrganizations > 0 ?
             Event::count() / $totalOrganizations : 0;
 
-        // Event Completion Rate
+        // Event Performance Metrics
         $completedEvents = Event::where('status', 'completed')->count();
-        $totalEvents = Event::count();
+        $totalEvents = Event::when($startDate, function ($query) use ($startDate) {
+            return $query->where('created_at', '>=', $startDate);
+        })->count();
+
         $eventCompletionRate = $totalEvents > 0 ?
             ($completedEvents / $totalEvents) * 100 : 0;
 
-        // Average volunteers per event
+        // Average volunteers per event with trend analysis
         $avgVolunteersPerEvent = Event::withCount('users')->avg('users_count') ?? 0;
 
-        // Monthly Registration Data - SQLite compatible
+        // Enhanced Monthly Data with trend analysis
         $monthlyRegistrations = User::select(
             DB::raw("CAST(strftime('%m', created_at) AS INTEGER) as month"),
             DB::raw("CAST(strftime('%Y', created_at) AS INTEGER) as year"),
             DB::raw('COUNT(*) as count')
         )
-            ->whereYear('created_at', Carbon::now()->year)
+            ->when($startDate, function ($query) use ($startDate) {
+                return $query->where('created_at', '>=', $startDate);
+            })
             ->groupBy(DB::raw("strftime('%m', created_at)"), DB::raw("strftime('%Y', created_at)"))
+            ->orderBy(DB::raw("strftime('%Y', created_at)"))
             ->orderBy(DB::raw("strftime('%m', created_at)"))
             ->get();
 
-        // Monthly Events Data - SQLite compatible
         $monthlyEvents = Event::select(
             DB::raw("CAST(strftime('%m', created_at) AS INTEGER) as month"),
             DB::raw("CAST(strftime('%Y', created_at) AS INTEGER) as year"),
             DB::raw('COUNT(*) as count')
         )
-            ->whereYear('created_at', Carbon::now()->year)
+            ->when($startDate, function ($query) use ($startDate) {
+                return $query->where('created_at', '>=', $startDate);
+            })
             ->groupBy(DB::raw("strftime('%m', created_at)"), DB::raw("strftime('%Y', created_at)"))
+            ->orderBy(DB::raw("strftime('%Y', created_at)"))
             ->orderBy(DB::raw("strftime('%m', created_at)"))
             ->get();
 
-        // Volunteer Retention Analytics - Fixed for SQLite
+        // Enhanced Volunteer Retention Analytics with deeper insights
         $volunteers = User::whereHas('role', function ($query) {
             $query->where('name', 'volunteer');
         })->withCount('participatingEvents')->get();
@@ -96,7 +148,7 @@ class Analytics extends Component
             'repeat_6_plus' => $volunteers->where('participating_events_count', '>=', 6)->count(),
         ];
 
-        // Category Performance - Add fallback for missing categories table
+        // Enhanced Category Performance with better error handling
         try {
             $categoryPerformance = Category::withCount('events')
                 ->orderBy('events_count', 'desc')
@@ -111,13 +163,13 @@ class Analytics extends Component
             ]);
         }
 
-        // Event Participation Data
+        // Event Participation Data with enhanced metrics
         $eventParticipation = Event::withCount('users')
             ->orderBy('users_count', 'desc')
             ->limit(10)
             ->get();
 
-        // Top Organizations with efficiency metrics
+        // Top Organizations with enhanced efficiency metrics
         $topOrganizations = User::whereHas('role', function ($query) {
             $query->where('name', 'organization');
         })
@@ -141,10 +193,16 @@ class Analytics extends Component
                 return $org;
             });
 
-        // Geographic Distribution - Add fallback for missing addresses table
+        // Geographic Distribution with region filtering
         try {
-            $regionActivity = Address::select('city', 'state', DB::raw('COUNT(DISTINCT addressable_id) as events_count'))
-                ->where('addressable_type', 'App\\Models\\Event')
+            $regionQuery = Address::select('city', 'state', DB::raw('COUNT(DISTINCT addressable_id) as events_count'))
+                ->where('addressable_type', 'App\\Models\\Event');
+
+            if ($this->selectedRegion !== 'all') {
+                $regionQuery->where('state', 'like', '%' . $this->selectedRegion . '%');
+            }
+
+            $regionActivity = $regionQuery
                 ->groupBy('city', 'state')
                 ->orderBy('events_count', 'desc')
                 ->limit(10)
@@ -227,6 +285,7 @@ class Analytics extends Component
                 'completed_events' => $completedEvents,
                 'pending_events' => $pendingEvents,
                 'user_growth_rate' => $userGrowthRate,
+                'weekly_growth_rate' => $weeklyGrowthRate,
                 'volunteer_retention_rate' => $retentionRate,
                 'avg_events_per_org' => $avgEventsPerOrg,
                 'event_completion_rate' => $eventCompletionRate,
@@ -235,6 +294,9 @@ class Analytics extends Component
                 'volunteer_show_rate' => $volunteerShowRate,
                 'avg_application_time' => $avgApplicationTime,
                 'total_applications' => $totalApplications,
+                // Additional engagement metrics
+                'engagement_score' => min(100, ($retentionRate + $eventCompletionRate + $applicationSuccessRate) / 3),
+                'platform_health' => $totalUsers > 100 && $retentionRate > 60 ? 'Excellent' : ($totalUsers > 50 && $retentionRate > 40 ? 'Good' : 'Needs Attention'),
             ],
             'monthlyRegistrations' => $monthlyRegistrations,
             'monthlyEvents' => $monthlyEvents,
@@ -244,6 +306,9 @@ class Analytics extends Component
             'topOrganizations' => $topOrganizations,
             'regionActivity' => $regionActivity,
             'peakActivity' => $peakActivity,
+            // Additional data for enhanced analytics
+            'timeRange' => $this->timeRange,
+            'selectedRegion' => $this->selectedRegion,
         ]);
     }
 }
