@@ -29,7 +29,8 @@ class AttributeSeeder extends Seeder
             'interests',
             'city',
             'verification_details',
-            'description'
+            'description',
+            'level'
         ];
 
         $attributes = array_map(function($item) {

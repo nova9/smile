@@ -25,10 +25,27 @@ class Show extends Component
     public $subtaskName = [];
     public $subtaskDescription = [];
     public $subtaskAssignedVolunteer = [];
-    
+    public $genderFilter = '';
+    public $levelFilter = '';
+    public $filteredVolunteers = [];
+    public $volunteerLevel;
 
     public function mount($id, GoogleMaps $googleMaps)
     {
+        $this->loadVolunteers($id, $googleMaps);
+    }
+
+    public function updatedGenderFilter()
+    {
+        $this->loadVolunteers($this->event->id, app(GoogleMaps::class));
+    }
+
+    public function updatedLevelFilter()
+    {
+        $this->loadVolunteers($this->event->id, app(GoogleMaps::class));
+    }
+
+    public function loadVolunteers($id , GoogleMaps $googleMaps){
 
         $this->event = auth()->user()->organizingEvents()->with('users', 'category')->find($id);
         // dd($this->event->users); // Debugging line, can be removed later
@@ -37,14 +54,53 @@ class Show extends Component
         $this->acceptedUsers = $this->event->users->where('pivot.status', 'accepted');
         $this->tasks = Task::where('event_id', $this->event->id)->get();
         $this->subtasks = $this->tasks->flatMap->subTasks;
-    }
+       
 
+        // Always set filteredVolunteers, handle empty filters
+        $filtered = $this->pendingUsers;
+        if ($this->genderFilter) {
+            
+            $filtered = $filtered->filter(function ($user) {
+                return $user->getCustomAttribute('gender') == $this->genderFilter;
+            });
+        }
+        //level
+        //beginner = points(0-10) + events(0-10) + tasks(0-10)
+        //intermediate = points(11-30) + events(11-30) + tasks(11-30)
+        //advanced = points(31+) + events(31+) + tasks(31+)
+        
+        foreach($filtered as $user){
+            $points = $user->badges->sum('points');
+            $events = $user->events->count();
+            $tasks = $user->tasks->count();
+            $user->setVolunteerLevel($points, $events, $tasks);
+
+        }
+        
+        if ($this->levelFilter) {
+            $filtered = $filtered->filter(function ($user) {
+                return $user->getCustomAttribute('level') == $this->levelFilter;
+            });
+        }
+        
+        $this->filteredVolunteers = $filtered->all();
+        // dd($this->filteredVolunteers);
+        
+    }
     public function approve($userId)
     {
         $this->event->users()->updateExistingPivot($userId, ['status' => 'accepted']);
-        $this->event->approveUserNotify($userId);// notify the user
+        $this->event->approveUserNotify($userId); // notify the user
         $this->pendingUsers = $this->event->users->where('pivot.status', 'pending');
         $this->acceptedUsers = $this->event->users->where('pivot.status', 'accepted');
+        //update the level
+        foreach ($this->acceptedUsers as $user) {
+            $points = $user->badges->sum('points');
+            $events = $user->participatingEvents()->where('status', 'accepted')->count();
+            $tasks = $user->tasks->count();
+            // dd($tasks);
+            $user->setVolunteerLevel($points, $events,$tasks);
+        }
     }
 
 
@@ -88,7 +144,7 @@ class Show extends Component
                 'assigned_id' => $this->assignedVolunteer[$taskId] ?? null,
             ]);
             // send the notification to assigned user
-            if ($this->assignedVolunteer[$taskId] != null){
+            if ($this->assignedVolunteer[$taskId] != null) {
                 $task->TaskAssignment();
             }
             //status update
@@ -159,9 +215,12 @@ class Show extends Component
         }
     }
 
-
     public function render()
     {
-        return view('livewire.requester.dashboard.my-events.show');
+        return view('livewire.requester.dashboard.my-events.show',[
+            
+            'filteredVolunteers' => $this->filteredVolunteers,
+            
+        ]);
     }
 }

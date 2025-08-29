@@ -97,8 +97,9 @@ class Profile extends Component
 
     public function save()
     {
-        $this->validate(Arr::except($this->rules(), ['profile_picture',]));
-
+        // dd("lo");
+        // $this->validate(Arr::except($this->rules(), ['profile_picture',]));
+    
 
         auth()->user()->setCustomAttribute('skills', json_encode($this->skills));
         auth()->user()->setCustomAttribute('age', $this->age);

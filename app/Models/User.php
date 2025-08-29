@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -6,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -78,12 +80,17 @@ class User extends Authenticatable
     }
     public function certificates(): HasMany
     {
-        return $this->hasMany(Certificate::class,'issued_to');
+        return $this->hasMany(Certificate::class, 'issued_to');
     }
 
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function tasks(): HasManyThrough
+    {
+        return $this->hasManyThrough(Task::class, Event::class);
     }
 
     public function chats(): BelongsToMany
@@ -93,7 +100,7 @@ class User extends Authenticatable
 
     public function profileCompletionPercentage($requiredskills)
     {
-       
+
 
         $initialPercentage = 0.3;
 
@@ -136,5 +143,50 @@ class User extends Authenticatable
         return $this->attributes()->get()->pluck('pivot.value', 'name')->all();
     }
 
+    public function assignBadgesForTasks($completedTasksCount)
+    {
+        if ($completedTasksCount === 1) {
+            // Assign badge (first task completed)
+            $firstBadge = \App\Models\Badge::find(1);
+            if ($firstBadge) {
+                $this->badges()->attach($firstBadge->id);
+            }
+        }
+        if ($completedTasksCount === 100) {
+            // Assign badge (100 tasks completed)
+            $hundredBadge = \App\Models\Badge::find(2);
+            if ($hundredBadge) {
+                $this->badges()->attach($hundredBadge->id);
+            }
+        }
+    }
 
+    public function assignBadgesForEvents($participatedEventsCount)
+    {
+        if ($participatedEventsCount === 1) {
+            // Assign badge (first event participated)
+            $firstBadge = \App\Models\Badge::find(3);
+            if ($firstBadge) {
+                $this->badges()->attach($firstBadge->id);
+            }
+        }
+        if ($participatedEventsCount === 10) {
+            // Assign badge (10 events participated)
+            $tenBadge = \App\Models\Badge::find(4);
+            if ($tenBadge) {
+                $this->badges()->attach($tenBadge->id);
+            }
+        }
+    }
+
+    public function setVolunteerLevel($points, $events, $tasks)
+    {
+        if ($points <= 1 && ($events <= 1 || $tasks <= 1)) {
+            $this->setCustomAttribute('level', 'beginner');
+        } elseif ($points <= 3 && ($events <= 3 || $tasks <= 3)) {
+            $this->setCustomAttribute('level', 'intermediate');
+        } else {
+            $this->setCustomAttribute('level', 'advanced');
+        }
+    }
 }

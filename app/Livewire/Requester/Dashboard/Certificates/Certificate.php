@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Livewire\Requester\Dashboard\MyEvents;
+namespace App\Livewire\Requester\Dashboard\Certificates;
 
+use App\Models\Certificate as ModelsCertificate;
 use Livewire\Component;
 use App\Models\Event;
 use App\Models\User;
@@ -13,6 +14,7 @@ class Certificate extends Component
     public $id;
     public $volunteerid;
     public $volunteer_name;
+    public $isIssued;
 
     public function mount($id, $volunteerid)
     {
@@ -37,6 +39,10 @@ class Certificate extends Component
             $this->certificate = null;
             $this->requester = null;
         }
+
+        $this->isIssued = ModelsCertificate::where('event_id', $this->id)
+            ->where('issued_to', $this->volunteerid)
+            ->exists();
     }
 
     public function issueCertificate($volunteerId)
@@ -51,21 +57,21 @@ class Certificate extends Component
                 'issued_at' => now(),
                 'remarks'   => null,
             ]);
+            $certificate->issueCertificateNotify();
         } else {
-            \App\Models\Certificate::create([
+            $certificate = \App\Models\Certificate::create([
                 'event_id'    => $this->id,
                 'issued_by'   => auth()->user()->id,
                 'issued_to'   => $volunteerId,
                 'issued_at'   => now(),
                 'remarks'     => null,
             ]);
+            $certificate->issueCertificateNotify();
         }
-        $certificate->issueCertificateNotify();
-        
     }
 
     public function render()
     {
-        return view('livewire.requester.dashboard.my-events.certificate');
+        return view('livewire.requester.dashboard.certificates.certificate');
     }
 }
