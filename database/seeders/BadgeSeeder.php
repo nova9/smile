@@ -16,13 +16,13 @@ class BadgeSeeder extends Seeder
         $badges = [
             [
                 'name' => 'Starter Helper',
-                'description' => 'Completed first 1 hour of volunteering.',
+                'description' => 'Completed first 1 task of volunteering.',
                 'points' => 1,
                 'icon_name' => 'badge1.svg'
             ],
             [
-                'name' => '100-Hour Legend',
-                'description' => 'Reached 100 hours of volunteering.',
+                'name' => '100-Task Legend',
+                'description' => 'Reached 100 tasks of volunteering.',
                 'points' => 100,
                 'icon_name' => 'badge2.svg'
             ],

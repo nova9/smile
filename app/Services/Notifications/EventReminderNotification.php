@@ -6,18 +6,17 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use App\Models\Certificate;
 use App\Models\Event;
 
-class CertificateIssued extends Notification implements ShouldQueue
+class EventReminderNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $certificate;
+    protected $event;
 
-    public function __construct(Certificate $certificate)
+    public function __construct(Event $event)
     {
-        $this->certificate = $certificate;
+        $this->event = $event;
     }
 
     public function via($notifiable)
@@ -38,12 +37,13 @@ class CertificateIssued extends Notification implements ShouldQueue
 
     public function toArray($notifiable)
     {
-        $event = Event::find($this->certificate->event_id);
+        $remainingDays = (new \DateTime())->diff(new \DateTime($this->event->starts_at))->days;
         return [
-            'event_id' => $this->certificate->event_id,
-            'name' => $event->name,
-            'message' => "Congratulations! You have been issued a certificate for your participation in '{$event->name}'.",
-            'event_url' => url('/volunteer/dashboard/certificate/' . $this->certificate->event_id)
+            'event_id' => $this->event->id,
+            'name' => $this->event->name,
+            'starts_at' => $this->event->starts_at,
+            'message' => "Only $remainingDays day(s) left! The event '{$this->event->name}' starts on " . date('F d, Y', strtotime($this->event->starts_at)) . ".",
+            'event_url' => url('/volunteer/dashboard/my-events/' . $this->event->id)
         ];
     }
 }

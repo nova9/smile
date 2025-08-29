@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Services\Notifications\EventJoinNotification;
+
 class Event extends Model
 {
     use HasFactory;
@@ -30,6 +31,8 @@ class Event extends Model
         'chat_id',
         'city',
         'embedding',
+        'participant_requirements',
+        'recruiting_method'
     ];
 
 
@@ -42,6 +45,8 @@ class Event extends Model
         'ends_at' => 'datetime',
         'starts_at' => 'datetime',
         'embedding' => 'json',
+        'skills' => 'array',
+        'participant_requirements' => 'array'
     ];
 
     public function category(): BelongsTo
