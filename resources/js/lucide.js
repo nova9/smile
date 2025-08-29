@@ -88,7 +88,11 @@ import {
     RotateCw,
     Box,
     ArrowLeftCircle,
-    BookPlus
+    BookPlus,
+    BookCheck,
+    BarChart,
+    VenusAndMars,
+    UserX,
 } from "lucide";
 
 
@@ -183,7 +187,11 @@ function registerIcons() {
             TrendingUp,
             CircleAlert,
             Trophy,
-            BookPlus
+            BookPlus,
+            BookCheck,
+            BarChart,
+            VenusAndMars,
+            UserX
         },
 
     });

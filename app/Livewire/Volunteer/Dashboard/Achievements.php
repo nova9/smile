@@ -9,20 +9,29 @@ use Livewire\Component;
 class Achievements extends Component
 {
     public $activities;
-    public $certificates;
+    public $certificates = [];
     public $badges;
     public $event_name;
     public $event_des;
     public function mount()
     {
-       
-       
+
+
         //pivottable=event_user
-        $this->certificates = auth()->user()->certificates;
-        $this->event_name = Event::find($this->certificates->first()->event_id)->name;
-        $this->event_des = Event::find($this->certificates->first()->event_id)->description;
-        $this->badges = auth()->user()->badges;
-        
+        $user = auth()->user();
+        $this->certificates = $user ? $user->certificates->toArray() : [];
+        if (!empty($this->certificates)) {
+            $eventId = $this->certificates[0]['event_id'] ?? null;
+            if ($eventId) {
+                $event = Event::find($eventId);
+                if ($event) {
+                    $this->event_name = $event->name;
+                    $this->event_des = $event->description;
+                }
+            }
+        }
+
+        $this->badges = $user ? $user->badges : [];
     }
 
     public function render()

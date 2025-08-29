@@ -49,6 +49,20 @@ class UserSeeder extends Seeder
             'password' => 'password',
             'role_id' => $roleVolunteer->id
         ]);
+
+        // Add more volunteers for demo/testing
+        User::query()->create([
+            'name' => 'Volunteer Two',
+            'email' => 'v2@s.com',
+            'password' => 'password',
+            'role_id' => $roleVolunteer->id
+        ]);
+        User::query()->create([
+            'name' => 'Volunteer Three',
+            'email' => 'v3@s.com',
+            'password' => 'password',
+            'role_id' => $roleVolunteer->id
+        ]);
         $existingBadges = Badge::all();
         User::factory()
             ->count(15)
@@ -61,6 +75,5 @@ class UserSeeder extends Seeder
                 $randomBadges = $existingBadges->random(rand(0, $existingBadges->count()));
                 $user->badges()->attach($randomBadges);
             });
-
     }
 }

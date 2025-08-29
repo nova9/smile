@@ -57,6 +57,19 @@ class Show extends Component
             $task->status = 'done';
             $task->save();
             $task->TaskCompletion();
+
+            // Check if this is the user's first completed task
+            $user = auth()->user();
+            $completedTasksCount = Task::where('assigned_id', $user->id)
+                ->where('status', 'done')
+                ->count();
+            $user->assignBadgesForTasks($completedTasksCount, $user);
+            
+            $points=$user->badges->sum('points');
+            $events=$user->participatingEvents()->where('status', 'accepted')->count();
+            // dd($points,$events,$completedTasksCount);
+            $user->setVolunteerLevel($points,$events,$completedTasksCount);
+
             session()->flash('success', 'Task status updated to Done.');
             // Optionally, reload tasks to reflect changes
             $this->tasks = $this->event->tasks()->get();

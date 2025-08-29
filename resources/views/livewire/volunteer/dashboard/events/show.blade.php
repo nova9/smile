@@ -163,7 +163,8 @@
                                     <h2 class="text-2xl font-bold text-gray-800 mb-4">Tags</h2>
                                     <div class="flex flex-wrap gap-2 mb-6">
                                         @foreach ($event->tags as $tag)
-                                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                            <span
+                                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
                                                 {{ $tag->name }}
                                             </span>
                                         @endforeach
@@ -174,7 +175,7 @@
                                             @foreach (explode(',', $event->skills) as $skill)
                                                 @if (trim($skill) !== '')
                                                     <span
-                                                        class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-green-100 to-blue-100 border border-green-200 text-green-800 text-xs font-semibold shadow-sm">
                                                         {{ trim($skill) }}
                                                     </span>
                                                 @endif
@@ -184,12 +185,118 @@
                                 </div>
 
                                 <div class="mt-8">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                                        Eligibility & Selection Criteria
+                                    </h2>
+                                    <div
+                                        class="bg-gradient-to-br from-gray-50 to-white border border-gray-100 rounded-xl p-6">
+                                        <!-- Recruiting Method -->
+                                        <div class="flex items-center gap-4">
+                                            <div class="flex-shrink-0">
+                                                <div
+                                                    class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
+                                                    <i data-lucide="user-plus" class="w-6 h-6 text-blue-500"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                @php
+                                                    $recruitingMethodLabels = [
+                                                        'first_come' => 'First Come, First Served',
+                                                        'application_review' => 'Application Review',
+                                                        'skill_assessment' => 'Skill-Based Assessment',
+                                                        'metrics' => 'Based on Metrics (Rank)',
+                                                    ];
+                                                    $recruitingMethodLabel =
+                                                        $recruitingMethodLabels[$event->recruiting_method] ??
+                                                        ($event->recruiting_method ?? 'Not specified');
+                                                @endphp
+                                                <div class="text-sm font-medium text-gray-500">
+                                                  We will be recruiting based on {{ $recruitingMethodLabel }} </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Participant Requirements -->
+                                        <div class="flex items-start gap-4">
+                                            <div class="flex-shrink-0">
+                                                <div
+                                                    class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center">
+                                                    <i data-lucide="users" class="w-6 h-6 text-yellow-500"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="w-full">
+                                                @if (!empty($event->participant_requirements))
+                                                    <div class="flex flex-wrap gap-2 mt-2">
+                                                        @foreach ($event->participant_requirements as $req)
+                                                            @if (isset($req['filter_types']) && $req['filter_types'] === 'gender')
+                                                                <span
+                                                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-sm font-medium">
+                                                                    <i data-lucide="venus-and-mars"
+                                                                        class="w-4 h-4 text-blue-400"
+                                                                        aria-hidden="true"></i>
+                                                                    <span class="flex items-center gap-1">
+                                                                        Men: <span
+                                                                            class="font-bold text-blue-700">{{ $req['male_participants'] ?? 0 }}</span>
+                                                                    </span>
+                                                                    <span class="flex items-center gap-1">
+                                                                        Women: <span
+                                                                            class="font-bold text-pink-700">{{ $req['female_participants'] ?? 0 }}</span>
+                                                                    </span>
+                                                                    <span class="flex items-center gap-1">
+                                                                        Non-Binary: <span
+                                                                            class="font-bold text-purple-700">{{ $req['non_binary_participants'] ?? 0 }}</span>
+                                                                    </span>
+                                                                </span>
+                                                            @elseif (isset($req['filter_types']) && $req['filter_types'] === 'level')
+                                                                <span
+                                                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium">
+                                                                    <i data-lucide="bar-chart"
+                                                                        class="w-4 h-4 text-yellow-400"
+                                                                        aria-hidden="true"></i>
+                                                                    Level:
+                                                                    <span>Beginner <span
+                                                                            class="font-bold text-yellow-700">{{ $req['beginner_participants'] ?? 0 }}</span></span>,
+                                                                    <span>Intermediate <span
+                                                                            class="font-bold text-orange-700">{{ $req['intermediate_participants'] ?? 0 }}</span></span>,
+                                                                    <span>Advanced <span
+                                                                            class="font-bold text-green-700">{{ $req['advanced_participants'] ?? 0 }}</span></span>
+                                                                </span>
+                                                            @else
+                                                                <span
+                                                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium">
+                                                                    {{ is_string($req) ? $req : 'Custom requirement' }}
+                                                                </span>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <div class="mt-2 text-gray-600 text-sm">No specific participant
+                                                        requirements.</div>
+                                                @endif
+
+                                                <!-- Minimum Age -->
+                                                @if (isset($event->minimum_age))
+                                                    <div class="mt-3">
+                                                        <span
+                                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
+                                                            <i data-lucide="calendar" class="w-4 h-4 text-green-500"
+                                                                aria-hidden="true"></i>
+                                                            Minimum Age: <span
+                                                                class="font-bold text-green-700">{{ $event->minimum_age }}</span>
+                                                        </span>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-8">
                                     <h2 class="text-2xl font-bold text-gray-800 mb-4">Additional Notes</h2>
                                     <div class=" p-4 space-y-2">
                                         <p class="text-gray-700 text-base"><span class="font-semibold">Notes:</span>
                                             {{ $event->notes }}</p>
-                                        <p class="text-gray-700 text-base"><span class="font-semibold">Minimum
-                                                Age:</span> {{ $event->minimum_age }}</p>
+
                                     </div>
                                 </div>
 
@@ -279,6 +386,18 @@
                                             <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
                                             Join This Event
                                         </button>
+                                        @if (session()->has('event_full'))
+                                            <div role="alert" class="alert alert-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                                </svg>
+                                                <span>{{ session('event_full') }}</span>
+                                            </div>
+                                        @endif
                                     @endif
                                     <button class="w-full btn btn-outline" wire:click="chat">
                                         <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
