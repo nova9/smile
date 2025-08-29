@@ -24,11 +24,13 @@ return new class extends Migration
             $table->integer('maximum_participants');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->text('skills')->nullable();
+            $table->json('skills')->nullable();
             $table->integer('minimum_age');
             $table->text('notes')->nullable();
             $table->string('city');
             $table->json('embedding')->nullable();
+            $table->json('participant_requirements')->nullable();
+            $table->string('recruiting_method')->default('first_come'); // Stores recruiting method
         });
     }
 

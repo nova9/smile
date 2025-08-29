@@ -70,6 +70,7 @@ class Profile extends Component
     public function save()
     {
 
+
         $verificationDetails = [
             'registration_number' => $this->registration_number,
             'legal_status' => $this->legal_status,

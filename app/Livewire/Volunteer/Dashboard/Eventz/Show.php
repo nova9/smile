@@ -19,9 +19,9 @@ class Show extends Component
 
     public function mount($id, GoogleMaps $googleMaps)
     {
-        
-         $requiredskills = [
-//            'skills'=> 0.1,
+
+        $requiredskills = [
+            //            'skills'=> 0.1,
             'age' => 0.2,
             'latitude' => 0.1,
             'longitude' => 0.1,
@@ -36,15 +36,26 @@ class Show extends Component
         // dd($this->event);
         $this->organizer = User::find($this->event->user_id);
         // dd($this->organizer);
-        $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude) ;
+        $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude);
     }
 
     public function join()
     {
+        $maxParticipants = $this->event->maximum_participants;
+        $currentParticipants = $this->event->users()->count();
+        if ((int)$maxParticipants < (int)$currentParticipants) {
+            session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
+            return redirect()->back();
+        } else {
+         
+            $this->event->userJoinsNotify();
+            $user = auth()->user();
+            $this->event->users()->attach(auth()->user()->id);
 
-        $this->event->userJoinsNotify();
-        $this->event->users()->attach(auth()->user()->id);
-        return redirect('/volunteer/dashboard/my-events');
+            $participatedEventsCount = $user->participatingEvents()->count();
+            $user->assignBadgesForEvents($participatedEventsCount, $user);
+            return redirect('/volunteer/dashboard/my-events');
+        }
     }
 
     public function render()

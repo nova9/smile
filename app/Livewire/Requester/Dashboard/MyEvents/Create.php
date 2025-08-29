@@ -37,7 +37,7 @@ class Create extends Component
 
     public $skills;
 
-
+    public $recruiting_method = '';
 
     public $tags = [];
     public $availableTags;
@@ -46,7 +46,17 @@ class Create extends Component
     public $notes;
 
     public $minimum_age;
-
+    public $filterTypes = [];
+    public $participant_requirements = [];
+    
+    public $male_participants;
+    public $female_participants;
+    public $non_binary_participants;
+    
+    public $beginner_participants;
+    public $intermediate_participants;
+    public $advanced_participants;
+    
     public function mount()
     {
         $this->categories = Category::all();
@@ -66,7 +76,9 @@ class Create extends Component
             'ends_at' => 'required|date|after:starts_at',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'skills' => 'required|string|max:500',
+            'skills' => 'required|array|min:1',
+            'participant_requirements' => 'array',
+            'recruiting_method' => 'required|string',
             'notes' => 'nullable|string|max:500',
             'minimum_age' => 'integer|min:0|max:120',
         ];
@@ -74,12 +86,56 @@ class Create extends Component
 
     public function save(GoogleMaps $googleMaps, EmbeddingService $embeddingService)
     {
+    
         $this->validate();
-
 
         $chat = Chat::query()->create([
             'is_group' => true,
         ]);
+        foreach($this->filterTypes as $type){
+            if($type == 'gender'){
+                $this->participant_requirements[] = [
+                    'filter_types' => $type,
+                    'male_participants' => $this->male_participants,
+                    'female_participants' => $this->female_participants,
+                    'non_binary_participants' => $this->non_binary_participants,
+                ];
+            }else{
+                $this->participant_requirements[] = [
+                    'filter_types' => $type,
+                    'beginner_participants' => $this->beginner_participants,
+                    'intermediate_participants' => $this->intermediate_participants,
+                    'advanced_participants' => $this->advanced_participants
+                ];
+            }
+
+        }
+
+        $genderSum = 0;
+        $levelSum = 0;
+        
+        foreach ($this->participant_requirements as $req) {
+            if ($req['filter_types'] === 'gender') {
+                $genderSum += (int)($req['male_participants'] ?? 0);
+                $genderSum += (int)($req['female_participants'] ?? 0);
+                $genderSum += (int)($req['non_binary_participants'] ?? 0);
+            }
+            if ($req['filter_types'] === 'level') {
+                $levelSum += (int)($req['beginner_participants'] ?? 0);
+                $levelSum += (int)($req['intermediate_participants'] ?? 0);
+                $levelSum += (int)($req['advanced_participants'] ?? 0);
+            }
+        }
+       
+        if ($genderSum > (int)$this->maximum_participants) {
+            $this->addError('participant_gender_requirements', 'Total gender participants cannot exceed maximum participants.');
+            return;
+        }
+        if ($levelSum > (int)$this->maximum_participants) {
+            $this->addError('participant_level_requirements', 'Total level participants cannot exceed maximum participants.');
+            return;
+        }
+        // dd($this->participant_requirements);
 
         $event = auth()->user()->organizingEvents()->create([
             'name' => $this->name,
@@ -93,6 +149,8 @@ class Create extends Component
             'notes' => $this->notes,
             'minimum_age' => $this->minimum_age,
             'skills' => $this->skills,
+            'participant_requirements' => $this->participant_requirements,
+            'recruiting_method' => $this->recruiting_method,
             'chat_id' => $chat->id,
             'city' => $googleMaps->getNearestCity($this->latitude, $this->longitude)
         ]);

@@ -29,8 +29,23 @@ class EventSeeder extends Seeder
                 'city' => 'Colombo',
                 'notes' => 'Bring gloves and reusable water bottles.',
                 'minimum_age' => 16,
-                'skills' => 'teamwork environmental awareness',
-                'tags' => ['cleaning', 'beach', 'sustainability']
+                'skills' => ['teamwork', 'environmental awareness'],
+                'recruiting_method' => 'first_come',
+                'tags' => ['cleaning', 'beach', 'sustainability'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 20,
+                        'female_participants' => 20,
+                        'non_binary_participants' => 10
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 15,
+                        'intermediate_participants' => 20,
+                        'advanced_participants' => 15
+                    ]
+                ]
             ],
             [
                 'name' => 'Tree Planting Day',
@@ -44,8 +59,23 @@ class EventSeeder extends Seeder
                 'city' => 'Kandy',
                 'notes' => 'Wear outdoor shoes and bring water.',
                 'minimum_age' => 18,
-                'skills' => 'gardening teamwork',
-                'tags' => ['planting', 'nature', 'community']
+                'skills' => ['gardening', 'teamwork'],
+                'recruiting_method' => 'application_review',
+                'tags' => ['planting', 'nature', 'community'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 10,
+                        'female_participants' => 10,
+                        'non_binary_participants' => 10
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 10,
+                        'intermediate_participants' => 10,
+                        'advanced_participants' => 10
+                    ]
+                ]
             ],
             [
                 'name' => 'Elderly Home Visit',
@@ -59,8 +89,23 @@ class EventSeeder extends Seeder
                 'city' => 'Galle',
                 'notes' => 'Bring any games or music if you like.',
                 'minimum_age' => 18,
-                'skills' => 'empathy communication',
-                'tags' => ['social work', 'elderly', 'care']
+                'skills' => ['empathy', 'communication'],
+                'recruiting_method' => 'first_come',
+                'tags' => ['social work', 'elderly', 'care'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 7,
+                        'female_participants' => 7,
+                        'non_binary_participants' => 6
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 7,
+                        'intermediate_participants' => 7,
+                        'advanced_participants' => 6
+                    ]
+                ]
             ],
             [
                 'name' => 'Youth Leadership Workshop',
@@ -74,8 +119,23 @@ class EventSeeder extends Seeder
                 'city' => 'Trincomalee',
                 'notes' => 'Lunch and snacks provided.',
                 'minimum_age' => 17,
-                'skills' => 'leadership public speaking',
-                'tags' => ['workshop', 'leadership', 'youth']
+                'skills' => ['leadership', 'public speaking'],
+                'recruiting_method' => 'skill_assessment',
+                'tags' => ['workshop', 'leadership', 'youth'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 15,
+                        'female_participants' => 15,
+                        'non_binary_participants' => 10
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 10,
+                        'intermediate_participants' => 15,
+                        'advanced_participants' => 15
+                    ]
+                ]
             ],
             [
                 'name' => 'Community Mural Painting',
@@ -89,8 +149,23 @@ class EventSeeder extends Seeder
                 'city' => 'Jaffna',
                 'notes' => 'Wear clothes you can get paint on.',
                 'minimum_age' => 16,
-                'skills' => 'creativity art',
-                'tags' => ['art', 'community', 'mural']
+                'skills' => ['creativity', 'art'],
+                'recruiting_method' => 'first_come',
+                'tags' => ['art', 'community', 'mural'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 10,
+                        'female_participants' => 10,
+                        'non_binary_participants' => 5
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 10,
+                        'intermediate_participants' => 10,
+                        'advanced_participants' => 5
+                    ]
+                ]
             ],
         ];
 
@@ -108,7 +183,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Bring a notebook and gardening gloves.',
                 'minimum_age' => 15,
                 'skills' => 'gardening sustainability',
-                'tags' => ['gardening', 'urban', 'sustainability']
+                'tags' => ['gardening', 'urban', 'sustainability'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 10,
+                        'female_participants' => 15,
+                        'non_binary_participants' => 10
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 10,
+                        'intermediate_participants' => 15,
+                        'advanced_participants' => 10
+                    ]
+                ],
+                'recruiting_method' => 'application_review'
             ],
             [
                 'name' => 'Charity Run for Education',
@@ -123,7 +213,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Wear comfortable running shoes.',
                 'minimum_age' => 14,
                 'skills' => 'fitness teamwork',
-                'tags' => ['running', 'charity', 'education']
+                'tags' => ['running', 'charity', 'education'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 40,
+                        'female_participants' => 40,
+                        'non_binary_participants' => 20
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 30,
+                        'intermediate_participants' => 40,
+                        'advanced_participants' => 30
+                    ]
+                ],
+                'recruiting_method' => 'first_come'
             ],
             [
                 'name' => 'Beach Yoga Session',
@@ -138,7 +243,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Bring a yoga mat or towel.',
                 'minimum_age' => 16,
                 'skills' => 'yoga mindfulness',
-                'tags' => ['yoga', 'wellness', 'beach']
+                'tags' => ['yoga', 'wellness', 'beach'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 7,
+                        'female_participants' => 7,
+                        'non_binary_participants' => 6
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 7,
+                        'intermediate_participants' => 7,
+                        'advanced_participants' => 6
+                    ]
+                ],
+                'recruiting_method' => 'skill_assessment'
             ],
             [
                 'name' => 'Food Drive for Homeless',
@@ -153,7 +273,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Bring non-perishable food items to donate.',
                 'minimum_age' => 18,
                 'skills' => 'organization empathy',
-                'tags' => ['charity', 'food drive', 'community']
+                'tags' => ['charity', 'food drive', 'community'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 10,
+                        'female_participants' => 10,
+                        'non_binary_participants' => 10
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 10,
+                        'intermediate_participants' => 10,
+                        'advanced_participants' => 10
+                    ]
+                ],
+                'recruiting_method' => 'first_come'
             ],
             [
                 'name' => 'Tech for Kids Workshop',
@@ -168,7 +303,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Laptops provided, but bring your own if preferred.',
                 'minimum_age' => 15,
                 'skills' => 'coding teaching',
-                'tags' => ['technology', 'education', 'youth']
+                'tags' => ['technology', 'education', 'youth'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 8,
+                        'female_participants' => 8,
+                        'non_binary_participants' => 9
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 8,
+                        'intermediate_participants' => 8,
+                        'advanced_participants' => 9
+                    ]
+                ],
+                'recruiting_method' => 'application_review'
             ],
             [
                 'name' => 'River Cleanup Initiative',
@@ -183,7 +333,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Wear sturdy shoes and bring gloves.',
                 'minimum_age' => 16,
                 'skills' => 'teamwork environmental awareness',
-                'tags' => ['cleaning', 'river', 'sustainability']
+                'tags' => ['cleaning', 'river', 'sustainability'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 13,
+                        'female_participants' => 14,
+                        'non_binary_participants' => 13
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 13,
+                        'intermediate_participants' => 14,
+                        'advanced_participants' => 13
+                    ]
+                ],
+                'recruiting_method' => 'first_come'
             ],
             [
                 'name' => 'Cultural Dance Festival',
@@ -198,7 +363,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Wear comfortable clothing suitable for dancing.',
                 'minimum_age' => 14,
                 'skills' => 'dancing creativity',
-                'tags' => ['dance', 'culture', 'festival']
+                'tags' => ['dance', 'culture', 'festival'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 17,
+                        'female_participants' => 16,
+                        'non_binary_participants' => 17
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 17,
+                        'intermediate_participants' => 16,
+                        'advanced_participants' => 17
+                    ]
+                ],
+                'recruiting_method' => 'skill_assessment'
             ],
             [
                 'name' => 'Animal Shelter Volunteer Day',
@@ -213,7 +393,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Wear closed-toe shoes and avoid strong perfumes.',
                 'minimum_age' => 18,
                 'skills' => 'animal care empathy',
-                'tags' => ['animals', 'volunteering', 'care']
+                'tags' => ['animals', 'volunteering', 'care'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 5,
+                        'female_participants' => 5,
+                        'non_binary_participants' => 5
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 5,
+                        'intermediate_participants' => 5,
+                        'advanced_participants' => 5
+                    ]
+                ],
+                'recruiting_method' => 'metrics'
             ],
             [
                 'name' => 'Health Awareness Campaign',
@@ -228,7 +423,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Bring a notebook for taking notes.',
                 'minimum_age' => 17,
                 'skills' => 'communication public health',
-                'tags' => ['health', 'awareness', 'community']
+                'tags' => ['health', 'awareness', 'community'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 10,
+                        'female_participants' => 10,
+                        'non_binary_participants' => 10
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 10,
+                        'intermediate_participants' => 10,
+                        'advanced_participants' => 10
+                    ]
+                ],
+                'recruiting_method' => 'first_come'
             ],
             [
                 'name' => 'Recycling Art Project',
@@ -243,7 +453,22 @@ class EventSeeder extends Seeder
                 'notes' => 'Bring any recyclable materials you have.',
                 'minimum_age' => 16,
                 'skills' => 'creativity art',
-                'tags' => ['art', 'recycling', 'sustainability']
+                'tags' => ['art', 'recycling', 'sustainability'],
+                'participant_requirements' => [
+                    [
+                        'filter_types' => 'gender',
+                        'male_participants' => 7,
+                        'female_participants' => 7,
+                        'non_binary_participants' => 6
+                    ],
+                    [
+                        'filter_types' => 'level',
+                        'beginner_participants' => 7,
+                        'intermediate_participants' => 7,
+                        'advanced_participants' => 6
+                    ]
+                ],
+                'recruiting_method' => 'application_review'
             ],
         ]);
 
@@ -270,6 +495,5 @@ class EventSeeder extends Seeder
 
             GenerateEmbedding::dispatch($event, ['name', 'description', 'skills', 'notes']);
         }
-
     }
 }

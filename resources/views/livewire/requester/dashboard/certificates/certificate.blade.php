@@ -81,14 +81,16 @@
             </div>
         </div>
         <div class="flex flex-col items-center mt-8 print:hidden w-full">
-             <button wire:click="issueCertificate({{ $volunteerid }})" type="button"
-                class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 12l2 2 4-4m-6 4h12m-6 4h6m-9-8h6m-9 4h6m-9 4h6" />
-                </svg>
-                Issue Certificate
-            </button>
+            @if (!$isIssued)
+                <button wire:click="issueCertificate({{ $volunteerid }})" type="button"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12l2 2 4-4m-6 4h12m-6 4h6m-9-8h6m-9 4h6m-9 4h6" />
+                    </svg>
+                    Issue Certificate
+                </button>
+            @endif
             <span class="text-gray-500 text-sm mt-4">You are viewing the certificate issued to this volunteer.</span>
         </div>
     </div>
