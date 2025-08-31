@@ -44,18 +44,7 @@ class Profile extends Component
 
         $this->profile_picture_url = FileManager::getTemporaryUrl(auth()->user()->getCustomAttribute('profile_picture'));
 
-
-         $requiredskills = [
-//            'skills'=> 0.1,
-            'age' => 0.2,
-            'latitude' => 0.1,
-            'longitude' => 0.1,
-            'contact_number' => 0.1,
-            'gender' => 0.2,
-            // 'profile_picture' => 0.1
-        ];
-
-        $this->completion = $user->profileCompletionPercentage($requiredskills);
+        $this->completion = $user->profileCompletionPercentage();
 
         $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
 
@@ -99,10 +88,9 @@ class Profile extends Component
     {
         // dd("lo");
         // $this->validate(Arr::except($this->rules(), ['profile_picture',]));
-    
+
 
         auth()->user()->setCustomAttribute('skills', json_encode($this->skills));
-        auth()->user()->setCustomAttribute('age', $this->age);
         auth()->user()->setCustomAttribute('latitude', $this->latitude);
         auth()->user()->setCustomAttribute('longitude', $this->longitude);
         auth()->user()->setCustomAttribute('contact_number', $this->contact_number);
@@ -111,6 +99,9 @@ class Profile extends Component
 
 
         GenerateEmbedding::dispatch(auth()->user(), textToEmbed: json_encode(auth()->user()->getAllAttributes()));
+
+        session()->flash('success', 'Profile updated successfully!');
+        return $this->redirect('/volunteer/dashboard/profile');
     }
 
     /**

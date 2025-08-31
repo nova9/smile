@@ -61,7 +61,7 @@
                                 $watch('query', (value) => {
                                     this.refreshTags()
                                 })
-                        
+
                                 $watch('availableTags', (value) => {
                                     console.log('availableTags changed', value)
                                 })
@@ -151,7 +151,7 @@
                         <div class="md:col-span-2" x-data="{
                             starts_at: @entangle('starts_at').defer,
                             ends_at: @entangle('ends_at').defer,
-                        
+
                             change_date(e) {
                                 // FIXME: will time format be correct?
                                 const value = e.target.value;
@@ -538,7 +538,8 @@
                     lng: 80.7718
                 },
                 zoom: 7,
-                mapId: "198a0e442491558328ee7d20"
+                mapId: "198a0e442491558328ee7d20",
+                gestureHandling: "cooperative",
             };
 
             map = new google.maps.Map(document.getElementById("map"), mapOptions);
