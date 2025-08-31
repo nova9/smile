@@ -82,32 +82,20 @@
             <!-- Hero Section -->
             <div class="p-6">
                 <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                    <!-- Event Image -->
-                    <div class="relative h-96 bg-gradient-to-r from-blue-500 to-purple-600">
-                        <img src="https://picsum.photos/seed/{{ $event->id }}/1024/720" alt="Event Image"
-                            class="w-full h-full object-cover">
-                        <div class="absolute top-6 left-6">
-                            <div class="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium"
-                                style="color: {{ $event->category->color }}">
-                                {{ $event->category->name }}
-                            </div>
-                        </div>
-                        <div class="absolute top-6 right-6">
-                            <button
-                                class="p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
-                                <i data-lucide="heart" class="w-5 h-5 text-gray-600"></i>
-                            </button>
-                        </div>
-                    </div>
-
                     <!-- Event Content -->
                     <div class="p-8">
                         <!-- Header -->
-                        <div class="mb-6">
+                        <div class="mb-6 flex items-center justify-between">
                             <h1 class="text-4xl font-bold text-accent mb-3">
                                 {{ $event->name }}
                             </h1>
 
+                            <div>
+                                <div class="px-4 py-2 text-white backdrop-blur-sm rounded-full text-sm font-medium"
+                                     style="background-color: {{ $event->category->color }}">
+                                    {{ $event->category->name }}
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Quick Info Grid -->

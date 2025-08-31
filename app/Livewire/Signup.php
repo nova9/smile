@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Jobs\GenerateEmbedding;
 use App\Models\Attribute;
 use App\Models\File;
+use App\Services\Kyc;
 use Aws\Exception\AwsException;
 use Aws\Rekognition\RekognitionClient;
 use Illuminate\Support\Arr;
@@ -25,8 +26,6 @@ class Signup extends Component
     public $selfie_url;
 
     public $verified = false;
-
-    public $similarity;
     #[Validate]
     public $front_image;
 
@@ -124,24 +123,13 @@ class Signup extends Component
 
         $selfieImage = Storage::get($this->selfie);
         $frontImage = $this->front_image->get();
-        $isValidDocument = $this->checkLabels($frontImage, ['Id Cards', 'Driving License', 'Passport']);
 
-        Log::info('is valid');
+        [$isValid, $error] = Kyc::isValid($frontImage, $selfieImage);
 
-        if (!$isValidDocument) {
-            $this->addError('front_image', 'The front image must contain a valid ID card, driving license, or passport.');
-            return;
-        }
-
-        $similarity = $this->compareFaces($selfieImage, $frontImage);
-
-        Log::info('Similarity' . $similarity);
-
-        if ($similarity > 80) {
-            $this->similarity = $similarity;
+        if ($isValid) {
             $this->verified = true;
         } else {
-            $this->addError('front_image', 'The selfie does not match the front image of the document.');
+            $this->addError('front_image', $error);
         }
     }
 
@@ -150,8 +138,7 @@ class Signup extends Component
         if ($this->document_type !== 'passport') {
             $validated = $this->validate();
         } else {
-            $this->validate(Arr::except($this->rules(), ['back_image',]));
-
+            $this->validate(Arr::except($this->rules(), ['back_image']));
         }
 
         $fronImagePath = $this->front_image->store(path: 'files');
@@ -175,12 +162,14 @@ class Signup extends Component
         ]);
 
 
-        $attributes = Attribute::whereIn('name', ['front_image', 'back_image', 'selfie', 'document_type'])->get()->keyBy('name');
+        $attributes = Attribute::whereIn('name', ['front_image', 'back_image', 'selfie', 'document_type', 'date_of_birth'])->get()->keyBy('name');
         $frontImageAttribute = $attributes['front_image'] ?? null;
         $backImageAttribute = $attributes['back_image'] ?? null;
         $selfieAttribute = $attributes['selfie'] ?? null;
         $documentTypeAttribute = $attributes['document_type'] ?? null;
+        $dateOfBirthAttribute = $attributes['date_of_birth'] ?? null;
 
+        $dateOfBirth = Kyc::getDateOfBirth($this->front_image->get(), $this->back_image->get());
 
         $user->attributes()->attach([
             $frontImageAttribute->id => [
@@ -194,6 +183,9 @@ class Signup extends Component
             ],
             $documentTypeAttribute->id => [
                 'value' => $validated['document_type'],
+            ],
+            $dateOfBirthAttribute->id => [
+                'value' => $dateOfBirth,
             ],
         ]);
 
@@ -239,66 +231,5 @@ class Signup extends Component
     protected function getTemporaryUrl($filename)
     {
         return Storage::temporaryUrl($filename, now()->addMinutes(15));
-    }
-
-    protected function compareFaces($source, $target)
-    {
-        try {
-            $rekognition = new RekognitionClient([
-                'version' => 'latest',
-                'region' => env('AWS_DEFAULT_REGION'),
-                'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
-                ],
-            ]);
-
-
-            $result = $rekognition->compareFaces([
-                'SimilarityThreshold' => 80,
-                'SourceImage' => ['Bytes' => $source],
-                'TargetImage' => ['Bytes' => $target],
-            ]);
-
-
-            if (count($result['FaceMatches']) !== 1) {
-                return 0;
-            }
-
-            return $result['FaceMatches'][0]['Similarity'] ?? 0;
-        } catch (AwsException $e) {
-            Log::error('AWS Rekognition error: ' . $e->getMessage());
-            return 0; // Return 0 similarity in case of an error
-        }
-    }
-
-    protected function checkLabels($image, $desiredLabels = [])
-    {
-        $rekognition = new RekognitionClient([
-            'version' => 'latest',
-            'region' => env('AWS_DEFAULT_REGION'),
-            'credentials' => [
-                'key' => env('AWS_ACCESS_KEY_ID'),
-                'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            ],
-        ]);
-
-        $result = $rekognition->detectLabels(
-            [
-                'Image' => [
-                    'Bytes' => $image,
-                ],
-                'MaxLabels' => 10,
-                'MinConfidence' => 75,
-            ]
-        );
-
-        $matchedLabels = collect($result['Labels'])
-            ->pluck('Name')
-            ->filter(function ($label) use ($desiredLabels) {
-                return in_array($label, $desiredLabels);
-            });
-
-        return $matchedLabels->isNotEmpty();
     }
 }

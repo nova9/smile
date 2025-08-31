@@ -331,7 +331,7 @@
                         <div class="flex items-center justify-center space-x-2">
                             <span class="text-green-600">✓</span>
                             <span class="text-gray-800 text-sm">
-                                Your identity has been successfully verified! {{ round($similarity) }}% match with the selfie.
+                                Your identity has been successfully verified!
                             </span>
                         </div>
                     </div>

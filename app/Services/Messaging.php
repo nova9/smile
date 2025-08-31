@@ -48,7 +48,7 @@ class Messaging
 
     public static function getMessagesForChat(Chat $chat)
     {
-        return $chat->messages()->with('user')->orderBy('created_at', 'desc')->get();
+        return $chat->messages()->with('user')->orderBy('created_at')->get();
     }
 
     public static function getDirectChatOtherParty($chat)
