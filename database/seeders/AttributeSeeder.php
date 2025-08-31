@@ -15,7 +15,6 @@ class AttributeSeeder extends Seeder
     {
         $attributes = [
             'skills',
-            'age',
             'latitude',
             'longitude',
             'contact_number',
@@ -30,7 +29,8 @@ class AttributeSeeder extends Seeder
             'city',
             'verification_details',
             'description',
-            'level'
+            'level',
+            'date_of_birth',
         ];
 
         $attributes = array_map(function($item) {

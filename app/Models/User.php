@@ -98,17 +98,21 @@ class User extends Authenticatable
         return $this->belongsToMany(Chat::class);
     }
 
-    public function profileCompletionPercentage($requiredskills)
+    public function profileCompletionPercentage()
     {
+        $initialPercentage = 0.4;
 
-
-        $initialPercentage = 0.3;
+        $requiredSkills = [
+            'latitude' => 0.1,
+            'longitude' => 0.1,
+            'contact_number' => 0.2,
+            'gender' => 0.2,
+        ];
 
         $user = auth()->user();
         $attributes = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
-        // dd($attributes);
-        foreach ($requiredskills as $key => $value) {
-            // dd($attributes[$requiredskill]);
+//         dd($attributes);
+        foreach ($requiredSkills as $key => $value) {
             if (!empty($attributes[$key])) {
                 $initialPercentage += $value;
             }
