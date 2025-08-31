@@ -5,7 +5,7 @@
                 <h1 class="text-2xl font-bold text-primary">My Events</h1>
                 <p class="text-neutral-500">You can manage event you organize here</p>
             </div>
-            <a href="/requester/dashboard/my-events/create">
+            <a href="/requester/dashboard/my-events/create" wire:navigate>
                 <button class="btn btn-primary">
                     + Create New Event
 

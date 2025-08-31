@@ -19,18 +19,7 @@ class Show extends Component
 
     public function mount($id, GoogleMaps $googleMaps)
     {
-
-        $requiredskills = [
-            //            'skills'=> 0.1,
-            'age' => 0.2,
-            'latitude' => 0.1,
-            'longitude' => 0.1,
-            'contact_number' => 0.1,
-            'gender' => 0.2,
-            // 'profile_picture' => 0.1
-        ];
-
-        $this->profileCompletionPercentage = auth()->user()->profileCompletionPercentage($requiredskills);
+        $this->profileCompletionPercentage = auth()->user()->profileCompletionPercentage();
         $this->event = Event::query()->with(['address', 'users'])->find($id);
         $this->Volunteers = $this->event->users;
         // dd($this->event);
@@ -47,7 +36,7 @@ class Show extends Component
             session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
             return redirect()->back();
         } else {
-         
+
             $this->event->userJoinsNotify();
             $user = auth()->user();
             $this->event->users()->attach(auth()->user()->id);

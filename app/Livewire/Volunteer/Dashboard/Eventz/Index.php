@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Services\EventRecommenderService;
 use App\Services\GoogleMaps;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -34,12 +35,16 @@ class Index extends Component
         // Get the authenticated user
         $user = auth()->user();
 
+
+        $dob = Carbon::parse(auth()->user()->getCustomAttribute('date_of_birth'));
+
         // Fetch all events with relationships
         $events = Event::query()
             ->with(['category', 'tags', 'address', 'user'])
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
+            ->where('minimum_age', '<=', $dob->age) // Filter by user's age
             ->get(); // Get all events as a collection
 
 
