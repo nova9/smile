@@ -7,14 +7,19 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public $search = '';
 
-    public $events;
-    public function mount(){
-        $user=auth()->user();
-        $this->events=$user->organizingEvents;
-    }
     public function render()
     {
-        return view('livewire.requester.dashboard.my-events.index');
+        $user = auth()->user();
+
+        $events = $user->organizingEvents()
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('livewire.requester.dashboard.my-events.index', [
+            'events' => $events,
+        ]);
     }
 }
