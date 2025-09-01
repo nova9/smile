@@ -34,6 +34,12 @@ class Profile extends Component
     public $longitude;
     public $age; // Age attribute
 
+
+    public $education = [];
+    public $institution;
+    public $qualification;
+    public $year_of_completion;
+
     public function mount()
     {
         $user = auth()->user();
@@ -41,6 +47,8 @@ class Profile extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->attribute = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
+
+        $this->education = json_decode($user->getCustomAttribute('education'), true) ?? [];
 
         $this->profile_picture_url = FileManager::getTemporaryUrl(auth()->user()->getCustomAttribute('profile_picture'));
 
@@ -76,11 +84,32 @@ class Profile extends Component
         ];
     }
 
+    public function addEducation()
+    {
+        $this->education = array_merge($this->education, [[
+            'institution' => $this->institution,
+            'qualification' => $this->qualification,
+            'year_of_completion' => $this->year_of_completion,
+            'id' => uniqid(),
+        ]]);
+        auth()->user()->setCustomAttribute('education', json_encode($this->education));
+    }
+
+    public function removeEducation($id)
+    {
+        $this->education = array_filter($this->education, function ($edu) use ($id) {
+            return $edu['id'] !== $id;
+        });
+        auth()->user()->setCustomAttribute('education', json_encode(array_values($this->education)));
+    }
+
     public function saveProfilePicture()
     {
         $this->validate(Arr::only($this->rules(), ['profile_picture']));
         $file = FileManager::store($this->profile_picture);
         auth()->user()->setCustomAttribute('profile_picture', $file->id);
+        session()->flash('success', 'Profile picture updated successfully!');
+        $this->redirect('/volunteer/dashboard/profile');
     }
 
 

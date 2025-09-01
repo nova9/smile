@@ -31,6 +31,7 @@ class AttributeSeeder extends Seeder
             'description',
             'level',
             'date_of_birth',
+            'education'
         ];
 
         $attributes = array_map(function($item) {

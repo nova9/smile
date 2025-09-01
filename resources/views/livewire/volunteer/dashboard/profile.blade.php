@@ -68,16 +68,41 @@
                     <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 ">
 
                         <div class="col-span-2">
+
+                            <fieldset class="fieldset">
+                                <legend class="fieldset-legend">Education</legend>
+                                <div class="flex gap-2">
+                                    <input type="text" class="input" placeholder="Institution" wire:model="institution">
+                                    <input type="text" class="input flex-1" placeholder="Qualification" wire:model="qualification">
+                                    <input type="text" class="input max-w-48" placeholder="Year of Completion" wire:model="year_of_completion">
+                                    <button class="btn" type="button" wire:click="addEducation">Add</button>
+                                </div>
+
+                                @foreach($education as $item)
+                                    <div class="flex items-center justify-between border border-neutral-300 rounded-sm p-2">
+                                       <div class="flex gap-4">
+                                           <p class="font-medium">{{$item['institution']}}</p>
+                                           <p>{{$item['qualification']}}</p>
+                                           <p>{{$item['year_of_completion']}}</p>
+                                       </div>
+                                        <button type="button" class="btn btn-sm btn-ghost btn-error p-1" wire:click="removeEducation('{{$item['id']}}')">
+                                            <i data-lucide="trash-2" class="size-4"></i>
+                                        </button>
+                                    </div>
+                                @endforeach
+
+                            </fieldset>
+
                             <fieldset class="fieldset">
                                 <legend class="fieldset-legend">Skills</legend>
                                 <x-common.form.input-list
                                     variable="skills"
                                     :suggestions="[
-        'First Aid', 'Teamwork', 'Communication', 'Leadership', 'Event Planning',
-        'Fundraising', 'Public Speaking', 'Teaching', 'Mentoring', 'Social Media Management',
-        'Photography', 'Graphic Design', 'Web Development', 'Project Management', 'Cooking',
-        'Organizing', 'Counseling', 'Data Entry', 'Advocacy', 'Environmental Awareness'
-    ]"
+                                        'First Aid', 'Teamwork', 'Communication', 'Leadership', 'Event Planning',
+                                        'Fundraising', 'Public Speaking', 'Teaching', 'Mentoring', 'Social Media Management',
+                                        'Photography', 'Graphic Design', 'Web Development', 'Project Management', 'Cooking',
+                                        'Organizing', 'Counseling', 'Data Entry', 'Advocacy', 'Environmental Awareness'
+                                    ]"
                                 />
 
 
@@ -88,11 +113,11 @@
                                 <x-common.form.input-list
                                     variable="interests"
                                     :suggestions="[
-        'Community Service', 'Education', 'Child Welfare', 'Elderly Care', 'Animal Welfare',
-        'Environmental Conservation', 'Health & Wellness', 'Fundraising', 'Disaster Relief', 'Arts & Culture',
-        'Sports & Recreation', 'Technology & Coding', 'Advocacy & Human Rights', 'Mentoring', 'Event Organization',
-        'Homeless Support', 'Mental Health Awareness', 'Sustainable Development', 'Food Drives', 'Research & Data Analysis'
-    ]"
+                                        'Community Service', 'Education', 'Child Welfare', 'Elderly Care', 'Animal Welfare',
+                                        'Environmental Conservation', 'Health & Wellness', 'Fundraising', 'Disaster Relief', 'Arts & Culture',
+                                        'Sports & Recreation', 'Technology & Coding', 'Advocacy & Human Rights', 'Mentoring', 'Event Organization',
+                                        'Homeless Support', 'Mental Health Awareness', 'Sustainable Development', 'Food Drives', 'Research & Data Analysis'
+                                    ]"
                                 />
 
                             </fieldset>

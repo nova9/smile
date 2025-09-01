@@ -12,6 +12,15 @@
                 </button>
             </a>
         </div>
+
+{{--        Search--}}
+        <div class="relative mb-2">
+            <input wire:model.live="search" class="input focus:outline-0 w-full" type="text" placeholder="Search">
+            <div class="absolute z-10 right-0 top-1/2 -translate-y-1/2 mr-3 pointer-events-none">
+                <i data-lucide="search" class="text-gray-400"></i>
+            </div>
+        </div>
+
         <div class="overflow-x-auto bg-base-100 rounded-lg shadow border border-gray-50">
             <table class="table w-full">
                 <thead>
@@ -37,7 +46,7 @@
                         <td>
                             <div class="flex flex-wrap gap-2">
                                 @foreach ($event->tags->take(2) as $tag)
-                                    <span class="badge pb-0.5 rounded-full badge-primary">{{ $tag->name }}</span>
+                                    <span class="badge text-xs rounded-full badge-primary">{{ $tag->name }}</span>
                                 @endforeach
                             </div>
                         </td>
