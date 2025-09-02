@@ -185,9 +185,9 @@ class User extends Authenticatable
 
     public function setVolunteerLevel($points, $events, $tasks)
     {
-        if ($points <= 1 && ($events <= 1 || $tasks <= 1)) {
+        if ($points <= 10 && ($events <= 10 || $tasks <= 10)) {
             $this->setCustomAttribute('level', 'beginner');
-        } elseif ($points <= 3 && ($events <= 3 || $tasks <= 3)) {
+        } elseif ($points <= 30 && ($events <= 30 || $tasks <= 30)) {
             $this->setCustomAttribute('level', 'intermediate');
         } else {
             $this->setCustomAttribute('level', 'advanced');
