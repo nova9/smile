@@ -6,9 +6,10 @@
             <x-common.dashboard.item to="/volunteer/dashboard/my-events" icon="file-clock" title="My Events"/>
             <x-common.dashboard.item to="/volunteer/dashboard/leaderboard" icon="users" title="Leaderboard"/>
             <x-common.dashboard.item to="/volunteer/dashboard/achievements" icon="trophy" title="My Achievements"/>
-
+            
         </x-slot>
 
         {{ $slot }}
+         <livewire:common.chatbot/>
     </x-common.dashboard>
 </div>

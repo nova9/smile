@@ -1,175 +1,187 @@
 <x-volunteer.dashboard-layout>
-    <div class="p-6 lg:p-12 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">Welcome, {{ auth()->user()->name }}!</h1>
-            <p class="text-gray-600 mt-2">Here's an overview of your volunteer journey.</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-6 gap-6 items-start">
-            <!-- Stats Section -->
-            <div class=" col-span-1 lg:col-span-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div
-                        class="stats bg-white shadow-lg rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                        <div class="stat p-6">
-                            <div class="stat-title text-gray-500 font-medium">Total Events</div>
-                            <div class="stat-value text-4xl font-extrabold text-indigo-600">8</div>
-                            <div class="stat-desc text-green-500 font-medium">21% more than last month</div>
-                        </div>
+    <div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-50 min-h-screen">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <!-- Campaign Overview -->
+            <div
+                class="bg-white rounded-2xl shadow-lg p-8 flex flex-col justify-between border border-gray-100 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-gray-700">Campaign Overview</h2>
+                    <div class="flex gap-2">
+                        <i data-lucide="facebook" class="text-blue-600"></i>
+                        <i data-lucide="twitter" class="text-sky-400"></i>
+                        <i data-lucide="youtube" class="text-red-600"></i>
                     </div>
-                    <div
-                        class="stats bg-white shadow-lg rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                        <div class="stat p-6">
-                            <div class="stat-title text-gray-500 font-medium">Total Points</div>
-                            <div class="stat-value text-4xl font-extrabold text-indigo-600">80</div>
-                            <div class="stat-desc text-green-500 font-medium">21% more than last month</div>
-                        </div>
-                    </div>
-                    <div
-                        class="stats bg-white shadow-lg rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                        <div class="stat p-6">
-                            <div class="stat-title text-gray-500 font-medium">Total Hours</div>
-                            <div class="stat-value text-4xl font-extrabold text-indigo-600">54</div>
-                            <div class="stat-desc text-green-500 font-medium">21% more than last month</div>
-                        </div>
-                    </div>
-
                 </div>
-                <div>
-                    
-                    <div class="bg-white rounded-xl shadow-lg p-6 mt-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">Monthly Volunteer Progress</h3>
-                        <canvas id="volunteerProgressChart" class="w-full h-64"></canvas>
-                    </div>
-                    <!-- Chart.js CDN and chart script -->
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            var ctx = document.getElementById('volunteerProgressChart').getContext('2d');
-                            new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: {!! json_encode($months ?? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']) !!},
-                                    datasets: [{
-                                        label: 'Hours',
-                                        data: {!! json_encode($monthlyHours ?? [12, 19, 3, 5, 2, 3]) !!},
-                                        backgroundColor: 'rgba(59,130,246,0.7)',
-                                        borderColor: 'rgba(59,130,246,1)',
-                                        borderWidth: 2,
-                                        borderRadius: 8,
-                                        hoverBackgroundColor: 'rgba(34,197,94,0.7)',
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        },
-                                        tooltip: {
-                                            backgroundColor: 'rgba(59,130,246,0.9)',
-                                            titleColor: '#fff',
-                                            bodyColor: '#fff',
-                                            borderColor: 'rgba(34,197,94,0.7)',
-                                            borderWidth: 1,
-                                            padding: 12,
-                                            cornerRadius: 8,
-                                        }
-                                    },
-                                    scales: {
-                                        x: {
-                                            grid: {
-                                                display: false
-                                            },
-                                            ticks: {
-                                                color: '#3b82f6',
-                                                font: {
-                                                    weight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        y: {
-                                            beginAtZero: true,
-                                            grid: {
-                                                color: 'rgba(59,130,246,0.1)'
-                                            },
-                                            ticks: {
-                                                color: '#22c55e',
-                                                font: {
-                                                    weight: 'bold'
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    </script>
+                <div class="text-4xl font-extrabold text-primary mb-2">65 <span
+                        class="text-base font-normal text-gray-400">Active</span></div>
+                <div class="flex justify-between text-sm text-gray-400 mb-4">
+                    <span>56 Pending</span>
+                    <span>45 Cancel</span>
+                    <span>75% Success rate</span>
                 </div>
-
+                <input type="text"
+                    class="mt-2 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary"
+                    placeholder="Search Campaign" />
             </div>
-
-            <!-- Achievements Section -->
-            <div class="col-span-1 lg:col-span-2">
-                <div class="card w-full bg-white shadow-lg rounded-xl overflow-hidden">
-                    <div class="card-body p-6">
-                        <h2 class="card-title text-2xl font-semibold text-gray-800 mb-4">Your Achievements</h2>
-                        <p class="text-gray-600 mb-4">Celebrating your milestones:</p>
-                        <ul class="space-y-3">
-                            <li class="flex items-center text-gray-700 mb-2">
-                                <svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12zm0-10a1 1 0 00-1 1v3a1 1 0 002 0V7a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z" />
-                                </svg>
-                                Leaderboard Rank #1
-                            </li>
-                            @if (isset($badges) && count($badges))
-                                <li class="flex flex-col text-gray-700 mb-2">
-                                    <div class="flex items-center mb-1">
-                                        <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                            <circle cx="10" cy="10" r="8" />
-                                        </svg>
-                                        Badges Earned
-                                    </div>
-                                    <ul class="ml-7 space-y-1">
-                                        @foreach ($badges as $badge)
-                                            <li class="flex items-center">
-                                                <span class="text-sm text-gray-600">{{ $badge->name }}</span>
-                                                @if ($badge->icon)
-                                                    <img src="{{ $badge->icon }}" alt="{{ $badge->name }}"
-                                                        class="w-5 h-5 ml-2" />
-                                                @endif
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
-                            @if (isset($certificates) && count($certificates))
-                                <li class="flex flex-col text-gray-700 mb-2">
-                                    <div class="flex items-center mb-1">
-                                        <svg class="w-5 h-5 text-purple-500 mr-2" fill="currentColor"
-                                            viewBox="0 0 20 20">
-                                            <rect x="4" y="4" width="12" height="12" rx="2" />
-                                        </svg>
-                                        Certificates Awarded
-                                    </div>
-                                    <ul class="ml-7 space-y-1">
-                                        @foreach ($certificates as $certificate)
-                                            <li class="flex items-center">
-                                                <span class="text-sm text-gray-600">{{ $certificate->title }}</span>
-                                                @if ($certificate->icon)
-                                                    <img src="{{ $certificate->icon }}" alt="{{ $certificate->title }}"
-                                                        class="w-5 h-5 ml-2" />
-                                                @endif
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
+            <!-- Mail Statistic -->
+            <div
+                class="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center border border-gray-100 hover:shadow-xl transition-shadow">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Mail Statistic</h2>
+                <!-- Pie Chart Placeholder -->
+                <svg width="90" height="90" viewBox="0 0 32 32" class="mb-4">
+                    <circle r="16" cx="16" cy="16" fill="#f3f4f6" />
+                    <path d="M16 16 L16 0 A16 16 0 0 1 32 16 Z" fill="#34d399" />
+                    <path d="M16 16 L32 16 A16 16 0 0 1 16 32 Z" fill="#fbbf24" />
+                    <path d="M16 16 L16 32 A16 16 0 0 1 0 16 Z" fill="#ef4444" />
+                </svg>
+                <div class="flex flex-col gap-1 text-sm">
+                    <span class="text-green-500 font-medium">Sent: 128 Mails</span>
+                    <span class="text-yellow-500 font-medium">Pending: 24</span>
+                    <span class="text-red-500 font-medium">Cancel: 10</span>
+                </div>
+            </div>
+            <!-- Traffic Effectives -->
+            <div
+                class="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center border border-gray-100 hover:shadow-xl transition-shadow">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Traffic Effectives</h2>
+                <!-- Donut Chart Placeholder -->
+                <svg width="90" height="90" viewBox="0 0 32 32" class="mb-4">
+                    <circle r="14" cx="16" cy="16" fill="#e5e7eb" />
+                    <path d="M16 16 L16 2 A14 14 0 0 1 30 16 Z" fill="#3b82f6" />
+                    <path d="M16 16 L30 16 A14 14 0 0 1 16 30 Z" fill="#10b981" />
+                    <path d="M16 16 L16 30 A14 14 0 0 1 2 16 Z" fill="#f59e42" />
+                </svg>
+                <div class="flex gap-4 text-sm">
+                    <span class="text-blue-500 font-medium">Paid: 70%</span>
+                    <span class="text-green-500 font-medium">Direct: 24%</span>
+                    <span class="text-yellow-500 font-medium">Organic: 12%</span>
                 </div>
             </div>
         </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+         <div class="grid grid-rows-1 md:grid-rows-3 gap-8 col-span-1">
+            <!-- Impression Cards -->
+            <div
+                class="bg-white rounded-2xl shadow-lg p-8 flex flex-col gap-3 border border-gray-100 hover:shadow-xl transition-shadow">
+                <div class="flex items-center gap-3 mb-2">
+                    <i data-lucide="activity" class="text-blue-500"></i>
+                    <span class="font-bold text-gray-700">Ad Name GOCA #30</span>
+                    <span class="ml-auto text-green-500 text-xs font-semibold">Active</span>
+                </div>
+                <div class="text-3xl font-extrabold text-primary">245k</div>
+                <div class="text-sm text-gray-400">Impressions</div>
+                <div class="w-full h-8 bg-gradient-to-r from-green-400 to-blue-400 rounded-lg"></div>
+                <div class="text-xs text-gray-300">Jan 24-26 2023</div>
+            </div>
+            <div
+                class="bg-white rounded-2xl shadow-lg p-8 flex flex-col gap-3 border border-gray-100 hover:shadow-xl transition-shadow">
+                <div class="flex items-center gap-3 mb-2">
+                    <i data-lucide="activity" class="text-blue-500"></i>
+                    <span class="font-bold text-gray-700">Ad Name FACA #24</span>
+                    <span class="ml-auto text-green-500 text-xs font-semibold">Active</span>
+                </div>
+                <div class="text-3xl font-extrabold text-primary">558k</div>
+                <div class="text-sm text-gray-400">Impressions</div>
+                <div class="w-full h-8 bg-gradient-to-r from-yellow-400 to-green-400 rounded-lg"></div>
+                <div class="text-xs text-gray-300">Jan 24-26 2023</div>
+            </div>
+            <div
+                class="bg-white rounded-2xl shadow-lg p-8 flex flex-col gap-3 border border-gray-100 hover:shadow-xl transition-shadow">
+                <div class="flex items-center gap-3 mb-2">
+                    <i data-lucide="activity" class="text-blue-500"></i>
+                    <span class="font-bold text-gray-700">Ad Name VOCA #20</span>
+                    <span class="ml-auto text-green-500 text-xs font-semibold">Active</span>
+                </div>
+                <div class="text-3xl font-extrabold text-primary">412k</div>
+                <div class="text-sm text-gray-400">Impressions</div>
+                <div class="w-full h-8 bg-gradient-to-r from-blue-400 to-yellow-400 rounded-lg"></div>
+                <div class="text-xs text-gray-300">Jan 24-26 2023</div>
+            </div>
+        </div>
+        <div class="col-span-2">
+          <div class="grid grid-rows-1 md:grid-rows-2 gap-8 mb-8 ">
+            <!-- Engagement Analytics -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-semibold text-gray-700">Engagement Analytics</h2>
+                        <div class="flex gap-2">
+                        <select
+                            class="border border-gray-200 rounded-lg px-2 py-1 text-sm focus:ring-2 focus:ring-primary">
+                            <option>Social media</option>
+                            <option>Email</option>
+                        </select>
+                        <select
+                            class="border border-gray-200 rounded-lg px-2 py-1 text-sm focus:ring-2 focus:ring-primary">
+                            <option>Monthly</option>
+                            <option>Weekly</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Bar Chart Placeholder -->
+                <div class="flex items-end gap-3 h-36 mt-6">
+                    <div class="bg-green-400 w-5 h-20 rounded-lg hover:scale-105 transition-transform"></div>
+                    <div class="bg-blue-400 w-5 h-28 rounded-lg hover:scale-105 transition-transform"></div>
+                    <div class="bg-yellow-400 w-5 h-24 rounded-lg hover:scale-105 transition-transform"></div>
+                    <div class="bg-green-400 w-5 h-32 rounded-lg hover:scale-105 transition-transform"></div>
+                    <div class="bg-blue-400 w-5 h-16 rounded-lg hover:scale-105 transition-transform"></div>
+                    <div class="bg-yellow-400 w-5 h-28 rounded-lg hover:scale-105 transition-transform"></div>
+                    <div class="bg-green-400 w-5 h-24 rounded-lg hover:scale-105 transition-transform"></div>
+                    <div class="bg-blue-400 w-5 h-32 rounded-lg hover:scale-105 transition-transform"></div>
+                    <div class="bg-yellow-400 w-5 h-20 rounded-lg hover:scale-105 transition-transform"></div>
+                </div>
+                <div class="flex justify-between text-sm mt-4 text-gray-400">
+                    <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span>
+                </div>
+            </div>
+            <!-- Schedule Table -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-gray-700">Schedule</h2>
+                    <button class="text-xs px-3 py-1 bg-primary text-white rounded-lg shadow">Export</button>
+                </div>
+                <table class="w-full text-sm rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="text-gray-500 bg-gray-50">
+                            <th class="py-2">No</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Date & Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-t hover:bg-gray-50">
+                            <td class="py-2">01</td>
+                            <td>Social Ads</td>
+                            <td><span class="text-green-500 font-semibold">Active</span></td>
+                            <td>01.12.23</td>
+                            <td><button class="text-xs text-primary underline">View</button></td>
+                        </tr>
+                        <tr class="border-t hover:bg-gray-50">
+                            <td class="py-2">02</td>
+                            <td>Email</td>
+                            <td><span class="text-yellow-500 font-semibold">Pending</span></td>
+                            <td>01.12.23</td>
+                            <td><button class="text-xs text-primary underline">View</button></td>
+                        </tr>
+                        <tr class="border-t hover:bg-gray-50">
+                            <td class="py-2">03</td>
+                            <td>Social Ads</td>
+                            <td><span class="text-red-500 font-semibold">Cancel</span></td>
+                            <td>01.12.23</td>
+                            <td><button class="text-xs text-primary underline">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+          
+        </div>
+
+       
+        </div>
+
+       
     </div>
 </x-volunteer.dashboard-layout>
