@@ -4,15 +4,21 @@ namespace App\Livewire\Common;
 
 use Livewire\Component;
 use App\Services\ChatbotService;
+use Livewire\Volt\Compilers\Mount;
 
 class Chatbot extends Component
 {
+
+    
     public $messages = [];
 
     public $input = '';
+    public $reply='';
+    
 
     public function sendMessage()
     {
+    
         if (trim($this->input) === '') return;
 
         // // Add user message
@@ -24,13 +30,12 @@ class Chatbot extends Component
 
         // Get reply from ChatbotService
         $service = app(ChatbotService::class);
-        $formattedMessages = $service->formatMessagesForOpenAI($this->messages);
-        $reply = $service->getChatbotReply($formattedMessages);
-
+        $this->reply = $service->getChatbotReply($this->messages);
+        // dd($reply);
         // Add bot reply
         $this->messages[] = [
             'role' => 'assistant',
-            'content' => $reply,
+            'content' => $this->reply,
         ];
 
         $this->input = '';
