@@ -8,5 +8,6 @@
         </x-slot>
 
         {{ $slot }}
+         <livewire:common.chatbot/>
     </x-common.dashboard>
 </div>
