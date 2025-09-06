@@ -43,12 +43,13 @@ class UserSeeder extends Seeder
         ]);
 
         $roleVolunteer = Role::where('name', 'volunteer')->first();
-        User::query()->create([
+        $volunteer = User::query()->create([
             'name' => 'Volunteer',
             'email' => 'v@s.com',
             'password' => 'password',
             'role_id' => $roleVolunteer->id
         ]);
+        $volunteer->setCustomAttribute('date_of_birth', '1990-01-01');
 
         // Add more volunteers for demo/testing
         User::query()->create([
