@@ -1,8 +1,25 @@
-<div class="fixed bottom-4 right-4 z-50">
+<div class="fixed bottom-4 right-4 z-50" x-data="{
+    open: localStorage.getItem('chatbotOpen') === 'true',
+    toggle() {
+        this.open = !this.open;
+        localStorage.setItem('chatbotOpen', this.open);
+    },
+    close() {
+        this.open = false;
+        localStorage.setItem('chatbotOpen', false);
+    },
+    init() {
+        this.$watch('open', value => localStorage.setItem('chatbotOpen', value));
+        // Listen for Livewire updates to restore state
+        document.addEventListener('livewire:update', () => {
+            this.open = localStorage.getItem('chatbotOpen') === 'true';
+        });
+    }
+}">
     <!-- Chatbot Toggle Button -->
     <button id="chatbot-toggle-btn"
-        class="bg-emerald-500 text-white p-4 rounded-full shadow-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
-        aria-label="Toggle chat">
+        class="bg-neutral text-white p-4 rounded-full shadow-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
+        aria-label="Toggle chat" x-show="!open" x-on:click="toggle()">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -10,13 +27,14 @@
     </button>
 
     <!-- Chatbot Window -->
-    <div id="chatbot-window" class="w-80 sm:w-96 bg-white rounded-lg shadow-xl flex flex-col max-h-[80vh]">
+    <div id="chatbot-window" class="w-80 sm:w-96 bg-white rounded-lg shadow-xl flex flex-col max-h-[80vh]"
+        x-show="open" x-transition>
         <!-- Chat Header -->
-        <div class="bg-emerald-500 text-white p-4 rounded-t-lg flex justify-between items-center">
+        <div class="bg-neutral text-white p-4 rounded-t-lg flex justify-between items-center">
             <h2 class="text-lg font-semibold">Smile Assistant</h2>
             <button id="chatbot-close-btn"
                 class="text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-700"
-                aria-label="Close chat">
+                aria-label="Close chat" x-on:click="close()">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -26,10 +44,47 @@
         <!-- Chat Messages Area -->
         <div class="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50">
             @foreach ($messages as $msg)
-                <div class="{{ $msg['role'] === 'user' ? 'flex justify-end' : 'flex justify-start' }}">
+                <div class="flex {{ $msg['role'] === 'user' ? 'justify-end' : 'justify-start' }}">
                     <div
-                        class="{{ $msg['role'] === 'user' ? 'chat-bubble-user' : 'chat-bubble-assistant' }} px-4 py-2 rounded-lg max-w-[80%] text-sm">
-                        {{ $msg['content'] }}
+                        class="px-4 py-2 rounded-lg max-w-[80%] text-sm shadow {{ $msg['role'] === 'user' ? 'bg-gray-100 text-gray-800 rounded-br-none' : 'bg-gray-100 text-gray-800 rounded-bl-none' }}">
+                        @if ($msg['role'] === 'assistant' && preg_match('/\d+\./', $msg['content']))
+                            @php
+                                $lines = preg_split('/\r?\n/', $msg['content']);
+                                $intro = [];
+                                $list = [];
+                                $after = [];
+                                $inList = false;
+                                foreach ($lines as $line) {
+                                    if (preg_match('/^\d+\./', trim($line))) {
+                                        $inList = true;
+                                        $list[] = trim($line);
+                                    } elseif ($inList && trim($line) === '') {
+                                        $inList = false;
+                                    } elseif ($inList) {
+                                        $list[count($list) - 1] .= ' ' . trim($line);
+                                    } elseif (!$inList) {
+                                        if (empty($list)) {
+                                            $intro[] = $line;
+                                        } else {
+                                            $after[] = $line;
+                                        }
+                                    }
+                                }
+                            @endphp
+                            @if (!empty($intro))
+                                <div class="mb-2 font-semibold">{{ implode(' ', $intro) }}</div>
+                            @endif
+                            <ol class="list-decimal list-inside space-y-1">
+                                @foreach ($list as $item)
+                                    <li>{{ preg_replace('/^\d+\.\s*/', '', $item) }}</li>
+                                @endforeach
+                            </ol>
+                            @if (!empty($after))
+                                <div class="mt-2">{{ implode(' ', $after) }}</div>
+                            @endif
+                        @else
+                            {{ strip_tags($msg['content']) }}
+                        @endif
                     </div>
                 </div>
             @endforeach
@@ -46,7 +101,7 @@
                 <input wire:model.defer="input" type="text" class="input input-bordered w-full text-sm"
                     placeholder="Type a message..." autocomplete="off" aria-label="Type your message">
                 <button type="submit"
-                    class="bg-emerald-500 text-white p-2 rounded-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
+                    class="bg-neutral text-white p-2 rounded-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
                     aria-label="Send message">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -57,29 +112,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    // Persist chat open/close state
-    const chatbotWindow = document.getElementById('chatbot-window');
-    const chatbotToggleBtn = document.getElementById('chatbot-toggle-btn');
-    const chatbotCloseBtn = document.getElementById('chatbot-close-btn');
-
-    chatbotToggleBtn.addEventListener('click', function() {
-        chatbotWindow.classList.toggle('hidden');
-        localStorage.setItem('chatbotOpen', !chatbotWindow.classList.contains('hidden'));
-    });
-
-    chatbotCloseBtn.addEventListener('click', function() {
-        chatbotWindow.classList.add('hidden');
-        localStorage.setItem('chatbotOpen', false);
-    });
-    // Restore chat window state after Livewire updates
-    document.addEventListener('livewire:update', function() {
-        if (localStorage.getItem('chatbotOpen') === 'true') {
-            chatbotWindow.classList.remove('hidden');
-        } else {
-            chatbotWindow.classList.add('hidden');
-        }
-    });
-</script>

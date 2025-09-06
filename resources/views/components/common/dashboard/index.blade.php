@@ -45,6 +45,7 @@
         <div class="overflow-scroll">
             {{ $slot }}
         </div>
+        <livewire:common.chatbot/>
     </div>
     
 </div>

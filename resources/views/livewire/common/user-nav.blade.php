@@ -46,7 +46,7 @@
                 <ul class="menu w-full space-y-1 text-error">
                     <li>
                         @csrf
-                        <button type="submit" class="flex items-center gap-2 hover:cursor-pointer">
+                        <button type="submit" class="flex items-center gap-2 hover:cursor-pointer" >
                             <i data-lucide="log-out" class="size-5"></i>
                             <span>Log out</span>
                         </button>
