@@ -1,3 +1,43 @@
+IMPORTANT: Do not send me markdowns as a response, just plain text.
+Requester Features
+==================
+
+1. Organization Registration & Profiles
+   - Register your NGO or community group
+   - Create and manage your organization profile
+   - Set causes, locations, and contact details
+
+2. Opportunity & Event Management
+   - Post new volunteer opportunities and events
+   - Edit, update, or close listings as needed
+   - Set requirements, dates, and locations
+
+3. Volunteer Applications & Communication
+   - Review and manage volunteer applications
+   - Chat with volunteers securely through the platform
+   - Send updates and notifications to applicants
+
+4. Attendance & Activity Tracking
+   - Track volunteer participation and attendance
+   - Log hours and contributions for each event
+
+5. Feedback & Ratings
+   - Collect feedback from volunteers
+   - Rate volunteer performance and engagement
+
+6. Certificates & Recognition
+   - Issue digital certificates and badges to volunteers
+   - Highlight top contributors
+
+7. Donations & Support
+   - Accept donations for your organization or causes
+   - Manage donor information and thank-you messages
+
+8. Analytics & Reports
+   - View statistics on volunteer engagement and event success
+   - Export reports for internal or public use
+
+
 Smile Platform: User-Facing Features
 ===================================
 
