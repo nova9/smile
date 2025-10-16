@@ -50,7 +50,7 @@ class GenerateEmbedding implements ShouldQueue
         } else {
             // Fallback to fields if no text provided
             $combinedText = collect($this->fieldsToEmbed)
-                ->map(fn($field) => $model->{$field} ?? '')
+                ->map(fn($field) => json_encode($model->{$field}) ?? '')
                 ->filter()
                 ->implode("\n\n");
         }
