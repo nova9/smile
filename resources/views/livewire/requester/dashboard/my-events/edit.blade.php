@@ -220,14 +220,56 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Skills Required -->
-                        <div class="md:col-span-2">
-                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Skills
-                                Required</label>
-                            <textarea wire:model="skills" id="skills" rows="3"
-                                      class="textarea textarea-bordered w-full"
-                                      placeholder="List any specific skills, experience, or qualifications needed..."></textarea>
-                            @error('skills') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-
+                        <div class="mb-4" x-data="{
+                            skillInput: '',
+                            skills: $wire.skills || [],
+                            addSkill() {
+                                const skill = this.skillInput.trim();
+                                if (skill && !this.skills.includes(skill)) {
+                                    this.skills.push(skill);
+                                    $wire.skills = this.skills;
+                                }
+                                this.skillInput = '';
+                            },
+                            removeSkill(skill) {
+                                this.skills = this.skills.filter(s => s !== skill);
+                                $wire.skills = this.skills;
+                            }
+                        }">
+                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-2">Required
+                                Skills</label>
+                            <div class="flex gap-2 mb-3">
+                                <input x-model="skillInput" x-on:keydown.enter.prevent="addSkill()" type="text"
+                                       class="input input-bordered flex-1" placeholder="Type a skill and press Enter"
+                                       aria-describedby="skills_error">
+                                <button type="button" x-on:click="addSkill()" class="btn btn-primary">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                    Add Skill
+                                </button>
+                            </div>
+                            <template x-if="skills.length > 0">
+                                <div class="flex flex-wrap gap-2 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                    <template x-for="skill in skills" :key="skill">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary rounded-full">
+                                            <span x-text="skill"></span>
+                                            <button type="button" class="ml-2 text-white hover:cursor-pointer"
+                                                    x-on:click="removeSkill(skill)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                     class="size-3 hover:cursor-pointer lucide lucide-x-icon lucide-x">
+                                                    <path d="M18 6 6 18" />
+                                                    <path d="m6 6 12 12" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </template>
+                                </div>
+                            </template>
+                            @error('skills')
+                            <p class="text-xs text-red-500 mt-1" id="skills_error">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Age Requirements -->
@@ -261,86 +303,160 @@
                         What do you need for the event?
                     </h2>
 
-                    <div></div>
+                    <div x-data="{ rows: @entangle('event_resources') }">
+                        <p class="text-sm text-gray-600 mb-3">Add resources required for the event and the
+                            amount/quantity needed.</p>
+
+                        <template x-if="rows.length === 0">
+                            <div class="mb-3 text-sm text-gray-500">No resources added yet. Click the button below to
+                                add one.</div>
+                        </template>
+
+                        <div class="space-y-3">
+                            <template x-for="(row, index) in rows" :key="index">
+                                <div class="grid grid-cols-12 gap-2 items-center">
+                                    <div class="col-span-7">
+                                        <label class="sr-only">Resource</label>
+                                        <template x-if="!rows[index].is_custom">
+                                            <select x-model="rows[index].resource_id"
+                                                    class="select select-bordered w-full">
+                                                <option value="">Select a resource</option>
+                                                @foreach ($resources as $resource)
+                                                    <option value="{{ $resource->id }}">{{ $resource->name }}
+                                                        @if($resource->unit) ({{ $resource->unit }}) @endif</option>
+                                                @endforeach
+                                            </select>
+                                        </template>
+                                        <template x-if="rows[index].is_custom">
+                                            <div class="grid grid-cols-2 gap-2">
+                                                <input x-model="rows[index].custom_name" type="text"
+                                                       class="input input-bordered w-full" placeholder="Custom resource name">
+                                                <input x-model="rows[index].custom_unit" type="text"
+                                                       class="input input-bordered w-full" placeholder="Unit (e.g., kg, pcs)">
+                                            </div>
+                                        </template>
+                                    </div>
+
+                                    <div class="col-span-3">
+                                        <label class="sr-only">Quantity</label>
+                                        <input x-model="rows[index].quantity" type="number" min="1"
+                                               class="input input-bordered w-full" placeholder="Quantity">
+                                    </div>
+
+                                    <div class="col-span-1 flex items-center justify-center">
+                                        <label class="inline-flex items-center text-xs">
+                                            <input type="checkbox" class="checkbox mr-2"
+                                                   x-model="rows[index].is_custom">
+                                            <span>Custom</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-span-1 flex justify-end items-center">
+                                        <button type="button" class="btn btn-sm"
+                                                x-on:click="rows.splice(index, 1)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2 size-4"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="button" class="btn btn-primary"
+                                    x-on:click="rows.push({ resource_id: '', quantity: 1 })">
+                                <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                Add Resource
+                            </button>
+                        </div>
+
+                        @error('event_resources')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        @enderror
+                        @error('event_resources.*.resource_id')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        @enderror
+                        @error('event_resources.*.quantity')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
             </div>
 
             <!-- Location Card -->
-            <div class="card bg-white shadow-md">
 
-                <div class="card-body">
-                    <h2 class="card-title text-xl mb-4 flex items-center">
-                        <i data-lucide="map-pin" class="size-5 mr-2 text-primary"></i>
-                        Location Details
-                    </h2>
+            <div class="card-body">
+                <h2 class="card-title text-xl mb-4 flex items-center">
+                    <i data-lucide="map-pin" class="size-5 mr-2 text-primary"></i>
+                    Location Details
+                </h2>
 
 
-                    <!-- Map Location Picker -->
+                <!-- Map Location Picker -->
 
-                    <div class="mb-6" wire:ignore>
-                        <div class="border border-gray-300 rounded-lg overflow-hidden">
-                            <div id="map" class="w-full h-[70vh] bg-gray-100 relative">
-                                <!-- Map will be initialized here -->
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    {{--                                    loading state--}}
-                                    <div class="flex items-center gap-2">
-                                        <button class="btn btn-sm btn-primary" onclick="initializeMap()"
-                                                type="button"
-                                        >
-                                            <i data-lucide="refresh-cw" class="size-4"></i>
-                                            <span class="ml-1">Reload Map</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Selected coordinates display -->
-                        <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                            <div class="flex items-center justify-between mb-3">
+                <div class="mb-6" wire:ignore>
+                    <div class="border border-gray-300 rounded-lg overflow-hidden">
+                        <div id="map" class="w-full h-[70vh] bg-gray-100 relative">
+                            <!-- Map will be initialized here -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                {{-- loading state --}}
                                 <div class="flex items-center gap-2">
-                                    <i data-lucide="navigation" class="size-4 text-primary"></i>
-                                    <h4 class="text-sm font-medium text-gray-700">Selected Location</h4>
-                                </div>
-                                <button type="button"
-                                        onclick="getCurrentLocation()"
-                                        class="btn btn-sm bg-primary hover:bg-green-700 text-white border-none shadow-sm hover:shadow-md transition-all duration-200 group"
-                                        title="Use my current location">
-                                    <i data-lucide="crosshair"
-                                       class="size-4 group-hover:rotate-90 transition-transform duration-200"></i>
-                                    <span class="hidden sm:inline ml-1">Current Location</span>
-                                </button>
-                            </div>
-
-                            <div id="coordinates-display" class="hidden">
-                                <div class="flex items-center gap-4 p-3 bg-white/50 rounded-lg border border-green-100">
-                                    <div class="flex items-center gap-2 text-sm text-gray-600">
-                                        <i data-lucide="map-pin" class="size-4 text-primary0"></i>
-                                        <span class="font-medium">Coordinates:</span>
-                                    </div>
-                                    <div class="flex items-center gap-4 text-sm font-mono">
-                                        <span id="lat-display" class="text-gray-700"></span>
-                                        <span class="text-gray-400">•</span>
-                                        <span id="lng-display" class="text-gray-700"></span>
-                                    </div>
+                                    <button class="btn btn-sm btn-primary" onclick="initializeMap()" type="button">
+                                        <i data-lucide="refresh-cw" class="size-4"></i>
+                                        <span class="ml-1">Reload Map</span>
+                                    </button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div id="no-location" class="flex items-center justify-center text-gray-500">
-                                <div class="text-center">
-                                    <i data-lucide="map" class="size-8 mx-auto mb-2 text-primary"></i>
-                                    <p class="text-sm">Click on the map to select a location</p>
-                                </div>
+                    <!-- Selected coordinates display -->
+                    <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="navigation" class="size-4 text-primary"></i>
+                                <h4 class="text-sm font-medium text-gray-700">Selected Location</h4>
                             </div>
-
-                            <!-- Hidden inputs for form submission -->
-                            <input wire:model="latitude" type="hidden" id="latitude">
-                            <input wire:model="longitude" type="hidden" id="longitude">
+                            <button type="button" onclick="getCurrentLocation()"
+                                    class="btn btn-sm bg-primary hover:bg-green-700 text-white border-none shadow-sm hover:shadow-md transition-all duration-200 group"
+                                    title="Use my current location">
+                                <i data-lucide="crosshair"
+                                   class="size-4 group-hover:rotate-90 transition-transform duration-200"></i>
+                                <span class="hidden sm:inline ml-1">Current Location</span>
+                            </button>
                         </div>
 
-                        @error('latitude') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-                        @error('longitude') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                        <div id="coordinates-display" class="hidden">
+                            <div class="flex items-center gap-4 p-3 bg-white/50 rounded-lg border border-green-100">
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <i data-lucide="map-pin" class="size-4 text-primary0"></i>
+                                    <span class="font-medium">Coordinates:</span>
+                                </div>
+                                <div class="flex items-center gap-4 text-sm font-mono">
+                                    <span id="lat-display" class="text-gray-700"></span>
+                                    <span class="text-gray-400">•</span>
+                                    <span id="lng-display" class="text-gray-700"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="no-location" class="flex items-center justify-center text-gray-500">
+                            <div class="text-center">
+                                <i data-lucide="map" class="size-8 mx-auto mb-2 text-primary"></i>
+                                <p class="text-sm">Click on the map to select a location</p>
+                            </div>
+                        </div>
+
+                        <!-- Hidden inputs for form submission -->
+                        <input wire:model="latitude" type="hidden" id="latitude">
+                        <input wire:model="longitude" type="hidden" id="longitude">
                     </div>
+
+                    @error('latitude')
+                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                    @enderror
+                    @error('longitude')
+                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
@@ -371,9 +487,13 @@
     function initializeMap() {
         // Initialize the map
         const mapOptions = {
-            center: {lat: 7.8731, lng: 80.7718},
+            center: {
+                lat: 7.8731,
+                lng: 80.7718
+            },
             zoom: 7,
-            mapId: "198a0e442491558328ee7d20"
+            mapId: "198a0e442491558328ee7d20",
+            gestureHandling: "cooperative",
         };
 
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -386,6 +506,11 @@
             };
             placeMarker(pos);
         });
+
+        placeMarker({
+            lat: {{ $latitude }},
+            lng: {{ $longitude }}
+        })
     }
 
     function placeMarker(pos) {
@@ -393,8 +518,6 @@
         if (marker) {
             marker.setMap(null);
         }
-
-        console.log(google)
 
         // Create a new marker
         marker = new google.maps.marker.AdvancedMarkerElement({
@@ -450,6 +573,6 @@
     // }
 
     window.addEventListener("load", initializeMap);
-</script>
 
+</script>
 @endassets
