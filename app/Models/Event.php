@@ -68,6 +68,11 @@ class Event extends Model
         return $this->belongsTo(Address::class);
     }
 
+    public function resources(): BelongsToMany
+    {
+        return $this->belongsToMany(Resource::class);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
