@@ -24,14 +24,6 @@
             </div>
         </div>
 
-        <!-- Summary Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-            <x-volunteer.dashboard.my-events.card label="Total Events" :value="count($participatingEvents)" icon="calendar-days" color="slate-600" color_bg="slate-100" />
-            <x-volunteer.dashboard.my-events.card label="Confirmed" :value="count($confirmedEvents)" icon="clock" color="emerald-600" color_bg="emerald-100" />
-            <x-volunteer.dashboard.my-events.card label="Pending" :value="count($pendingEvents)" icon="clock" color="amber-600" color_bg="amber-100" />
-            <x-volunteer.dashboard.my-events.card label="Completed" :value="count($completedEvents)" icon="clock" color="violet-600" color_bg="violet-100" />
-            <x-volunteer.dashboard.my-events.card label="Cancelled" :value="count($cancelledEvents)" icon="clock" color="rose-600" color_bg="rose-100" />
-        </div>
 
         <!-- Filters -->
         <div class="mb-6">
