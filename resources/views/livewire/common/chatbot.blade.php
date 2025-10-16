@@ -18,7 +18,7 @@
 }">
     <!-- Chatbot Toggle Button -->
     <button id="chatbot-toggle-btn"
-        class="bg-neutral text-white p-4 rounded-full shadow-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
+        class="bg-neutral text-white p-4 rounded-full shadow-lg hover:outline hover:bg-white hover:text-primary focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
         aria-label="Toggle chat" x-show="!open" x-on:click="toggle()">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

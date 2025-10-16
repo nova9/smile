@@ -1,9 +1,9 @@
-<div class="drawer drawer-end z-99999" x-cloak>
+<div class="drawer drawer-end" x-cloak>
     <input id="drawer" wire:model="drawerOpen" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
-        <label for="drawer">
+        <label for="drawer" class="z-199">
             <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom"
-                data-tip="notifications">
+                data-tip="Notifications">
                 <i data-lucide="bell" class="size-5"></i>
                 @php $unread = $notifications->count(); @endphp
                 @if ($unread)
@@ -13,7 +13,7 @@
             </div>
         </label>
     </div>
-    <div class="drawer-side">
+    <div class="drawer-side z-200">
         <label for="drawer" aria-label="close sidebar" class="drawer-overlay"></label>
         <div class="bg-base-200 min-h-full w-80">
             <!-- Header -->

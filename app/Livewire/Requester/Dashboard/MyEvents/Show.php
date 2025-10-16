@@ -54,12 +54,12 @@ class Show extends Component
         $this->acceptedUsers = $this->event->users->where('pivot.status', 'accepted');
         $this->tasks = Task::where('event_id', $this->event->id)->get();
         $this->subtasks = $this->tasks->flatMap->subTasks;
-       
+
 
         // Always set filteredVolunteers, handle empty filters
         $filtered = $this->pendingUsers;
         if ($this->genderFilter) {
-            
+
             $filtered = $filtered->filter(function ($user) {
                 return $user->getCustomAttribute('gender') == $this->genderFilter;
             });
@@ -68,7 +68,7 @@ class Show extends Component
         //beginner = points(0-10) + events(0-10) + tasks(0-10)
         //intermediate = points(11-30) + events(11-30) + tasks(11-30)
         //advanced = points(31+) + events(31+) + tasks(31+)
-        
+
         foreach($filtered as $user){
             $points = $user->badges->sum('points');
             $events = $user->events->count();
@@ -76,16 +76,16 @@ class Show extends Component
             $user->setVolunteerLevel($points, $events, $tasks);
 
         }
-        
+
         if ($this->levelFilter) {
             $filtered = $filtered->filter(function ($user) {
                 return $user->getCustomAttribute('level') == $this->levelFilter;
             });
         }
-        
+
         $this->filteredVolunteers = $filtered->all();
         // dd($this->filteredVolunteers);
-        
+
     }
     public function approve($userId)
     {
@@ -169,7 +169,7 @@ class Show extends Component
     {
         // validate
 
-        //add subtask 
+        //add subtask
         $name = $this->subtaskName[$taskId] ?? null;
         $desc = $this->subtaskDescription[$taskId] ?? null;
         $assigned = $this->subtaskAssignedVolunteer[$taskId] ?? null;
@@ -218,9 +218,9 @@ class Show extends Component
     public function render()
     {
         return view('livewire.requester.dashboard.my-events.show',[
-            
+
             'filteredVolunteers' => $this->filteredVolunteers,
-            
+
         ]);
     }
 }
