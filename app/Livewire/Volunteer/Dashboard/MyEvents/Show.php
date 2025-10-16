@@ -32,6 +32,7 @@ class Show extends Component
             ->with(['address', 'users', 'category', 'tags'])
             ->find($id);
         $this->status = $this->event->users->where('id', auth()->id())->first()?->pivot->status;
+        // dd($this->status);
         $this->volunteers = $this->event->users;
         $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude);
         $this->tasks = $this->event->tasks()->get();
