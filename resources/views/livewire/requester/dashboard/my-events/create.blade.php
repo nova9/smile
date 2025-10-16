@@ -18,8 +18,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Event Name -->
                         <div class="md:col-span-2">
-                            <x-common.auth.input name="name" label="Event Name"
-                                placeholder="e.g., Community Food Drive" required />
+                            <x-common.auth.input name="name" label="Event Name" placeholder="e.g., Community Food Drive"
+                                required />
                         </div>
 
                         <!-- Category -->
@@ -164,8 +164,8 @@
                             <div class="text-black">
                                 <!-- Date Range -->
                                 <div class="card">
-                                    <label for="starts_at" class="block text-sm font-medium text-gray-700 mb-2">Event
-                                        Timespan</label>
+                                    <label for="starts_at" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Event Timespan</label>
                                     <calendar-range x-on:change="change_date"
                                         class="cally bg-base-100 border border-base-300 shadow-lg rounded-box">
                                         <svg aria-label="Previous" class="fill-current size-4" slot="previous"
@@ -184,7 +184,6 @@
                                     @error('ends_at')
                                         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                     @enderror
-
                                 </div>
                             </div>
                         </div>
@@ -205,8 +204,8 @@
                         <div class="mb-4">
                             <label for="maximum_participants"
                                 class="block text-sm font-medium text-gray-700 mb-2">Maximum Participants</label>
-                            <input wire:model="maximum_participants" type="number" id="maximum_participants"
-                                min="1" class="input input-bordered w-full" placeholder="e.g., 50"
+                            <input wire:model="maximum_participants" type="number" id="maximum_participants" min="1"
+                                class="input input-bordered w-full" placeholder="e.g., 50"
                                 aria-describedby="maximum_participants_error">
                             @error('maximum_participants')
                                 <p class="text-xs text-red-500 mt-1" id="maximum_participants_error">{{ $message }}
@@ -248,21 +247,19 @@
                                     <div>
                                         <label for="female_participants"
                                             class="block text-xs text-gray-600 mb-1">Woman</label>
-                                        <input wire:model="female_participants" type="number"
-                                            id="female_participants" min="0"
-                                            class="input input-bordered w-full" placeholder="e.g., 20"
+                                        <input wire:model="female_participants" type="number" id="female_participants"
+                                            min="0" class="input input-bordered w-full" placeholder="e.g., 20"
                                             aria-describedby="female_participants_error">
                                     </div>
                                     <div>
                                         <label for="non_binary_participants"
                                             class="block text-xs text-gray-600 mb-1">Non-Binary/Other</label>
                                         <input wire:model="non_binary_participants" type="number"
-                                            id="non_binary_participants" min="0"
-                                            class="input input-bordered w-full" placeholder="e.g., 10"
-                                            aria-describedby="non_binary_participants_error">
+                                            id="non_binary_participants" min="0" class="input input-bordered w-full"
+                                            placeholder="e.g., 10" aria-describedby="non_binary_participants_error">
                                     </div>
                                     @error('participant_gender_requirements')
-                                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
@@ -278,28 +275,25 @@
                                         <label for="beginner_participants"
                                             class="block text-xs text-gray-600 mb-1">Beginner</label>
                                         <input wire:model="beginner_participants" type="number"
-                                            id="beginner_participants" min="0"
-                                            class="input input-bordered w-full" placeholder="e.g., 10"
-                                            aria-describedby="beginner_participants_error">
+                                            id="beginner_participants" min="0" class="input input-bordered w-full"
+                                            placeholder="e.g., 10" aria-describedby="beginner_participants_error">
                                     </div>
                                     <div>
                                         <label for="intermediate_participants"
                                             class="block text-xs text-gray-600 mb-1">Intermediate</label>
                                         <input wire:model="intermediate_participants" type="number"
-                                            id="intermediate_participants" min="0"
-                                            class="input input-bordered w-full" placeholder="e.g., 10"
-                                            aria-describedby="intermediate_participants_error">
+                                            id="intermediate_participants" min="0" class="input input-bordered w-full"
+                                            placeholder="e.g., 10" aria-describedby="intermediate_participants_error">
                                     </div>
                                     <div>
                                         <label for="advanced_participants"
                                             class="block text-xs text-gray-600 mb-1">Advanced</label>
                                         <input wire:model="advanced_participants" type="number"
-                                            id="advanced_participants" min="0"
-                                            class="input input-bordered w-full" placeholder="e.g., 10"
-                                            aria-describedby="advanced_participants_error">
+                                            id="advanced_participants" min="0" class="input input-bordered w-full"
+                                            placeholder="e.g., 10" aria-describedby="advanced_participants_error">
                                     </div>
-                                     @error('participant_level_requirements')
-                                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                    @error('participant_level_requirements')
+                                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="mt-2 text-xs text-gray-500">
@@ -344,8 +338,7 @@
                                 </button>
                             </div>
                             <template x-if="skills.length > 0">
-                                <div
-                                    class="flex flex-wrap gap-2 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="flex flex-wrap gap-2 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
                                     <template x-for="skill in skills" :key="skill">
                                         <span
                                             class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-primary rounded-full">
@@ -422,6 +415,82 @@
                         What do you need for the event?
                     </h2>
 
+                    <div x-data="{ rows: @entangle('event_resources') }">
+                        <p class="text-sm text-gray-600 mb-3">Add resources required for the event and the
+                            amount/quantity needed.</p>
+
+                        <template x-if="rows.length === 0">
+                            <div class="mb-3 text-sm text-gray-500">No resources added yet. Click the button below to
+                                add one.</div>
+                        </template>
+
+                        <div class="space-y-3">
+                            <template x-for="(row, index) in rows" :key="index">
+                                <div class="grid grid-cols-12 gap-2 items-center">
+                                    <div class="col-span-7">
+                                        <label class="sr-only">Resource</label>
+                                        <template x-if="!rows[index].is_custom">
+                                            <select x-model="rows[index].resource_id"
+                                                class="select select-bordered w-full">
+                                                <option value="">Select a resource</option>
+                                                @foreach ($resources as $resource)
+                                                    <option value="{{ $resource->id }}">{{ $resource->name }}
+                                                        @if($resource->unit) ({{ $resource->unit }}) @endif</option>
+                                                @endforeach
+                                            </select>
+                                        </template>
+                                        <template x-if="rows[index].is_custom">
+                                            <div class="grid grid-cols-2 gap-2">
+                                                <input x-model="rows[index].custom_name" type="text"
+                                                    class="input input-bordered w-full" placeholder="Custom resource name">
+                                                <input x-model="rows[index].custom_unit" type="text"
+                                                    class="input input-bordered w-full" placeholder="Unit (e.g., kg, pcs)">
+                                            </div>
+                                        </template>
+                                    </div>
+
+                                    <div class="col-span-3">
+                                        <label class="sr-only">Quantity</label>
+                                        <input x-model="rows[index].quantity" type="number" min="1"
+                                            class="input input-bordered w-full" placeholder="Quantity">
+                                    </div>
+
+                                    <div class="col-span-1 flex items-center justify-center">
+                                        <label class="inline-flex items-center text-xs">
+                                            <input type="checkbox" class="checkbox mr-2"
+                                                x-model="rows[index].is_custom">
+                                            <span>Custom</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-span-1 flex justify-end items-center">
+                                        <button type="button" class="btn btn-sm"
+                                            x-on:click="rows.splice(index, 1)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2 size-4"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="button" class="btn btn-primary"
+                                x-on:click="rows.push({ resource_id: '', quantity: 1 })">
+                                <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                Add Resource
+                            </button>
+                        </div>
+
+                        @error('event_resources')
+                            <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        @enderror
+                        @error('event_resources.*.resource_id')
+                            <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        @enderror
+                        @error('event_resources.*.quantity')
+                            <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        @enderror
+                    </div>
 
                 </div>
 
@@ -441,10 +510,9 @@
                             <div id="map" class="w-full h-[70vh] bg-gray-100 relative">
                                 <!-- Map will be initialized here -->
                                 <div class="absolute inset-0 flex items-center justify-center">
-                                    {{--                                    loading state --}}
+                                    {{-- loading state --}}
                                     <div class="flex items-center gap-2">
-                                        <button class="btn btn-sm btn-primary" onclick="initializeMap()"
-                                            type="button">
+                                        <button class="btn btn-sm btn-primary" onclick="initializeMap()" type="button">
                                             <i data-lucide="refresh-cw" class="size-4"></i>
                                             <span class="ml-1">Reload Map</span>
                                         </button>
@@ -470,8 +538,7 @@
                             </div>
 
                             <div id="coordinates-display" class="hidden">
-                                <div
-                                    class="flex items-center gap-4 p-3 bg-white/50 rounded-lg border border-green-100">
+                                <div class="flex items-center gap-4 p-3 bg-white/50 rounded-lg border border-green-100">
                                     <div class="flex items-center gap-2 text-sm text-gray-600">
                                         <i data-lucide="map-pin" class="size-4 text-primary0"></i>
                                         <span class="font-medium">Coordinates:</span>
@@ -526,95 +593,95 @@
 </x-requester.dashboard-layout>
 
 @assets
-    <script>
-        let map;
-        let marker;
+<script>
+    let map;
+    let marker;
 
-        function initializeMap() {
-            // Initialize the map
-            const mapOptions = {
-                center: {
-                    lat: 7.8731,
-                    lng: 80.7718
-                },
-                zoom: 7,
-                mapId: "198a0e442491558328ee7d20",
-                gestureHandling: "cooperative",
+    function initializeMap() {
+        // Initialize the map
+        const mapOptions = {
+            center: {
+                lat: 7.8731,
+                lng: 80.7718
+            },
+            zoom: 7,
+            mapId: "198a0e442491558328ee7d20",
+            gestureHandling: "cooperative",
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        // Add a click listener to the map
+        map.addListener("click", (event) => {
+            const pos = {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng()
             };
+            placeMarker(pos);
+        });
+    }
 
-            map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-            // Add a click listener to the map
-            map.addListener("click", (event) => {
-                const pos = {
-                    lat: event.latLng.lat(),
-                    lng: event.latLng.lng()
-                };
-                placeMarker(pos);
-            });
+    function placeMarker(pos) {
+        // If a marker already exists, remove it
+        if (marker) {
+            marker.setMap(null);
         }
 
-        function placeMarker(pos) {
-            // If a marker already exists, remove it
-            if (marker) {
-                marker.setMap(null);
-            }
+        console.log(google)
 
-            console.log(google)
+        // Create a new marker
+        marker = new google.maps.marker.AdvancedMarkerElement({
+            map,
+            position: pos,
+            title: "Hello, Sri Lanka!"
+        });
 
-            // Create a new marker
-            marker = new google.maps.marker.AdvancedMarkerElement({
-                map,
-                position: pos,
-                title: "Hello, Sri Lanka!"
-            });
+        // Set the latitude and longitude input values
+        document.getElementById("latitude").value = pos.lat;
+        document.getElementById("longitude").value = pos.lng;
 
-            // Set the latitude and longitude input values
-            document.getElementById("latitude").value = pos.lat;
-            document.getElementById("longitude").value = pos.lng;
+        Livewire.dispatch('coordinates', pos);
 
-            Livewire.dispatch('coordinates', pos);
+        // Update the coordinates display
+        document.getElementById("lat-display").innerText = `Lat: ${pos.lat.toFixed(6)}`;
+        document.getElementById("lng-display").innerText = `Lng: ${pos.lng.toFixed(6)}`;
+        document.getElementById("coordinates-display").classList.remove("hidden");
+        document.getElementById("no-location").classList.add("hidden");
+    }
 
-            // Update the coordinates display
-            document.getElementById("lat-display").innerText = `Lat: ${pos.lat.toFixed(6)}`;
-            document.getElementById("lng-display").innerText = `Lng: ${pos.lng.toFixed(6)}`;
-            document.getElementById("coordinates-display").classList.remove("hidden");
-            document.getElementById("no-location").classList.add("hidden");
-        }
-
-        function getCurrentLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        console.log("Latitude:", latitude);
-                        console.log("Longitude:", longitude);
-                        // Set the map center to the current location
-                        const pos = {
-                            lat: latitude,
-                            lng: longitude
-                        }
-                        map.setCenter(pos);
-                        placeMarker(pos)
-                    },
-                    function(error) {
-                        console.error("Error getting location:", error.message);
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    console.log("Latitude:", latitude);
+                    console.log("Longitude:", longitude);
+                    // Set the map center to the current location
+                    const pos = {
+                        lat: latitude,
+                        lng: longitude
                     }
-                );
-            } else {
-                console.log("Geolocation is not supported by this browser.");
-            }
+                    map.setCenter(pos);
+                    placeMarker(pos)
+                },
+                function (error) {
+                    console.error("Error getting location:", error.message);
+                }
+            );
+        } else {
+            console.log("Geolocation is not supported by this browser.");
         }
+    }
 
-        // Load the Google Maps script
-        // function loadScript() {
-        //     const script = document.createElement("script");
-        //     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
-        //     script.async = true;
-        //     document.head.appendChild(script);
-        // }
+    // Load the Google Maps script
+    // function loadScript() {
+    //     const script = document.createElement("script");
+    //     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBNNa55DL19ILQw2A6_DXQzZyu8YzYPf5s&loading=async&callback=initializeMap&libraries=marker`;
+    //     script.async = true;
+    //     document.head.appendChild(script);
+    // }
 
-        window.addEventListener("load", initializeMap);
-    </script>
+    window.addEventListener("load", initializeMap);
+</script>
 @endassets
