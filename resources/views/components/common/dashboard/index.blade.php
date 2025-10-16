@@ -1,6 +1,6 @@
 <div x-data="{ navClosed: $persist(false) }" class="flex h-screen overflow-hidden">
     {{--    Sidebar--}}
-    <div class="z-999 border-r border-gray-200 bg-stone-50 flex flex-col p-1.5 sticky">
+    <div class="z-100 border-r border-gray-200 bg-stone-50 flex flex-col p-1.5 sticky">
         <div class="flex mb-4" :class="navClosed ? '' : 'w-64'">
             <div class="flex justify-center w-full mt-2" x-show="!navClosed">
                 <img src="{{ asset('storage/assets/logo.svg') }}" alt="logo" class="h-8 select-none">
@@ -38,7 +38,7 @@
             </div>
 
             <div class="flex gap-2">
-                 <livewire:common.notification/>
+                <livewire:common.notification/>
                 <livewire:common.chat/>
             </div>
         </div>

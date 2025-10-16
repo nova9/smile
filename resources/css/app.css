@@ -51,8 +51,6 @@
 }
 
 
-.cally {
-    &::part(button):hover {
-        background: var(--color-base-200);
-    }
+.cally calendar-month::part(button):hover {
+    color: black;
 }
