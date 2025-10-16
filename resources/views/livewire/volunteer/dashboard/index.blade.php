@@ -1,175 +1,225 @@
 <x-volunteer.dashboard-layout>
-    <div class="p-6 lg:p-12 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">Welcome, {{ auth()->user()->name }}!</h1>
-            <p class="text-gray-600 mt-2">Here's an overview of your volunteer journey.</p>
+    <div class="min-h-screen p-4 sm:p-6 lg:p-8 bg-gray-50">
+        <!-- Hero Section -->
+        <div
+            class="mb-8 bg-gradient-to-r from-primary/5 to-green-600/5 rounded-3xl p-6 sm:p-8 shadow-sm border border-primary/10">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-accent">
+                        Welcome,
+                        <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
+                            {{ Auth::user()->name ?? 'Volunteer' }}
+                        </span>
+                    </h1>
+                    <p class="text-slate-600 text-base sm:text-lg mt-2">Your impact at a glance</p>
+                </div>
+                <div
+                    class="inline-flex items-center px-4 py-2 bg-white/50 backdrop-blur-sm rounded-full text-sm font-medium text-primary shadow-sm border border-primary/20">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Volunteer Dashboard
+                </div>
+            </div>
+        </div>
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+            <div
+                class="bg-white rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-bold text-slate-800">{{ $totalHours ?? '0' }}</div>
+                        <div class="text-sm text-slate-500">Total Hours</div>
+                    </div>
+                    <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                        <i data-lucide="timer" class="w-5 h-5 text-slate-600"></i>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-white rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-bold text-emerald-600">{{ $eventsCount ?? '0' }}</div>
+                        <div class="text-sm text-slate-500">Events Joined</div>
+                    </div>
+                    <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <i data-lucide="calendar-days" class="w-5 h-5 text-emerald-600"></i>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-white rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-bold text-violet-600">{{ $achievementsCount ?? '0' }}
+                        </div>
+                        <div class="text-sm text-slate-500">Achievements</div>
+                    </div>
+                    <div class="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center">
+                        <i data-lucide="trophy" class="w-5 h-5 text-violet-600"></i>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-white rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-bold text-amber-600">{{ $certificatesCount ?? '0' }}</div>
+                        <div class="text-sm text-slate-500">Certificates</div>
+                    </div>
+                    <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
+                        <i data-lucide="award" class="w-5 h-5 text-amber-600"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 h-full flex flex-col">
+                <h2 class="text-base font-semibold mb-4 text-primary">Volunteer Hours (Last 6 Months)</h2>
+                <div class="flex-1 flex items-center justify-center">
+                    <canvas id="hoursBarChart" style="width:100%;max-height:400px;"></canvas>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 h-full flex flex-col">
+                <h2 class="text-base font-semibold mb-4 text-primary">Event Participation Breakdown</h2>
+                <div class="flex-1 flex items-center justify-center">
+                    <canvas id="eventsPieChart" style="width:100%;max-height:400px;"></canvas>
+                </div>
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-6 gap-6 items-start">
-            <!-- Stats Section -->
-            <div class=" col-span-1 lg:col-span-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div
-                        class="stats bg-white shadow-lg rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                        <div class="stat p-6">
-                            <div class="stat-title text-gray-500 font-medium">Total Events</div>
-                            <div class="stat-value text-4xl font-extrabold text-indigo-600">8</div>
-                            <div class="stat-desc text-green-500 font-medium">21% more than last month</div>
-                        </div>
+        <!-- Quick Links -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+            <a href="/volunteer/dashboard/events"
+                class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="party-popper"
+                        class="w-8 h-8 text-primary group-hover:scale-105 transition-transform"></i>
+                    <div>
+                        <div class="text-base font-semibold text-primary">Find Opportunities</div>
+                        <div class="text-sm text-slate-500">Browse new events</div>
                     </div>
-                    <div
-                        class="stats bg-white shadow-lg rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                        <div class="stat p-6">
-                            <div class="stat-title text-gray-500 font-medium">Total Points</div>
-                            <div class="stat-value text-4xl font-extrabold text-indigo-600">80</div>
-                            <div class="stat-desc text-green-500 font-medium">21% more than last month</div>
-                        </div>
-                    </div>
-                    <div
-                        class="stats bg-white shadow-lg rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                        <div class="stat p-6">
-                            <div class="stat-title text-gray-500 font-medium">Total Hours</div>
-                            <div class="stat-value text-4xl font-extrabold text-indigo-600">54</div>
-                            <div class="stat-desc text-green-500 font-medium">21% more than last month</div>
-                        </div>
-                    </div>
-
                 </div>
-                <div>
-                    
-                    <div class="bg-white rounded-xl shadow-lg p-6 mt-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">Monthly Volunteer Progress</h3>
-                        <canvas id="volunteerProgressChart" class="w-full h-64"></canvas>
+            </a>
+            <a href="/volunteer/dashboard/my-events"
+                class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="file-clock"
+                        class="w-8 h-8 text-emerald-600 group-hover:scale-105 transition-transform"></i>
+                    <div>
+                        <div class="text-base font-semibold text-emerald-600">My Events</div>
+                        <div class="text-sm text-slate-500">View participation</div>
                     </div>
-                    <!-- Chart.js CDN and chart script -->
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            var ctx = document.getElementById('volunteerProgressChart').getContext('2d');
-                            new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: {!! json_encode($months ?? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']) !!},
-                                    datasets: [{
-                                        label: 'Hours',
-                                        data: {!! json_encode($monthlyHours ?? [12, 19, 3, 5, 2, 3]) !!},
-                                        backgroundColor: 'rgba(59,130,246,0.7)',
-                                        borderColor: 'rgba(59,130,246,1)',
-                                        borderWidth: 2,
-                                        borderRadius: 8,
-                                        hoverBackgroundColor: 'rgba(34,197,94,0.7)',
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        },
-                                        tooltip: {
-                                            backgroundColor: 'rgba(59,130,246,0.9)',
-                                            titleColor: '#fff',
-                                            bodyColor: '#fff',
-                                            borderColor: 'rgba(34,197,94,0.7)',
-                                            borderWidth: 1,
-                                            padding: 12,
-                                            cornerRadius: 8,
-                                        }
-                                    },
-                                    scales: {
-                                        x: {
-                                            grid: {
-                                                display: false
-                                            },
-                                            ticks: {
-                                                color: '#3b82f6',
-                                                font: {
-                                                    weight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        y: {
-                                            beginAtZero: true,
-                                            grid: {
-                                                color: 'rgba(59,130,246,0.1)'
-                                            },
-                                            ticks: {
-                                                color: '#22c55e',
-                                                font: {
-                                                    weight: 'bold'
-                                                }
-                                            }
-                                        }
+                </div>
+            </a>
+            <a href="/volunteer/dashboard/leaderboard"
+                class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="users"
+                        class="w-8 h-8 text-violet-600 group-hover:scale-105 transition-transform"></i>
+                    <div>
+                        <div class="text-base font-semibold text-violet-600">Leaderboard</div>
+                        <div class="text-sm text-slate-500">See top volunteers</div>
+                    </div>
+                </div>
+            </a>
+            <a href="/volunteer/dashboard/achievements"
+                class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="trophy"
+                        class="w-8 h-8 text-amber-600 group-hover:scale-105 transition-transform"></i>
+                    <div>
+                        <div class="text-base font-semibold text-amber-600">Achievements</div>
+                        <div class="text-sm text-slate-500">Celebrate milestones</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+
+        <!-- Chart.js CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Bar Chart: Volunteer Hours
+                const hoursBarChart = document.getElementById('hoursBarChart').getContext('2d');
+                new Chart(hoursBarChart, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                        datasets: [{
+                            label: 'Hours',
+                            data: [12, 19, 8, 15, 10, 14],
+                            backgroundColor: 'rgba(16, 185, 129, 0.4)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: '#f3f4f6'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Pie Chart: Event Participation
+                const eventsPieChart = document.getElementById('eventsPieChart').getContext('2d');
+                new Chart(eventsPieChart, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Completed', 'Upcoming', 'Cancelled'],
+                        datasets: [{
+                            data: [8, 3, 1],
+                            backgroundColor: [
+                                'rgba(99, 102, 241, 0.6)',
+                                'rgba(16, 185, 129, 0.6)',
+                                'rgba(251, 191, 36, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(99, 102, 241, 1)',
+                                'rgba(16, 185, 129, 1)',
+                                'rgba(251, 191, 36, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        size: 12
                                     }
                                 }
-                            });
-                        });
-                    </script>
-                </div>
-
-            </div>
-
-            <!-- Achievements Section -->
-            <div class="col-span-1 lg:col-span-2">
-                <div class="card w-full bg-white shadow-lg rounded-xl overflow-hidden">
-                    <div class="card-body p-6">
-                        <h2 class="card-title text-2xl font-semibold text-gray-800 mb-4">Your Achievements</h2>
-                        <p class="text-gray-600 mb-4">Celebrating your milestones:</p>
-                        <ul class="space-y-3">
-                            <li class="flex items-center text-gray-700 mb-2">
-                                <svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12zm0-10a1 1 0 00-1 1v3a1 1 0 002 0V7a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z" />
-                                </svg>
-                                Leaderboard Rank #1
-                            </li>
-                            @if (isset($badges) && count($badges))
-                                <li class="flex flex-col text-gray-700 mb-2">
-                                    <div class="flex items-center mb-1">
-                                        <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                            <circle cx="10" cy="10" r="8" />
-                                        </svg>
-                                        Badges Earned
-                                    </div>
-                                    <ul class="ml-7 space-y-1">
-                                        @foreach ($badges as $badge)
-                                            <li class="flex items-center">
-                                                <span class="text-sm text-gray-600">{{ $badge->name }}</span>
-                                                @if ($badge->icon)
-                                                    <img src="{{ $badge->icon }}" alt="{{ $badge->name }}"
-                                                        class="w-5 h-5 ml-2" />
-                                                @endif
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
-                            @if (isset($certificates) && count($certificates))
-                                <li class="flex flex-col text-gray-700 mb-2">
-                                    <div class="flex items-center mb-1">
-                                        <svg class="w-5 h-5 text-purple-500 mr-2" fill="currentColor"
-                                            viewBox="0 0 20 20">
-                                            <rect x="4" y="4" width="12" height="12" rx="2" />
-                                        </svg>
-                                        Certificates Awarded
-                                    </div>
-                                    <ul class="ml-7 space-y-1">
-                                        @foreach ($certificates as $certificate)
-                                            <li class="flex items-center">
-                                                <span class="text-sm text-gray-600">{{ $certificate->title }}</span>
-                                                @if ($certificate->icon)
-                                                    <img src="{{ $certificate->icon }}" alt="{{ $certificate->title }}"
-                                                        class="w-5 h-5 ml-2" />
-                                                @endif
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
     </div>
 </x-volunteer.dashboard-layout>
