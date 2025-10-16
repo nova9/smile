@@ -171,7 +171,7 @@
                                     <div class="flex items-center justify-between mb-6">
                                         <h3 class="text-2xl font-bold text-yellow-700 flex items-center gap-2">
                                             <i data-lucide="clock" class="w-6 h-6 text-yellow-500"></i>
-                                            Pending Approval
+                                            Volunteers
                                         </h3>
                                         <span class="text-base text-gray-500">{{ $pendingUsers->count() }}</span>
                                     </div>

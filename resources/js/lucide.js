@@ -93,6 +93,7 @@ import {
     BarChart,
     VenusAndMars,
     UserX,
+    Image
 } from "lucide";
 
 
@@ -191,7 +192,8 @@ function registerIcons() {
             BookCheck,
             BarChart,
             VenusAndMars,
-            UserX
+            UserX,
+            Image
         },
 
     });

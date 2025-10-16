@@ -8,6 +8,7 @@ use Livewire\Component;
 class Index extends Component
 {
     public $participatingEvents;
+    public $totalEvents;
     public $confirmedEvents;
     public $pendingEvents;
     public $completedEvents;
@@ -34,7 +35,7 @@ class Index extends Component
     public function loadEvents()
     {
         $query = auth()->user()->participatingEvents()->orderBy('created_at', 'desc');
-        
+        $this->totalEvents = $query->count();
         if(!empty($this->statusFilter)){
             
             $query->wherePivot('status',$this->statusFilter);

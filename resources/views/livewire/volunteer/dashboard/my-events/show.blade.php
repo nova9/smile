@@ -54,7 +54,7 @@
                     </div>
                     <div class="tabs tabs-lift">
                         <label class="tab">
-                            <input type="radio" name="my_tabs_4"  checked="checked"/>
+                            <input type="radio" name="my_tabs_4" checked="checked" />
                             <i data-lucide="info" class="w-4 h-4 mr-2"></i>
                             Event Details
                         </label>
@@ -284,28 +284,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Gallery -->
-                                    @php
-                                        $images = [
-                                            'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
-                                            'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
-                                            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
-                                            'https://images.unsplash.com/photo-1464983953574-0892a716854b',
-                                        ];
-                                    @endphp
-                                    @if (!empty($images))
-                                        <div>
-                                            <h2 class="text-2xl font-bold text-gray-800 mb-4">Gallery</h2>
-                                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                                @foreach ($images as $img)
-                                                    <img src="{{ $img }}"
-                                                        class="rounded-lg shadow-sm object-cover w-full h-32"
-                                                        alt="Event Image">
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    @endif
-
                                     <!-- Map -->
                                     <div>
                                         <h2 class="text-2xl font-bold text-gray-800 mb-4">Location</h2>
@@ -414,7 +392,7 @@
                         </div>
                         @if ($status == 'pending')
                             <label class="tab">
-                                <input type="radio" name="my_tabs_4"  />
+                                <input type="radio" name="my_tabs_4" />
                                 <i data-lucide="book-check" class="w-4 h-4 mr-2"></i>
                                 Workflows
                             </label>
@@ -437,7 +415,7 @@
                             </div>
                         @elseif ($status == 'accepted')
                             <label class="tab">
-                                <input type="radio" name="my_tabs_4"  />
+                                <input type="radio" name="my_tabs_4" />
                                 <i data-lucide="book-check" class="w-4 h-4 mr-2"></i>
                                 Workflows
                             </label>
@@ -607,6 +585,71 @@
                                 </div>
                             </div>
                         @endif
+                        <label class="tab">
+                            <input type="radio" name="my_tabs_4" />
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>
+                            Event Gallery
+                        </label>
+                        <div class="tab-content bg-base-100 border-base-300 p-6">
+
+                            @if ($status == 'accepted')
+                                <div class="mb-8">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Upload Your Memories with This
+                                        Event
+                                    </h2>
+                                    <p class="text-gray-600 text-lg mx-auto leading-relaxed">
+                                        Share your photos and videos from the event to inspire others and showcase the
+                                        impact of our community efforts. Your contributions help build a vibrant and
+                                        engaged
+                                        volunteer community.
+                                    </p>
+                                </div>
+                                <div class="mb-6 flex flex-col sm:flex-row items-center gap-4">
+                                    <form method="POST" enctype="multipart/form-data"
+                                        class="flex items-center gap-3 w-full justify-center">
+                                        @csrf
+                                        <label class="btn btn-outline flex items-center gap-2 cursor-pointer mb-0">
+                                            {{-- <i data-lucide="upload" class="w-5 h-5"></i> --}}
+                                            Upload Photo
+                                            <input type="file" name="event_gallery[]" accept="image/*"
+                                                class="hidden" multiple>
+                                        </label>
+                                        <span class="text-xs text-gray-500">JPG, PNG up to 5MB each</span>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="mb-8">
+                                    {{-- <h2 class="text-2xl font-bold text-gray-800 mb-4">Event Gallery</h2> --}}
+                                    <p class="text-gray-600 text-lg mx-auto leading-relaxed">
+                                        Browse photos and videos from the event to see the impact of our community
+                                        efforts.
+                                        Join us in future events to contribute your own memories and help build a
+                                        vibrant
+                                        and engaged volunteer community.
+                                    </p>
+                                </div>
+                            @endif
+
+
+                            @php
+                                $images = [
+                                    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+                                    'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
+                                    'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80',
+                                    'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+                                ];
+                            @endphp
+                            <div class="container mx-auto px-4 py-8">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    @foreach ($images as $img)
+                                        <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                                            <img src="{{ $img }}" alt="Gallery Image"
+                                                class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
