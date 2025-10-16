@@ -53,6 +53,7 @@ class Event extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    
 
     public function tags(): BelongsToMany
     {
@@ -81,6 +82,11 @@ class Event extends Model
     {
         // Return the user who created the event
         return $this->user;
+    }
+    
+    public function isFavourite()
+    {
+        return Favourites::where('event_id', $this->id)->exists();
     }
 
     public function userJoinsNotify()
