@@ -4,10 +4,7 @@
         this.open = !this.open;
         localStorage.setItem('chatbotOpen', this.open);
     },
-    close() {
-        this.open = false;
-        localStorage.setItem('chatbotOpen', false);
-    },
+    
     init() {
         this.$watch('open', value => localStorage.setItem('chatbotOpen', value));
         // Listen for Livewire updates to restore state
@@ -28,13 +25,13 @@
 
     <!-- Chatbot Window -->
     <div id="chatbot-window" class="w-80 sm:w-96 bg-white rounded-lg shadow-xl flex flex-col max-h-[80vh]"
-        x-show="open" x-transition>
+        x-show="open" >
         <!-- Chat Header -->
         <div class="bg-neutral text-white p-4 rounded-t-lg flex justify-between items-center">
             <h2 class="text-lg font-semibold">Smile Assistant</h2>
             <button id="chatbot-close-btn"
                 class="text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-700"
-                aria-label="Close chat" x-on:click="close()">
+                aria-label="Close chat" x-on:click="toggle()">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -96,17 +93,19 @@
         </div>
 
         <!-- Chat Input Area -->
-        <div class="p-4 border-t bg-white">
+        <div class="p-4  bg-white">
             <form wire:submit.prevent="sendMessage" class="flex space-x-2">
                 <input wire:model.defer="input" type="text" class="input input-bordered w-full text-sm"
                     placeholder="Type a message..." autocomplete="off" aria-label="Type your message">
                 <button type="submit"
                     class="bg-neutral text-white p-2 rounded-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
                     aria-label="Send message">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
+                   <span wire:loading.remove wire:target="sendMessage" aria-hidden="true">
+                       <i data-lucide="send-horizontal"></i>
+                    </span>
+                    <span wire:loading wire:target="sendMessage" aria-hidden="true" class="inline-flex items-center">
+                      <i data-lucide="loader-circle" class="animate-spin"></i>
+                    </span>
                 </button>
             </form>
         </div>

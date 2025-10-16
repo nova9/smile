@@ -1,24 +1,6 @@
 <x-volunteer.dashboard-layout>
     <div class="min-h-screen p-6">
-        <div class="inline-flex items-center mb-10 px-6 py-3 bg-gradient-to-r from-primary/10 to-green-600/10 text-primary rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-primary/20">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            Welcome to Your Achievements
-        </div>
-        <div class="mb-8">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
-                        My Volunteer
-                        <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
-                            Achievements
-                        </span>
-                    </h1>
-                    <p class="text-slate-600 text-lg">Celebrate your journey and milestones as a volunteer</p>
-                </div>
-            </div>
-        </div>
+       
 
         <!-- Summary Cards -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
