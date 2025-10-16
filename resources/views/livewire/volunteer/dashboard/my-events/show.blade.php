@@ -9,8 +9,10 @@
     }
 @endphp
 
+
+
 <x-volunteer.dashboard-layout>
-    <div class="min-h-screen bg-gray-50">
+    <div class="min-h-screen bg-gray-50" >
         <!-- Main Container -->
         <div class="container mx-auto px-4 py-8">
             <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
@@ -30,9 +32,9 @@
                     </div>
                     <div class="absolute top-4 right-4">
                         <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
-                            wire:click="toggleFavorite">
+                            wire:click="toggleFavorite" >
                             <i data-lucide="heart"
-                                class="w-5 h-5 {{ $event->is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
+                                class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600'}}"></i>
                         </button>
                     </div>
                 </div>
@@ -60,12 +62,100 @@
                         </label>
                         <div class="tab-content bg-base-100 border-base-300 p-6">
                             <!-- Event Description -->
-                            <div class="mb-8">
-                                <h2 class="text-2xl font-bold text-gray-800 mb-4">About This Event</h2>
-                                <p class="text-gray-600 text-lg mx-auto leading-relaxed">
-                                    {{ $event->description }}
-                                </p>
-                            </div>
+                            <div class="flex flex-col">
+                                <div class="flex justify-between">
+                                  <div class="mb-8">
+                                        <h2 class="text-2xl font-bold text-gray-800 mb-4">About This Event</h2>
+                                        <p class="text-gray-600 text-lg mx-auto leading-relaxed">
+                                            {{ $event->description }}
+                                        </p>
+                                        
+                                    </div>
+                                <!-- Action Buttons -->
+                                    <div class="mb-10 text-center">
+                                        @php
+                                            $user = $event->users->where('id', auth()->id())->first();
+                                            $status = $user?->pivot->status;
+                                        @endphp
+                                        @if (!$event->users->contains(auth()->user()))
+                                            {{-- <button
+                                        class="btn btn-primary btn-lg rounded-full px-8 py-3 font-semibold shadow-lg hover:scale-105 transition"
+                                        wire:click="join">
+                                        <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
+                                        Join This Event
+                                    </button> --}}
+                                        @elseif ($event->ends_at < now() && $status == 'accepted')
+                                            
+                                            <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
+                                                <a href="{{ route('volunteer.feedback') }}"
+                                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                                    <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
+                                                    <span>Leave Feedback</span>
+                                                </a>
+        
+                                                <a href="{{ route('community.space', ['id' => $event->id]) }}"
+                                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                                    <i data-lucide="users" class="w-5 h-5"></i>
+                                                    <span>Community Space</span>
+                                                </a>
+        
+                                                <button id="share-event-btn" type="button"
+                                                    class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                                    <i data-lucide="share-2" class="w-5 h-5"></i>
+                                                    <span>Share</span>
+                                                </button>
+                                            </div>
+        
+                                            <!-- Tiny toast for copy feedback -->
+                                            <div id="share-toast"
+                                                class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
+                                                Link copied to clipboard
+                                            </div>
+        
+                                        @elseif ($status == 'pending' || $status == 'accepted' )
+                                        <button id="share-event-btn" type="button"
+                                                class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                                <i data-lucide="share-2" class="w-5 h-5"></i>
+                                                <span>Share</span>
+                                        </button>
+                                        
+                                        @endif
+                                    </div>
+                                </div>
+                                <div>
+                                 @if ($status == 'completed')
+                                    <div
+                                        class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex items-center gap-4">
+                                        <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
+                                        <div>
+                                            <h3 class="text-lg font-bold text-green-700">Event Completed!</h3>
+                                            <p class="text-green-600 text-sm">Thank you for your participation.</p>
+                                        </div>
+                                    </div>
+                                @elseif ($status == 'pending')
+                                    <div
+                                        class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6 flex items-center  gap-4">
+                                        <i data-lucide="clock" class="w-8 h-8 text-yellow-500"></i>
+                                        <div>
+                                            <h3 class="text-lg text-left font-bold text-yellow-700">Pending Approval</h3>
+                                            <p class="text-yellow-600 text-sm">The organizer will review your request
+                                                soon.</p>
+                                        </div>
+                                    </div>
+                                @elseif ($status == 'accepted')
+                                    <div
+                                        class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
+                                        <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
+                                        <div>
+                                            <h3 class="text-lg font-bold text-green-700">You're In!</h3>
+                                            <p class="text-green-600 text-sm">Looking forward to your participation.</p>
+                                        </div>
+                                    </div>
+                                @endif
+                                </div>
+                        </div>
+                            
+                          
 
                             <!-- Quick Info Cards -->
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
@@ -96,74 +186,6 @@
                                 </div>
                             </div>
 
-
-                            <!-- Action Buttons -->
-                            <div class="mb-10 text-center">
-                                @php
-                                    $user = $event->users->where('id', auth()->id())->first();
-                                    $status = $user?->pivot->status;
-                                @endphp
-                                @if (!$event->users->contains(auth()->user()))
-                                    {{-- <button
-                                class="btn btn-primary btn-lg rounded-full px-8 py-3 font-semibold shadow-lg hover:scale-105 transition"
-                                wire:click="join">
-                                <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
-                                Join This Event
-                            </button> --}}
-                                @elseif ($event->ends_at < now() && $status == 'accepted')
-                                    <div
-                                        class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex items-center gap-4">
-                                        <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
-                                        <div>
-                                            <h3 class="text-lg font-bold text-green-700">Event Completed!</h3>
-                                            <p class="text-green-600 text-sm">Thank you for your participation.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                                        <a href="{{ route('volunteer.feedback') }}"
-                                            class="btn btn-outline btn-lg px-6 py-7 flex items-center gap-2">
-                                            <i data-lucide="message-circle" class="w-5 h-5"></i>
-                                            Leave Feedback
-                                        </a>
-                                        <a href="{{ route('community.space', ['id' => $event->id]) }}"
-                                            class="btn btn-accent btn-lg px-6 py-3 flex items-center gap-2">
-                                            <i data-lucide="users" class="w-5 h-5"></i>
-                                            Community Space
-                                        </a>
-                                        <button class="btn btn-outline btn-lg px-6 py-3 flex items-center gap-2">
-                                            <i data-lucide="share-2" class="w-5 h-5"></i>
-                                            Share Event
-                                        </button>
-                                    </div>
-                                @elseif ($status == 'pending')
-                                    {{-- <div
-                                        class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6 flex items-center  gap-4">
-                                        <i data-lucide="clock" class="w-8 h-8 text-yellow-500"></i>
-                                        <div>
-                                            <h3 class="text-lg text-left font-bold text-yellow-700">Pending Approval</h3>
-                                            <p class="text-yellow-600 text-sm">The organizer will review your request
-                                                soon.</p>
-                                        </div>
-                                    </div> --}}
-                                    <button class="btn btn-outline btn-lg px-6 py-3 flex items-center gap-2">
-                                        <i data-lucide="share-2" class="w-5 h-5"></i>
-                                        Share Event
-                                    </button>
-                                @elseif ($status == 'accepted')
-                                    {{-- <div
-                                        class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
-                                        <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
-                                        <div>
-                                            <h3 class="text-lg font-bold text-green-700">You're In!</h3>
-                                            <p class="text-green-600 text-sm">Looking forward to your participation.</p>
-                                        </div>
-                                    </div> --}}
-                                    <button class="btn btn-outline btn-lg px-6 py-3 flex items-center gap-2">
-                                        <i data-lucide="share-2" class="w-5 h-5"></i>
-                                        Share Event
-                                    </button>
-                                @endif
-                            </div>
                             <div class="my-8">
                                 <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
                                     Eligibility & Selection Criteria

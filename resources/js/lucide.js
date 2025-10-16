@@ -93,7 +93,9 @@ import {
     BarChart,
     VenusAndMars,
     UserX,
-    Image
+    Image,
+    SendHorizontal,
+    LoaderCircle
 } from "lucide";
 
 
@@ -193,7 +195,9 @@ function registerIcons() {
             BarChart,
             VenusAndMars,
             UserX,
-            Image
+            Image,
+            SendHorizontal,
+            LoaderCircle
         },
 
     });

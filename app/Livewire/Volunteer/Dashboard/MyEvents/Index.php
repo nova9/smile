@@ -3,11 +3,13 @@
 namespace App\Livewire\Volunteer\Dashboard\MyEvents;
 
 use App\Models\Category;
+use App\Models\Favourites;
 use Livewire\Component;
 
 class Index extends Component
 {
     public $participatingEvents;
+    public $favouriteEvents;
     public $totalEvents;
     public $confirmedEvents;
     public $pendingEvents;
@@ -16,6 +18,7 @@ class Index extends Component
     public $statusFilter = '';
     public $categories;
     public $categoryFilter = '';
+    public $favouriteEventsFilter = false;
     public $search = '';
 
     public function mount()
@@ -31,9 +34,14 @@ class Index extends Component
     {
         $this->loadEvents();
     }
+    public function updatedFavouriteEventsFilter()
+    {
+        $this->loadEvents();
+    }
 
     public function loadEvents()
     {
+        $this->favouriteEvents = Favourites::where('user_id', auth()->id())->get();
         $query = auth()->user()->participatingEvents()->orderBy('created_at', 'desc');
         $this->totalEvents = $query->count();
         if(!empty($this->statusFilter)){
@@ -43,17 +51,18 @@ class Index extends Component
         if(!empty($this->categoryFilter)){
             $query->where('category_id',$this->categoryFilter);
         }
+        if($this->favouriteEventsFilter){
+            $query->whereIn('events.id', $this->favouriteEvents->pluck('event_id'));
+        }
         $this->participatingEvents = $query->get();
-
         $this->confirmedEvents = auth()->user()->participatingEvents()
             ->wherePivot('status', 'accepted')
             ->wherePivot('ends_at', null)
             ->get();
-
+        
         $this->completedEvents = auth()->user()->participatingEvents()
             ->wherePivot('status', 'completed')
             ->get();
-
         $this->pendingEvents = auth()->user()->participatingEvents()
             ->wherePivot('status', 'pending')
             ->get();
@@ -62,8 +71,8 @@ class Index extends Component
             ->wherePivot('status', 'rejected')
             ->get();
 
+    
         $this->categories = Category::all();
-
        
             
 
@@ -71,13 +80,6 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.volunteer.dashboard.my-events.index',[
-         $participatingEvents= auth()->user()->participatingEvents()
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(5)
-        ]);
+        return view('livewire.volunteer.dashboard.my-events.index');
     }
 }

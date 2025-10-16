@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\Task;
 use App\Services\GoogleMaps;
 use Livewire\Component;
+use phpDocumentor\Reflection\Types\This;
 
 class Show extends Component
 {
@@ -14,6 +15,8 @@ class Show extends Component
     public $volunteers;
     public $city;
     public $tasks;
+    public $is_favorited;
+   
 
     // public function join()
     // {
@@ -36,6 +39,8 @@ class Show extends Component
         $this->volunteers = $this->event->users;
         $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude);
         $this->tasks = $this->event->tasks()->get();
+        $this->is_favorited = $this->toggleFavorite();
+        
     }
 
     public function render()
@@ -82,5 +87,11 @@ class Show extends Component
         session()->flash('success', 'Task status updated to ' . ucfirst($newStatus) . '.');
         // Optionally, reload tasks to reflect changes
         $this->tasks = $this->event->tasks()->get();
+    }
+    
+    public function toggleFavorite(){
+        $favoriteService = new \App\Services\Favorite()->toggleFavorite($this->event->id,auth()->id());
+        $this->is_favorited = !$this->is_favorited;
+        return $favoriteService;
     }
 }
