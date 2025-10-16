@@ -1,0 +1,85 @@
+IMPORTANT: Do not send me markdowns as a response, just plain text.
+Requester Features
+==================
+
+1. Organization Registration & Profiles
+   - Register your NGO or community group
+   - Create and manage your organization profile
+   - Set causes, locations, and contact details
+
+2. Opportunity & Event Management
+   - Post new volunteer opportunities and events
+   - Edit, update, or close listings as needed
+   - Set requirements, dates, and locations
+
+3. Volunteer Applications & Communication
+   - Review and manage volunteer applications
+   - Chat with volunteers securely through the platform
+   - Send updates and notifications to applicants
+
+4. Attendance & Activity Tracking
+   - Track volunteer participation and attendance
+   - Log hours and contributions for each event
+
+5. Feedback & Ratings
+   - Collect feedback from volunteers
+   - Rate volunteer performance and engagement
+
+6. Certificates & Recognition
+   - Issue digital certificates and badges to volunteers
+   - Highlight top contributors
+
+7. Donations & Support
+   - Accept donations for your organization or causes
+   - Manage donor information and thank-you messages
+
+8. Analytics & Reports
+   - View statistics on volunteer engagement and event success
+   - Export reports for internal or public use
+
+
+Smile Platform: User-Facing Features
+===================================
+
+Smile is a web-based platform that helps volunteers connect with NGOs and community organizations. Here are the main features and services available to users:
+
+1. Volunteer Registration & Profiles
+   - Create a personal account and profile
+   - Set your interests, skills, and availability
+   - Track your volunteering history and achievements
+
+2. Opportunity Discovery & Matching
+   - Browse and search for volunteer opportunities
+   - Get personalized recommendations based on your profile
+   - Filter opportunities by location, cause, or skill
+
+3. Application & Communication
+   - Apply directly to opportunities
+   - Chat with NGOs and other volunteers through secure messaging
+
+4. Event Participation & Tracking
+   - Join events and projects organized by NGOs
+   - Log your volunteer hours and activities
+
+5. Badges, Certificates & Leaderboards
+   - Earn digital badges and certificates for your contributions
+   - See your rank on volunteer leaderboards
+
+6. Community & Collaboration
+   - Participate in group chats and discussions with other volunteers
+   - Collaborate on projects and share experiences
+
+7. Feedback & Ratings
+   - Leave feedback for NGOs and events
+   - Rate your volunteering experiences
+
+8. Donations
+   - Support NGOs and causes by making donations through the platform
+
+9. Notifications
+   - Receive real-time updates about new opportunities, messages, and event reminders
+
+10. Public Profiles (Optional)
+    - Showcase your volunteering history, badges, and certificates to others
+
+Smile is designed to make volunteering easy, rewarding, and impactful for everyone. Explore opportunities, connect with organizations, and make a difference in your community!

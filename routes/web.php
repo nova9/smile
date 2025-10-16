@@ -27,3 +27,6 @@ Route::prefix('/requester')->group(base_path('routes/requester.php'));
 Route::prefix('/volunteer')->group(base_path('routes/volunteer.php'));
 Route::prefix('/admin')->group(base_path('routes/admin.php'));
 Route::prefix('/lawyer')->group(base_path('routes/lawyer.php'));
+
+//chatbot
+Route::post('/chat/send', [\App\Livewire\Common\Chatbot::class, 'sendMessage']);

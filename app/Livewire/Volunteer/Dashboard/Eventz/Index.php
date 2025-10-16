@@ -48,10 +48,9 @@ class Index extends Component
             ->get(); // Get all events as a collection
 
 
-
         // Get recommended events from the service
         $recommendedEvents = $eventRecommenderService->recommendEventsToUser($user, $events, 50); // Adjust topN as needed
-
+        // dd($recommendedEvents);
 
         // Paginate the recommended events
         $perPage = 12;

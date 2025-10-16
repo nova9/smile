@@ -43,8 +43,17 @@
 
                             </div>
                             <div class="flex flex-col">
-                                <h3 class="font-bold text-2xl">{{ auth()->user()->name }}</h3>
-                                <h2 class="text-neutral-500">{{ auth()->user()->email }}</h2>
+                                <div class="flex flex-col gap-1">
+                                    <h3 class="font-extrabold text-3xl  tracking-tight">{{ auth()->user()->name }}</h3>
+                                    <h2 class="text-base text-gray-500 font-medium flex items-center gap-2">
+                                        <i data-lucide="mail" class="w-4 h-4 text-accent"></i>
+                                        {{ auth()->user()->email }}
+                                    </h2>
+                                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold shadow-sm">
+                                        <i data-lucide="star" class="w-4 h-4 text-yellow-400"></i>
+                                        {{ $volunteer_level }}
+                                    </div>
+                                </div>
                                 <!-- Progress Bar -->
                                 <div x-show="uploading">
                                     <progress class="progress w-56" x-bind:value="progress"
