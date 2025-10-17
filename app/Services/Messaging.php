@@ -48,7 +48,12 @@ class Messaging
 
     public static function getMessagesForChat(Chat $chat)
     {
-        return $chat->messages()->with('user')->orderBy('created_at')->get();
+        return $chat->messages()->with('user')->orderBy('created_at', 'desc')->get();
+    }
+
+    public static function getMessagesForChatDisplay(Chat $chat)
+    {
+        return $chat->messages()->with('user')->orderBy('created_at', 'asc')->get();
     }
 
     public static function getDirectChatOtherParty($chat)
@@ -68,5 +73,35 @@ class Messaging
         $user->chats()->attach($chat->id);
 
         return true;
+    }
+
+    public static function hasUnreadMessages(Chat $chat): bool
+    {
+        return $chat->messages()
+            ->where('user_id', '!=', auth()->id())
+            ->whereNull('read_at')
+            ->exists();
+    }
+
+    public static function getUnreadMessageCount(Chat $chat): int
+    {
+        return $chat->messages()
+            ->where('user_id', '!=', auth()->id())
+            ->whereNull('read_at')
+            ->count();
+    }
+
+    public static function markMessagesAsRead(Chat $chat): void
+    {
+        $chat->messages()
+            ->where('user_id', '!=', auth()->id())
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+    }
+
+    public static function getLastMessageTime(Chat $chat): ?string
+    {
+        $lastMessage = $chat->messages()->latest()->first();
+        return $lastMessage ? $lastMessage->created_at->diffForHumans() : null;
     }
 }
