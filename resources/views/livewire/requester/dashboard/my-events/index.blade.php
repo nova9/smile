@@ -13,7 +13,7 @@
             </a>
         </div>
 
-{{--        Search--}}
+        {{--        Search--}}
         <div class="relative mb-2">
             <input wire:model.live="search" class="input focus:outline-0 w-full" type="text" placeholder="Search">
             <div class="absolute z-10 right-0 top-1/2 -translate-y-1/2 mr-3 pointer-events-none">
@@ -26,6 +26,7 @@
                 <thead>
                 <tr class="bg-gray-100 text-base-content/80">
                     <th class="py-3 px-4 text-left">Event</th>
+                    <th class="py-3 px-4 text-left">Date</th>
                     <th class="py-3 px-4 text-left">Description</th>
                     <th class="py-3 px-4 text-left">Tags</th>
                     <th class="py-3 px-4 text-right">Actions</th>
@@ -41,7 +42,10 @@
                             </a>
                         </td>
                         <td class="py-3 px-4 text-base-content max-w-[350px]">
-                            <span class="line-clamp-3 overflow-hidden">{{ $event->description }}</span>
+                            <span class="line-clamp-2 overflow-hidden">{{ $event->starts_at->diffForHumans() }}</span>
+                        </td>
+                        <td class="py-3 px-4 text-base-content max-w-[350px]">
+                            <span class="line-clamp-2 overflow-hidden">{{ $event->description }}</span>
                         </td>
                         <td>
                             <div class="flex flex-wrap gap-2">
@@ -51,9 +55,11 @@
                             </div>
                         </td>
                         <td class=" flex gap-2 justify-end">
-                            <button class="btn btn-sm">
-                                <a href="{{ route('requester.event.edit', $event->id) }}" wire:navigate>Edit</a>
-                            </button>
+                            <a href="{{ route('requester.event.edit', $event->id) }}" wire:navigate>
+                                <button class="btn btn-sm">
+                                    Edit
+                                </button>
+                            </a>
                         </td>
                     </tr>
                 @empty
