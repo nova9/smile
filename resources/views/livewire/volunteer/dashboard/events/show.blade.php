@@ -170,6 +170,23 @@
                                             @endforeach
                                         </div>
                                     @endif
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        @foreach ($event->resources as $resource)
+                                            <span
+                                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
+                                                {{ $resource->name }}
+                                            </span>
+                                             <span
+                                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
+                                                {{ $resource->description }}
+                                            </span>
+                                              <span
+                                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
+                                                {{ $resource->unit }}
+                                            </span>
+                                        @endforeach
+                                    </div>
                                 </div>
 
                                 <div class="mt-8">
