@@ -12,6 +12,7 @@ Route::middleware(['auth', 'role:requester'])->group(function () {
         Route::get('/my-events/{id}/edit', \App\Livewire\Requester\Dashboard\MyEvents\Edit::class)->name('requester.event.edit');
         Route::get('/my-events/{id}/certificates/{volunteerid}', \App\Livewire\Requester\Dashboard\Certificates\Certificate::class)->name('certificate.show');
         Route::get('/issued-certificates', \App\Livewire\Requester\Dashboard\Certificates\IssuedCertificates::class);
+        Route::get('/volunteers/{id}', \App\Livewire\Requester\Dashboard\Volunteers\Show::class)->name('requester.dashboard.volunteers.show');
 
     });
 });
