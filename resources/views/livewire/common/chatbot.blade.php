@@ -4,7 +4,7 @@
         this.open = !this.open;
         localStorage.setItem('chatbotOpen', this.open);
     },
-    
+
     init() {
         this.$watch('open', value => localStorage.setItem('chatbotOpen', value));
         // Listen for Livewire updates to restore state
@@ -105,6 +105,7 @@
                        <i  data-lucide="send-horizontal"></i>
                     </span>
                     <span wire:loading.flex wire:target="sendMessage" aria-hidden="true">
+
                       <i data-lucide="loader-circle" class="animate-spin"></i>
                     </span>
                 </button>

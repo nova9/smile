@@ -53,7 +53,7 @@ class Event extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    
+
 
     public function tags(): BelongsToMany
     {
@@ -71,7 +71,7 @@ class Event extends Model
 
     public function resources(): BelongsToMany
     {
-        return $this->belongsToMany(Resource::class);
+        return $this->belongsToMany(Resource::class)->withPivot('quantity');
     }
 
     public function user(): BelongsTo
@@ -84,10 +84,12 @@ class Event extends Model
         return $this->user;
     }
 
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
+
 
     public function isFavourite()
     {
