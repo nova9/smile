@@ -16,13 +16,9 @@
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-2 items-end sm:items-center">
-                    <span class="px-4 py-1 bg-yellow-100 text-yellow-800 text-sm font-semibold rounded-full shadow">
-                        {{ ucfirst($organization->status ?? 'Pending Approval') }}
+                    <span class="px-4 py-1 bg-green-100 text-green-800 text-sm font-semibold rounded-full shadow">
+                        Active
                     </span>
-                    <div class="flex gap-2 mt-2 sm:mt-0">
-                        <button class="btn btn-neutral font-bold">Approve</button>
-                        <button class="btn btn-outline btn-error font-bold">Reject</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -33,10 +29,10 @@
             <label class="tab flex gap-1">
                 <input type="radio" name="org_tabs" checked="checked" />
                 <i class="fas fa-user mr-2 text-primary"></i>
-                <span class="font-semibold">Profile & Verification</span>
+                <span class="font-semibold">Profile & Documents</span>
             </label>
             <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
-                <!-- Profile & Verification Tab -->
+                <!-- Profile & Documents Tab -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Organization Details -->
                     <div class="bg-white/90 rounded-2xl shadow-xl p-8">
@@ -75,35 +71,43 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Verification Status -->
+                    <!-- Documents -->
                     <div class="bg-white/90 rounded-2xl shadow-xl p-8">
                         <h2
                             class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
-                            Verification Status</h2>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-semibold text-gray-700">Documents Submitted</span>
-                                <span
-                                    class="px-3 py-1 bg-green-100 text-green-800 text-sm font-bold rounded-full shadow">Complete</span>
+                            Legal Documents</h2>
+                        <p class="text-sm text-gray-600 mb-4">Uploaded Documents (7/10 files uploaded)</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-file-pdf text-red-500"></i>
+                                    <div>
+                                        <p class="text-sm font-semibold text-gray-900">registration.pdf</p>
+                                        <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span
+                                        class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded">PDF</span>
+                                    <button class="btn btn-outline btn-primary btn-sm font-semibold">Download</button>
+                                </div>
                             </div>
-
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-semibold text-gray-700">Legal Verification</span>
-                                <span
-                                    class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-bold rounded-full shadow">Pending</span>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-file-pdf text-red-500"></i>
+                                    <div>
+                                        <p class="text-sm font-semibold text-gray-900">tax.pdf</p>
+                                        <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span
+                                        class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded">PDF</span>
+                                    <button class="btn btn-outline btn-primary btn-sm font-semibold">Download</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="mt-6">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Rejection Reason (if
-                                applicable)</label>
-                            <textarea
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                rows="3" placeholder="Enter reason for rejection..."></textarea>
-                        </div>
-                        <div class="mt-6 flex gap-3">
-                            <button class="btn btn-neutral font-bold w-full sm:w-auto">Approve</button>
-                            <button class="btn btn-outline btn-error font-bold w-full sm:w-auto">Reject</button>
-                        </div>
+                        <p class="text-sm text-red-600 mt-4 font-semibold">Max 10 files allowed per opportunity.</p>
                     </div>
                 </div>
             </div>
@@ -160,83 +164,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <label class="tab flex gap-1">
-                <input type="radio" name="org_tabs" />
-                <i class="fas fa-file-alt mr-2 text-primary"></i>
-                <span class="font-semibold">Documents</span>
-            </label>
-            <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
-                <!-- Documents Tab -->
-                <h2
-                    class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
-                    Legal Documents</h2>
-                <p class="text-sm text-gray-600 mb-4">Uploaded Documents (7/10 files uploaded)</p>
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow">
-                        <div class="flex items-center space-x-3">
-                            <i class="fas fa-file-pdf text-red-500"></i>
-                            <div>
-                                <p class="text-sm font-semibold text-gray-900">registration.pdf</p>
-                                <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded">PDF</span>
-                            <button class="btn btn-outline btn-primary btn-sm font-semibold">Download</button>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow">
-                        <div class="flex items-center space-x-3">
-                            <i class="fas fa-file-pdf text-red-500"></i>
-                            <div>
-                                <p class="text-sm font-semibold text-gray-900">tax.pdf</p>
-                                <p class="text-xs text-gray-500">Uploaded: 2025-01-10</p>
-                            </div>
-
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded">PDF</span>
-                            <button class="btn btn-outline btn-primary btn-sm font-semibold">Download</button>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-red-600 mt-4 font-semibold">Max 10 files allowed per opportunity.</p>
-            </div>
-
-            <label class="tab flex gap-1">
-                <input type="radio" name="org_tabs" />
-                <i class="fas fa-history mr-2 text-accent"></i>
-                <span class="font-semibold">Audit Log</span>
-            </label>
-            <div class="tab-content bg-base-100 border-base-300 p-8 rounded-2xl shadow-lg">
-                <!-- Audit Log Tab -->
-                <h2
-                    class="text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
-                    Audit Log</h2>
-                <x-admin.data-table :columns=" [
-        ['key' => 'id', 'label' => 'Id', 'type' => 'text'],
-        ['key' => 'status', 'label' => 'Status', 'type' => 'badge'],
-        ['key' => 'changed_by', 'label' => 'Changed By', 'type' => 'text'],
-        ['key' => 'date_time', 'label' => 'Date/Time', 'type' => 'text'],
-        ['key' => 'reason', 'label' => 'Reason', 'type' => 'text']
-    ]" :data=" [
-        [
-            'id' => '1',
-            'status' => ['class' => 'badge-success', 'text' => 'Verified'],
-            'changed_by' => 'AdminUser',
-            'date_time' => '2025-06-12 10:30 AM',
-            'reason' => 'Legal docs verified'
-        ],
-        [
-            'id' => '2',
-            'status' => ['class' => 'badge-warning', 'text' => 'Pending'],
-            'changed_by' => 'System',
-            'date_time' => '2025-06-10 09:15 AM',
-            'reason' => 'Initial registration submitted'
-        ]
-    ]" />
             </div>
 
             <label class="tab flex gap-1">
