@@ -98,13 +98,15 @@ import {
     SendHorizontal,
     LoaderCircle,
     MoveUp,
-    CircleX
+    CircleX,
+    Tag
 } from "lucide";
 
 
 function registerIcons() {
     createIcons({
         icons: {
+            Tag,
             ArrowLeftCircle,
             Box,
             RotateCw,

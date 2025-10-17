@@ -1,5 +1,5 @@
 <x-requester.dashboard-layout>
-    <div class="container mx-auto mt-4 px-4">
+    <div class="mx-auto mt-4 px-4">
         <div class="flex items-center justify-between mb-6">
             <div>
                 <h1 class="text-2xl font-bold text-primary">My Events</h1>
@@ -8,7 +8,6 @@
             <a href="/requester/dashboard/my-events/create" wire:navigate>
                 <button class="btn btn-primary">
                     + Create New Event
-
                 </button>
             </a>
         </div>
@@ -27,6 +26,7 @@
                 <tr class="bg-gray-100 text-base-content/80">
                     <th class="py-3 px-4 text-left">Event</th>
                     <th class="py-3 px-4 text-left">Date</th>
+                    <th class="py-3 px-4 text-left">Category</th>
                     <th class="py-3 px-4 text-left">Description</th>
                     <th class="py-3 px-4 text-left">Tags</th>
                     <th class="py-3 px-4 text-right">Actions</th>
@@ -45,6 +45,9 @@
                             <span class="line-clamp-2 overflow-hidden">{{ $event->starts_at->diffForHumans() }}</span>
                         </td>
                         <td class="py-3 px-4 text-base-content max-w-[350px]">
+                            <span class="line-clamp-2 overflow-hidden">{{ $event->category->name }}</span>
+                        </td>
+                        <td class="py-3 px-4 text-base-content max-w-[350px]">
                             <span class="line-clamp-2 overflow-hidden">{{ $event->description }}</span>
                         </td>
                         <td>
@@ -60,6 +63,9 @@
                                     Edit
                                 </button>
                             </a>
+                            <button class="btn btn-sm btn-error">
+                                <i data-lucide="trash2" class="size-4"></i>
+                            </button>
                         </td>
                     </tr>
                 @empty
