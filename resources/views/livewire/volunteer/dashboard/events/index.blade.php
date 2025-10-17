@@ -10,10 +10,10 @@
 @endphp
 
 <x-volunteer.dashboard-layout>
-    <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
-       
+    <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-4">
+
         <!-- Search and Filter Section -->
-        <div class="flex flex-col lg:flex-row gap-4 my-8">
+        <div class="flex flex-col lg:flex-row gap-4 mb-4">
             <!-- Search Bar -->
             <label class="input flex-grow-1">
                 <i data-lucide="search" class="opacity-50"></i>
@@ -54,13 +54,23 @@
 
                         <!-- Event Creator -->
                         <div class="flex items-center gap-2 mb-3 py-2 px-3 bg-gray-50 rounded-lg">
-                            <div
-                                class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
-                                {{ substr($item->user->name ?? 'Unknown', 0, 1) }}
-                            </div>
+                            @if($item->user->getCustomAttribute('profile_picture'))
+                                <img
+                                    class="size-8 rounded-full object-cover"
+                                    src="{{ \App\Services\FileManager::getTemporaryUrl($item->user->getCustomAttribute('profile_picture')) }}"
+                                    alt="organizer profile picture"
+                                >
+                            @else
+                                <div
+                                    class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
+                                    {{ substr($item->user->name ?? 'Unknown', 0, 1) }}
+                                </div>
+                            @endif
+
+
                             <div class="flex-1">
                                 <div class="text-sm font-medium text-gray-700">{{ $item->user->name }}</div>
-                                <div class="text-xs text-gray-500">Event Organizer</div>
+                                <div class="text-xs text-gray-500">{{ $item->user->email }}</div>
                             </div>
                             <div class="flex items-center gap-1 text-yellow-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor"
@@ -109,11 +119,11 @@
                                     Show more
                                 </button>
                             </a>
-                        <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
-                            wire:click="toggleFavorite({{ $item->id }})" >
-                            <i data-lucide="heart"
-                                class="w-5 h-5 {{ $item->isFavourite() ? 'text-red-500 fill-current' : 'text-gray-600'}}"></i>
-                        </button>
+                            <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
+                                    wire:click="toggleFavorite({{ $item->id }})">
+                                <i data-lucide="heart"
+                                   class="w-5 h-5 {{ $item->isFavourite() ? 'text-red-500 fill-current' : 'text-gray-600'}}"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
