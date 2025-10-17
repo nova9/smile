@@ -160,7 +160,7 @@
                                     @if (!empty($event->skills))
                                         <h2 class="text-2xl font-bold text-gray-800 mb-4">Skills</h2>
                                         <div class="flex flex-wrap gap-2 mb-6">
-                                            @foreach (explode(',', $event->skills) as $skill)
+                                            @foreach ($event->skills as $skill)
                                                 @if (trim($skill) !== '')
                                                     <span
                                                         class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-green-100 to-blue-100 border border-green-200 text-green-800 text-xs font-semibold shadow-sm">
