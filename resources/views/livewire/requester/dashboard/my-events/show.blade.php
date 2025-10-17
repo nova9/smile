@@ -11,12 +11,14 @@
                         <div class="relative z-10 max-w-5xl mx-auto px-6 py-6 sm:py-10 lg:py-14 text-white">
                             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                                 <div class="md:flex-1">
-                                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+                                    <div
+                                        class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
                                         <i data-lucide="tag" class="w-4 h-4"></i>
                                         <span>{{ $event->category->name }}</span>
                                     </div>
 
-                                    <h1 class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-md">
+                                    <h1
+                                        class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-md">
                                         {{ $event->name }}
                                     </h1>
 
@@ -25,7 +27,8 @@
                                     </p>
 
                                     <div class="mt-4 flex flex-wrap gap-3 items-center">
-                                        <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
+                                        <div
+                                            class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
                                             <i data-lucide="calendar" class="w-4 h-4"></i>
                                             <span>
                                                 {{ $event->starts_at ? $event->starts_at->format('M j') : 'TBA' }}
@@ -35,28 +38,30 @@
                                             </span>
                                         </div>
 
-                                        <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
+                                        <div
+                                            class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
                                             <i data-lucide="map-pin" class="w-4 h-4"></i>
                                             <span>{{ $event->address?->city ?? $event->city ?? 'Online / TBA' }}</span>
                                         </div>
 
-                                        <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
+                                        <div
+                                            class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
                                             <i data-lucide="user" class="w-4 h-4"></i>
                                             <span>By {{ $event->user?->name ?? 'Organizer' }}</span>
                                         </div>
                                     </div>
                                 </div>
 
-{{--                                <div class="flex-shrink-0 flex items-center gap-2">--}}
-{{--                                    <a href="#"--}}
-{{--                                       class="inline-flex items-center gap-2 bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold shadow hover:shadow-lg transition">--}}
-{{--                                        <i data-lucide="edit-2" class="w-4 h-4"></i> Edit--}}
-{{--                                    </a>--}}
-{{--                                    <button type="button"--}}
-{{--                                            class="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition">--}}
-{{--                                        <i data-lucide="share-2" class="w-4 h-4"></i> Share--}}
-{{--                                    </button>--}}
-{{--                                </div>--}}
+                                {{-- <div class="flex-shrink-0 flex items-center gap-2">--}}
+                                {{-- <a href="#" --}} {{--
+                                        class="inline-flex items-center gap-2 bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold shadow hover:shadow-lg transition">--}}
+                                {{-- <i data-lucide="edit-2" class="w-4 h-4"></i> Edit--}}
+                                {{-- </a>--}}
+                                {{-- <button type="button" --}} {{--
+                                        class="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition">--}}
+                                {{-- <i data-lucide="share-2" class="w-4 h-4"></i> Share--}}
+                                {{-- </button>--}}
+                                {{-- </div>--}}
                             </div>
                         </div>
                     </div>
@@ -80,30 +85,47 @@
 
                     <!-- Stats Cards -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                        <div class="bg-gray-50 rounded-xl p-5 text-center shadow-sm">
-                            <i data-lucide="users" class="w-8 h-8 text-blue-600 mx-auto mb-2"></i>
+                        <div
+                            class="rounded-xl p-5 text-center shadow-md bg-gradient-to-br from-white to-blue-50 border border-blue-50">
+                            <div
+                                class="mx-auto mb-3 inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/60 ring-1 ring-blue-100">
+                                <i data-lucide="users" class="w-6 h-6 text-blue-600"></i>
+                            </div>
                             <div class="text-sm text-gray-500">Total Applications</div>
-                            <div class="font-semibold text-gray-800">{{ $event->users->count() }}</div>
+                            <div class="font-semibold text-gray-800 text-lg">{{ $event->users->count() }}</div>
                         </div>
-                        <div class="bg-gray-50 rounded-xl p-5 text-center shadow-sm">
-                            <i data-lucide="check-circle" class="w-8 h-8 text-green-600 mx-auto mb-2"></i>
+                        <div
+                            class="rounded-xl p-5 text-center shadow-md bg-gradient-to-br from-white to-green-50 border border-green-50">
+                            <div
+                                class="mx-auto mb-3 inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/60 ring-1 ring-green-100">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-600"></i>
+                            </div>
                             <div class="text-sm text-gray-500">Approved</div>
-                            <div class="font-semibold text-gray-800">{{ $acceptedUsers->count() }}</div>
+                            <div class="font-semibold text-gray-800 text-lg">{{ $acceptedUsers->count() }}</div>
                         </div>
-                        <div class="bg-gray-50 rounded-xl p-5 text-center shadow-sm">
-                            <i data-lucide="clock" class="w-8 h-8 text-yellow-600 mx-auto mb-2"></i>
+                        <div
+                            class="rounded-xl p-5 text-center shadow-md bg-gradient-to-br from-white to-yellow-50 border border-yellow-50">
+                            <div
+                                class="mx-auto mb-3 inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/60 ring-1 ring-yellow-100">
+                                <i data-lucide="clock" class="w-6 h-6 text-yellow-600"></i>
+                            </div>
                             <div class="text-sm text-gray-500">Pending Review</div>
-                            <div class="font-semibold text-gray-800">{{ $pendingUsers->count() }}</div>
+                            <div class="font-semibold text-gray-800 text-lg">{{ $pendingUsers->count() }}</div>
                         </div>
-                        <div class="bg-gray-50 rounded-xl p-5 text-center shadow-sm">
-                            <i data-lucide="user" class="w-8 h-8 text-purple-600 mx-auto mb-2"></i>
+                        <div
+                            class="rounded-xl p-5 text-center shadow-md bg-gradient-to-br from-white to-purple-50 border border-purple-50">
+                            <div
+                                class="mx-auto mb-3 inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/60 ring-1 ring-purple-100">
+                                <i data-lucide="user" class="w-6 h-6 text-purple-600"></i>
+                            </div>
                             <div class="text-sm text-gray-500">Max Capacity</div>
-                            <div class="font-semibold text-gray-800">{{ $event->maximum_participants }}</div>
+                            <div class="font-semibold text-gray-800 text-lg">{{ $event->maximum_participants }}</div>
                         </div>
                     </div>
 
                     <!-- Trello-like Volunteer Board -->
                     <div class="tabs tabs-lift">
+                        {{-- Volunteers--}}
                         <label class="tab">
                             <input type="radio" name="my_tabs_4" checked="checked"/>
                             <div class="flex gap-1">
@@ -209,31 +231,47 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- Pending Approval below filter in main card -->
-                                <div class="bg-yellow-50 rounded-2xl p-6 shadow-md border border-yellow-200 mb-8">
+                                <!-- Pending Approval: modern card & grid -->
+                                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-8">
                                     <div class="flex items-center justify-between mb-6">
-                                        <h3 class="text-2xl font-bold text-yellow-700 flex items-center gap-2">
-                                            <i data-lucide="clock" class="w-6 h-6 text-yellow-500"></i>
+                                        <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                                            <i data-lucide="clock" class="w-6 h-6 text-indigo-500"></i>
                                             Volunteers
                                         </h3>
-                                        <span class="text-base text-gray-500">{{ $pendingUsers->count() }}</span>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm text-gray-500">Pending</span>
+                                            <span
+                                                class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-sm font-semibold">{{ $pendingUsers->count() }}</span>
+                                        </div>
                                     </div>
-                                    <div class="space-y-4 volunteer-column" data-status="pending">
-                                        @foreach ($filteredVolunteers as $user)
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        @forelse ($filteredVolunteers as $user)
                                             <div
-                                                class="volunteer-card bg-white rounded-xl p-5 shadow-sm border border-yellow-200 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col gap-3">
-                                                <div class="flex items-center gap-4">
+                                                class="flex flex-col bg-gray-50 rounded-xl p-4 border border-gray-100 transform transition duration-200">
+                                                <div class="flex items-start gap-4">
                                                     <img
                                                         src="{{ $user->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $user->id . '.jpg' }}"
                                                         alt="{{ $user->name }}"
-                                                        class="w-12 h-12 rounded-full object-cover border-2 border-yellow-500">
-                                                    <div class="flex-1">
-                                                        <h3 class="font-semibold text-gray-800 text-lg">
-                                                            {{ $user->name }}
-                                                        </h3>
-                                                        <p class="text-xs text-gray-600">
-                                                            {{ $user->role->name ?? 'Volunteer' }} • 4.6★</p>
-                                                        <div class="flex gap-2 mt-1">
+                                                        class="w-12 h-12 rounded-full object-cover ring-2 ring-indigo-100">
+                                                    <div class="flex-1 min-w-0">
+                                                        <div class="flex items-center justify-between gap-2">
+                                                            <a href="{{ route('requester.dashboard.volunteers.show', $user->id) }}">
+                                                                <h4 class="text-sm font-semibold text-gray-800 truncate"
+                                                                >
+                                                                    {{ $user->name }}
+                                                                </h4>
+                                                            </a>
+                                                            <span
+                                                                class="text-xs text-gray-500">{{ $user->getCustomAttribute('level') }}</span>
+                                                        </div>
+                                                        <p class="text-xs text-gray-500 truncate">
+                                                            {{ $user->role->name ?? 'Volunteer' }} •
+                                                            {{ number_format($user->getCustomAttribute('rating') ?? 4.6, 1) }}
+                                                            ★
+                                                        </p>
+
+                                                        <div class="mt-2 flex flex-wrap gap-2">
                                                             @php
                                                                 $skillsRaw = $user->getCustomAttribute('skills');
                                                                 $skills = is_array($skillsRaw)
@@ -244,45 +282,48 @@
                                                             @endphp
                                                             @foreach ($skills as $skill)
                                                                 <span
-                                                                    class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">{{ trim($skill, '[]"') }}</span>
+                                                                    class="px-2 py-1 bg-indigo-50 text-indigo-700 text-xs rounded-full">{{ trim($skill, '[]"') }}</span>
                                                             @endforeach
                                                             <span
-                                                                class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
-                                                                {{ $user->events->count() }} Events
-                                                            </span>
-                                                            <span
-                                                                class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
-                                                                {{ $user->getCustomAttribute('level') }}
-                                                            </span>
+                                                                class="px-2 py-1 bg-white text-gray-700 text-xs rounded-full border border-gray-100">{{ $user->events->count() }}
+                                                                events</span>
                                                         </div>
-                                                        {{-- <p class="text-xs text-gray-500 mt-1">Applied
-                                                            {{ $user->pivot['created_at']->diffForHumans() }}</p> --}}
-                                                    </div>
-                                                    <div class="flex gap-2">
-                                                        <button wire:click="approve({{ $user->id }})"
-                                                                class="px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded-lg text-xs font-medium transition-colors">
-                                                            Approve
-                                                        </button>
-                                                        <button wire:click="decline({{ $user->id }})"
-                                                                class="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-medium transition-colors">
-                                                            Decline
-                                                        </button>
                                                     </div>
                                                 </div>
+
+                                                <div class="mt-3 flex items-center gap-2">
+                                                    <button wire:click="approve({{ $user->id }})" title="Approve"
+                                                            class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold transition">
+                                                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                                        Approve
+                                                    </button>
+                                                    <button wire:click="decline({{ $user->id }})" title="Decline"
+                                                            class="inline-flex items-center gap-2 px-3 py-2 bg-white text-red-600 border border-gray-200 hover:bg-gray-50 rounded-lg text-sm font-semibold transition">
+                                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                                        Decline
+                                                    </button>
+                                                </div>
                                             </div>
-                                        @endforeach
-                                        @if ($pendingUsers->count() > 0)
-                                            <div class="pt-3 border-t border-gray-300">
-                                                <button wire:click="approveAll"
-                                                        class="w-full flex items-center justify-center gap-2 bg-green-500 text-white text-sm font-medium py-2 rounded-lg hover:bg-green-600 transition-colors">
-                                                    <i data-lucide="check-circle" class="w-4 h-4"></i> Approve All
-                                                </button>
+                                        @empty
+                                            <div class="col-span-full text-center py-8 text-gray-500">
+                                                No volunteers match the current filters.
                                             </div>
-                                        @endif
+                                        @endforelse
                                     </div>
+
+                                    @if ($pendingUsers->count() > 0)
+                                        <div class="mt-6 border-t border-gray-100 pt-4">
+                                            <button wire:click="approveAll"
+                                                    class="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium py-3 rounded-lg transition-colors">
+                                                <i data-lucide="check-circle" class="w-4 h-4"></i> Approve All
+                                            </button>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Workflows--}}
                         <label class="tab">
                             <input type="radio" name="my_tabs_4"/>
                             <div class="flex gap-1">
@@ -334,7 +375,8 @@
                                                                     class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Todo</span>
                                                             </div>
                                                             <p class="text-sm text-gray-600 mb-2">
-                                                                {{ $task->description }}</p>
+                                                                {{ $task->description }}
+                                                            </p>
                                                             <div class="flex items-center gap-2 mb-2">
                                                                 @if ($task->assignedUser && $task->assignedUser->id)
                                                                     <img
@@ -357,18 +399,16 @@
                                                         <label for="my-drawer-{{ $task->id }}"
                                                                aria-label="close sidebar"
                                                                class="drawer-overlay"></label>
-                                                        <ul
-                                                            class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                                                            <form
-                                                                wire:submit.prevent="updateTask({{ $task->id }})"
-                                                                class="space-y-4">
+                                                        <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                                                            <form wire:submit.prevent="updateTask({{ $task->id }})"
+                                                                  class="space-y-4">
                                                                 <h3
                                                                     class="text-lg font-bold text-blue-700 flex items-center gap-2">
                                                                     <svg class="w-5 h-5 text-blue-500" fill="none"
                                                                          stroke="currentColor" viewBox="0 0 24 24">
                                                                         <path stroke-linecap="round"
-                                                                              stroke-linejoin="round" stroke-width="2"
-                                                                              d="M12 4v16m8-8H4"/>
+                                                                              stroke-linejoin="round"
+                                                                              stroke-width="2" d="M12 4v16m8-8H4"/>
                                                                     </svg>
                                                                     Edit Task
                                                                 </h3>
@@ -392,7 +432,8 @@
                                                                         </option>
                                                                         @foreach ($acceptedUsers as $volunteer)
                                                                             <option value="{{ $volunteer->id }}">
-                                                                                {{ $volunteer->name }}</option>
+                                                                                {{ $volunteer->name }}
+                                                                            </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -403,7 +444,8 @@
                                                                         <h4
                                                                             class="text-md font-bold text-blue-600 mb-2 flex items-center gap-2">
                                                                             <svg class="w-4 h-4 text-blue-400"
-                                                                                 fill="none" stroke="currentColor"
+                                                                                 fill="none"
+                                                                                 stroke="currentColor"
                                                                                  viewBox="0 0 24 24">
                                                                                 <path stroke-linecap="round"
                                                                                       stroke-linejoin="round"
@@ -455,8 +497,7 @@
                                                                             <h4
                                                                                 class="text-md font-bold text-blue-600 mb-2 flex items-center gap-2">
                                                                                 <svg class="w-4 h-4 text-blue-400"
-                                                                                     fill="none"
-                                                                                     stroke="currentColor"
+                                                                                     fill="none" stroke="currentColor"
                                                                                      viewBox="0 0 24 24">
                                                                                     <path stroke-linecap="round"
                                                                                           stroke-linejoin="round"
@@ -498,8 +539,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="flex gap-2 mt-4">
-                                                                    <button type="submit"
-                                                                            class="btn btn-primary flex-1"
+                                                                    <button type="submit" class="btn btn-primary flex-1"
                                                                             onclick="document.getElementById('my-drawer-{{ $task->id }}').checked=false;">
                                                                         Update
                                                                     </button>
@@ -512,8 +552,8 @@
                                                 </div>
                                             @endforeach
                                             <!-- The button to open modal -->
-                                            <label for="my_modal_6" class="btn w-full"> <i
-                                                    data-lucide="book-plus"></i> Add a
+                                            <label for="my_modal_6" class="btn w-full"> <i data-lucide="book-plus"></i>
+                                                Add a
                                                 task</label>
 
                                             <!-- Put this part before </body> tag -->
@@ -540,9 +580,8 @@
                                                                     onclick="document.getElementById('my_modal_6').checked=false;">
                                                                 <svg class="w-4 h-4 mr-1" fill="none"
                                                                      stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path stroke-linecap="round"
-                                                                          stroke-linejoin="round" stroke-width="2"
-                                                                          d="M12 4v16m8-8H4"/>
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                          stroke-width="2" d="M12 4v16m8-8H4"/>
                                                                 </svg>
                                                                 Add Task
                                                             </button>
@@ -581,7 +620,8 @@
                                                                     class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-semibold">Doing</span>
                                                             </div>
                                                             <p class="text-sm text-gray-600 mb-2">
-                                                                {{ $task->description }}</p>
+                                                                {{ $task->description }}
+                                                            </p>
                                                             <div class="flex items-center gap-2 mb-2">
                                                                 @if ($task->assignedUser && $task->assignedUser->id)
                                                                     <img
@@ -604,18 +644,16 @@
                                                         <label for="my-drawer-{{ $task->id }}"
                                                                aria-label="close sidebar"
                                                                class="drawer-overlay"></label>
-                                                        <ul
-                                                            class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                                                            <form
-                                                                wire:submit.prevent="updateTask({{ $task->id }})"
-                                                                class="space-y-4">
+                                                        <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                                                            <form wire:submit.prevent="updateTask({{ $task->id }})"
+                                                                  class="space-y-4">
                                                                 <h3
                                                                     class="text-lg font-bold text-blue-700 flex items-center gap-2">
                                                                     <svg class="w-5 h-5 text-blue-500" fill="none"
                                                                          stroke="currentColor" viewBox="0 0 24 24">
                                                                         <path stroke-linecap="round"
-                                                                              stroke-linejoin="round" stroke-width="2"
-                                                                              d="M12 4v16m8-8H4"/>
+                                                                              stroke-linejoin="round"
+                                                                              stroke-width="2" d="M12 4v16m8-8H4"/>
                                                                     </svg>
                                                                     Edit Task
                                                                 </h3>
@@ -639,7 +677,8 @@
                                                                         </option>
                                                                         @foreach ($acceptedUsers as $volunteer)
                                                                             <option value="{{ $volunteer->id }}">
-                                                                                {{ $volunteer->name }}</option>
+                                                                                {{ $volunteer->name }}
+                                                                            </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -650,7 +689,8 @@
                                                                         <h4
                                                                             class="text-md font-bold text-blue-600 mb-2 flex items-center gap-2">
                                                                             <svg class="w-4 h-4 text-blue-400"
-                                                                                 fill="none" stroke="currentColor"
+                                                                                 fill="none"
+                                                                                 stroke="currentColor"
                                                                                  viewBox="0 0 24 24">
                                                                                 <path stroke-linecap="round"
                                                                                       stroke-linejoin="round"
@@ -702,8 +742,7 @@
                                                                             <h4
                                                                                 class="text-md font-bold text-blue-600 mb-2 flex items-center gap-2">
                                                                                 <svg class="w-4 h-4 text-blue-400"
-                                                                                     fill="none"
-                                                                                     stroke="currentColor"
+                                                                                     fill="none" stroke="currentColor"
                                                                                      viewBox="0 0 24 24">
                                                                                     <path stroke-linecap="round"
                                                                                           stroke-linejoin="round"
@@ -745,8 +784,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="flex gap-2 mt-4">
-                                                                    <button type="submit"
-                                                                            class="btn btn-primary flex-1"
+                                                                    <button type="submit" class="btn btn-primary flex-1"
                                                                             onclick="document.getElementById('my-drawer-{{ $task->id }}').checked=false;">
                                                                         Update
                                                                     </button>
@@ -786,7 +824,8 @@
                                                                     class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Done</span>
                                                             </div>
                                                             <p class="text-sm text-gray-600 mb-2">
-                                                                {{ $task->description }}</p>
+                                                                {{ $task->description }}
+                                                            </p>
                                                             <div class="flex items-center gap-2 mb-2">
                                                                 @if ($task->assignedUser && $task->assignedUser->id)
                                                                     <img
@@ -808,6 +847,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Certificates --}}
                         <label class="tab">
                             <input type="radio" name="my_tabs_4"/>
                             <div class="flex gap-1">
@@ -918,10 +959,14 @@
                 </div>
             </div>
             <div class="col-span-2">
-                <div class="bg-gray-50 rounded-2xl p-6 shadow-md border border-green-100">
+                <div
+                    class="bg-gradient-to-br from-white to-green-50 rounded-2xl p-6 shadow-lg ring-1 ring-green-100 border border-transparent">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-bold text-green-700 flex items-center gap-2">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                        <h3 class="text-xl font-bold text-green-800 flex items-center gap-3">
+                            <span
+                                class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/60 ring-1 ring-green-100">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
+                            </span>
                             Approved Volunteers
                         </h3>
                         <span class="text-base text-gray-500">{{ $acceptedUsers->count() }}</span>
@@ -935,18 +980,18 @@
                                 appear here.</p>
                         </div>
                     @else
-                        <div class="space-y-4">
+                        <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
                             @foreach ($acceptedUsers as $user)
                                 <div
-                                    class="volunteer-card bg-white rounded-xl p-4 shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-200 cursor-pointer flex items-center gap-4">
+                                    class="volunteer-card rounded-xl p-4 shadow-md border border-green-100 bg-white/80 hover:-translate-y-1 transform transition-all duration-200 cursor-pointer flex items-center gap-4">
                                     <img
                                         src="{{ $user->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $user->id . '.jpg' }}"
                                         alt="{{ $user->name }}"
                                         class="w-10 h-10 rounded-full object-cover border-2 border-green-500">
                                     <div class="flex-1">
                                         <h3 class="font-semibold text-gray-800 text-md">{{ $user->name }}</h3>
-                                        <p class="text-xs text-gray-600">{{ $user->role->name ?? 'Volunteer' }} • 4.9★
-                                        </p>
+                                        <p class="text-xs text-gray-600">{{ $user->role->name ?? 'Volunteer' }} •
+                                            4.9★</p>
                                         <div class="flex gap-2 mt-1">
                                             <span
                                                 class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">{{$user->getCustomAttribute('level')}}</span>
@@ -954,8 +999,8 @@
                                                 class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Local</span>
                                         </div>
                                     </div>
-                                    <button wire:click="messageVolunteer({{ $user->id }})"
-                                            class="p-2 bg-blue-100 hover:bg-blue-200 rounded-lg transition-colors">
+                                    <button wire:click="messageVolunteer({{ $user->id }})" title="Message"
+                                            class="inline-flex items-center gap-2 px-3 py-2 bg-blue-100 hover:bg-blue-200 rounded-full transition-colors shadow-sm">
                                         <i data-lucide="message-circle" class="w-4 h-4 text-blue-600"></i>
                                     </button>
                                 </div>
