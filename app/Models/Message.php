@@ -11,6 +11,11 @@ class Message extends Model
         'content',
         'chat_id',
         'user_id',
+        'read_at',
+    ];
+
+    protected $casts = [
+        'read_at' => 'datetime',
     ];
 
     public function user(): BelongsTo

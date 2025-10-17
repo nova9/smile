@@ -35,18 +35,42 @@ class Chat extends Component
         $chat = auth()->user()->chats()->with('messages')->find($chatId);
         $this->drawerOpen = false;
         $this->currentChat = $chat;
+        
+        // Mark all messages in this chat as read
+        if ($chat) {
+            Messaging::markMessagesAsRead($chat);
+        }
+        
+        // Refresh the chat list to update unread status
+        $this->chats = Messaging::getAllDirectChats();
     }
 
     public function sendMessage($chatId)
     {
         Messaging::sendMessage($this->input, $chatId);
         $this->input = "";
+        
+        // Refresh the chat list to update latest message
+        $this->chats = Messaging::getAllDirectChats();
+        
+        // Refresh current chat to show new message
+        $this->currentChat = auth()->user()->chats()->with('messages')->find($chatId);
     }
 
     public function closeChat()
     {
         $this->currentChat = null;
         $this->input = '';
+    }
+
+    public function refreshChats()
+    {
+        $this->chats = Messaging::getAllDirectChats();
+        
+        // Also refresh current chat if it's open
+        if ($this->currentChat) {
+            $this->currentChat = auth()->user()->chats()->with('messages')->find($this->currentChat->id);
+        }
     }
 
     public function render()

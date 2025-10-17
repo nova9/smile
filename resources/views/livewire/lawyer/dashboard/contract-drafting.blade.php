@@ -28,6 +28,13 @@
                 </button>
             </div>
 
+            <div class="flex justify-between items-center">
+                <button class="btn btn-accent" onclick="openContractModal()">
+                    <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                    New Contract Testing
+                </button>
+            </div>
+            
             <!-- Current Contracts -->
             <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                 <h3 class="text-xl font-semibold text-gray-800 mb-6">Current Drafts</h3>
