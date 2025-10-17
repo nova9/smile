@@ -3,9 +3,11 @@
 namespace App\Livewire\Volunteer\Dashboard\MyEvents;
 
 use App\Models\Event;
+use App\Models\EventPhoto;
+use App\Models\File;
 use App\Models\Review;
 use App\Models\Task;
-use App\Services\Favorite;
+use App\Services\FileManager;
 use App\Services\GoogleMaps;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -20,12 +22,17 @@ class Show extends Component
     public $tasks;
     public $reviewbutton = false;
     public $is_favorited;
+    public $uploadedPhotos = [];
+    public $avgratings;
 
     #[Validate('nullable|string|max:500')]
     public string $review;
 
     #[Validate('required|integer|min:1|max:5')]
     public int $rating;
+
+    public $reviewCount;
+    public $eventReviews;
 
 
     // public function join()
@@ -58,6 +65,24 @@ class Show extends Component
             $this->reviewbutton = true;
         }
 
+        $uploadedPhotos = $this->event->photos;
+        $this->uploadedPhotos = $uploadedPhotos->pluck('file_id')->map(function($fileId){
+            return FileManager::getTemporaryUrl($fileId);
+        });
+
+        $this->loadReviews();
+        // dd()
+        // dd($this->event->reviews);
+        //map function replaces the id with temporary url
+        // dd($this->uploadedPhotos);
+
+    }
+
+    public function loadReviews(){
+        $this->reviewCount = $this->event->reviews->count();
+        $this->eventReviews = $this->event->reviews;
+        $this->avgratings = $this->reviewCount > 0 ? ($this->event->reviews->pluck('rating')->sum()) / $this->reviewCount : 0;
+
     }
 
     public function submitReview(){
@@ -88,7 +113,7 @@ class Show extends Component
            }
         }
 
-
+       $this->loadReviews();
 
     }
 
@@ -101,8 +126,16 @@ class Show extends Component
 
         foreach ($this->photos as $photo) {
             $photo->store(path: 'photos');
-            //  $file = FileManager::store($this->profile_picture);
+            $file = FileManager::store($photo);
+            $isuploaded=EventPhoto::create([
+                'user_id'=> auth()->id(),
+                'event_id'=> $this->event->id,
+                'file_id'=> $file->id,
+                ]);
+
         }
+
+
     }
 
 
