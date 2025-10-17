@@ -7,7 +7,13 @@
                     <div class="flex gap-1 flex-1">
                         <label class="input w-full">
                             <i data-lucide="search" class="w-4 h-4"></i>
-                            <input type="search" class="grow" wire:model.live.debounce.250ms="Search for events" />
+                              <input type="text" wire:model.live="search" class="grow">
+ 
+                                    {{-- <ul>
+                                        @foreach ($users as $user)
+                                            <li wire:key="{{ $user->id }}">{{ $user->name }}</li>
+                                        @endforeach
+                                    </ul> --}}
                         </label>
                         <label class="flex items-center gap-2 ml-2 select-none">
                             <input type="checkbox" 
