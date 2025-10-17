@@ -12,10 +12,10 @@
 
 
 <x-volunteer.dashboard-layout>
-    <div class="min-h-screen bg-gray-50" >
+    <div class="min-h-screen bg-gray-50">
         <!-- Main Container -->
-        <div class="container mx-auto px-4 py-8">
-            <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+        <div class="container mx-auto px-4 py-8 flex">
+            <div class="flex-5 bg-white rounded-3xl shadow-lg overflow-hidden">
                 <!-- Hero Section -->
                 <div class="relative h-64 sm:h-80 lg:h-96">
                     <img src="{{ $event->image ?? 'https://picsum.photos/seed/' . $event->id . '/1200/800' }}"
@@ -32,9 +32,9 @@
                     </div>
                     <div class="absolute top-4 right-4">
                         <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
-                            wire:click="toggleFavorite" >
+                            wire:click="toggleFavorite">
                             <i data-lucide="heart"
-                                class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600'}}"></i>
+                                class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
                         </button>
                     </div>
                 </div>
@@ -64,98 +64,78 @@
                             <!-- Event Description -->
                             <div class="flex flex-col">
                                 <div class="flex justify-between">
-                                  <div class="mb-8">
+                                    <div class="mb-8">
                                         <h2 class="text-2xl font-bold text-gray-800 mb-4">About This Event</h2>
                                         <p class="text-gray-600 text-lg mx-auto leading-relaxed">
                                             {{ $event->description }}
                                         </p>
-                                        
+
                                     </div>
-                                <!-- Action Buttons -->
+                                    <!-- Action Buttons -->
                                     <div class="mb-10 text-center">
                                         @php
                                             $user = $event->users->where('id', auth()->id())->first();
                                             $status = $user?->pivot->status;
                                         @endphp
-                                        @if (!$event->users->contains(auth()->user()))
-                                            {{-- <button
-                                        class="btn btn-primary btn-lg rounded-full px-8 py-3 font-semibold shadow-lg hover:scale-105 transition"
-                                        wire:click="join">
-                                        <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
-                                        Join This Event
-                                    </button> --}}
-                                        @elseif ($event->ends_at < now() && $status == 'accepted')
-                                            
-                                            <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
-                                                <a href="{{ route('volunteer.feedback') }}"
-                                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
-                                                    <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
-                                                    <span>Leave Feedback</span>
-                                                </a>
-        
-                                                <a href="{{ route('community.space', ['id' => $event->id]) }}"
-                                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
-                                                    <i data-lucide="users" class="w-5 h-5"></i>
-                                                    <span>Community Space</span>
-                                                </a>
-        
-                                                <button id="share-event-btn" type="button"
-                                                    class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
-                                                    <i data-lucide="share-2" class="w-5 h-5"></i>
-                                                    <span>Share</span>
-                                                </button>
-                                            </div>
-        
-                                            <!-- Tiny toast for copy feedback -->
+                                        <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
+
+                                            <button id="share-event-btn" type="button"
+                                                class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                                <i data-lucide="share-2" class="w-5 h-5"></i>
+                                                <span>Share</span>
+                                            </button>
+                                            <!-- Tiny toast for copy review -->
                                             <div id="share-toast"
                                                 class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
                                                 Link copied to clipboard
                                             </div>
-        
-                                        @elseif ($status == 'pending' || $status == 'accepted' )
-                                        <button id="share-event-btn" type="button"
-                                                class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
-                                                <i data-lucide="share-2" class="w-5 h-5"></i>
-                                                <span>Share</span>
-                                        </button>
-                                        
-                                        @endif
+                                            <a href="{{ route('community.space', ['id' => $event->id]) }}"
+                                                class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                                <i data-lucide="users" class="w-5 h-5"></i>
+                                                <span>Community Space</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
-                                 @if ($status == 'completed')
-                                    <div
-                                        class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex items-center gap-4">
-                                        <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
-                                        <div>
-                                            <h3 class="text-lg font-bold text-green-700">Event Completed!</h3>
-                                            <p class="text-green-600 text-sm">Thank you for your participation.</p>
+                                    @if ($status == 'completed')
+                                        <div
+                                            class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex items-center gap-4">
+                                            <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
+                                            <div>
+                                                <h3 class="text-lg font-bold text-green-700">Event Completed!</h3>
+                                                <p class="text-green-600 text-sm">Thank you for your participation.</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                @elseif ($status == 'pending')
-                                    <div
-                                        class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6 flex items-center  gap-4">
-                                        <i data-lucide="clock" class="w-8 h-8 text-yellow-500"></i>
-                                        <div>
-                                            <h3 class="text-lg text-left font-bold text-yellow-700">Pending Approval</h3>
-                                            <p class="text-yellow-600 text-sm">The organizer will review your request
-                                                soon.</p>
+                                    @elseif ($status == 'pending')
+                                        <div
+                                            class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6 flex items-center  gap-4">
+                                            <i data-lucide="clock" class="w-8 h-8 text-yellow-500"></i>
+                                            <div>
+                                                <h3 class="text-lg text-left font-bold text-yellow-700">Pending
+                                                    Approval
+                                                </h3>
+                                                <p class="text-yellow-600 text-sm">The organizer will review your
+                                                    request
+                                                    soon.</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                @elseif ($status == 'accepted')
-                                    <div
-                                        class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
-                                        <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
-                                        <div>
-                                            <h3 class="text-lg font-bold text-green-700">You're In!</h3>
-                                            <p class="text-green-600 text-sm">Looking forward to your participation.</p>
+                                    @elseif ($status == 'accepted')
+                                        <div
+                                            class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
+                                            <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
+                                            <div>
+                                                <h3 class="text-lg font-bold text-green-700">You're In!</h3>
+                                                <p class="text-green-600 text-sm">Looking forward to your
+                                                    participation.
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
                                 </div>
-                        </div>
-                            
-                          
+                            </div>
+
+
 
                             <!-- Quick Info Cards -->
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
@@ -295,7 +275,7 @@
                             </div>
 
                             <!-- Grid Layout for Content -->
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
                                 <!-- Left Column: Event Details -->
                                 <div class="lg:col-span-2 space-y-8">
                                     <!-- About Event -->
@@ -546,135 +526,267 @@
                                                                     class="text-xs text-gray-700">{{ $task->assignedUser->name }}</span>
                                                             </div>
                                                         @endif
-                                                        <button
-                                                            class="w-full flex items-center justify-center gap-2 bg-yellow-500 text-white text-sm font-medium py-2 rounded-lg hover:bg-yellow-600 transition-colors"
+                                                        <label
+                                                            class="btn w-full flex items-center justify-center gap-2 bg-yellow-500 text-white text-sm font-medium py-2 rounded-lg hover:bg-yellow-600 transition-colors"
                                                             wire:click="updateTaskStatus({{ $task->id }}, 'done')">
                                                             <i data-lucide="check-circle-2" class="w-4 h-4"></i> Mark
                                                             as
                                                             Done
-                                                        </button>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
+                                                        </label>
 
-                                        <!-- Done Column -->
-                                        <div class="flex-1 min-w-[280px] bg-gray-100 rounded-xl p-4 shadow-md">
-                                            <div class="flex items-center justify-between mb-4">
-                                                <h3 class="text-lg font-bold text-green-700 flex items-center gap-2">
-                                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
-                                                    Done
-                                                </h3>
-                                                <span
-                                                    class="text-sm text-gray-500">{{ $tasks->where('status', 'done')->count() }}</span>
-                                            </div>
-                                            <div class="space-y-3 task-column" data-status="done">
-                                                @foreach ($tasks->where('status', 'done') as $task)
-                                                    <div class="task-card bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 cursor-move"
-                                                        draggable="true" data-task-id="{{ $task->id }}">
-                                                        <div class="flex items-center justify-between mb-2">
-                                                            <h4
-                                                                class="font-semibold text-gray-800 flex items-center gap-2">
-                                                                <i data-lucide="check"
-                                                                    class="w-4 h-4 text-green-500"></i>
-                                                                {{ $task->name }}
-                                                            </h4>
-                                                            <span
-                                                                class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Done</span>
-                                                        </div>
-                                                        <p class="text-sm text-gray-600 mb-3 line-clamp-3">
-                                                            {{ $task->description }}</p>
-                                                        @if ($task->assignedUser)
-                                                            <div class="flex items-center gap-2 mb-3">
-                                                                <img src="{{ $task->assignedUser->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $task->assignedUser->id . '.jpg' }}"
-                                                                    class="w-6 h-6 rounded-full object-cover"
-                                                                    alt="Assigned User">
-                                                                <span
-                                                                    class="text-xs text-gray-700">{{ $task->assignedUser->name }}</span>
-                                                            </div>
-                                                        @endif
-                                                        <button
-                                                            class="w-full flex items-center justify-center gap-2 bg-gray-300 text-gray-600 text-sm font-medium py-2 rounded-lg cursor-not-allowed"
-                                                            disabled>
-                                                            <i data-lucide="check-circle" class="w-4 h-4"></i>
-                                                            Completed
-                                                        </button>
+
                                                     </div>
-                                                @endforeach
                                             </div>
-                                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Done Column -->
+                <div class="flex-1 min-w-[280px] bg-gray-100 rounded-xl p-4 shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-green-700 flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            Done
+                        </h3>
+                        <span class="text-sm text-gray-500">{{ $tasks->where('status', 'done')->count() }}</span>
+                    </div>
+                    <div class="space-y-3 task-column" data-status="done">
+                        @foreach ($tasks->where('status', 'done') as $task)
+                            <div class="task-card bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 cursor-move"
+                                draggable="true" data-task-id="{{ $task->id }}">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold text-gray-800 flex items-center gap-2">
+                                        <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                                        {{ $task->name }}
+                                    </h4>
+                                    <span
+                                        class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Done</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3 line-clamp-3">
+                                    {{ $task->description }}</p>
+                                @if ($task->assignedUser)
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <img src="{{ $task->assignedUser->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $task->assignedUser->id . '.jpg' }}"
+                                            class="w-6 h-6 rounded-full object-cover" alt="Assigned User">
+                                        <span class="text-xs text-gray-700">{{ $task->assignedUser->name }}</span>
                                     </div>
-                                </div>
+                                @endif
+                                <button
+                                    class="w-full flex items-center justify-center gap-2 bg-gray-300 text-gray-600 text-sm font-medium py-2 rounded-lg cursor-not-allowed"
+                                    disabled>
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                    Completed
+                                </button>
                             </div>
-                        @endif
-                        <label class="tab">
-                            <input type="radio" name="my_tabs_4" />
-                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>
-                            Event Gallery
-                        </label>
-                        <div class="tab-content bg-base-100 border-base-300 p-6">
-
-                            @if ($status == 'accepted')
-                                <div class="mb-8">
-                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Upload Your Memories with This
-                                        Event
-                                    </h2>
-                                    <p class="text-gray-600 text-lg mx-auto leading-relaxed">
-                                        Share your photos and videos from the event to inspire others and showcase the
-                                        impact of our community efforts. Your contributions help build a vibrant and
-                                        engaged
-                                        volunteer community.
-                                    </p>
-                                </div>
-                                <div class="mb-6 flex flex-col sm:flex-row items-center gap-4">
-                                    <form method="POST" enctype="multipart/form-data"
-                                        class="flex items-center gap-3 w-full justify-center">
-                                        @csrf
-                                        <label class="btn btn-outline flex items-center gap-2 cursor-pointer mb-0">
-                                            {{-- <i data-lucide="upload" class="w-5 h-5"></i> --}}
-                                            Upload Photo
-                                            <input type="file" name="event_gallery[]" accept="image/*"
-                                                class="hidden" multiple>
-                                        </label>
-                                        <span class="text-xs text-gray-500">JPG, PNG up to 5MB each</span>
-                                    </form>
-                                </div>
-                            @else
-                                <div class="mb-8">
-                                    {{-- <h2 class="text-2xl font-bold text-gray-800 mb-4">Event Gallery</h2> --}}
-                                    <p class="text-gray-600 text-lg mx-auto leading-relaxed">
-                                        Browse photos and videos from the event to see the impact of our community
-                                        efforts.
-                                        Join us in future events to contribute your own memories and help build a
-                                        vibrant
-                                        and engaged volunteer community.
-                                    </p>
-                                </div>
-                            @endif
-
-
-                            @php
-                                $images = [
-                                    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
-                                    'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
-                                    'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80',
-                                    'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
-                                ];
-                            @endphp
-                            <div class="container mx-auto px-4 py-8">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                    @foreach ($images as $img)
-                                        <div class="group relative overflow-hidden rounded-lg shadow-lg">
-                                            <img src="{{ $img }}" alt="Gallery Image"
-                                                class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
+
+    </div>
+    @endif
+    <label class="tab">
+        <input type="radio" name="my_tabs_4" />
+        <i data-lucide="image" class="w-4 h-4 mr-2"></i>
+        Event Gallery
+    </label>
+    <div class="tab-content bg-base-100 border-base-300 p-6">
+
+        @if ($status == 'accepted')
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Upload Your Memories with This
+                    Event
+                </h2>
+                <p class="text-gray-600 text-lg mx-auto leading-relaxed">
+                    Share your photos and videos from the event to inspire others and showcase the
+                    impact of our community efforts. Your contributions help build a vibrant and
+                    engaged
+                    volunteer community.
+                </p>
+            </div>
+            <div class="mb-6">
+                <form wire:submit="save" class="flex flex-col sm:flex-row items-center gap-4">
+                    <label
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm text-gray-700 hover:bg-gray-50">
+                        <i data-lucide="upload" class="w-4 h-4"></i>
+                        <span>Choose photos</span>
+                        <input type="file" wire:model="photos" multiple accept="image/*" class="hidden">
+                    </label>
+
+                    <div class="ml-auto flex items-center gap-3">
+                       
+
+                        <button type="submit"
+                            class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                            Save photos
+                        </button>
+                    </div>
+                </form>
+            </div>
+        @else
+            <div class="mb-8">
+                {{-- <h2 class="text-2xl font-bold text-gray-800 mb-4">Event Gallery</h2> --}}
+                <p class="text-gray-600 text-lg mx-auto leading-relaxed">
+                    Browse photos and videos from the event to see the impact of our community
+                    efforts.
+                    Join us in future events to contribute your own memories and help build a
+                    vibrant
+                    and engaged volunteer community.
+                </p>
+            </div>
+        @endif
+
+
+        @php
+            $images = [
+                'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+                'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
+                'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80',
+                'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+            ];
+        @endphp
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                @foreach ($images as $img)
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                        <img src="{{ $img }}" alt="Gallery Image"
+                            class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <label class="tab">
+        <input type="radio" name="my_tabs_4" />
+        <i data-lucide="star" class="w-4 h-4 mr-2"></i>
+        Reviews
+    </label>
+    <div class="tab-content bg-base-100 border-base-300 p-6">
+        {{-- Reviews section for this event --}}
+        <div class="container mx-auto px-4 py-8 flex-2">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Reviews</h3>
+                        @php
+                            $eventReviews = $event->reviews ?? collect();
+                            $reviewCount = is_countable($eventReviews)
+                                ? count($eventReviews)
+                                : $eventReviews->count() ?? 0;
+                            $avgRating = $reviewCount
+                                ? round(collect($eventReviews)->avg(fn($r) => $r->rating ?? 0), 1)
+                                : null;
+                        @endphp
+                        <div class="text-sm text-gray-500">{{ $reviewCount }}
+                            review{{ $reviewCount !== 1 ? 's' : '' }}{{ $avgRating ? ' • ' . $avgRating . '/5' : '' }}
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        @if ($reviewbutton)
+                            <!-- Event-level review modal (unique per event) -->
+                            <button onclick="my_modal_4.showModal()"
+                                class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
+                                for="event_review_modal_{{ $event->id }}">
+                                <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
+                                <span>Review</span>
+                            </button>
+                            <dialog id="my_modal_4" class="modal">
+                                <div class="modal-box w-full max-w-lg p-8 bg-white rounded-2xl shadow-xl relative">
+                                    <button onclick="my_modal_4.close()" type="button"
+                                        class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
+                                        <i data-lucide="x" class="w-6 h-6"></i>
+                                    </button>
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                                        <i data-lucide="star" class="w-6 h-6 text-yellow-400"></i>
+                                        Leave a Review
+                                    </h2>
+                                    <p class="text-gray-500 mb-6">Share your experience and help
+                                        others!</p>
+                                    <form method="dialog" wire:submit="submitReview" class="space-y-5">
+                                        <div>
+                                            <label for="rating"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                                            <input type="number" min="1" max="5" wire:model="rating"
+                                                id="rating"
+                                                class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                                                placeholder="1-5">
+                                        </div>
+                                        <div>
+                                            <label for="review"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Your
+                                                Review</label>
+                                            <textarea wire:model="review" id="review" rows="4"
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
+                                                placeholder="Write your review..."></textarea>
+                                        </div>
+                                        <div class="flex justify-end gap-2 mt-6">
+
+                                            <button onclick="my_modal_4.close()"
+                                                class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
+                                                type="submit">Send</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </dialog>
+                        @endif
+                    </div>
+                </div>
+
+                @if ($reviewCount)
+                    <div class="grid grid-cols-1 gap-4">
+                        @foreach ($eventReviews as $review)
+                            <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 flex-shrink-0">
+                                        @if (isset($review->user) && isset($review->user->profile_photo_url))
+                                            <img src="{{ $review->user->profile_photo_url }}"
+                                                alt="{{ $review->user->name }}"
+                                                class="w-full h-full object-cover rounded-full">
+                                        @else
+                                            <span
+                                                class="font-semibold">{{ strtoupper(substr($review->user->name ?? 'U', 0, 1)) }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-800">
+                                                    {{ $review->user->name ?? 'Anonymous' }}</div>
+                                                <div class="text-xs text-gray-500">
+                                                    {{ $review->created_at?->format('M j, Y') ?? '' }}</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="flex text-yellow-400">
+                                                    @php $r = (int) ($review->rating ?? 0); @endphp
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $r)
+                                                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                                        @else
+                                                            <i data-lucide="star" class="w-4 h-4 text-gray-300"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                                <div class="text-sm text-gray-600">{{ $review->rating ?? '-' }}/5
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="mt-3 text-gray-700 text-sm">{{ $review->review ?? '' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
     </div>
 </x-volunteer.dashboard-layout>

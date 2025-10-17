@@ -83,7 +83,12 @@ class Event extends Model
         // Return the user who created the event
         return $this->user;
     }
-    
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function isFavourite()
     {
         return Favourites::where('event_id', $this->id)->exists();

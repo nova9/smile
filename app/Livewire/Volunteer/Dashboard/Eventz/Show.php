@@ -16,6 +16,7 @@ class Show extends Component
     public $city;
     public $organizer;
     public $Volunteers;
+    public $resources;
 
     public function mount($id, GoogleMaps $googleMaps)
     {
@@ -26,6 +27,8 @@ class Show extends Component
         $this->organizer = User::find($this->event->user_id);
         // dd($this->organizer);
         $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude);
+        $this->resources = $this->event->resources;
+        // dd($this->resources);
     }
 
     public function join()
