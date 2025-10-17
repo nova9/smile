@@ -2,11 +2,16 @@
 
 namespace App\Livewire\Requester\Dashboard;
 
+use App\Services\FileManager;
+use Illuminate\Support\Arr;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Profile extends Component
 
 {
+    use WithFileUploads;
     public $attribute;
     public $completion;
     public $name;
@@ -24,6 +29,18 @@ class Profile extends Component
     public $verification_document;
     public $latitude;
     public $longitude;
+
+    #[Validate]
+    public $profile_picture;
+
+    public $profile_picture_url;
+
+    public function rules()
+    {
+        return [
+            'profile_picture' => 'required|image|max:10240', // 10MB max size
+        ];
+    }
 
 
     public function mount()
@@ -47,7 +64,9 @@ class Profile extends Component
         ];
 
         $this->completion = $this->user->profileCompletionPercentage($requiredskills);
-        
+
+        $this->profile_picture_url = FileManager::getTemporaryUrl(auth()->user()->getCustomAttribute('profile_picture'));
+
 
         $this->contact_number = $this->user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
         $this->logo = $this->user->attributes()->where('name', 'logo')->get()->pluck('pivot.value')->first();
@@ -64,6 +83,15 @@ class Profile extends Component
         $this->legal_status = $verificationDetails['legal_status'] ?? '';
         $this->credentials = $verificationDetails['credentials'] ?? '';
         $this->verification_document = $verificationDetails['verification_document'] ?? null;
+    }
+
+    public function saveProfilePicture()
+    {
+        $this->validate(Arr::only($this->rules(), ['profile_picture']));
+        $file = FileManager::store($this->profile_picture);
+        auth()->user()->setCustomAttribute('profile_picture', $file->id);
+        session()->flash('success', 'Profile picture updated successfully!');
+        $this->redirect('/requester/dashboard/profile');
     }
 
 
