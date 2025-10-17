@@ -54,6 +54,7 @@ class Event extends Model
         return $this->belongsTo(Category::class);
     }
 
+
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
@@ -68,6 +69,11 @@ class Event extends Model
         return $this->belongsTo(Address::class);
     }
 
+    public function resources(): BelongsToMany
+    {
+        return $this->belongsToMany(Resource::class)->withPivot('quantity');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -76,6 +82,18 @@ class Event extends Model
     {
         // Return the user who created the event
         return $this->user;
+    }
+
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+
+    public function isFavourite()
+    {
+        return Favourites::where('event_id', $this->id)->exists();
     }
 
     public function userJoinsNotify()

@@ -1,30 +1,5 @@
 <x-volunteer.dashboard-layout>
     <div class="min-h-screen p-6">
-
-        <!-- Header Section -->
-        <div class="mb-8">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
-                        My Volunteer
-                        <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
-                            Events
-                        </span>
-                    </h1>
-                    <p class="text-slate-600 text-lg">Track and manage your volunteer activities</p>
-                </div>
-                <div
-                    class="inline-flex items-center mb-10 px-6 py-3 bg-gradient-to-r from-primary/10 to-green-600/10 text-primary rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-primary/20">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    Welcome to Your Volunteer Events
-                </div>
-            </div>
-        </div>
-
-
         <!-- Filters -->
         <div class="mb-6">
             <div class="flex flex-wrap gap-4 items-center">
@@ -34,6 +9,12 @@
                             <i data-lucide="search" class="w-4 h-4"></i>
                             <input type="search" class="grow" wire:model.live.debounce.250ms="Search for events" />
                         </label>
+                        <label class="flex items-center gap-2 ml-2 select-none">
+                            <input type="checkbox" 
+                                class="checkbox checkbox-accent checkbox-sm" wire:model.change="favouriteEventsFilter">
+                            <span class="text-sm text-slate-700">favourites</span>
+                        </label>
+
                     </div>
                     <select class="select" wire:model.change="statusFilter">
                         <option value="">All Status</option>
@@ -41,6 +22,7 @@
                         <option value="completed">Completed</option>
                         <option value="pending">Pending</option>
                         <option value="rejected">Cancelled</option>
+
                     </select>
                     <select class="select" wire:model.change="categoryFilter">
                         <option value="">All Categories</option>
@@ -60,8 +42,7 @@
         </div>
 
         <!-- Events List (Desktop) -->
-        <div
-            class="border border-slate-200 overflow-hidden rounded-2xl shadow-sm">
+        <div class="border border-slate-200 overflow-hidden rounded-2xl shadow-sm">
             <!-- Table Header -->
             <div class="px-6 py-5 border-b border-slate-200 bg-slate-50">
                 <div class="grid grid-cols-12 gap-4 text-sm font-semibold text-slate-700">
@@ -87,6 +68,14 @@
                                         <a href="/volunteer/dashboard/my-events/{{ $item->id }}"
                                             class="font-bold text-slate-900 mb-2 text-lg transition-colors duration-200">
                                             {{ $item->name }}
+                                            @php
+                                                $favoriteIds = $favouriteEvents->pluck('event_id')->toArray();
+                                            @endphp
+                                            @if (in_array($item->id, $favoriteIds))
+                                                <span class="inline-flex items-center">
+                                                    <i data-lucide="heart" class="w-4 h-4 mr-1 text-red-500"></i>
+                                                </span>
+                                            @endif
                                         </a>
                                         <p class="text-sm text-slate-600 line-clamp-2 mb-3">
                                             {{ $item->description }}
@@ -115,8 +104,7 @@
 
                             <!-- Location -->
                             <div class="col-span-2">
-                                <div
-                                    class="flex items-center gap-2 text-sm text-slate-600 bg-white/50 rounded-xl">
+                                <div class="flex items-center gap-2 text-sm text-slate-600 bg-white/50 rounded-xl">
                                     <div
                                         class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
                                         <i data-lucide="map-pin" class="w-4 h-4 text-slate-500"></i>
@@ -128,11 +116,11 @@
                             <!-- Status -->
                             <div class="col-span-1">
                                 @if ($item->pivot->status === 'accepted')
-                                        <span
-                                            class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 shadow-sm">
-                                            <div class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
-                                            Confirmed
-                                        </span>
+                                    <span
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 shadow-sm">
+                                        <div class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
+                                        Confirmed
+                                    </span>
                                 @elseif($item->pivot->status === 'pending')
                                     <span
                                         class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 shadow-sm">
@@ -141,9 +129,9 @@
                                     </span>
                                 @elseif($item->pivot->status === 'completed')
                                     <span
-                                            class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 shadow-sm">
-                                            <i data-lucide="check-circle" class="w-3 h-3 mr-2"></i>
-                                            Completed
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 shadow-sm">
+                                        <i data-lucide="check-circle" class="w-3 h-3 mr-2"></i>
+                                        Completed
                                     </span>
                                 @elseif($item->pivot->status === 'rejected' || $item->pivot->status === 'cancelled')
                                     <span
@@ -155,9 +143,8 @@
                             </div>
 
                             <!-- Organizer -->
-                            <div class="col-span-3">
-                                <div
-                                    class="flex items-center gap-3 bg-white/50 rounded-xl">
+                            <div class="col-span-2">
+                                <div class="flex items-center gap-3 bg-white/50 rounded-xl">
                                     <div class="relative">
                                         <div
                                             class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-sm font-bold text-white shadow-md">
@@ -173,6 +160,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
 
                         </div>

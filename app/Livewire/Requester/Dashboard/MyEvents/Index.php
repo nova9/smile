@@ -17,7 +17,6 @@ class Index extends Component
             ->where('name', 'like', '%' . $this->search . '%')
             ->orderBy('created_at', 'desc')
             ->get();
-
         return view('livewire.requester.dashboard.my-events.index', [
             'events' => $events,
         ]);
