@@ -1,61 +1,75 @@
 <x-requester.dashboard-layout>
     <main class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto space-y-8">
-           
+
             <!-- Profile Card -->
             <div class="group">
-                <div class="border border-neutral-200 rounded-3xl p-8 shadow-sm bg-white flex flex-col gap-8">
+                {{--                Picture--}}
+                <div
+                    class="border border-neutral-200 rounded-3xl p-8 shadow-sm bg-white flex flex-col gap-8">
                     <div class="flex items-center justify-between gap-6">
-                        <div x-data="{ uploading: false, progress: 0 }" 
-                             x-on:livewire-upload-start="uploading = true"
-                             x-on:livewire-upload-finish="uploading = false"
-                             x-on:livewire-upload-cancel="uploading = false"
-                             x-on:livewire-upload-error="uploading = false"
-                             x-on:livewire-upload-progress="progress = $event.detail.progress"
-                             class="flex gap-4">
-                            <!-- Logo Upload -->
+                        <div
+                            x-data="{ uploading: false, progress: 0 }"
+                            x-on:livewire-upload-start="uploading = true"
+                            x-on:livewire-upload-finish="uploading = false"
+                            x-on:livewire-upload-cancel="uploading = false"
+                            x-on:livewire-upload-error="uploading = false"
+                            x-on:livewire-upload-progress="progress = $event.detail.progress"
+                            class="flex gap-4"
+                        >
                             <div class="flex flex-col gap-2 items-center">
-                                <x-common.avatar size="100" 
-                                    :src="$logo ? $logo->temporaryUrl() : 'https://api.dicebear.com/7.x/initials/svg?seed=' . urlencode(Str::substr($name, 0, 1))"
-                                    :name="$name" 
-                                    aria-describedby="logo-description"/>
-                                <span id="logo-description" class="sr-only">Organization logo</span>
+                                <x-common.avatar size="100"
+                                                 :src="$profile_picture ? $profile_picture->temporaryUrl() : ($profile_picture_url ? $profile_picture_url : '')"
+                                                 :name="$name"/>
+
                                 <div class="flex gap-1">
-                                    <label class="bg-black rounded-full px-4 py-1 text-white cursor-pointer text-xs">
-                                        Edit Logo
-                                        <input accept="image/png,image/jpeg,image/jpg" wire:model="logo" type="file" class="hidden"/>
+
+                                    <label
+                                        class="bg-black rounded-full px-4 py-1 text-white cursor-pointer text-xs">
+                                        Edit
+
+                                        <input accept="image/*" wire:model="profile_picture" type="file"
+                                               class="hidden"/>
                                     </label>
-                                    @if($logo)
-                                        <button type="button" wire:click="saveLogo" 
-                                                class="bg-black rounded-full px-4 py-1 text-white cursor-pointer text-xs">
+
+                                    @if($profile_picture)
+                                        <button
+                                            type="button"
+                                            wire:click="saveProfilePicture"
+                                            class="bg-black rounded-full px-4 py-1 text-white cursor-pointer text-xs">
                                             Save
                                         </button>
                                     @endif
                                 </div>
-                              
-                                {{-- Error Message --}}
-                                @error('logo')
-                                    <span class="text-xs text-red-500">{{ $message }}</span>
-                                @enderror
+
                             </div>
-                            <!-- Organization Name and Verification -->
                             <div class="flex flex-col">
-                                <h3 class="font-bold text-2xl">{{ $name }}</h3>
-                                <span class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-semibold {{ $is_verified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}" 
-                                      aria-label="Verification status">
-                                    {{ $is_verified ? 'Verified' : 'Pending Verification' }}
-                                </span>
-                            </div>
-                            
-                        </div>
-                          <div
-                                    class="radial-progress"
-                                    style="--value:{{ $completion * 100 }};"
-                                    aria-valuenow="{{ $completion * 100 }}"
-                                    role="progressbar">{{ $completion * 100 }}%
+                                <div class="flex flex-col gap-1">
+                                    <h3 class="font-extrabold text-3xl  tracking-tight">{{ auth()->user()->name }}</h3>
+                                    <h2 class="text-base text-gray-500 font-medium flex items-center gap-2">
+                                        <i data-lucide="mail" class="w-4 h-4 text-accent"></i>
+                                        {{ auth()->user()->email }}
+                                    </h2>
                                 </div>
+                                <!-- Progress Bar -->
+                                <div x-show="uploading">
+                                    <progress class="progress w-56" x-bind:value="progress"
+                                              max="100"></progress>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Progress --}}
+                        <div
+                            class="radial-progress"
+                            style="--value:{{ $completion * 100 }};"
+                            aria-valuenow="{{ $completion * 100 }}"
+                            role="progressbar">{{ $completion * 100 }}%
+                        </div>
                     </div>
+
                 </div>
+
 
                 <!-- Profile Form -->
                 <form wire:submit.prevent="save" class="space-y-4 sm:space-y-6" method="post">
@@ -78,7 +92,7 @@
                                     <span class="text-xs text-red-500">{{ $message }}</span>
                                 @enderror
                             </fieldset>
-                        
+
                             <fieldset class="border border-gray-300 rounded-md p-4">
                                 <legend class="text-sm font-medium text-gray-700 px-2">Email</legend>
                                 <input id="email" wire:model="email" name="email" type="email" disabled
@@ -167,7 +181,7 @@
                             </fieldset> --}}
                             <fieldset class="border border-gray-300 rounded-md p-4">
                                 <legend class="text-sm font-medium text-gray-700 px-2">Payment Details</legend>
-                                <p class="text-sm text-gray-500">Manage payment methods for premium features and donations via 
+                                <p class="text-sm text-gray-500">Manage payment methods for premium features and donations via
                                     <a href="#" class="text-accent hover:underline">Payment Settings</a>.</p>
                             </fieldset>
                         </div>
@@ -176,9 +190,9 @@
                         <div class="w-full">
                             <label class="text-sm font-medium text-gray-700 flex gap-1">
                                 <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                                 <span>Address</span>
