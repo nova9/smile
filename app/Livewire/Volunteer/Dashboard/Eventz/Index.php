@@ -4,6 +4,7 @@ namespace App\Livewire\Volunteer\Dashboard\Eventz;
 
 use App\Models\Event;
 use App\Services\EventRecommenderService;
+use App\Services\Favorite;
 use App\Services\GoogleMaps;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
@@ -20,7 +21,7 @@ class Index extends Component
 
     #[Url]
     public $page = 1;
-   
+
 
     public function mount(EventRecommenderService $eventRecommenderService)
     {
@@ -29,7 +30,7 @@ class Index extends Component
 //        dd(auth()->user());
 //        dd($eventRecommenderService->recommendEventsToUser(auth()->user(), $events, 10));
         // dd($googleMaps->getNearestCity('7.8731', '80.7718'));
-          
+
     }
 
     public function render(EventRecommenderService $eventRecommenderService)
@@ -77,8 +78,10 @@ class Index extends Component
             ['path' => url()->current(), 'query' => request()->query()]
         );
     }
-      public function toggleFavorite($event_id){
-        $favoriteService = new \App\Services\Favorite()->toggleFavorite($event_id,auth()->id());
+
+    public function toggleFavorite($event_id)
+    {
+        $favoriteService = Favorite::toggleFavorite($event_id, auth()->id());
         return $favoriteService;
     }
 }
