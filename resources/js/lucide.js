@@ -75,6 +75,7 @@ import {
     HelpCircle,
     Activity,
     Filter,
+    Zap,
     User,
     ScrollText,
     Save,
@@ -97,13 +98,15 @@ import {
     SendHorizontal,
     LoaderCircle,
     MoveUp,
-    CircleX
+    CircleX,
+    Tag
 } from "lucide";
 
 
 function registerIcons() {
     createIcons({
         icons: {
+            Tag,
             ArrowLeftCircle,
             Box,
             RotateCw,
@@ -173,6 +176,7 @@ function registerIcons() {
             XCircle,
             CheckCircle,
             Gavel,
+            Zap,
             ChartSpline,
             Trash2,
             FileText,
