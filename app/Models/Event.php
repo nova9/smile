@@ -94,6 +94,10 @@ class Event extends Model
         return Favourites::where('event_id', $this->id)->exists();
     }
 
+    public function photos(): HasMany
+    {
+        return $this->hasMany(EventPhoto::class);
+    }
     public function userJoinsNotify()
     {
         // Send notification to event creator
