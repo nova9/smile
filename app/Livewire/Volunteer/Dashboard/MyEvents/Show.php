@@ -3,11 +3,13 @@
 namespace App\Livewire\Volunteer\Dashboard\MyEvents;
 
 use App\Models\Event;
+use App\Models\Review;
 use App\Models\Task;
 use App\Services\GoogleMaps;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use phpDocumentor\Reflection\Types\This;
-
+use Livewire\WithFileUploads;
 class Show extends Component
 {
     public $event;
@@ -15,7 +17,14 @@ class Show extends Component
     public $volunteers;
     public $city;
     public $tasks;
+    public $reviewbutton = false;
     public $is_favorited;
+    
+    #[Validate('nullable|string|max:500')]
+    public string $review;
+
+    #[Validate('required|integer|min:1|max:5')]
+    public int $rating;
    
 
     // public function join()
@@ -41,7 +50,61 @@ class Show extends Component
         $this->tasks = $this->event->tasks()->get();
         $this->is_favorited = $this->toggleFavorite();
         
+        $completedTasksCount = Task::where('assigned_id', auth()->id())
+                ->where('status', 'done')
+                ->count();
+        if ($completedTasksCount >= 1) {
+            $this->reviewbutton = true;
+        }
+       
     }
+    
+    public function submitReview(){
+        $this->validate();
+
+        $alreadyReviewed = Review::where('user_id', auth()->id())
+            ->where('event_id', $this->event->id)
+            ->exists();
+        if (!$alreadyReviewed) {
+            Review::create([
+                'user_id' => (auth()->id()),
+                'event_id' => ($this->event->id),
+                'review' => ($this->review),
+                'rating' => ($this->rating)
+            ]);
+
+        }else{
+           $review= Review::where('user_id',auth()->id())
+           ->where('event_id',$this->event->id)
+           ->first();
+           
+           if($review){
+                $review->update([
+                
+                    'review' => ($this->review),
+                    'rating' => ($this->rating)
+                ]);
+           }
+        }
+       
+       
+       
+    }
+
+    use WithFileUploads;
+ 
+    public $photos = [];
+ 
+    public function save()
+    {
+       
+        foreach ($this->photos as $photo) {
+            $photo->store(path: 'photos');
+            //  $file = FileManager::store($this->profile_picture);
+        }
+    }
+
+
 
     public function render()
     {
@@ -69,6 +132,7 @@ class Show extends Component
             $completedTasksCount = Task::where('assigned_id', $user->id)
                 ->where('status', 'done')
                 ->count();
+            
             $user->assignBadgesForTasks($completedTasksCount, $user);
             
             $points=$user->badges->sum('points');

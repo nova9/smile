@@ -6,6 +6,8 @@
             <x-common.dashboard.item to="/volunteer/dashboard/events" icon="party-popper" title="Opportunities"/>
             <x-common.dashboard.item to="/volunteer/dashboard/leaderboard" icon="users" title="Leaderboard"/>
             <x-common.dashboard.item to="/volunteer/dashboard/achievements" icon="trophy" title="My Achievements"/>
+            <x-common.dashboard.item to="/volunteer/dashboard/reviews" icon="star" title="Reviews"/>
+
             
         </x-slot>
 
