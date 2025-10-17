@@ -4,6 +4,7 @@
 
             <!-- Profile Card -->
             <div>
+                {{--                Picture--}}
                 <div
                     class="border border-neutral-200 rounded-3xl p-8 shadow-sm bg-white flex flex-col gap-8">
                     <div class="flex items-center justify-between gap-6">
@@ -49,8 +50,8 @@
                                         <i data-lucide="mail" class="w-4 h-4 text-accent"></i>
                                         {{ auth()->user()->email }}
                                     </h2>
-                                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold shadow-sm">
-                                        <i data-lucide="star" class="w-4 h-4 text-yellow-400"></i>
+                                    <div
+                                        class="flex w-fit items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
                                         {{ $volunteer_level }}
                                     </div>
                                 </div>
@@ -82,19 +83,23 @@
                                 <legend class="fieldset-legend">Education</legend>
                                 <div class="flex gap-2">
                                     <input type="text" class="input" placeholder="Institution" wire:model="institution">
-                                    <input type="text" class="input flex-1" placeholder="Qualification" wire:model="qualification">
-                                    <input type="text" class="input max-w-48" placeholder="Year of Completion" wire:model="year_of_completion">
+                                    <input type="text" class="input flex-1" placeholder="Qualification"
+                                           wire:model="qualification">
+                                    <input type="text" class="input max-w-48" placeholder="Year of Completion"
+                                           wire:model="year_of_completion">
                                     <button class="btn" type="button" wire:click="addEducation">Add</button>
                                 </div>
 
                                 @foreach($education as $item)
-                                    <div class="flex items-center justify-between border border-neutral-300 rounded-sm p-2">
-                                       <div class="flex gap-4">
-                                           <p class="font-medium">{{$item['institution']}}</p>
-                                           <p>{{$item['qualification']}}</p>
-                                           <p>{{$item['year_of_completion']}}</p>
-                                       </div>
-                                        <button type="button" class="btn btn-sm btn-ghost btn-error p-1" wire:click="removeEducation('{{$item['id']}}')">
+                                    <div
+                                        class="flex items-center justify-between border border-neutral-300 rounded-sm p-2">
+                                        <div class="flex gap-4">
+                                            <p class="font-medium">{{$item['institution']}}</p>
+                                            <p>{{$item['qualification']}}</p>
+                                            <p>{{$item['year_of_completion']}}</p>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-ghost btn-error p-1"
+                                                wire:click="removeEducation('{{$item['id']}}')">
                                             <i data-lucide="trash-2" class="size-4"></i>
                                         </button>
                                     </div>
@@ -252,8 +257,6 @@
 
                             </div>
                         </div>
-
-
 
 
                     </div>
