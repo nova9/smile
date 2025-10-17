@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class GoogleMaps
 {
-    protected string $apiKey;
+    protected ?string $apiKey;
 
     /**
      * Create a new class instance.
@@ -14,6 +14,10 @@ class GoogleMaps
     public function __construct()
     {
         $this->apiKey = env('GOOGLE_MAPS_API_KEY');
+        
+        if (!$this->apiKey) {
+            throw new \Exception('Google Maps API key is not configured. Please set GOOGLE_MAPS_API_KEY in your .env file.');
+        }
     }
 
     public function getNearestCity(float $latitude, float $longitude): ?string
