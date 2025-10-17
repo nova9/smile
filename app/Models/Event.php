@@ -90,6 +90,11 @@ class Event extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function tasksLists(): HasMany
+    {
+        return $this->hasMany(TaskList::class);
+    }
+
 
     public function isFavourite()
     {

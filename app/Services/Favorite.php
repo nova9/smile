@@ -10,7 +10,7 @@ class Favorite
 {
     public $isfavorited;
 
-    public function toggleFavorite(int $eventId, int $userId): bool
+    public static function toggleFavorite(int $eventId, int $userId): bool
     {
         $favorite = ModelsFavorite::where('event_id', $eventId)
             ->where('user_id', $userId)
