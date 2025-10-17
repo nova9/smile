@@ -51,7 +51,7 @@
 
     @if($currentChat)
         <!-- Chat Box -->
-        <div class="fixed right-10 bottom-0 w-[40vw] h-[50vh] bg-base-200 shadow-2xl rounded-t-lg border border-neutral-300 flex flex-col">
+        <div class="fixed right-10 bottom-0 w-[40vw] h-[50vh] bg-base-200 shadow-2xl rounded-t-lg border border-neutral-300 flex flex-col" style="z-index: 999999 !important;">
             <!-- Chat Header -->
             <div class="flex items-center gap-3 px-4 py-3 border-b border-base-300 bg-base-100 rounded-t-lg">
                 <img src="https://i.pravatar.cc/40?img=2" alt="User"
