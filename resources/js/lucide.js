@@ -96,7 +96,9 @@ import {
     UserX,
     Image,
     SendHorizontal,
-    LoaderCircle
+    LoaderCircle,
+    MoveUp,
+    CircleX
 } from "lucide";
 
 
@@ -199,7 +201,9 @@ function registerIcons() {
             UserX,
             Image,
             SendHorizontal,
-            LoaderCircle
+            LoaderCircle,
+            MoveUp,
+            CircleX
         },
 
     });
