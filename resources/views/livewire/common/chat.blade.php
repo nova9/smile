@@ -95,7 +95,17 @@
                         class="font-semibold">{{ \App\Services\Messaging::getDirectChatOtherParty($currentChat)->name }}</div>
                     <div class="text-xs text-base-content/70 flex items-center gap-1">
                         <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        Available for Legal Help
+                        @php
+                            $otherParty = \App\Services\Messaging::getDirectChatOtherParty($currentChat);
+                            $currentUserRole = auth()->user()->role->name ?? 'volunteer';
+                        @endphp
+                        @if($currentUserRole === 'lawyer')
+                            Ready to Help
+                        @elseif($otherParty->role->name === 'lawyer')
+                            Legal Advisor Online
+                        @else
+                            Online
+                        @endif
                     </div>
                 </div>
                 <button wire:click="closeChat" class="ml-auto text-base-content/50 hover:text-base-content transition">
