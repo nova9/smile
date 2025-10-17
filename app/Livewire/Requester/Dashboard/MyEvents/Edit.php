@@ -4,6 +4,7 @@ namespace App\Livewire\Requester\Dashboard\MyEvents;
 
 use App\Models\Category;
 use App\Models\Chat;
+use App\Models\Resource;
 use App\Models\Tag;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -45,8 +46,13 @@ class Edit extends Component
 
     public $minimum_age;
 
+    public $resources;
+
+    public $event_resources = [];
+
     public function mount($id)
     {
+        $this->resources = Resource::all();
         $this->event = auth()->user()->organizingEvents()->find($id);
         $this->categories = Category::all();
         $this->availableTags = Tag::all();
@@ -70,6 +76,16 @@ class Edit extends Component
         $this->category_id = $this->event['category_id'];
         $this->tags = $this->event->tags->pluck('name')->toArray();
         $this->availableTags = Tag::all()->pluck('name')->sort()->values();
+
+//        $this->event_resources = $this->event->resources;
+
+        $this->event_resources = $this->event->resources->map(function ($resource) {
+            return [
+                'resource_id' => $resource->id,
+                'quantity' => $resource->pivot->quantity,
+            ];
+        })->values()->toArray();
+//        dd($this->event_resources);
     }
 
     protected function rules()
@@ -84,9 +100,15 @@ class Edit extends Component
             'ends_at' => 'required|date|after:starts_at',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'skills' => 'required|string|max:500',
+            'skills' => 'required|array|min:1',
             'notes' => 'nullable|string|max:500',
             'minimum_age' => 'integer|min:0|max:120',
+            'event_resources' => 'array',
+            'event_resources.*.resource_id' => 'nullable|exists:resources,id',
+            'event_resources.*.quantity' => 'nullable|integer|min:1',
+            'event_resources.*.is_custom' => 'nullable|boolean',
+            'event_resources.*.custom_name' => 'nullable|string|max:255',
+            'event_resources.*.custom_unit' => 'nullable|string|max:50',
         ];
     }
 
@@ -109,7 +131,6 @@ class Edit extends Component
         ]);
 
 
-
         // create new tags if they don't exist
         $tagIds = [];
         foreach ($this->tags as $tagName) {
@@ -118,13 +139,29 @@ class Edit extends Component
         }
 
 
-        if (!empty($this->tags)) {
-            $this->event->tags()->sync($tagIds);
+        $this->event->tags()->sync($tagIds);
+
+        // add custom resources to the database
+        $resources = [];
+        foreach ($this->event_resources as $resource) {
+            // create custom resource and add its new id to resourceIds
+            if (!empty($resource['is_custom'])) {
+                $newResource = Resource::create([
+                    'name' => $resource['custom_name'],
+                    'unit' => $resource['custom_unit'],
+                ]);
+                $resources[$newResource->id] = [
+                    'quantity' => $resource['quantity'],
+                ];
+            } // add existing ids to resourceIdsd
+            else {
+                $resources[$resource['resource_id']] = [
+                    'quantity' => $resource['quantity'],
+                ];
+            }
         }
 
-
-        return redirect('/requester/dashboard/my-events')
-            ->with('success', 'Event Updated successfully!');
+        $this->event->resources()->sync($resources);
     }
 
     #[On('coordinates')]

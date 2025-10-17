@@ -2,33 +2,7 @@
 
     <main class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto space-y-8">
-            <!-- Header Section -->
-
-            <div class="text-center space-y-6">
-                <!-- Title -->
-                <div class="space-y-4">
-                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-accent leading-tight relative">
-                        Top <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">Smilers</span>
-                        <svg class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-40 h-4 text-primary/30"
-                            viewBox="0 0 100 12" fill="none">
-                            <path d="M2 6C20 1 40 1 50 6C60 11 80 11 98 6" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" />
-                        </svg>
-                    </h1>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Recognizing our amazing volunteers who spread joy and make a difference in their communities
-                    </p>
-                </div>
-                <!-- Badge -->
-                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 to-green-600/10 text-primary rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-primary/20">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                              clip-rule="evenodd"></path>
-                    </svg>
-                    Celebrating Our Top Smilers
-                </div>
-            </div>
+           
 
             <!-- Your Rank Summary Card -->
             <div class="relative group">

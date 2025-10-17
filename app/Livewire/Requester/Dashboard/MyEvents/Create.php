@@ -42,21 +42,22 @@ class Create extends Component
     public $tags = [];
     public $availableTags;
     public $resources;
+    public $event_resources = [];
 
     public $notes;
 
     public $minimum_age;
     public $filterTypes = [];
     public $participant_requirements = [];
-    
+
     public $male_participants;
     public $female_participants;
     public $non_binary_participants;
-    
+
     public $beginner_participants;
     public $intermediate_participants;
     public $advanced_participants;
-    
+
     public function mount()
     {
         $this->categories = Category::all();
@@ -77,6 +78,12 @@ class Create extends Component
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'skills' => 'required|array|min:1',
+            'event_resources' => 'array',
+            'event_resources.*.resource_id' => 'nullable|exists:resources,id',
+            'event_resources.*.quantity' => 'nullable|integer|min:1',
+            'event_resources.*.is_custom' => 'nullable|boolean',
+            'event_resources.*.custom_name' => 'nullable|string|max:255',
+            'event_resources.*.custom_unit' => 'nullable|string|max:50',
             'participant_requirements' => 'array',
             'recruiting_method' => 'required|string',
             'notes' => 'nullable|string|max:500',
@@ -86,21 +93,20 @@ class Create extends Component
 
     public function save(GoogleMaps $googleMaps, EmbeddingService $embeddingService)
     {
-    
         $this->validate();
 
         $chat = Chat::query()->create([
             'is_group' => true,
         ]);
-        foreach($this->filterTypes as $type){
-            if($type == 'gender'){
+        foreach ($this->filterTypes as $type) {
+            if ($type == 'gender') {
                 $this->participant_requirements[] = [
                     'filter_types' => $type,
                     'male_participants' => $this->male_participants,
                     'female_participants' => $this->female_participants,
                     'non_binary_participants' => $this->non_binary_participants,
                 ];
-            }else{
+            } else {
                 $this->participant_requirements[] = [
                     'filter_types' => $type,
                     'beginner_participants' => $this->beginner_participants,
@@ -113,25 +119,25 @@ class Create extends Component
 
         $genderSum = 0;
         $levelSum = 0;
-        
+
         foreach ($this->participant_requirements as $req) {
             if ($req['filter_types'] === 'gender') {
-                $genderSum += (int)($req['male_participants'] ?? 0);
-                $genderSum += (int)($req['female_participants'] ?? 0);
-                $genderSum += (int)($req['non_binary_participants'] ?? 0);
+                $genderSum += (int) ($req['male_participants'] ?? 0);
+                $genderSum += (int) ($req['female_participants'] ?? 0);
+                $genderSum += (int) ($req['non_binary_participants'] ?? 0);
             }
             if ($req['filter_types'] === 'level') {
-                $levelSum += (int)($req['beginner_participants'] ?? 0);
-                $levelSum += (int)($req['intermediate_participants'] ?? 0);
-                $levelSum += (int)($req['advanced_participants'] ?? 0);
+                $levelSum += (int) ($req['beginner_participants'] ?? 0);
+                $levelSum += (int) ($req['intermediate_participants'] ?? 0);
+                $levelSum += (int) ($req['advanced_participants'] ?? 0);
             }
         }
-       
-        if ($genderSum > (int)$this->maximum_participants) {
+
+        if ($genderSum > (int) $this->maximum_participants) {
             $this->addError('participant_gender_requirements', 'Total gender participants cannot exceed maximum participants.');
             return;
         }
-        if ($levelSum > (int)$this->maximum_participants) {
+        if ($levelSum > (int) $this->maximum_participants) {
             $this->addError('participant_level_requirements', 'Total level participants cannot exceed maximum participants.');
             return;
         }
@@ -167,10 +173,36 @@ class Create extends Component
             $tagIds[] = $tag->id;
         }
 
-
+        // link tags to the event
         if (!empty($this->tags)) {
             $event->tags()->sync($tagIds);
         }
+
+        // add custom resources to the database
+        $resources = [];
+        foreach ($this->event_resources as $resource) {
+            // create custom resource and add its new id to resourceIds
+            if (!empty($resource['is_custom'])) {
+                $newResource = Resource::create([
+                    'name' => $resource['custom_name'],
+                    'unit' => $resource['custom_unit'],
+                ]);
+                $resources[$newResource->id] = [
+                    'quantity' => $resource['quantity'],
+                ];
+            }
+            // add existing ids to resourceIdsd
+            else {
+                $resources[$resource['resource_id']] = [
+                    'quantity' => $resource['quantity'],
+                ];
+            }
+        }
+
+        if (!empty($resources)) {
+            $event->resources()->sync($resources);
+        }
+
 
         return redirect('/requester/dashboard/my-events')
             ->with('success', 'Event created successfully!');

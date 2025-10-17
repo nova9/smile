@@ -11,21 +11,7 @@
 
 <x-volunteer.dashboard-layout>
     <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white p-6">
-        <!-- Header Section -->
-        <div class="mb-4">
-            <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
-                Volunteer
-                <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
-                    Opportunities
-                </span>
-            </h1>
-            <p class="text-gray-600 text-lg leading-relaxed">
-                Find opportunities that match your
-                <span class="text-primary font-semibold">passion</span>
-                and skills.
-            </p>
-        </div>
-
+       
         <!-- Search and Filter Section -->
         <div class="flex flex-col lg:flex-row gap-4 my-8">
             <!-- Search Bar -->
@@ -123,9 +109,11 @@
                                     Show more
                                 </button>
                             </a>
-                            <button class="btn btn-square">
-                                <i data-lucide="heart"></i>
-                            </button>
+                        <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
+                            wire:click="toggleFavorite({{ $item->id }})" >
+                            <i data-lucide="heart"
+                                class="w-5 h-5 {{ $item->isFavourite() ? 'text-red-500 fill-current' : 'text-gray-600'}}"></i>
+                        </button>
                         </div>
                     </div>
                 </div>
