@@ -15,7 +15,7 @@ class LegalHelp extends Component
         $lawyer = $this->findAvailableLawyer();
         
         if (!$lawyer) {
-            session()->flash('error', 'No lawyers are currently available. Please try again later.');
+            session()->flash('error', 'No legal advisors are currently available. We will notify you when someone becomes available.');
             return;
         }
 
@@ -37,14 +37,16 @@ class LegalHelp extends Component
                     "Hello! I'm reaching out for legal assistance. Could you please help me with a legal question?",
                     $chat->id
                 );
+                session()->flash('success', 'New chat created with ' . $lawyer->name . '. Welcome message sent!');
+            } else {
+                session()->flash('success', 'Reconnected with ' . $lawyer->name . '. Your previous conversation is ready.');
             }
 
             // Trigger the chat to open
             $this->dispatch('openChat', $chat->id);
             
-            session()->flash('success', 'Connected with ' . $lawyer->name . ' for legal assistance.');
         } else {
-            session()->flash('error', 'Unable to establish chat connection. Please try again.');
+            session()->flash('error', 'Unable to establish chat connection. Please try again later or contact support.');
         }
     }
 
