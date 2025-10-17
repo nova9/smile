@@ -7,6 +7,7 @@ use App\Models\EventPhoto;
 use App\Models\File;
 use App\Models\Review;
 use App\Models\Task;
+use App\Services\Favorite;
 use App\Services\FileManager;
 use App\Services\GoogleMaps;
 use Livewire\Attributes\Validate;
