@@ -17,73 +17,25 @@
         <div class="container mx-auto px-4 py-8 flex">
             <div class="flex-5 bg-white rounded-3xl shadow-lg overflow-hidden">
                 <!-- Hero Section -->
-                <div class="relative overflow-hidden">
-                    <div
-                        class="relative h-56 sm:h-72 lg:h-80 bg-gradient-to-r from-green-600 to-emerald-600 rounded-t-3xl">
-                        <div class="z-20 absolute top-4 right-4">
-                            <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
-                                    wire:click="toggleFavorite">
-                                <i data-lucide="heart"
-                                   class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
-                            </button>
-                        </div>
-                        <div class="z-10 absolute inset-0 bg-black/25" aria-hidden="true"></div>
-                        <div class="relative z-10 max-w-5xl mx-auto px-6 py-6 sm:py-10 lg:py-14 text-white">
-                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                <div class="md:flex-1">
-                                    <div
-                                        class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
-                                        <i data-lucide="tag" class="w-4 h-4"></i>
-                                        <span>{{ $event->category->name }}</span>
-                                    </div>
-
-                                    <h1
-                                        class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-md">
-                                        {{ $event->name }}
-                                    </h1>
-
-                                    <p class="mt-3 text-sm sm:text-base text-white/90 max-w-2xl line-clamp-2">
-                                        {{$event->description }}
-                                    </p>
-
-                                    <div class="mt-4 flex flex-wrap gap-3 items-center">
-                                        <div
-                                            class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
-                                            <i data-lucide="calendar" class="w-4 h-4"></i>
-                                            <span>
-                                                {{ $event->starts_at ? $event->starts_at->format('M j') : 'TBA' }}
-                                                @if($event->ends_at)
-                                                    - {{ $event->ends_at->format('M j, Y') }}
-                                                @endif
-                                            </span>
-                                        </div>
-
-                                        <div
-                                            class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
-                                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                                            <span>{{ $event->address?->city ?? $event->city ?? 'Online / TBA' }}</span>
-                                        </div>
-
-                                        <div
-                                            class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
-                                            <i data-lucide="user" class="w-4 h-4"></i>
-                                            <span>By {{ $event->user?->name ?? 'Organizer' }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- <div class="flex-shrink-0 flex items-center gap-2">--}}
-                                {{-- <a href="#" --}} {{--
-                                        class="inline-flex items-center gap-2 bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold shadow hover:shadow-lg transition">--}}
-                                {{-- <i data-lucide="edit-2" class="w-4 h-4"></i> Edit--}}
-                                {{-- </a>--}}
-                                {{-- <button type="button" --}} {{--
-                                        class="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition">--}}
-                                {{-- <i data-lucide="share-2" class="w-4 h-4"></i> Share--}}
-                                {{-- </button>--}}
-                                {{-- </div>--}}
+                <div class="relative h-64 sm:h-80 lg:h-96">
+                    <img src="{{ $event->image ?? 'https://picsum.photos/seed/' . $event->id . '/1200/800' }}"
+                        alt="Event Image" class="w-full h-full object-cover opacity-90">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg">
+                                {{ $event->name }}
+                            </h1>
+                            <div class="mt-3 px-4 py-2 bg-white/80 rounded-full text-sm font-semibold text-blue-800">
+                                {{ $event->category->name }}
                             </div>
                         </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
+                            wire:click="toggleFavorite">
+                            <i data-lucide="heart"
+                                class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -137,7 +89,11 @@
                                                 class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
                                                 Link copied to clipboard
                                             </div>
-
+                                            <a href="{{ route('community.space', ['id' => $event->id]) }}"
+                                                class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                                <i data-lucide="users" class="w-5 h-5"></i>
+                                                <span>Community Space</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -650,22 +606,20 @@
                 </p>
             </div>
             <div class="mb-6">
-                <form wire:submit.prevent="save" class="flex flex-col sm:flex-row items-center gap-4">
+                <form wire:submit="save" class="flex flex-col sm:flex-row items-center gap-4">
                     <label
                         class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm text-gray-700 hover:bg-gray-50">
                         <i data-lucide="upload" class="w-4 h-4"></i>
-                        <input type="file" wire:model="photos" multiple accept="image/*">
+                        <span>Choose photos</span>
+                        <input type="file" wire:model="photos" multiple accept="image/*" class="hidden">
                     </label>
 
                     <div class="ml-auto flex items-center gap-3">
+
+
                         <button type="submit"
                             class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
-                            <span wire:loading wire:target="save">
-                                <i data-lucide="loader" class="w-4 h-4 animate-spin"></i>
-                            </span>
-                            <span wire:loading.remove wire:target="save">
-                                <i data-lucide="save" class="w-4 h-4"></i>
-                            </span>
+                            <i data-lucide="save" class="w-4 h-4"></i>
                             Save photos
                         </button>
                     </div>
@@ -695,9 +649,9 @@
         @endphp
         <div class="container mx-auto px-4 py-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                @foreach ($uploadedPhotos as $photo)
+                @foreach ($images as $img)
                     <div class="group relative overflow-hidden rounded-lg shadow-lg">
-                        <img src="{{ $photo }}" alt="Gallery Image"
+                        <img src="{{ $img }}" alt="Gallery Image"
                             class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
                     </div>
                 @endforeach
@@ -715,78 +669,68 @@
             <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
                     <div>
-                        <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <i data-lucide="star" class="w-6 h-6 text-yellow-400"></i>
-                            Reviews
-                        </h3>
-                        <div class="flex items-center gap-2 mt-1">
-                            @php
-                                $avg = floatval($avgratings ?? 0);
-                                $fullStars = floor($avg);
-                                $halfStar = $avg - $fullStars >= 0.5;
-                            @endphp
-                            <div class="flex text-yellow-400">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $fullStars)
-                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                                    @elseif ($i == $fullStars + 1 && $halfStar)
-                                        <i data-lucide="star-half" class="w-4 h-4 fill-current"></i>
-                                    @else
-                                        <i data-lucide="star" class="w-4 h-4 text-gray-300"></i>
-                                    @endif
-                                @endfor
-                            </div>
-                            <span class="text-sm text-gray-600 font-semibold">{{ number_format($avg, 1) }}/5</span>
+                        <h3 class="text-xl font-bold text-gray-800">Reviews</h3>
+                        @php
+                            $eventReviews = $event->reviews ?? collect();
+                            $reviewCount = is_countable($eventReviews)
+                                ? count($eventReviews)
+                                : $eventReviews->count() ?? 0;
+                            $avgRating = $reviewCount
+                                ? round(collect($eventReviews)->avg(fn($r) => $r->rating ?? 0), 1)
+                                : null;
+                        @endphp
+                        <div class="text-sm text-gray-500">{{ $reviewCount }}
+                            review{{ $reviewCount !== 1 ? 's' : '' }}{{ $avgRating ? ' • ' . $avgRating . '/5' : '' }}
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
-                        {{-- @if ($reviewbutton) --}}
-                        <!-- Event-level review modal (unique per event) -->
-                        <button onclick="my_modal_4.showModal()"
-                            class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
-                            for="event_review_modal_{{ $event->id }}">
-                            <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
-                            <span>Review</span>
-                        </button>
-                        <dialog id="my_modal_4" class="modal">
-                            <div class="modal-box w-full max-w-lg p-8 bg-white rounded-2xl shadow-xl relative">
-                                <button onclick="my_modal_4.close()" type="button"
-                                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
-                                    <i data-lucide="x" class="w-6 h-6"></i>
-                                </button>
-                                <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-                                    <i data-lucide="star" class="w-6 h-6 text-yellow-400"></i>
-                                    Leave a Review
-                                </h2>
-                                <p class="text-gray-500 mb-6">Share your experience and help
-                                    others!</p>
-                                <form method="dialog" wire:submit="submitReview" class="space-y-5">
-                                    <div>
-                                        <label for="rating"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
-                                        <input type="number" min="1" max="5" wire:model="rating"
-                                            id="rating"
-                                            class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
-                                            placeholder="1-5">
-                                    </div>
-                                    <div>
-                                        <label for="review"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Your
-                                            Review</label>
-                                        <textarea wire:model="review" id="review" rows="4"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
-                                            placeholder="Write your review..."></textarea>
-                                    </div>
-                                    <div class="flex justify-end gap-2 mt-6">
+                        @if ($reviewbutton)
+                            <!-- Event-level review modal (unique per event) -->
+                            <button onclick="my_modal_4.showModal()"
+                                class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
+                                for="event_review_modal_{{ $event->id }}">
+                                <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
+                                <span>Review</span>
+                            </button>
+                            <dialog id="my_modal_4" class="modal">
+                                <div class="modal-box w-full max-w-lg p-8 bg-white rounded-2xl shadow-xl relative">
+                                    <button onclick="my_modal_4.close()" type="button"
+                                        class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
+                                        <i data-lucide="x" class="w-6 h-6"></i>
+                                    </button>
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                                        <i data-lucide="star" class="w-6 h-6 text-yellow-400"></i>
+                                        Leave a Review
+                                    </h2>
+                                    <p class="text-gray-500 mb-6">Share your experience and help
+                                        others!</p>
+                                    <form method="dialog" wire:submit="submitReview" class="space-y-5">
+                                        <div>
+                                            <label for="rating"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                                            <input type="number" min="1" max="5" wire:model="rating"
+                                                id="rating"
+                                                class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                                                placeholder="1-5">
+                                        </div>
+                                        <div>
+                                            <label for="review"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Your
+                                                Review</label>
+                                            <textarea wire:model="review" id="review" rows="4"
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
+                                                placeholder="Write your review..."></textarea>
+                                        </div>
+                                        <div class="flex justify-end gap-2 mt-6">
 
-                                        <button onclick="my_modal_4.close()"
-                                            class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
-                                            type="submit">Send</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </dialog>
-                        {{-- @endif --}}
+                                            <button onclick="my_modal_4.close()"
+                                                class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
+                                                type="submit">Send</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </dialog>
+                        @endif
                     </div>
                 </div>
 
