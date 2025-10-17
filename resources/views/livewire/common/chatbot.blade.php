@@ -98,12 +98,14 @@
                 <input wire:model.defer="input" type="text" class="input input-bordered w-full text-sm"
                     placeholder="Type a message..." autocomplete="off" aria-label="Type your message">
                 <button type="submit"
-                    class="bg-neutral text-white p-2 rounded-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
+                    class="bg-neutral text-white p-2 rounded-lg  focus:outline-none focus:ring-2 focus:ring-emerald-700 transition-colors duration-300"
                     aria-label="Send message">
-                   <span wire:loading.remove wire:target="sendMessage" aria-hidden="true">
-                       <i data-lucide="send-horizontal"></i>
+                    {{-- when the sendMessage is running remove the icon that is what wire:targe --}}
+                   <span wire:loading.remove.flex wire:target="sendMessage" aria-hidden="true">
+                       <i  data-lucide="send-horizontal"></i>
                     </span>
-                    <span wire:loading wire:target="sendMessage" aria-hidden="true">
+                    <span wire:loading.flex wire:target="sendMessage" aria-hidden="true">
+
                       <i data-lucide="loader-circle" class="animate-spin"></i>
                     </span>
                 </button>
