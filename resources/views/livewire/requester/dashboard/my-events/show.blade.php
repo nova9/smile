@@ -983,7 +983,7 @@
                         <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
                             @foreach ($acceptedUsers as $user)
                                 <div
-                                    class="volunteer-card rounded-xl p-4 shadow-md border border-green-100 bg-white/80 hover:-translate-y-1 transform transition-all duration-200 cursor-pointer flex items-center gap-4">
+                                    class="volunteer-card rounded-xl p-4 border border-green-200 bg-white/80 transform transition-all duration-200 cursor-pointer flex items-center gap-4">
                                     <img
                                         src="{{ $user->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $user->id . '.jpg' }}"
                                         alt="{{ $user->name }}"
