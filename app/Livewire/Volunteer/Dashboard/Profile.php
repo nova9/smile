@@ -14,6 +14,7 @@ use Livewire\WithFileUploads;
 class Profile extends Component
 {
     use WithFileUploads;
+
     public $attribute;
     public $skills = [];
     public $interests = [];
@@ -70,10 +71,10 @@ class Profile extends Component
         $this->gender = $user->attributes()->where('name', 'gender')->get()->pluck('pivot.value')->first();
         $this->age = $user->attributes()->where('name', 'age')->get()->pluck('pivot.value')->first(); // Initialize age
 
-        $points=$user->badges()->sum('points');
-        $events=$user->events()->count();
-        $tasks=$user->tasks()->count();
-        $user->setVolunteerLevel($points, $events, $tasks);//just sets the level
+//        $points = $user->badges()->sum('points');
+//        $events = $user->events()->count();
+//        $tasks = $user->tasks()->count();
+//        $user->setVolunteerLevel($points, $events, $tasks);//just sets the level
         $this->volunteer_level = $user->getCustomAttribute('level');
     }
 
@@ -168,8 +169,6 @@ class Profile extends Component
         $this->latitude = $lat;
         $this->longitude = $lng;
     }
-
-
 
 
     public function render()

@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('task_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\TaskList::class);
             $table->foreignIdFor(\App\Models\Event::class);
-            $table->foreignId('parent_id')->nullable()->constrained('tasks')->onDelete('cascade');
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->foreignId('assigned_id')->nullable();
-            $table->enum('status', ['todo', 'doing', 'done'])->default('todo');
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('task_lists');
     }
 };

@@ -99,13 +99,15 @@ import {
     LoaderCircle,
     MoveUp,
     CircleX,
-    Tag
+    Tag,
+    ListTodo
 } from "lucide";
 
 
 function registerIcons() {
     createIcons({
         icons: {
+            ListTodo,
             Tag,
             ArrowLeftCircle,
             Box,
