@@ -4,6 +4,8 @@ namespace App\Livewire\Admin\Dashboard;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\EventReport;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
@@ -190,11 +192,59 @@ class Index extends Component
         $this->dispatch('notify', message: 'Dashboard data reloaded', type: 'success');
     }
 
+    public function toggleEventStatus($eventId)
+    {
+        $event = Event::findOrFail($eventId);
+        $event->update(['is_active' => !$event->is_active]);
+        
+        $status = $event->is_active ? 'visible' : 'hidden';
+        session()->flash('message', "Event is now {$status} to volunteers!");
+    }
+
+    public function dismissReports($eventId)
+    {
+        EventReport::where('event_id', $eventId)
+            ->where('status', 'pending')
+            ->update(['status' => 'dismissed']);
+        
+        session()->flash('message', 'Reports dismissed successfully!');
+    }
+
     public function render()
     {
+        // Get events with 3 or more reports, sorted by most reported first
+        $reportedEvents = Event::withCount(['reports' => function ($query) {
+                $query->where('status', 'pending');
+            }])
+            ->with(['user', 'category', 'reports' => function ($query) {
+                $query->where('status', 'pending')->with('user')->latest();
+            }])
+            ->get()
+            ->filter(function ($event) {
+                return $event->reports_count >= 3;
+            })
+            ->sortByDesc('reports_count')
+            ->sortByDesc('created_at')
+            ->take(10);
+
+        // Get other events (with less than 3 reports or no reports)
+        $otherEvents = Event::withCount(['reports' => function ($query) {
+                $query->where('status', 'pending');
+            }])
+            ->with(['user', 'category'])
+            ->latest()
+            ->get()
+            ->filter(function ($event) {
+                return $event->reports_count < 3;
+            })
+            ->take(10);
+
         // Auto-refresh every 30 seconds
         $this->dispatch('startAutoRefresh', interval: $this->refreshInterval * 1000);
 
-        return view('livewire.admin.dashboard.index');
+        return view('livewire.admin.dashboard.index', [
+            'reportedEvents' => $reportedEvents,
+            'otherEvents' => $otherEvents,
+        ]);
     }
 }
