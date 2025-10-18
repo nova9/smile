@@ -193,7 +193,7 @@ class Signup extends Component
 
 
         auth()->login($user);
-
+        
         return redirect()->route('dashboard')->with('success', 'Account created successfully!');
     }
 
