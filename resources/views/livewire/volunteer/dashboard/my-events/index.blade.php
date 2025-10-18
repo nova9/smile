@@ -8,7 +8,7 @@
                         <label class="input w-full">
                             <i data-lucide="search" class="w-4 h-4"></i>
                               <input type="text" wire:model.live="search" class="grow">
- 
+
                                     {{-- <ul>
                                         @foreach ($users as $user)
                                             <li wire:key="{{ $user->id }}">{{ $user->name }}</li>
@@ -16,7 +16,7 @@
                                     </ul> --}}
                         </label>
                         <label class="flex items-center gap-2 ml-2 select-none">
-                            <input type="checkbox" 
+                            <input type="checkbox"
                                 class="checkbox checkbox-accent checkbox-sm" wire:model.change="favouriteEventsFilter">
                             <span class="text-sm text-slate-700">favourites</span>
                         </label>
@@ -63,7 +63,7 @@
 
             <!-- Events List Items -->
             <div class="px-6">
-                @foreach ($participatingEvents as $item)
+                @forelse ($participatingEvents as $item)
                     <div class="hover:bg-white/60 transition-all duration-200 group">
                         <div class="grid grid-cols-12 gap-4 items-center">
 
@@ -171,7 +171,11 @@
 
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="py-6 text-center text-slate-600">
+                        No events found.
+                    </div>
+                @endforelse
             </div>
         </div>
 

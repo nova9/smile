@@ -9,11 +9,18 @@ use Livewire\Component;
 class GroupChat extends Component
 {
     public $event;
+    public $messages;
     public $inputMessage;
 
     public function mount($eventId)
     {
         $this->event = Event::with('chat')->find($eventId);
+        $this->loadMessages();
+    }
+
+    public function loadMessages()
+    {
+        $this->messages = Messaging::getMessagesForChatDisplay($this->event->chat);
     }
 
     public function sendMessage()
