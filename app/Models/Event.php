@@ -78,6 +78,12 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function chat(): BelongsTo
+    {
+        return $this->belongsTo(Chat::class);
+    }
+
     public function eventCreator()
     {
         // Return the user who created the event

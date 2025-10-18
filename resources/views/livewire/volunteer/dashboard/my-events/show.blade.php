@@ -16,7 +16,7 @@
         <div class="p-4">
             <div class="tabs tabs-lift">
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4" checked="checked" />
+                    <input type="radio" name="my_tabs_4" checked="checked"/>
                     <i data-lucide="info" class="w-4 h-4 mr-2"></i>
                     Event Details
                 </label>
@@ -44,22 +44,22 @@
                         <div class="mb-10 text-center">
                             <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
                                 <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
-                                    wire:click="toggleFavorite">
+                                        wire:click="toggleFavorite">
                                     <i data-lucide="heart"
-                                        class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
+                                       class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
                                 </button>
                                 <button id="share-event-btn" type="button"
-                                    class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                        class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
                                     <i data-lucide="share-2" class="w-5 h-5"></i>
                                     <span>Share</span>
                                 </button>
                                 <!-- Tiny toast for copy review -->
                                 <div id="share-toast"
-                                    class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
+                                     class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
                                     Link copied to clipboard
                                 </div>
                                 <a href="{{ route('community.space', ['id' => $event->id]) }}"
-                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                   class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
                                     <i data-lucide="users" class="w-5 h-5"></i>
                                     <span>Community Space</span>
                                 </a>
@@ -96,7 +96,8 @@
                                     </div>
                                 </div>
                             @elseif ($status == 'accepted')
-                                <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
+                                <div
+                                    class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
                                     <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
                                     <div>
                                         <h3 class="text-lg font-bold text-green-700">You're In!</h3>
@@ -185,7 +186,7 @@
                                                     <span
                                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-sm font-medium">
                                                         <i data-lucide="venus-mars" class="w-4 h-4 text-blue-400"
-                                                            aria-hidden="true"></i>
+                                                           aria-hidden="true"></i>
                                                         <span class="flex items-center gap-1">
                                                             Men: <span
                                                                 class="font-bold text-blue-700">{{ $req['male_participants'] ?? 0 }}</span>
@@ -203,7 +204,7 @@
                                                     <span
                                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium">
                                                         <i data-lucide="bar-chart" class="w-4 h-4 text-yellow-400"
-                                                            aria-hidden="true"></i>
+                                                           aria-hidden="true"></i>
                                                         Level:
                                                         <span>Beginner <span
                                                                 class="font-bold text-yellow-700">{{ $req['beginner_participants'] ?? 0 }}</span></span>,
@@ -232,7 +233,7 @@
                                             <span
                                                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
                                                 <i data-lucide="calendar" class="w-4 h-4 text-green-500"
-                                                    aria-hidden="true"></i>
+                                                   aria-hidden="true"></i>
                                                 Minimum Age: <span
                                                     class="font-bold text-green-700">{{ $event->minimum_age }}</span>
                                             </span>
@@ -268,14 +269,14 @@
                                     <div
                                         class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden mb-1">
                                         <iframe width="100%" height="100%" frameborder="0"
-                                            style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                            src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                            allowfullscreen>
+                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                                allowfullscreen>
                                         </iframe>
                                     </div>
                                     <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                        target="_blank"
-                                        class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                       target="_blank"
+                                       class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                         <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
                                         Open in Google Maps
                                     </a>
@@ -311,10 +312,6 @@
                                 <p class="text-gray-600 text-sm mb-4">
                                     {{ $event->user->bio ?? 'Passionate about building a cleaner, greener community.' }}
                                 </p>
-                                <button class="btn btn-outline btn-sm w-full flex items-center justify-center gap-2">
-                                    <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                    Message Organizer
-                                </button>
                             </div>
 
                             <!-- Tags -->
@@ -322,7 +319,8 @@
                                 <h2 class="text-xl font-bold text-gray-800 mb-4">Tags</h2>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($event->tags as $tag)
-                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                        <span
+                                            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                                             #{{ $tag->name }}
                                         </span>
                                     @endforeach
@@ -361,19 +359,19 @@
                 </div>
                 @if ($status == 'accepted')
                     <label class="tab">
-                        <input type="radio" name="my_tabs_4" />
+                        <input type="radio" name="my_tabs_4"/>
                         <i data-lucide="book-check" class="w-4 h-4 mr-2"></i>
                         Workflows
                     </label>
 
                     <div class="tab-content bg-gray-100 border-base-300 p-6">
-                        <livewire:common.workflow :eventId="$event->id" />
+                        <livewire:common.workflow :eventId="$event->id"/>
                     </div>
                 @endif
 
                 {{-- Event Gallery--}}
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4" />
+                    <input type="radio" name="my_tabs_4"/>
                     <i data-lucide="image" class="w-4 h-4 mr-2"></i>
                     Event Gallery
                 </label>
@@ -404,7 +402,7 @@
 
 
                                     <button type="submit"
-                                        class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
+                                            class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
                                         <i data-lucide="save" class="w-4 h-4"></i>
                                         Save photos
                                     </button>
@@ -438,7 +436,7 @@
                             @foreach ($images as $img)
                                 <div class="group relative overflow-hidden rounded-lg shadow-lg">
                                     <img src="{{ $img }}" alt="Gallery Image"
-                                        class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
                                 </div>
                             @endforeach
                         </div>
@@ -447,7 +445,7 @@
 
                 {{-- Reviews--}}
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4" />
+                    <input type="radio" name="my_tabs_4"/>
                     <i data-lucide="star" class="w-4 h-4 mr-2"></i>
                     Reviews
                 </label>
@@ -475,8 +473,8 @@
                                     @if ($reviewbutton)
                                         <!-- Event-level review modal (unique per event) -->
                                         <button onclick="my_modal_4.showModal()"
-                                            class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
-                                            for="event_review_modal_{{ $event->id }}">
+                                                class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
+                                                for="event_review_modal_{{ $event->id }}">
                                             <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
                                             <span>Review</span>
                                         </button>
@@ -484,7 +482,7 @@
                                             <div
                                                 class="modal-box w-full max-w-lg p-8 bg-white rounded-2xl shadow-xl relative">
                                                 <button onclick="my_modal_4.close()" type="button"
-                                                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
+                                                        class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
                                                     <i data-lucide="x" class="w-6 h-6"></i>
                                                 </button>
                                                 <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
@@ -496,24 +494,25 @@
                                                 <form method="dialog" wire:submit="submitReview" class="space-y-5">
                                                     <div>
                                                         <label for="rating"
-                                                            class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
-                                                        <input type="number" min="1" max="5" wire:model="rating" id="rating"
-                                                            class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
-                                                            placeholder="1-5">
+                                                               class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                                                        <input type="number" min="1" max="5" wire:model="rating"
+                                                               id="rating"
+                                                               class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                                                               placeholder="1-5">
                                                     </div>
                                                     <div>
                                                         <label for="review"
-                                                            class="block text-sm font-medium text-gray-700 mb-1">Your
+                                                               class="block text-sm font-medium text-gray-700 mb-1">Your
                                                             Review</label>
                                                         <textarea wire:model="review" id="review" rows="4"
-                                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
-                                                            placeholder="Write your review..."></textarea>
+                                                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
+                                                                  placeholder="Write your review..."></textarea>
                                                     </div>
                                                     <div class="flex justify-end gap-2 mt-6">
 
                                                         <button onclick="my_modal_4.close()"
-                                                            class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
-                                                            type="submit">Send
+                                                                class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
+                                                                type="submit">Send
                                                         </button>
                                                     </div>
                                                 </form>
@@ -532,8 +531,8 @@
                                                     class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 flex-shrink-0">
                                                     @if (isset($review->user) && isset($review->user->profile_photo_url))
                                                         <img src="{{ $review->user->profile_photo_url }}"
-                                                            alt="{{ $review->user->name }}"
-                                                            class="w-full h-full object-cover rounded-full">
+                                                             alt="{{ $review->user->name }}"
+                                                             class="w-full h-full object-cover rounded-full">
                                                     @else
                                                         <span
                                                             class="font-semibold">{{ strtoupper(substr($review->user->name ?? 'U', 0, 1)) }}</span>
@@ -554,9 +553,11 @@
                                                                 @php $r = (int) ($review->rating ?? 0); @endphp
                                                                 @for ($i = 1; $i <= 5; $i++)
                                                                     @if ($i <= $r)
-                                                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                                                        <i data-lucide="star"
+                                                                           class="w-4 h-4 fill-current"></i>
                                                                     @else
-                                                                        <i data-lucide="star" class="w-4 h-4 text-gray-300"></i>
+                                                                        <i data-lucide="star"
+                                                                           class="w-4 h-4 text-gray-300"></i>
                                                                     @endif
                                                                 @endfor
                                                             </div>
@@ -577,15 +578,16 @@
                 </div>
 
                 {{-- Chat --}}
-                <label class="tab">
-                    <input type="radio" name="my_tabs_4" />
-                    <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>
-                    Chat
-                </label>
-                <div class="tab-content bg-base-100 border-base-300 p-6">
-                    <!-- Group Chat UI -->
-                    <livewire:common.group-chat :eventId="$event->id" />
-                </div>
+                @if ($status == 'accepted')
+                    <label class="tab">
+                        <input type="radio" name="my_tabs_4"/>
+                        <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>
+                        Chat
+                    </label>
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        <livewire:common.group-chat :eventId="$event->id"/>
+                    </div>
+                @endif
             </div>
 
         </div>
