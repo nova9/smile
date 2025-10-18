@@ -88,6 +88,38 @@ class ContractCustomization extends Component
             ]
         ];
 
-        return view('livewire.lawyer.dashboard.contract-customization', compact('stats', 'templates'));
+        // New: incoming change requests (front-end only mock data)
+        $changeRequests = [
+            [
+                'id' => 1001,
+                'template_id' => 1,
+                'template_name' => 'Standard Volunteer Service Agreement',
+                'organization' => 'Acme Goodwill Foundation',
+                'contact_person' => 'Grace Lee',
+                'contact_email' => 'grace.lee@acme.org',
+                'requested_at' => date('Y-m-d H:i'),
+                'status' => 'pending', // pending | approved | rejected
+                'priority' => 'high',
+                'reason' => 'Update liability clause to reflect event insurance coverage.',
+                'current_terms' => "1. The volunteer agrees to perform assigned duties diligently and responsibly.\n2. The organization will provide necessary guidance and a safe work environment.\n3. Confidential information must not be disclosed without consent.\n4. Either party may terminate this agreement with prior notice.",
+                'proposed_terms' => "1. The volunteer agrees to perform assigned duties diligently and responsibly.\n2. The organization will provide necessary guidance and a safe work environment, including event insurance coverage where applicable.\n3. Confidential information must not be disclosed without consent.\n4. Either party may terminate this agreement with 7 days prior notice.",
+            ],
+            [
+                'id' => 1002,
+                'template_id' => 6,
+                'template_name' => 'Short-term Volunteer Agreement',
+                'organization' => 'City Food Bank',
+                'contact_person' => 'David Chen',
+                'contact_email' => 'david.chen@cityfoodbank.org',
+                'requested_at' => date('Y-m-d H:i', strtotime('-1 day')),
+                'status' => 'pending',
+                'priority' => 'medium',
+                'reason' => 'Clarify time commitment and add rest breaks during distribution days.',
+                'current_terms' => "1. Volunteer services are provided without compensation.\n2. The volunteer will be assigned tasks by the organization.\n3. The volunteer may terminate services at any time with notice.",
+                'proposed_terms' => "1. Volunteer services are provided without compensation.\n2. The volunteer will be assigned tasks by the organization, with a maximum of 6 hours per day including rest breaks.\n3. The volunteer may terminate services at any time with 24 hours notice.",
+            ],
+        ];
+
+        return view('livewire.lawyer.dashboard.contract-customization', compact('stats', 'templates', 'changeRequests'));
     }
 }
