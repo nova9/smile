@@ -11,7 +11,7 @@
 
 
 <x-volunteer.dashboard-layout>
-    <div class="min-h-screen bg-gray-50">
+    <div class="bg-gray-50">
 
         <div class="p-4">
             <div class="tabs tabs-lift">
@@ -186,7 +186,7 @@
                                                     <span
                                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-sm font-medium">
                                                         <i data-lucide="venus-mars" class="w-4 h-4 text-blue-400"
-                                                            aria-hidden="true"></i>
+                                                           aria-hidden="true"></i>
                                                         <span class="flex items-center gap-1">
                                                             Men: <span
                                                                 class="font-bold text-blue-700">{{ $req['male_participants'] ?? 0 }}</span>
@@ -204,7 +204,7 @@
                                                     <span
                                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium">
                                                         <i data-lucide="bar-chart" class="w-4 h-4 text-yellow-400"
-                                                            aria-hidden="true"></i>
+                                                           aria-hidden="true"></i>
                                                         Level:
                                                         <span>Beginner <span
                                                                 class="font-bold text-yellow-700">{{ $req['beginner_participants'] ?? 0 }}</span></span>,
@@ -233,7 +233,7 @@
                                             <span
                                                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
                                                 <i data-lucide="calendar" class="w-4 h-4 text-green-500"
-                                                    aria-hidden="true"></i>
+                                                   aria-hidden="true"></i>
                                                 Minimum Age: <span
                                                     class="font-bold text-green-700">{{ $event->minimum_age }}</span>
                                             </span>
@@ -269,14 +269,14 @@
                                     <div
                                         class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden mb-1">
                                         <iframe width="100%" height="100%" frameborder="0"
-                                            style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                            src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                            allowfullscreen>
+                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                                allowfullscreen>
                                         </iframe>
                                     </div>
                                     <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                        target="_blank"
-                                        class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                       target="_blank"
+                                       class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                         <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
                                         Open in Google Maps
                                     </a>
@@ -349,8 +349,7 @@
                                         <div class="flex items-center gap-3">
                                             <i data-lucide="twitter" class="w-5 h-5 text-blue-400"></i>
                                             <span class="text-gray-700 font-medium">Social:</span>
-                                            <a href="#"
-                                                class="text-blue-600 hover:underline font-medium">Twitter</a>
+                                            <a href="#" class="text-blue-600 hover:underline font-medium">Twitter</a>
                                         </div>
                                     </div>
                                 </div>
@@ -360,19 +359,19 @@
                 </div>
                 @if ($status == 'accepted')
                     <label class="tab">
-                        <input type="radio" name="my_tabs_4" />
+                        <input type="radio" name="my_tabs_4"/>
                         <i data-lucide="book-check" class="w-4 h-4 mr-2"></i>
                         Workflows
                     </label>
 
                     <div class="tab-content bg-gray-100 border-base-300 p-6">
-                        <livewire:common.workflow :eventId="$event->id" />
+                        <livewire:common.workflow :eventId="$event->id"/>
                     </div>
                 @endif
 
-                {{-- Event Gallery --}}
+                {{-- Event Gallery--}}
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4" />
+                    <input type="radio" name="my_tabs_4"/>
                     <i data-lucide="image" class="w-4 h-4 mr-2"></i>
                     Event Gallery
                 </label>
@@ -662,7 +661,7 @@
                         <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>
                         Chat
                     </label>
-                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                    <div class="tab-content bg-base-100 border-base-300 p-0">
                         <livewire:common.group-chat :eventId="$event->id" />
                     </div>
                 @endif
