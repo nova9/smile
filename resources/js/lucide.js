@@ -102,13 +102,17 @@ import {
     Tag,
     ListTodo,
     GripHorizontal,
-    GripVertical
+    GripVertical,
+    Send,
+    Paperclip
 } from "lucide";
 
 
 function registerIcons() {
     createIcons({
         icons: {
+            Paperclip,
+            Send,
             GripVertical,
             GripHorizontal,
             ListTodo,
