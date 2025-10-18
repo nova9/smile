@@ -412,6 +412,10 @@
                                         <i data-lucide="share-2" class="w-5 h-5 mr-2"></i>
                                         Share Event
                                     </button>
+                                    <!-- Report Event Button -->
+                                    <div class="w-full">
+                                        @livewire('volunteer.dashboard.eventz.report-event', ['eventId' => $event->id])
+                                    </div>
                                 </div>
                             </div>
                         </div>

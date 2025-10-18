@@ -16,7 +16,7 @@
         <div class="p-4">
             <div class="tabs tabs-lift">
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4" checked="checked"/>
+                    <input type="radio" name="my_tabs_4" checked="checked" />
                     <i data-lucide="info" class="w-4 h-4 mr-2"></i>
                     Event Details
                 </label>
@@ -44,22 +44,22 @@
                         <div class="mb-10 text-center">
                             <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
                                 <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
-                                        wire:click="toggleFavorite">
+                                    wire:click="toggleFavorite">
                                     <i data-lucide="heart"
-                                       class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
+                                        class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
                                 </button>
                                 <button id="share-event-btn" type="button"
-                                        class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                    class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
                                     <i data-lucide="share-2" class="w-5 h-5"></i>
                                     <span>Share</span>
                                 </button>
                                 <!-- Tiny toast for copy review -->
                                 <div id="share-toast"
-                                     class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
+                                    class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
                                     Link copied to clipboard
                                 </div>
                                 <a href="{{ route('community.space', ['id' => $event->id]) }}"
-                                   class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
                                     <i data-lucide="users" class="w-5 h-5"></i>
                                     <span>Community Space</span>
                                 </a>
@@ -395,14 +395,15 @@
                                     class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm text-gray-700 hover:bg-gray-50">
                                     <i data-lucide="upload" class="w-4 h-4"></i>
                                     <span>Choose photos</span>
-                                    <input type="file" wire:model="photos" multiple accept="image/*" class="hidden">
+                                    <input type="file" wire:model="photos" multiple accept="image/*"
+                                        class="hidden">
                                 </label>
 
                                 <div class="ml-auto flex items-center gap-3">
 
 
                                     <button type="submit"
-                                            class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
+                                        class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
                                         <i data-lucide="save" class="w-4 h-4"></i>
                                         Save photos
                                     </button>
@@ -436,16 +437,16 @@
                             @foreach ($images as $img)
                                 <div class="group relative overflow-hidden rounded-lg shadow-lg">
                                     <img src="{{ $img }}" alt="Gallery Image"
-                                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                                        class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
 
-                {{-- Reviews--}}
+                {{-- Reviews --}}
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4"/>
+                    <input type="radio" name="my_tabs_4" />
                     <i data-lucide="star" class="w-4 h-4 mr-2"></i>
                     Reviews
                 </label>
@@ -470,55 +471,99 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    @if ($reviewbutton)
-                                        <!-- Event-level review modal (unique per event) -->
-                                        <button onclick="my_modal_4.showModal()"
-                                                class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
-                                                for="event_review_modal_{{ $event->id }}">
-                                            <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
-                                            <span>Review</span>
-                                        </button>
-                                        <dialog id="my_modal_4" class="modal">
-                                            <div
-                                                class="modal-box w-full max-w-lg p-8 bg-white rounded-2xl shadow-xl relative">
-                                                <button onclick="my_modal_4.close()" type="button"
-                                                        class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
-                                                    <i data-lucide="x" class="w-6 h-6"></i>
-                                                </button>
-                                                <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-                                                    <i data-lucide="star" class="w-6 h-6 text-yellow-400"></i>
-                                                    Leave a Review
-                                                </h2>
-                                                <p class="text-gray-500 mb-6">Share your experience and help
-                                                    others!</p>
-                                                <form method="dialog" wire:submit="submitReview" class="space-y-5">
-                                                    <div>
-                                                        <label for="rating"
-                                                               class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
-                                                        <input type="number" min="1" max="5" wire:model="rating"
+                                    {{-- @if ($reviewbutton) --}}
+                                    <!-- Event-level review modal (unique per event) -->
+                                    <button onclick="my_modal_4.showModal()"
+                                        class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
+                                        for="event_review_modal_{{ $event->id }}">
+                                        <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
+                                        <span>Review</span>
+                                    </button>
+                                    <dialog id="my_modal_4" class="modal">
+                                        <div
+                                            class="modal-box w-full max-w-lg p-8 bg-white rounded-2xl shadow-xl relative">
+                                            <button onclick="my_modal_4.close()" type="button"
+                                                class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
+                                                <i data-lucide="x" class="w-6 h-6"></i>
+                                            </button>
+                                            <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                                                <i data-lucide="star" class="w-6 h-6 text-yellow-400"></i>
+                                                Leave a Review
+                                            </h2>
+                                            <p class="text-gray-500 mb-6">Share your experience and help
+                                                others!</p>
+                                            <form method="dialog" wire:submit="submitReview" class="space-y-5">
+                                                <div>
+                                                    <label for="rating"
+                                                        class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                                                    {{-- <input type="number" min="1" max="5" wire:model="rating"
                                                                id="rating"
                                                                class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
-                                                               placeholder="1-5">
+                                                               placeholder="1-5"> --}}
+                                                    <div class="rating rating-lg rating-half">
+                                                        <input type="radio" wire:model="rating" name="rating-11"
+                                                            class="rating-hidden" />
+                                                        <input type="radio" wire:model="rating" value="0.5"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                            aria-label="0.5 star" />
+                                                        <input type="radio" wire:model="rating" value="1"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                            aria-label="1 star" />
+                                                        <input type="radio" wire:model="rating" value="1.5"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                            aria-label="1.5 star" />
+                                                        <input type="radio" wire:model="rating" value="2"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                            aria-label="2 star" />
+                                                        <input type="radio" wire:model="rating" value="2.5"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                            aria-label="2.5 star" />
+                                                        <input type="radio" wire:model="rating" value="3"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                            aria-label="3 star" />
+                                                        <input type="radio" wire:model="rating" value="3.5"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                            aria-label="3.5 star" />
+                                                        <input type="radio" wire:model="rating" value="4"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                            aria-label="4 star" />
+                                                        <input type="radio" wire:model="rating" value="4.5"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                            aria-label="4.5 star" />
+                                                        <input type="radio" wire:model="rating" value="5"
+                                                            name="rating-11"
+                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                            aria-label="5 star" />
                                                     </div>
-                                                    <div>
-                                                        <label for="review"
-                                                               class="block text-sm font-medium text-gray-700 mb-1">Your
-                                                            Review</label>
-                                                        <textarea wire:model="review" id="review" rows="4"
-                                                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
-                                                                  placeholder="Write your review..."></textarea>
-                                                    </div>
-                                                    <div class="flex justify-end gap-2 mt-6">
+                                                </div>
+                                                <div>
+                                                    <label for="review"
+                                                        class="block text-sm font-medium text-gray-700 mb-1">Your
+                                                        Review</label>
+                                                    <textarea wire:model="review" id="review" rows="4"
+                                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
+                                                        placeholder="Write your review..."></textarea>
+                                                </div>
+                                                <div class="flex justify-end gap-2 mt-6">
 
-                                                        <button onclick="my_modal_4.close()"
-                                                                class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
-                                                                type="submit">Send
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </dialog>
-                                    @endif
+                                                    <button onclick="my_modal_4.close()"
+                                                        class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
+                                                        type="submit">Send
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </dialog>
+                                    {{-- @endif --}}
                                 </div>
                             </div>
 
@@ -531,8 +576,8 @@
                                                     class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 flex-shrink-0">
                                                     @if (isset($review->user) && isset($review->user->profile_photo_url))
                                                         <img src="{{ $review->user->profile_photo_url }}"
-                                                             alt="{{ $review->user->name }}"
-                                                             class="w-full h-full object-cover rounded-full">
+                                                            alt="{{ $review->user->name }}"
+                                                            class="w-full h-full object-cover rounded-full">
                                                     @else
                                                         <span
                                                             class="font-semibold">{{ strtoupper(substr($review->user->name ?? 'U', 0, 1)) }}</span>
@@ -549,24 +594,56 @@
                                                             </div>
                                                         </div>
                                                         <div class="flex items-center gap-2">
-                                                            <div class="flex text-yellow-400">
-                                                                @php $r = (int) ($review->rating ?? 0); @endphp
-                                                                @for ($i = 1; $i <= 5; $i++)
-                                                                    @if ($i <= $r)
-                                                                        <i data-lucide="star"
-                                                                           class="w-4 h-4 fill-current"></i>
-                                                                    @else
-                                                                        <i data-lucide="star"
-                                                                           class="w-4 h-4 text-gray-300"></i>
-                                                                    @endif
-                                                                @endfor
+                                                            <div class="rating rating-lg rating-half">
+                                                            {{-- 1 full opacity ,0.2 almost transparert --}}
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="0.5 star"
+                                                                    style="opacity:{{ $review->rating >= 0.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="1 star"
+                                                                    style="opacity:{{ $review->rating >= 1 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="1.5 star"
+                                                                    style="opacity:{{ $review->rating >= 1.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="2 star"
+                                                                    style="opacity:{{ $review->rating >= 2 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="2.5 star"
+                                                                    style="opacity:{{ $review->rating >= 2.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="3 star"
+                                                                    style="opacity:{{ $review->rating >= 3 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="3.5 star"
+                                                                    style="opacity:{{ $review->rating >= 3.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="4 star"
+                                                                    style="opacity:{{ $review->rating >= 4 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="4.5 star"
+                                                                    style="opacity:{{ $review->rating >= 4.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="5 star"
+                                                                    style="opacity:{{ $review->rating == 5 ? 1 : 0.2 }}">
+                                                                </div>
                                                             </div>
                                                             <div class="text-sm text-gray-600">
                                                                 {{ $review->rating ?? '-' }}/5
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <p class="mt-3 text-gray-700 text-sm">{{ $review->review ?? '' }}</p>
+                                                    <p class="mt-3 text-gray-700 text-sm">{{ $review->review ?? '' }}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -580,12 +657,12 @@
                 {{-- Chat --}}
                 @if ($status == 'accepted')
                     <label class="tab">
-                        <input type="radio" name="my_tabs_4"/>
+                        <input type="radio" name="my_tabs_4" />
                         <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>
                         Chat
                     </label>
                     <div class="tab-content bg-base-100 border-base-300 p-0">
-                        <livewire:common.group-chat :eventId="$event->id"/>
+                        <livewire:common.group-chat :eventId="$event->id" />
                     </div>
                 @endif
             </div>

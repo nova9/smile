@@ -35,7 +35,9 @@ class Index extends Component
 
     public function loadEvents()
     {
-        $query = auth()->user()->participatingEvents()->orderBy('created_at', 'desc');
+        $query = auth()->user()->participatingEvents()
+            ->where('is_active', true) // Only show active events
+            ->orderBy('created_at', 'desc');
         $this->totalEvents = $query->count();
         if(!empty($this->statusFilter)){
             
@@ -47,19 +49,23 @@ class Index extends Component
         $this->participatingEvents = $query->get();
 
         $this->confirmedEvents = auth()->user()->participatingEvents()
+            ->where('is_active', true) // Only show active events
             ->wherePivot('status', 'accepted')
             ->wherePivot('ends_at', null)
             ->get();
 
         $this->completedEvents = auth()->user()->participatingEvents()
+            ->where('is_active', true) // Only show active events
             ->wherePivot('status', 'completed')
             ->get();
 
         $this->pendingEvents = auth()->user()->participatingEvents()
+            ->where('is_active', true) // Only show active events
             ->wherePivot('status', 'pending')
             ->get();
         $this->cancelledEvents = auth()->user()
             ->participatingEvents()
+            ->where('is_active', true) // Only show active events
             ->wherePivot('status', 'rejected')
             ->get();
 
@@ -70,6 +76,7 @@ class Index extends Component
     {
         return view('livewire.volunteer.dashboard.index',
          $participatingEvents= auth()->user()->participatingEvents()
+            ->where('is_active', true) // Only show active events
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })

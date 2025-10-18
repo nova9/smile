@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\ResetPasswordController;
+use App\Livewire\ResetPassword;
 
 Route::post('/contracts/{id}/upload', [ContractController::class, 'uploadDocument'])->name('contracts.upload');
 Route::post('/contracts/{id}/approve', [ContractController::class, 'approveContract'])->name('contracts.approve');
@@ -19,6 +21,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('guest')->group(function () {
     Route::get('/signup', \App\Livewire\Signup::class);
     Route::get('/login', \App\Livewire\Login::class);
+    Route::get('/forgot-password', \App\Livewire\ForgotPassword::class);
+    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
     Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 });
 
