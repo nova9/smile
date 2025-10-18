@@ -14,14 +14,10 @@
     }
 }">
     <!-- Chatbot Toggle Button -->
-    <button id="chatbot-toggle-btn" aria-label="Toggle chat" x-show="!open" x-on:click="toggle()"
-    class="p-1.5 rounded-sm drawer-button hover:bg-neutral-200 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="SmileBot"
+    <button id="chatbot-toggle-btn" aria-label="Toggle chat"  x-on:click="toggle()"
+    class="p-1 rounded-sm drawer-button hover:bg-neutral-200 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="SmileBot"
     >
-        
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-        </svg>
+        <i data-lucide="bot"></i>
     </button>
     <div class="fixed bottom-4 right-4 z-50">
 
@@ -48,41 +44,9 @@
                     <div class="flex {{ $msg['role'] === 'user' ? 'justify-end' : 'justify-start' }}">
                         <div
                             class="px-4 py-2 rounded-lg max-w-[80%] text-sm shadow {{ $msg['role'] === 'user' ? 'bg-gray-100 text-gray-800 rounded-br-none' : 'bg-gray-100 text-gray-800 rounded-bl-none' }}">
-                            @if ($msg['role'] === 'assistant' && preg_match('/\d+\./', $msg['content']))
-                                @php
-                                    $lines = preg_split('/\r?\n/', $msg['content']);
-                                    $intro = [];
-                                    $list = [];
-                                    $after = [];
-                                    $inList = false;
-                                    foreach ($lines as $line) {
-                                        if (preg_match('/^\d+\./', trim($line))) {
-                                            $inList = true;
-                                            $list[] = trim($line);
-                                        } elseif ($inList && trim($line) === '') {
-                                            $inList = false;
-                                        } elseif ($inList) {
-                                            $list[count($list) - 1] .= ' ' . trim($line);
-                                        } elseif (!$inList) {
-                                            if (empty($list)) {
-                                                $intro[] = $line;
-                                            } else {
-                                                $after[] = $line;
-                                            }
-                                        }
-                                    }
-                                @endphp
-                                @if (!empty($intro))
-                                    <div class="mb-2 font-semibold">{{ implode(' ', $intro) }}</div>
-                                @endif
-                                <ol class="list-decimal list-inside space-y-1">
-                                    @foreach ($list as $item)
-                                        <li>{{ preg_replace('/^\d+\.\s*/', '', $item) }}</li>
-                                    @endforeach
-                                </ol>
-                                @if (!empty($after))
-                                    <div class="mt-2">{{ implode(' ', $after) }}</div>
-                                @endif
+                            @if ($msg['role'] === 'assistant')
+                            {{-- strip tags removes html and xml tags --}}
+                                {{ strip_tags($msg['content']) }}
                             @else
                                 {{ strip_tags($msg['content']) }}
                             @endif
