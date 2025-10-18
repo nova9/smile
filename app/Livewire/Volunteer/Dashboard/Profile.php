@@ -88,7 +88,7 @@ class Profile extends Component
             'longitude' => 'nullable|numeric',
             'contact_number' => 'nullable|string|max:10|min:10', // Adjust max length as needed
             'gender' => 'nullable|string|in:male,female,other,prefer_not_to_say',
-            'profile_picture' => 'required|image|max:10240', // 10MB max size
+            'profile_picture' => 'nullable|image|max:10240', // 10MB max size
         ];
     }
 

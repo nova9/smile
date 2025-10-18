@@ -38,7 +38,7 @@ class Profile extends Component
     public function rules()
     {
         return [
-            'profile_picture' => 'required|image|max:10240', // 10MB max size
+            'profile_picture' => 'nullable|image|max:10240', // 10MB max size
         ];
     }
 
