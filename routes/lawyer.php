@@ -9,7 +9,6 @@ Route::middleware('auth')->group(function () {
 
     // Business Process Routes
     Route::get('/contract-drafting', \App\Livewire\Lawyer\Dashboard\ContractDrafting::class)->name('lawyer.contract-drafting');
-    Route::get('/approval-workflow', \App\Livewire\Lawyer\Dashboard\ApprovalWorkflow::class)->name('lawyer.approval-workflow');
     Route::get('/digital-signature', \App\Livewire\Lawyer\Dashboard\DigitalSignature::class)->name('lawyer.digital-signature');
     Route::get('/contract-archive', \App\Livewire\Lawyer\Dashboard\ContractArchive::class)->name('lawyer.contract-archive');
     Route::get('/contract-customization', \App\Livewire\Lawyer\Dashboard\ContractCustomization::class)->name('lawyer.contract-customization');
