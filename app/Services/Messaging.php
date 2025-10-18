@@ -45,23 +45,25 @@ class Messaging
         return $message->user->id === auth()->id();
     }
 
-    public static function sendMessage($content, $chatId)
+    public static function sendMessage($content, $chatId, $fileId = null, $messageType = 'text')
     {
         Message::query()->create([
             'user_id' => auth()->id(),
             'chat_id' => $chatId,
             'content' => $content,
+            'file_id' => $fileId,
+            'message_type' => $messageType,
         ]);
     }
 
     public static function getMessagesForChat(Chat $chat)
     {
-        return $chat->messages()->with('user')->orderBy('created_at', 'desc')->get();
+        return $chat->messages()->with(['user', 'file'])->orderBy('created_at', 'desc')->get();
     }
 
     public static function getMessagesForChatDisplay(Chat $chat)
     {
-        return $chat->messages()->with('user')->orderBy('created_at', 'asc')->get();
+        return $chat->messages()->with(['user', 'file'])->orderBy('created_at', 'asc')->get();
     }
 
     public static function getDirectChatOtherParty($chat)
