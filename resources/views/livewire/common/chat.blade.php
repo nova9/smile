@@ -123,17 +123,73 @@
                     @forelse(\App\Services\Messaging::getMessagesForChatDisplay($currentChat) as $message)
                         @if(\App\Services\Messaging::isMessageMine($message))
                             <div class="flex flex-col items-end">
-                                <div
-                                    class="bg-primary text-primary-content rounded-lg px-3 py-2 text-sm max-w-[70%]">{{ $message->content }}</div>
-                                <span
-                                    class="text-xs text-base-content/50 mt-1">{{ $message->created_at->diffForHumans() }}</span>
+                                @if($message->message_type === 'image' && $message->file)
+                                    <div class="rounded-lg overflow-hidden max-w-[70%]">
+                                        <img src="{{ \App\Services\FileManager::getTemporaryUrl($message->file->id) }}" 
+                                             alt="Image" 
+                                             class="max-h-64 rounded-lg cursor-pointer hover:opacity-90 transition"
+                                             onclick="window.open('{{ \App\Services\FileManager::getTemporaryUrl($message->file->id) }}', '_blank')">
+                                        @if($message->content && $message->content !== 'Sent an image')
+                                            <div class="bg-primary text-primary-content px-3 py-2 text-sm mt-1">{{ $message->content }}</div>
+                                        @endif
+                                    </div>
+                                @elseif($message->message_type === 'document' && $message->file)
+                                    <div class="bg-primary text-primary-content rounded-lg px-3 py-2 text-sm max-w-[70%]">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="file-text" class="size-5"></i>
+                                            <div class="flex-1">
+                                                <div class="font-medium">{{ $message->file->file_name }}</div>
+                                                <div class="text-xs opacity-80">{{ number_format($message->file->file_size / 1024, 2) }} KB</div>
+                                            </div>
+                                            <a href="{{ \App\Services\FileManager::getTemporaryUrl($message->file->id) }}" 
+                                               download 
+                                               class="btn btn-sm btn-ghost">
+                                                <i data-lucide="download" class="size-4"></i>
+                                            </a>
+                                        </div>
+                                        @if($message->content && $message->content !== 'Sent a document')
+                                            <div class="mt-2 pt-2 border-t border-primary-content/20">{{ $message->content }}</div>
+                                        @endif
+                                    </div>
+                                @else
+                                    <div class="bg-primary text-primary-content rounded-lg px-3 py-2 text-sm max-w-[70%]">{{ $message->content }}</div>
+                                @endif
+                                <span class="text-xs text-base-content/50 mt-1">{{ $message->created_at->diffForHumans() }}</span>
                             </div>
                         @else
                             <div class="flex flex-col items-start">
-                                <div
-                                    class="bg-base-300 rounded-lg px-3 py-2 text-sm max-w-[70%]">{{ $message->content }}</div>
-                                <span
-                                    class="text-xs text-base-content/50 mt-1">{{ $message->created_at->diffForHumans() }}</span>
+                                @if($message->message_type === 'image' && $message->file)
+                                    <div class="rounded-lg overflow-hidden max-w-[70%]">
+                                        <img src="{{ \App\Services\FileManager::getTemporaryUrl($message->file->id) }}" 
+                                             alt="Image" 
+                                             class="max-h-64 rounded-lg cursor-pointer hover:opacity-90 transition"
+                                             onclick="window.open('{{ \App\Services\FileManager::getTemporaryUrl($message->file->id) }}', '_blank')">
+                                        @if($message->content && $message->content !== 'Sent an image')
+                                            <div class="bg-base-300 px-3 py-2 text-sm mt-1">{{ $message->content }}</div>
+                                        @endif
+                                    </div>
+                                @elseif($message->message_type === 'document' && $message->file)
+                                    <div class="bg-base-300 rounded-lg px-3 py-2 text-sm max-w-[70%]">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="file-text" class="size-5"></i>
+                                            <div class="flex-1">
+                                                <div class="font-medium">{{ $message->file->file_name }}</div>
+                                                <div class="text-xs opacity-70">{{ number_format($message->file->file_size / 1024, 2) }} KB</div>
+                                            </div>
+                                            <a href="{{ \App\Services\FileManager::getTemporaryUrl($message->file->id) }}" 
+                                               download 
+                                               class="btn btn-sm btn-ghost">
+                                                <i data-lucide="download" class="size-4"></i>
+                                            </a>
+                                        </div>
+                                        @if($message->content && $message->content !== 'Sent a document')
+                                            <div class="mt-2 pt-2 border-t border-base-content/20">{{ $message->content }}</div>
+                                        @endif
+                                    </div>
+                                @else
+                                    <div class="bg-base-300 rounded-lg px-3 py-2 text-sm max-w-[70%]">{{ $message->content }}</div>
+                                @endif
+                                <span class="text-xs text-base-content/50 mt-1">{{ $message->created_at->diffForHumans() }}</span>
                             </div>
                         @endif
                     @empty
@@ -144,15 +200,65 @@
                 </div>
             </div>
             <!-- Input -->
-            <div class="border-t border-base-300 px-4 py-3 bg-base-100 flex items-center gap-2">
-                <input
-                    wire:model="input"
-                    type="text"
-                    class="input input-bordered w-full text-sm"
-                    placeholder="Type a message..."
-                    x-on:keydown.enter.stop.prevent="sendMessage({{ $currentChat->id }})"
-                >
-                <button class="btn btn-primary btn-sm" x-on:click="sendMessage({{ $currentChat->id }})">Send</button>
+            <div class="border-t border-base-300 bg-base-100">
+                <!-- File Preview -->
+                @if($attachment)
+                    <div class="px-4 py-2 border-b border-base-300 bg-base-200">
+                        <div class="flex items-center gap-2 p-2 bg-base-100 rounded-lg">
+                            @if(is_object($attachment) && method_exists($attachment, 'getMimeType'))
+                                @if(str_starts_with($attachment->getMimeType(), 'image/'))
+                                    <img src="{{ $attachment->temporaryUrl() }}" alt="Preview" class="w-16 h-16 object-cover rounded">
+                                @else
+                                    <div class="w-16 h-16 bg-base-300 rounded flex items-center justify-center">
+                                        <i data-lucide="file-text" class="size-8 text-base-content/50"></i>
+                                    </div>
+                                @endif
+                                <div class="flex-1">
+                                    <div class="font-medium text-sm">{{ $attachment->getClientOriginalName() }}</div>
+                                    <div class="text-xs text-base-content/70">{{ number_format($attachment->getSize() / 1024, 2) }} KB</div>
+                                </div>
+                            @endif
+                            <button wire:click="removeAttachment" type="button" class="btn btn-sm btn-ghost btn-circle">
+                                <i data-lucide="x" class="size-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+                
+                <!-- Loading Indicator -->
+                <div wire:loading wire:target="attachment" class="px-4 py-2 border-b border-base-300 bg-base-200">
+                    <div class="flex items-center gap-2 p-2 bg-base-100 rounded-lg">
+                        <div class="loading loading-spinner loading-sm"></div>
+                        <span class="text-sm">Uploading file...</span>
+                    </div>
+                </div>
+                
+                <!-- Input Area -->
+                <div class="px-4 py-3 flex items-center gap-2">
+                    <label for="file-upload-{{ $currentChat->id }}" class="btn btn-ghost btn-sm btn-circle" wire:loading.attr="disabled" wire:target="attachment">
+                        <i data-lucide="paperclip" class="size-5"></i>
+                    </label>
+                    <input 
+                        id="file-upload-{{ $currentChat->id }}" 
+                        type="file" 
+                        wire:model.live="attachment" 
+                        class="hidden"
+                        accept="image/*,.pdf,.doc,.docx,.txt"
+                    >
+                    <input
+                        wire:model="input"
+                        type="text"
+                        class="input input-bordered w-full text-sm"
+                        placeholder="Type a message..."
+                        wire:keydown.enter="sendMessage({{ $currentChat->id }})"
+                    >
+                    <button class="btn btn-primary btn-sm" wire:click="sendMessage({{ $currentChat->id }})" wire:loading.attr="disabled" wire:target="sendMessage">
+                        <span wire:loading.remove wire:target="sendMessage">
+                            <i data-lucide="send" class="size-4"></i>
+                        </span>
+                        <span wire:loading wire:target="sendMessage" class="loading loading-spinner loading-xs"></span>
+                    </button>
+                </div>
             </div>
         </div>
     @endif
