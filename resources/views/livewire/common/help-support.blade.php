@@ -139,17 +139,25 @@
                                             <div class="flex justify-between items-start mb-1">
                                                 <h4 class="font-medium text-xs truncate pr-2">{{ $ticket->subject }}</h4>
                                                 <span class="badge badge-xs 
-                                                                                @if($ticket->status === 'open') badge-warning
-                                                                                @elseif($ticket->status === 'in_progress') badge-info  
-                                                                                @elseif($ticket->status === 'resolved') badge-success
-                                                                                @else badge-neutral
-                                                                                @endif">
+                                                                                                @if($ticket->status === 'open') badge-warning
+                                                                                                @elseif($ticket->status === 'in_progress') badge-info  
+                                                                                                @elseif($ticket->status === 'resolved') badge-success
+                                                                                                @else badge-neutral
+                                                                                                @endif">
                                                     {{ ucfirst($ticket->status) }}
                                                 </span>
                                             </div>
-                                            <p class="text-xs text-gray-500">
-                                                {{ $ticket->created_at->format('M j, Y') }}
-                                            </p>
+                                            <div class="flex justify-between items-center">
+                                                <p class="text-xs text-gray-500">
+                                                    {{ $ticket->created_at->format('M j, Y') }}
+                                                </p>
+                                                @if($ticket->status !== 'closed' && $ticket->status !== 'resolved')
+                                                    <button wire:click="resolveTicket({{ $ticket->id }})"
+                                                        class="btn btn-xs btn-success tooltip tooltip-left" data-tip="Mark as Resolved">
+                                                        <i data-lucide="check" class="size-3"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
@@ -169,11 +177,11 @@
                                             <div class="flex justify-between items-start mb-2">
                                                 <h4 class="font-medium text-sm">{{ $ticket->subject }}</h4>
                                                 <span class="badge badge-sm 
-                                                                            @if($ticket->status === 'open') badge-warning
-                                                                            @elseif($ticket->status === 'in_progress') badge-info  
-                                                                            @elseif($ticket->status === 'resolved') badge-success
-                                                                            @else badge-neutral
-                                                                            @endif">
+                                                                                        @if($ticket->status === 'open') badge-warning
+                                                                                        @elseif($ticket->status === 'in_progress') badge-info  
+                                                                                        @elseif($ticket->status === 'resolved') badge-success
+                                                                                        @else badge-neutral
+                                                                                        @endif">
                                                     {{ ucfirst($ticket->status) }}
                                                 </span>
                                             </div>
@@ -181,9 +189,17 @@
                                                 Category: {{ $this->formatCategoryName($ticket->category) }} |
                                                 Priority: {{ $this->formatPriorityName($ticket->priority) }}
                                             </p>
-                                            <p class="text-xs text-gray-500">
-                                                {{ $ticket->created_at->format('M j, Y g:i A') }}
-                                            </p>
+                                            <div class="flex justify-between items-center">
+                                                <p class="text-xs text-gray-500">
+                                                    {{ $ticket->created_at->format('M j, Y g:i A') }}
+                                                </p>
+                                                @if($ticket->status !== 'closed' && $ticket->status !== 'resolved')
+                                                    <button wire:click="resolveTicket({{ $ticket->id }})"
+                                                        class="btn btn-xs btn-success tooltip tooltip-left" data-tip="Mark as Resolved">
+                                                        <i data-lucide="check" class="size-3"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
