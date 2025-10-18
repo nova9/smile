@@ -44,6 +44,7 @@ class Index extends Component
         // Fetch all events with relationships
         $events = Event::query()
             ->with(['category', 'tags', 'address', 'user'])
+            ->where('is_active', true) // Only show active events to volunteers
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })

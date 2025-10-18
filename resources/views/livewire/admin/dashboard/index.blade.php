@@ -54,6 +54,200 @@
         </div>
     </div>
 
+    <!-- Success Message -->
+    @if (session()->has('message'))
+        <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>{{ session('message') }}</span>
+        </div>
+    @endif
+
+    <!-- Quick Event Controls -->
+    <div class="mb-10">
+        <!-- Reported Events Section (Priority) -->
+        @if($reportedEvents->count() > 0)
+            <div class="bg-red-50 border-2 border-red-200 rounded-3xl shadow-xl p-8 mb-6">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                    <h3 class="text-2xl font-bold text-red-700">
+                        Reported Events ({{ $reportedEvents->sum('reports_count') }} Reports)
+                    </h3>
+                </div>
+                
+                <div class="space-y-3">
+                    @foreach($reportedEvents as $event)
+                        <div class="bg-white border-2 border-red-300 rounded-lg p-5 shadow-md">
+                            <div class="flex items-start justify-between gap-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <h4 class="font-bold text-gray-900 text-xl">{{ $event->name }}</h4>
+                                        <span class="px-3 py-1 bg-red-600 text-white rounded-full text-sm font-bold inline-flex items-center">
+                                            <i class="fas fa-flag mr-1.5"></i>
+                                            {{ $event->reports_count }} {{ Str::plural('Report', $event->reports_count) }}
+                                        </span>
+                                        @if($event->reports_count >= 5)
+                                            <span class="px-3 py-1 bg-red-700 text-white rounded-full text-xs font-bold animate-pulse">
+                                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                                PRIORITY
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="text-sm text-gray-600 space-y-1">
+                                        <div class="flex items-center gap-4">
+                                            <span class="inline-flex items-center">
+                                                <i class="fas fa-user text-gray-400 mr-2"></i>
+                                                By: {{ $event->user->name ?? 'N/A' }}
+                                            </span>
+                                            <span class="inline-flex items-center">
+                                                <i class="fas fa-tag text-gray-400 mr-2"></i>
+                                                {{ $event->category->name ?? 'N/A' }}
+                                            </span>
+                                            <span class="inline-flex items-center">
+                                                <i class="fas fa-calendar text-gray-400 mr-2"></i>
+                                                {{ $event->starts_at->format('M d, Y') }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Report Reasons -->
+                                    <div class="mt-3 p-3 bg-red-50 rounded-lg">
+                                        <div class="text-sm font-semibold text-red-800 mb-2">Report Reasons:</div>
+                                        <div class="space-y-1">
+                                            @foreach($event->reports->take(3) as $report)
+                                                <div class="text-sm text-gray-700">
+                                                    <i class="fas fa-circle text-red-400 mr-2" style="font-size: 6px;"></i>
+                                                    <span class="font-medium">{{ $report->user->name }}:</span> {{ $report->reason }}
+                                                    @if($report->details)
+                                                        - "{{ Str::limit($report->details, 50) }}"
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                            @if($event->reports_count > 3)
+                                                <div class="text-sm text-red-600 font-medium mt-1">
+                                                    + {{ $event->reports_count - 3 }} more reports
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-col gap-2 ml-4 min-w-[200px]">
+                                    @if($event->is_active)
+                                        <span class="px-3 py-1.5 bg-green-100 text-green-800 rounded-lg text-sm font-medium text-center">
+                                            <i class="fas fa-eye mr-1.5"></i>
+                                            Active
+                                        </span>
+                                    @else
+                                        <span class="px-3 py-1.5 bg-gray-100 text-gray-800 rounded-lg text-sm font-medium text-center">
+                                            <i class="fas fa-eye-slash mr-1.5"></i>
+                                            Hidden
+                                        </span>
+                                    @endif
+                                    
+                                    <a href="/admin/dashboard/event-details/{{ $event->id }}" 
+                                       class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-center">
+                                        <i class="fas fa-search mr-2"></i>
+                                        View Event
+                                    </a>
+                                    
+                                    @if($event->is_active)
+                                        <button 
+                                            wire:click="toggleEventStatus({{ $event->id }})"
+                                            wire:confirm="Are you sure you want to disable this reported event?"
+                                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">
+                                            <i class="fas fa-ban mr-2"></i>
+                                            Disable Event
+                                        </button>
+                                    @else
+                                        <button 
+                                            wire:click="toggleEventStatus({{ $event->id }})"
+                                            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
+                                            <i class="fas fa-check mr-2"></i>
+                                            Enable Event
+                                        </button>
+                                    @endif
+                                    
+                                    <button 
+                                        wire:click="dismissReports({{ $event->id }})"
+                                        wire:confirm="Dismiss all reports for this event?"
+                                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-medium">
+                                        <i class="fas fa-times mr-2"></i>
+                                        Dismiss Reports
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+        
+        <!-- Regular Events Section -->
+        <div class="bg-white/90 rounded-3xl shadow-xl p-8">
+            <h3 class="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-6">
+                Other Events
+            </h3>
+            
+            <div class="space-y-3">
+                @forelse($otherEvents as $event)
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
+                        <div class="flex-1">
+                            <div class="font-semibold text-gray-900 text-lg">{{ $event->name }}</div>
+                            <div class="text-sm text-gray-500 mt-1">
+                                <span class="inline-flex items-center">
+                                    <i class="fas fa-user text-gray-400 mr-1"></i>
+                                    By: {{ $event->user->name ?? 'N/A' }}
+                                </span>
+                                <span class="mx-2">|</span>
+                                <span class="inline-flex items-center">
+                                    <i class="fas fa-tag text-gray-400 mr-1"></i>
+                                    {{ $event->category->name ?? 'N/A' }}
+                                </span>
+                                <span class="mx-2">|</span>
+                                <span class="inline-flex items-center">
+                                    <i class="fas fa-calendar text-gray-400 mr-1"></i>
+                                    {{ $event->starts_at->format('M d, Y') }}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 ml-4">
+                            @if($event->is_active)
+                                <span class="px-3 py-1.5 bg-green-100 text-green-800 rounded-full text-sm font-medium inline-flex items-center">
+                                    <i class="fas fa-eye mr-1.5"></i>
+                                    Active
+                                </span>
+                                <button 
+                                    wire:click="toggleEventStatus({{ $event->id }})"
+                                    wire:confirm="Are you sure you want to hide this event from volunteers?"
+                                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium inline-flex items-center">
+                                    <i class="fas fa-eye-slash mr-2"></i>
+                                    Hide
+                                </button>
+                            @else
+                                <span class="px-3 py-1.5 bg-red-100 text-red-800 rounded-full text-sm font-medium inline-flex items-center">
+                                    <i class="fas fa-eye-slash mr-1.5"></i>
+                                    Hidden
+                                </span>
+                                <button 
+                                    wire:click="toggleEventStatus({{ $event->id }})"
+                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium inline-flex items-center">
+                                    <i class="fas fa-eye mr-2"></i>
+                                    Show
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-calendar-times text-4xl text-gray-400 mb-4"></i>
+                        <p>No events found</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
+
     <!-- Critical Actions Required & Recent Admin Actions -->
     <div class="mb-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
