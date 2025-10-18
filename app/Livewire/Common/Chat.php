@@ -22,10 +22,20 @@ class Chat extends Component
     public $input;
 
     public $drawerOpen = false;
+    
+    public $totalUnreadCount = 0;
 
     public function mount()
     {
         $this->chats = Messaging::getAllDirectChats();
+        $this->updateUnreadCount();
+    }
+    
+    public function updateUnreadCount()
+    {
+        $this->totalUnreadCount = $this->chats->sum(function ($chat) {
+            return Messaging::getUnreadMessageCount($chat);
+        });
     }
 
 
@@ -43,6 +53,7 @@ class Chat extends Component
         
         // Refresh the chat list to update unread status
         $this->chats = Messaging::getAllDirectChats();
+        $this->updateUnreadCount();
     }
 
     public function sendMessage($chatId)
@@ -52,6 +63,7 @@ class Chat extends Component
         
         // Refresh the chat list to update latest message
         $this->chats = Messaging::getAllDirectChats();
+        $this->updateUnreadCount();
         
         // Refresh current chat to show new message
         $this->currentChat = auth()->user()->chats()->with('messages')->find($chatId);
@@ -66,6 +78,7 @@ class Chat extends Component
     public function refreshChats()
     {
         $this->chats = Messaging::getAllDirectChats();
+        $this->updateUnreadCount();
         
         // Also refresh current chat if it's open
         if ($this->currentChat) {
