@@ -22,6 +22,7 @@ class Show extends Component
     {
         $this->profileCompletionPercentage = auth()->user()->profileCompletionPercentage();
         $this->event = Event::query()->with(['address', 'users'])->find($id);
+        // dd($this->event);
         $this->Volunteers = $this->event->users;
         // dd($this->event);
         $this->organizer = User::find($this->event->user_id);
@@ -35,19 +36,57 @@ class Show extends Component
     {
         $maxParticipants = $this->event->maximum_participants;
         $currentParticipants = $this->event->users()->count();
-        if ((int)$maxParticipants < (int)$currentParticipants) {
-            session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
-            return redirect()->back();
-        } else {
+        $slotAvailable = $maxParticipants - $currentParticipants;
 
-            $this->event->userJoinsNotify();
-            $user = auth()->user();
-            $this->event->users()->attach(auth()->user()->id);
+        if($slotAvailable > 0){
+            if ((int)$maxParticipants < (int)$currentParticipants) {
+                session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
+                return redirect()->back();
+            } else {
+    
+                $this->event->userJoinsNotify();
+                $user = auth()->user();
+                $this->event->users()->attach(auth()->user()->id);
+    
+                $participatedEventsCount = $user->participatingEvents()->count();
+                $user->assignBadgesForEvents($participatedEventsCount, $user);
+                return redirect('/volunteer/dashboard/my-events');
+            }
 
-            $participatedEventsCount = $user->participatingEvents()->count();
-            $user->assignBadgesForEvents($participatedEventsCount, $user);
-            return redirect('/volunteer/dashboard/my-events');
+            $method = $this->event->recruiting_method;
+            dd($method);
+            switch($method){
+                case "first_come":
+                    if($slotAvailable > 0){
+                        $this->event->users()->updateExistingPivot(auth()->id(), ['status' => 'accepted']);
+                    } else {
+                        session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
+                    }
+                    break;
+                case 'application_review':
+                    $this->event->users()->updateExistingPivot(auth()->id(), ['status' => 'pending']);
+                    break;
+        
+                case 'skill_assessment':
+                    $this->event->users()->updateExistingPivot(auth()->id(), ['status' => 'pending']);
+                    break;
+        
+                case 'metrics':
+                    if ($applicant->rank <= 10) { // for example, top 10 ranks
+                        $applicant->status = 'approved';
+                    } else {
+                        $applicant->status = 'rejected';
+                    }
+                    break;
+        
+                default:
+                    $applicant->status = 'pending_review';
+    
+            }
         }
+        else {
+                    session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
+         }
     }
 
     public function render()
