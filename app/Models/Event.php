@@ -32,7 +32,8 @@ class Event extends Model
         'city',
         'embedding',
         'participant_requirements',
-        'recruiting_method'
+        'recruiting_method',
+        'is_active'
     ];
 
 
@@ -46,7 +47,8 @@ class Event extends Model
         'starts_at' => 'datetime',
         'embedding' => 'json',
         'skills' => 'array',
-        'participant_requirements' => 'array'
+        'participant_requirements' => 'array',
+        'is_active' => 'boolean'
     ];
 
     public function category(): BelongsTo
@@ -105,6 +107,12 @@ class Event extends Model
     {
         return $this->hasMany(EventPhoto::class);
     }
+
+    public function reports(): HasMany
+    {
+        return $this->hasMany(EventReport::class);
+    }
+
     public function userJoinsNotify()
     {
         // Send notification to event creator
