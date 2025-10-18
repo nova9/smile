@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Event::class);
             $table->string('name');
+            $table->integer('order')->nullable();
             $table->timestamps();
         });
     }
