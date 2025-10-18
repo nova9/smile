@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\Notifications\TaskCompletionNotification; // Fixed import path
 use App\Services\Notifications\TaskAssignedNotification;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
@@ -18,6 +19,8 @@ class Task extends Model
         'name',
         'description',
         'assigned_id',
+        'order',
+        'task_list_id',
     ];
 
     public function event()
@@ -36,7 +39,7 @@ class Task extends Model
         return $this->hasMany(Task::class, 'parent_id');
     }
 
-    public function assignedUser()
+    public function assignedUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_id');
     }
