@@ -18,10 +18,18 @@ class Messaging
 
     public static function getDirectChatTo(User $authUser, User $user): ?Chat
     {
-        return Chat::query()->whereHas('users', fn($q) => $q->whereIn('users.id', [$authUser, $user->id]))
-            ->withCount('users')
-            ->where('users_count', 2)
-            ->first();
+        // Get all chats where the auth user is a participant
+        $chats = Chat::query()
+            ->whereHas('users', fn($q) => $q->where('users.id', $authUser->id))
+            ->with('users')
+            ->get();
+        
+        // Find the chat that has exactly 2 users: the auth user and the target user
+        return $chats->first(function ($chat) use ($authUser, $user) {
+            $userIds = $chat->users->pluck('id')->sort()->values();
+            $expectedIds = collect([$authUser->id, $user->id])->sort()->values();
+            return $userIds->count() === 2 && $userIds->toArray() === $expectedIds->toArray();
+        });
     }
 
     public static function getAllDirectChats()
@@ -69,8 +77,11 @@ class Messaging
             return false;
         }
 
-        $chat = $authUser->chats()->create();
-        $user->chats()->attach($chat->id);
+        // Create a new chat
+        $chat = Chat::create();
+        
+        // Attach both users to the chat
+        $chat->users()->attach([$authUser->id, $user->id]);
 
         return true;
     }
