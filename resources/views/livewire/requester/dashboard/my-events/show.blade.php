@@ -1,5 +1,48 @@
 <x-requester.dashboard-layout>
+    <div class="min-h-screen bg-gray-50">
+        <!-- Main Container -->
+        <div class="px-4 py-4 grid grid-cols-6 gap-5">
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden col-span-4">
+                <!-- Hero Section -->
+                <div class="relative overflow-hidden">
+                    <div
+                        class="relative h-56 sm:h-72 lg:h-80 bg-gradient-to-r from-green-600 to-emerald-600 rounded-t-3xl">
+                        <div class="absolute inset-0 bg-black/25" aria-hidden="true"></div>
+                        <div class="relative z-10 max-w-5xl mx-auto px-6 py-6 sm:py-10 lg:py-14 text-white">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <div class="md:flex-1">
+                                    <div
+                                        class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+                                        <i data-lucide="tag" class="w-4 h-4"></i>
+                                        <span>{{ $event->category->name }}</span>
+                                    </div>
 
+                                    <h1
+                                        class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-md">
+                                        {{ $event->name }}
+                                    </h1>
+
+                                    <p class="mt-3 text-sm sm:text-base text-white/90 max-w-2xl line-clamp-2">
+                                        {{$event->description }}
+                                    </p>
+
+                                    <div class="mt-4 flex flex-wrap gap-3 items-center">
+                                        <div
+                                            class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
+                                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                                            <span>
+                                                {{ $event->starts_at ? $event->starts_at->format('M j') : 'TBA' }}
+                                                @if($event->ends_at)
+                                                    - {{ $event->ends_at->format('M j, Y') }}
+                                                @endif
+                                            </span>
+                                        </div>
+
+                                        <div
+                                            class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
+                                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                                            <span>{{ $event->address?->city ?? $event->city ?? 'Online / TBA' }}</span>
+                                        </div>
 
 <div class="p-4">
     <!-- Trello-like Volunteer Board -->
@@ -170,6 +213,29 @@
                                     </div>
                                 </div>
 
+                                                <div class="mt-3 flex items-center gap-2">
+
+                                                    <button wire:click="approve({{ $user->id }})" title="Approve"
+                                                            class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold transition">
+                                                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                                        Approve
+                                                    </button>
+                                                    <button wire:click="decline({{ $user->id }})" title="Decline"
+                                                            class="inline-flex items-center gap-2 px-3 py-2 bg-white text-red-600 border border-gray-200 hover:bg-gray-50 rounded-lg text-sm font-semibold transition">
+                                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                                        Decline
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-span-full text-center py-8 text-gray-500">
+                                                No volunteers match the current filters.
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                                 <div class="mt-3 flex items-center gap-2">
                                     <button wire:click="approve({{ $user->id }})" title="Approve"
                                             class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold transition">

@@ -37,16 +37,19 @@
                 {{-- spacer--}}
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex gap-3">
                 <livewire:common.notification />
                 <livewire:common.chat />
                 <livewire:common.help-support />
+                <livewire:common.chatbot />
+                
             </div>
         </div>
         <div class="overflow-scroll">
             {{ $slot }}
         </div>
-        <livewire:common.chatbot />
+       
+  
     </div>
 
 </div>

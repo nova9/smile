@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Volunteer\Dashboard;
 
+use App\Models\Event;
 use App\Models\User;
 use Livewire\Component;
 
 class Leaderboard extends Component
 {
     public $users;
+
 
     public function mount()
     {
@@ -29,7 +31,21 @@ class Leaderboard extends Component
                     return $user;
                 });
             });
+      
+        
+            
     }
+    
+    // public function rank(){
+    //     $this->users = User::all();
+    //     $points = $this->users->map(function($user){
+    //         return $user->badges()->sum('points') ;
+    //     });
+        
+    //     // $users=$this->users->groupBy('points')->sortKeysDesc()->values();
+    //     return $points;
+
+    // }
 
     public function render()
     {

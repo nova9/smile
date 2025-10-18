@@ -87,6 +87,7 @@ class Show extends Component
         // dd($this->filteredVolunteers);
 
     }
+  
     public function approve($userId)
     {
         $this->event->users()->updateExistingPivot($userId, ['status' => 'accepted']);
@@ -101,6 +102,8 @@ class Show extends Component
             // dd($tasks);
             $user->setVolunteerLevel($points, $events,$tasks);
         }
+        $this->loadVolunteers($this->event->id, app(GoogleMaps::class));
+        
     }
 
 
