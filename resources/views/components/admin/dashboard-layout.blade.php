@@ -7,7 +7,7 @@
                 title="Organizations" />
             <x-common.dashboard.item to="/admin/dashboard/analytics" icon="chart-spline" title="Analytics" />
             <x-common.dashboard.item to="/admin/dashboard/dispute-handling" icon="handshake" title="Dispute Handling" />
-
+          <x-common.dashboard.item to="/admin/dashboard/help-requests" icon="help-circle" title="Help Requests" />
         </x-slot>
 
         {{ $slot }}

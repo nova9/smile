@@ -11,6 +11,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/event-details/{id}', \App\Livewire\Admin\Dashboard\EventDetails::class);
 
     Route::get('/dashboard/dispute-handling', \App\Livewire\Admin\Dashboard\DisputeHandling::class);
+    Route::get('/dashboard/help-requests', \App\Livewire\Admin\Dashboard\HelpRequests::class);
 
     Route::get('/dashboard/analytics', \App\Livewire\Admin\Dashboard\Analytics::class);
     Route::get('/dashboard/profile', \App\Livewire\Admin\Dashboard\Profile::class);
