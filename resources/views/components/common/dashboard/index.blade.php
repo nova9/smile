@@ -31,7 +31,7 @@
                 <i data-lucide="panel-left" class="size-4 "></i>
             </div>
 
-            {{request()->path()}}
+{{--            {{request()->path()}}--}}
 
             <div class="flex-1">
                 {{-- spacer--}}

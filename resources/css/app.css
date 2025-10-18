@@ -54,3 +54,8 @@
 .cally calendar-month::part(button):hover {
     color: black;
 }
+
+.draggable-mirror {
+    z-index: 9999 !important;
+    opacity: 0.8;
+}

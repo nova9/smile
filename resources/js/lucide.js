@@ -100,13 +100,17 @@ import {
     MoveUp,
     CircleX,
     Tag,
-    ListTodo
+    ListTodo,
+    GripHorizontal,
+    GripVertical
 } from "lucide";
 
 
 function registerIcons() {
     createIcons({
         icons: {
+            GripVertical,
+            GripHorizontal,
             ListTodo,
             Tag,
             ArrowLeftCircle,
