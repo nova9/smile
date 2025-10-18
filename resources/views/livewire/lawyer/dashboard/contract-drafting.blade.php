@@ -103,7 +103,8 @@
                             <!-- Right side - Action Button -->
                             <div class="flex-shrink-0">
                                 <button class="btn btn-accent group-hover:shadow-md transition-all duration-300 px-6 py-3"
-                                    onclick="openContractModalWithTemplate('{{ $template['name'] }}')">
+                                    data-template="{{ $template['name'] }}"
+                                    onclick="openContractModalWithTemplate(this.dataset.template)">
                                     <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
                                     Use Template
                                 </button>
