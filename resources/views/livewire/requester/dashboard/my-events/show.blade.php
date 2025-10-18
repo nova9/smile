@@ -1,267 +1,283 @@
 <x-requester.dashboard-layout>
-    <div class="min-h-screen bg-gray-50">
-        <!-- Main Container -->
-        <div class="px-4 py-4 grid grid-cols-6 gap-5">
-            <!-- Left Column -->
-            <div class="bg-white rounded-3xl shadow-lg overflow-hidden col-span-4">
-                <!-- Hero Section -->
-                <div class="relative overflow-hidden">
-                    <div class="relative h-56 sm:h-72 lg:h-80 bg-gradient-to-r from-green-600 to-emerald-600 rounded-t-3xl">
-                        <div class="absolute inset-0 bg-black/25" aria-hidden="true"></div>
-                        <div class="relative z-10 max-w-5xl mx-auto px-6 py-6 sm:py-10 lg:py-14 text-white">
-                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                <div class="md:flex-1">
-                                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
-                                        <i data-lucide="tag" class="w-4 h-4"></i>
-                                        <span>{{ $event->category->name }}</span>
-                                    </div>
+    <div class="p-2 bg-gray-50">
 
-                                    <h1 class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-md">
-                                        {{ $event->name }}
-                                    </h1>
+        <!-- Tabs Section -->
+        <div class="p-4">
+            <div class="tabs tabs-lift">
+                {{-- Volunteers Tab --}}
+                <label class="tab">
+                    <input type="radio" name="my_tabs_4" checked />
+                    <div class="flex gap-1">
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        <span>Event Details</span>
+                    </div>
+                </label>
+                <div class="tab-content bg-base-100 border-base-300 p-6">
 
-                                    <p class="mt-3 text-sm sm:text-base text-white/90 max-w-2xl line-clamp-2">
-                                        {{ $event->description }}
-                                    </p>
-
-                                    <div class="mt-4 flex flex-wrap gap-3 items-center">
-                                        <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
-                                            <i data-lucide="calendar" class="w-4 h-4"></i>
-                                            <span>
-                                                {{ $event->starts_at ? $event->starts_at->format('M j') : 'TBA' }}
-                                                @if ($event->ends_at)
-                                                    - {{ $event->ends_at->format('M j, Y') }}
-                                                @endif
-                                            </span>
-                                        </div>
-
-                                        <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
-                                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                                            <span>{{ $event->address?->city ?? ($event->city ?? 'Online / TBA') }}</span>
-                                        </div>
-
-                                        <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm">
-                                            <i data-lucide="user" class="w-4 h-4"></i>
-                                            <span>By {{ $event->user?->name ?? 'Organizer' }}</span>
-                                        </div>
-                                    </div>
+                    <!-- Hero Section -->
+                    <div
+                        class="flex justify-between bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 mb-8 border border-gray-100 shadow-sm">
+                        <div>
+                            <div class="flex items-center gap-4">
+                                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight max-w-4xl">
+                                    {{ $event->name }}
+                                </h1>
+                                <div
+                                    class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium border border-gray-200">
+                                    {{ $event->category->name }}
                                 </div>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 text-lg mx-auto leading-relaxed">
+                                    {{ $event->description }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-10 text-center">
+                            <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
+                                <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
+                                    wire:click="toggleFavorite">
+                                    <i data-lucide="heart"
+                                        class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
+                                </button>
+                                <button id="share-event-btn" type="button"
+                                    class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                    <i data-lucide="share-2" class="w-5 h-5"></i>
+                                    <span>Share</span>
+                                </button>
+                                <!-- Tiny toast for copy review -->
+                                <div id="share-toast"
+                                    class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
+                                    Link copied to clipboard
+                                </div>
+                                <a href="{{ route('community.space', ['id' => $event->id]) }}"
+                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                    <i data-lucide="users" class="w-5 h-5"></i>
+                                    <span>Community Space</span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Tabs Section -->
-                <div class="p-6 sm:p-8 lg:p-12">
-                    <div class="tabs tabs-lift">
-                        {{-- Volunteers Tab --}}
-                        <label class="tab">
-                            <input type="radio" name="my_tabs_4" checked />
-                            <div class="flex gap-1">
-                                <i data-lucide="users" class="w-4 h-4"></i>
-                                <span>Volunteers</span>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Volunteers</h2>
+
+                    <!-- Filters -->
+                    <div class="mb-8 flex flex-wrap gap-4 items-center justify-between">
+                        <div class="flex gap-3 flex-wrap">
+                            <!-- Search Input -->
+                            <div class="relative">
+                                <input type="text" wire:model.live="searchFilter" placeholder="Search volunteers..."
+                                    class="w-64 bg-white border border-gray-200 rounded-lg pl-10 pr-4 py-2.5 text-sm font-medium text-gray-700 placeholder-gray-500 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-5 focus:border-black transition-all">
+                                <i data-lucide="search"
+                                    class="absolute left-3 top-3 w-4 h-4 text-gray-400 pointer-events-none"></i>
                             </div>
-                        </label>
-                        <div class="tab-content bg-base-100 border-base-300 p-6">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">Volunteers</h2>
-
-                            <!-- Pending Approval & Filters -->
-                            <div class="mb-6 flex flex-wrap gap-3 items-center justify-start">
-                                <!-- Gender Filter -->
-                                <div class="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-4 py-2 shadow-sm">
-                                    <i data-lucide="venus-mars" class="w-4 h-4 text-blue-400"></i>
-                                    <span class="text-sm font-semibold text-blue-700">Gender</span>
-                                    <select wire:model.change="genderFilter" class="bg-transparent text-blue-800 font-medium focus:outline-none px-2 py-1 rounded-full">
-                                        <option value="">All</option>
-                                        <option value="male">Man</option>
-                                        <option value="female">Woman</option>
-                                        <option value="non_binary">Non-Binary</option>
-                                        <option value="prefer_not_to_say">Prefer not to say</option>
-                                    </select>
-                                </div>
-                                <!-- Level Filter -->
-                                <div class="flex items-center gap-2 bg-yellow-50 border border-yellow-200 rounded-full px-4 py-2 shadow-sm">
-                                    <i data-lucide="bar-chart" class="w-4 h-4 text-yellow-400"></i>
-                                    <span class="text-sm font-semibold text-yellow-700">Level</span>
-                                    <select wire:model.change="levelFilter" class="bg-transparent text-yellow-800 font-medium focus:outline-none px-2 py-1 rounded-full">
-                                        <option value="">All</option>
-                                        <option value="beginner">Beginner</option>
-                                        <option value="intermediate">Intermediate</option>
-                                        <option value="advanced">Advanced</option>
-                                    </select>
-                                </div>
+                            <!-- Gender Filter -->
+                            <div class="relative">
+                                <select wire:model.change="genderFilter"
+                                    class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2.5 pr-8 text-sm font-medium text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-5 focus:border-black transition-all">
+                                    <option value="">All Genders</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="non_binary">Non-Binary</option>
+                                    <option value="prefer_not_to_say">Prefer not to say</option>
+                                </select>
+                                <i data-lucide="chevron-down"
+                                    class="absolute right-2.5 top-3 w-4 h-4 text-gray-400 pointer-events-none"></i>
                             </div>
+                            <!-- Level Filter -->
+                            <div class="relative">
+                                <select wire:model.change="levelFilter"
+                                    class="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2.5 pr-8 text-sm font-medium text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-5 focus:border-black transition-all">
+                                    <option value="">All Levels</option>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                </select>
+                                <i data-lucide="chevron-down"
+                                    class="absolute right-2.5 top-3 w-4 h-4 text-gray-400 pointer-events-none"></i>
+                            </div>
+                        </div>
+                    </div>
 
-                            <!-- Volunteers List -->
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                @forelse ($filteredVolunteers as $user)
-                                    <div class="flex flex-col bg-gray-50 rounded-xl p-4 border border-gray-100 transform transition duration-200">
-                                        <div class="flex items-start gap-4">
+                    <!-- Volunteers List -->
+                    <div class="space-y-3">
+                        @forelse ($volunteers as $user)
+                            <div
+                                class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-sm transition-all duration-200 group">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-4 flex-1">
+                                        <div class="relative">
                                             <img src="{{ $user->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $user->id . '.jpg' }}"
-                                                 alt="{{ $user->name }}"
-                                                 class="w-12 h-12 rounded-full object-cover ring-2 ring-indigo-100">
-                                            <div class="flex-1 min-w-0">
-                                                <div class="flex items-center justify-between gap-2">
-                                                    <a href="{{ route('requester.dashboard.volunteers.show', $user->id) }}">
-                                                        <h4 class="text-sm font-semibold text-gray-800 truncate">{{ $user->name }}</h4>
-                                                    </a>
-                                                    <span class="text-xs text-gray-500">{{ $user->getCustomAttribute('level') }}</span>
-                                                </div>
-                                                <p class="text-xs text-gray-500 truncate">
-                                                    {{ $user->role->name ?? 'Volunteer' }} • {{ number_format($user->getCustomAttribute('rating') ?? 4.6, 1) }} ★
-                                                </p>
+                                                alt="{{ $user->name }}" class="w-14 h-14 rounded-full object-cover">
+                                            <div
+                                                class="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                                                <div class="w-3 h-3 bg-green-400 rounded-full"></div>
                                             </div>
                                         </div>
-                                        <div class="mt-3 flex items-center gap-2">
-                                            <button wire:click="approve({{ $user->id }})" class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold transition">
-                                                <i data-lucide="check-circle" class="w-4 h-4"></i> Approve
-                                            </button>
-                                            <button wire:click="decline({{ $user->id }})" class="inline-flex items-center gap-2 px-3 py-2 bg-white text-red-600 border border-gray-200 hover:bg-gray-50 rounded-lg text-sm font-semibold transition">
-                                                <i data-lucide="x" class="w-4 h-4"></i> Decline
-                                            </button>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-3 mb-1">
+                                                <a href="{{ route('requester.dashboard.volunteers.show', $user->id) }}"
+                                                    class="text-lg font-semibold text-gray-900 hover:text-gray-700 transition-colors">
+                                                    {{ $user->name }}
+                                                </a>
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                                                    {{ $user->getCustomAttribute('level') }}
+                                                </span>
+                                            </div>
+                                            <div class="flex items-center gap-4 text-sm text-gray-600">
+                                                <span>{{ $user->role->name ?? 'Volunteer' }}</span>
+                                                <div class="flex items-center gap-1">
+                                                    <i data-lucide="star" class="w-4 h-4 fill-current text-yellow-400"></i>
+                                                    <span
+                                                        class="font-medium">{{ number_format($user->getCustomAttribute('rating') ?? 4.6, 1) }}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                @empty
-                                    <div class="col-span-full text-center py-8 text-gray-500">
-                                        No volunteers match the current filters.
-                                    </div>
-                                @endforelse
-                            </div>
-
-                            <!-- Approve All Button -->
-                            @if ($pendingUsers->count() > 0)
-                                <div class="mt-6 border-t border-gray-100 pt-4">
-                                    <button wire:click="approveAll" class="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium py-3 rounded-lg transition-colors">
-                                        <i data-lucide="check-circle" class="w-4 h-4"></i> Approve All
-                                    </button>
+                                    @if ($user->pivot->status === 'pending')
+                                        <div class="flex items-center gap-2 ml-4">
+                                            <button wire:click="decline({{ $user->id }})"
+                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200">
+                                                <i data-lucide="x" class="w-4 h-4"></i>
+                                                Decline
+                                            </button>
+                                            <button wire:click="approve({{ $user->id }})"
+                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-black hover:bg-gray-800 rounded-lg transition-all duration-200">
+                                                <i data-lucide="check" class="w-4 h-4"></i>
+                                                Approve
+                                            </button>
+                                        </div>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full font-medium ml-4">
+                                            <i data-lucide="check-circle" class="w-4 h-4"></i> Approved
+                                        </span>
+                                    @endif
                                 </div>
-                            @endif
-                        </div>
-
-                        {{-- Workflows Tab --}}
-                        <label class="tab">
-                            <input type="radio" name="my_tabs_4" />
-                            <div class="flex gap-1">
-                                <i data-lucide="book-check" class="w-4 h-4"></i>
-                                <span>Workflows</span>
                             </div>
-                        </label>
-                        <div class="tab-content bg-gray-100 border-base-300 p-6">
-                            <livewire:common.workflow :eventId="$event->id" />
-                        </div>
-
-                        {{-- Certificates Tab --}}
-                        <label class="tab">
-                            <input type="radio" name="my_tabs_4" />
-                            <div class="flex gap-1">
-                                <i data-lucide="shield-check" class="w-4 h-4"></i>
-                                <span>Certificates</span>
-                            </div>
-                        </label>
-                        <div class="tab-content bg-base-100 border-base-300 p-6">
-                            @if (isset($acceptedUsers) && $acceptedUsers->count() > 0)
-                                <div class="mt-12 mb-8">
-                                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-gray-800">
-                                        <i data-lucide="award" class="w-6 h-6 text-yellow-500"></i> Issue Certificates
-                                    </h3>
-                                    <div class="overflow-x-auto">
-                                        <table class="min-w-full bg-white rounded-xl shadow border border-gray-200">
-                                            <thead class="bg-gray-100">
-                                                <tr>
-                                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider rounded-tl-xl">Name</th>
-                                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Tasks Status</th>
-                                                    <th class="px-6 py-3 flex justify-end text-left text-xs font-bold text-gray-700 uppercase tracking-wider rounded-tr-xl">Certificate</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($acceptedUsers as $volunteer)
-                                                    @php
-                                                        $assignedTasks = $tasks->where('assigned_id', $volunteer->id);
-                                                        $doneTasksCount = $assignedTasks->where('status', 'done')->count();
-                                                        $totalAssignedCount = $assignedTasks->count();
-                                                    @endphp
-                                                    <tr class="border-b last:border-b-0 hover:bg-gray-50 transition">
-                                                        <td class="px-6 py-4 flex items-center gap-3">
-                                                            <img src="{{ $volunteer->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $volunteer->id . '.jpg' }}" alt="{{ $volunteer->name }}" class="w-8 h-8 rounded-full border-2 border-blue-100">
-                                                            <span class="font-semibold text-gray-800">{{ $volunteer->name }}</span>
-                                                        </td>
-                                                        <td class="px-6 py-4">
-                                                            @if ($totalAssignedCount > 0 && $doneTasksCount === $totalAssignedCount)
-                                                                <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-bold">
-                                                                    <i data-lucide="check-circle" class="w-4 h-4"></i> All Tasks Completed
-                                                                </span>
-                                                            @else
-                                                                <span class="inline-flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">
-                                                                    <i data-lucide="alert-circle" class="w-4 h-4"></i> Pending Tasks
-                                                                </span>
-                                                            @endif
-                                                        </td>
-                                                        <td class="px-6 py-4 flex justify-end">
-                                                            @if ($totalAssignedCount > 0 && $doneTasksCount === $totalAssignedCount)
-                                                                <form method="GET" action="{{ route('certificate.show', ['id' => $event->id, 'volunteerid' => $volunteer->id]) }}" class="inline">
-                                                                    <button class="btn btn-info">
-                                                                        <i data-lucide="eye" class="w-4 h-4"></i> View Certificate
-                                                                    </button>
-                                                                </form>
-                                                            @elseif(!empty($volunteer->certificate_issued))
-                                                                <span class="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-full">
-                                                                    <i data-lucide="award" class="w-4 h-4"></i> Certificate Issued
-                                                                </span>
-                                                            @else
-                                                                <span class="inline-flex items-center gap-1 px-2 py-1 bg-gray-50 text-gray-400 text-xs rounded-full">
-                                                                    <i data-lucide="slash" class="w-4 h-4"></i> Not Eligible
-                                                                </span>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        @empty
+                            <div class="text-center py-16">
+                                <div
+                                    class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                                    <i data-lucide="users" class="w-8 h-8 text-gray-400"></i>
                                 </div>
-                            @endif
-                        </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">No pending requests</h3>
+                                <p class="text-gray-600">There are currently no volunteer requests to review.</p>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
-            </div>
 
-            <!-- Right Column -->
-            <div class="col-span-2">
-                <div class="bg-gradient-to-br from-white to-green-50 rounded-2xl p-6 shadow-lg ring-1 ring-green-100 border border-transparent">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-bold text-green-800 flex items-center gap-3">
-                            <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/60 ring-1 ring-green-100">
-                                <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
-                            </span>
-                            Approved Volunteers
-                        </h3>
-                        <span class="text-base text-gray-500">{{ $acceptedUsers->count() }}</span>
+                {{-- Workflows Tab --}}
+                <label class="tab">
+                    <input type="radio" name="my_tabs_4" />
+                    <div class="flex gap-1">
+                        <i data-lucide="book-check" class="w-4 h-4"></i>
+                        <span>Workflows</span>
                     </div>
+                </label>
+                <div class="tab-content overflow-scroll bg-gray-100 border-base-300 p-6">
+                    <livewire:common.workflow :eventId="$event->id" />
+                </div>
 
-                    @if (count($acceptedUsers) == 0)
-                        <div class="flex flex-col items-center justify-center py-12">
-                            <i data-lucide="user-x" class="w-12 h-12 text-gray-400 mb-4"></i>
-                            <h4 class="text-lg font-semibold text-gray-700 mb-2">No volunteers have been approved yet.</h4>
-                            <p class="text-sm text-gray-500 mb-4 text-center">Once you approve volunteers, they will appear here.</p>
-                        </div>
-                    @else
-                        <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
-                            @foreach ($acceptedUsers as $user)
-                                <div class="volunteer-card rounded-xl p-4 border border-green-200 bg-white/80 transform transition-all duration-200 cursor-pointer flex items-center gap-4">
-                                    <img src="{{ $user->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $user->id . '.jpg' }}" alt="{{ $user->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-green-500">
-                                    <div class="flex-1">
-                                        <h3 class="font-semibold text-gray-800 text-md">{{ $user->name }}</h3>
-                                        <p class="text-xs text-gray-600">{{ $user->role->name ?? 'Volunteer' }} • 4.9★</p>
-                                        <div class="flex gap-2 mt-1">
-                                            <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">{{ $user->getCustomAttribute('level') }}</span>
-                                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Local</span>
-                                        </div>
-                                    </div>
-                                    <button wire:click="messageVolunteer({{ $user->id }})" title="Message" class="inline-flex items-center gap-2 px-3 py-2 bg-blue-100 hover:bg-blue-200 rounded-full transition-colors shadow-sm">
-                                        <i data-lucide="message-circle" class="w-4 h-4 text-blue-600"></i>
-                                    </button>
-                                </div>
-                            @endforeach
+                <label class="tab">
+                    <input type="radio" name="my_tabs_4" />
+                    <div class="flex gap-1">
+                        <i data-lucide="book-check" class="w-4 h-4"></i>
+                        <span>Chat</span>
+                    </div>
+                </label>
+                <div class="tab-content p-0">
+                    <livewire:common.group-chat :eventId="$event->id" />
+                </div>
+
+                {{-- Certificates Tab --}}
+                <label class="tab">
+                    <input type="radio" name="my_tabs_4" />
+                    <div class="flex gap-1">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span>Certificates</span>
+                    </div>
+                </label>
+                <div class="tab-content bg-base-100 border-base-300 p-6">
+                    @if (isset($acceptedUsers) && $acceptedUsers->count() > 0)
+                        <div class="mt-12 mb-8">
+                            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-gray-800">
+                                <i data-lucide="award" class="w-6 h-6 text-yellow-500"></i> Issue Certificates
+                            </h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full bg-white rounded-xl shadow border border-gray-200">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider rounded-tl-xl">
+                                                Name
+                                            </th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                                Tasks Status
+                                            </th>
+                                            <th
+                                                class="px-6 py-3 flex justify-end text-left text-xs font-bold text-gray-700 uppercase tracking-wider rounded-tr-xl">
+                                                Certificate
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($acceptedUsers as $volunteer)
+                                            @php
+                                                $assignedTasks = $tasks->where('assigned_id', $volunteer->id);
+                                                $doneTasksCount = $assignedTasks->where('status', 'done')->count();
+                                                $totalAssignedCount = $assignedTasks->count();
+                                            @endphp
+                                            <tr class="border-b last:border-b-0 hover:bg-gray-50 transition">
+                                                <td class="px-6 py-4 flex items-center gap-3">
+                                                    <img src="{{ $volunteer->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $volunteer->id . '.jpg' }}"
+                                                        alt="{{ $volunteer->name }}"
+                                                        class="w-8 h-8 rounded-full border-2 border-blue-100">
+                                                    <span class="font-semibold text-gray-800">{{ $volunteer->name }}</span>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    @if ($totalAssignedCount > 0 && $doneTasksCount === $totalAssignedCount)
+                                                        <span
+                                                            class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-bold">
+                                                            <i data-lucide="check-circle" class="w-4 h-4"></i> All Tasks Completed
+                                                        </span>
+                                                    @else
+                                                        <span
+                                                            class="inline-flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">
+                                                            <i data-lucide="alert-circle" class="w-4 h-4"></i> Pending Tasks
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                                <td class="px-6 py-4 flex justify-end">
+                                                    @if ($totalAssignedCount > 0 && $doneTasksCount === $totalAssignedCount)
+                                                        <form method="GET"
+                                                            action="{{ route('certificate.show', ['id' => $event->id, 'volunteerid' => $volunteer->id]) }}"
+                                                            class="inline">
+                                                            <button class="btn btn-info">
+                                                                <i data-lucide="eye" class="w-4 h-4"></i> View Certificate
+                                                            </button>
+                                                        </form>
+                                                    @elseif(!empty($volunteer->certificate_issued))
+                                                        <span
+                                                            class="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-full">
+                                                            <i data-lucide="award" class="w-4 h-4"></i> Certificate Issued
+                                                        </span>
+                                                    @else
+                                                        <span
+                                                            class="inline-flex items-center gap-1 px-2 py-1 bg-gray-50 text-gray-400 text-xs rounded-full">
+                                                            <i data-lucide="slash" class="w-4 h-4"></i> Not Eligible
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     @endif
                 </div>

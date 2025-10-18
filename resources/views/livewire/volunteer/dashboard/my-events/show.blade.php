@@ -11,7 +11,7 @@
 
 
 <x-volunteer.dashboard-layout>
-    <div class="min-h-screen bg-gray-50">
+    <div class="bg-gray-50">
 
         <div class="p-4">
             <div class="tabs tabs-lift">
@@ -584,7 +584,7 @@
                         <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>
                         Chat
                     </label>
-                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                    <div class="tab-content bg-base-100 border-base-300 p-0">
                         <livewire:common.group-chat :eventId="$event->id"/>
                     </div>
                 @endif
