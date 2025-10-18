@@ -96,6 +96,18 @@ class HelpSupport extends Component
         return $priorities[$priority] ?? ucfirst($priority);
     }
 
+    public function resolveTicket($ticketId)
+    {
+        $ticket = SupportTicket::find($ticketId);
+
+        if ($ticket && $ticket->user_id == Auth::id() && $ticket->status !== 'closed') {
+            $ticket->update(['status' => 'resolved']);
+
+            $this->showAlert = true;
+            $this->alertMessage = 'Ticket marked as resolved successfully!';
+        }
+    }
+
     public function closeModal()
     {
         $this->modalOpen = false;
