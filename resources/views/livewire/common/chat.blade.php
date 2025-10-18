@@ -7,8 +7,13 @@
     <input id="my-drawer" wire:model="drawerOpen" type="checkbox" class="drawer-toggle"/>
     <div class="drawer-content">
         <label for="my-drawer" class="z-199">
-            <div class="p-1.5 rounded-sm drawer-button hover:bg-neutral-200 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="Chat">
+            <div class="p-1.5 rounded-sm drawer-button hover:bg-neutral-200 transition-colors tooltip hover:tooltip-open tooltip-bottom relative" data-tip="Chat">
                 <i data-lucide="message-circle" class="size-5"></i>
+                @if($totalUnreadCount > 0)
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold shadow-lg">
+                        {{ $totalUnreadCount > 9 ? '9+' : $totalUnreadCount }}
+                    </span>
+                @endif
             </div>
         </label>
     </div>
