@@ -27,10 +27,10 @@ class Show extends Component
     public $avgratings;
 
     #[Validate('nullable|string|max:500')]
-    public string $review;
+    public $review;
 
-    #[Validate('required|integer|min:1|max:5')]
-    public int $rating;
+    #[Validate('required')]
+    public $rating;
 
     public $reviewCount;
     public $eventReviews;
@@ -48,7 +48,7 @@ class Show extends Component
     public function mount($id, GoogleMaps $googleMaps)
     {
         // dd($this->event);
-
+        
         $this->event = Event::query()
             ->with(['address', 'users', 'category', 'tags'])
             ->find($id);
