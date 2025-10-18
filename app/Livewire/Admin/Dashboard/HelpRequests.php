@@ -60,12 +60,16 @@ class HelpRequests extends Component
 
     public function render()
     {
-        $query = SupportTicket::with('user')
+        $query = SupportTicket::with(['user.role'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('subject', 'like', '%' . $this->search . '%')
                         ->orWhere('user_name', 'like', '%' . $this->search . '%')
-                        ->orWhere('message', 'like', '%' . $this->search . '%');
+                        ->orWhere('message', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('user', function ($userQuery) {
+                            $userQuery->where('name', 'like', '%' . $this->search . '%')
+                                ->orWhere('email', 'like', '%' . $this->search . '%');
+                        });
                 });
             })
             ->when($this->statusFilter !== 'all', function ($query) {
