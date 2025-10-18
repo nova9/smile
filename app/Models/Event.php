@@ -117,7 +117,7 @@ class Event extends Model
         $eventCreator = $this->eventCreator();
         // dd($eventCreator);
         if ($eventCreator) {
-            $eventCreator->notify(new EventJoinNotification($this));
+                $eventCreator->notify(new EventJoinNotification($this));
             // dd("Notification sent to event creator: " . $eventCreator->name);
         }
 

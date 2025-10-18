@@ -54,7 +54,7 @@ class Show extends Component
             }
 
             $method = $this->event->recruiting_method;
-            dd($method);
+            // dd($method);
             switch($method){
                 case "first_come":
                     if($slotAvailable > 0){
