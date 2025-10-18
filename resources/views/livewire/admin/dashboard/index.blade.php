@@ -56,9 +56,22 @@
 
     <!-- Success Message -->
     @if (session()->has('message'))
-        <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center">
-            <i class="fas fa-check-circle mr-2"></i>
-            <span>{{ session('message') }}</span>
+        <div 
+            x-data="{ show: true }" 
+            x-show="show"
+            x-init="setTimeout(() => show = false, 5000)"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform translate-y-2"
+            class="mb-6 {{ session('message_type') === 'info' ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-green-50 border-green-200 text-green-700' }} border px-4 py-3 rounded-lg flex items-center shadow-lg">
+            <i class="fas fa-{{ session('message_icon', 'check-circle') }} mr-2 text-xl"></i>
+            <span class="font-medium">{{ session('message') }}</span>
+            <button @click="show = false" class="ml-auto text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
     @endif
 
@@ -76,7 +89,21 @@
                 
                 <div class="space-y-3">
                     @foreach($reportedEvents as $event)
-                        <div class="bg-white border-2 border-red-300 rounded-lg p-5 shadow-md">
+                        <div 
+                            x-data="{ loading: false }" 
+                            x-on:event-status-changed.window="if ($event.detail.eventId === {{ $event->id }}) { loading = false; }"
+                            x-on:reports-dismissed.window="if ($event.detail.eventId === {{ $event->id }}) { loading = false; }"
+                            class="bg-white border-2 border-red-300 rounded-lg p-5 shadow-md transition-all duration-300 hover:shadow-xl"
+                            :class="{ 'opacity-50': loading }">
+                            
+                            <!-- Loading Overlay -->
+                            <div x-show="loading" x-cloak class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center z-10">
+                                <div class="flex items-center gap-2">
+                                    <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
+                                    <span class="text-sm font-medium text-gray-600">Processing...</span>
+                                </div>
+                            </div>
+                            
                             <div class="flex items-start justify-between gap-4">
                                 <div class="flex-1">
                                     <div class="flex items-center gap-3 mb-2">
@@ -145,7 +172,7 @@
                                     @endif
                                     
                                     <a href="/admin/dashboard/event-details/{{ $event->id }}" 
-                                       class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-center">
+                                       class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 font-medium text-center transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg">
                                         <i class="fas fa-search mr-2"></i>
                                         View Event
                                     </a>
@@ -153,26 +180,54 @@
                                     @if($event->is_active)
                                         <button 
                                             wire:click="toggleEventStatus({{ $event->id }})"
+                                            x-on:click="loading = true"
                                             wire:confirm="Are you sure you want to disable this reported event?"
-                                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">
-                                            <i class="fas fa-ban mr-2"></i>
-                                            Disable Event
+                                            wire:loading.attr="disabled"
+                                            wire:loading.class="opacity-50 cursor-not-allowed"
+                                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 font-medium transform hover:scale-105 active:scale-95">
+                                            <span wire:loading.remove wire:target="toggleEventStatus({{ $event->id }})">
+                                                <i class="fas fa-ban mr-2"></i>
+                                                Disable Event
+                                            </span>
+                                            <span wire:loading wire:target="toggleEventStatus({{ $event->id }})" class="flex items-center justify-center">
+                                                <i class="fas fa-spinner fa-spin mr-2"></i>
+                                                Processing...
+                                            </span>
                                         </button>
                                     @else
                                         <button 
                                             wire:click="toggleEventStatus({{ $event->id }})"
-                                            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
-                                            <i class="fas fa-check mr-2"></i>
-                                            Enable Event
+                                            x-on:click="loading = true"
+                                            wire:confirm="Are you sure you want to enable this reported event?"
+                                            wire:loading.attr="disabled"
+                                            wire:loading.class="opacity-50 cursor-not-allowed"
+                                            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 font-medium transform hover:scale-105 active:scale-95">
+                                            <span wire:loading.remove wire:target="toggleEventStatus({{ $event->id }})">
+                                                <i class="fas fa-check mr-2"></i>
+                                                Enable Event
+                                            </span>
+                                            <span wire:loading wire:target="toggleEventStatus({{ $event->id }})" class="flex items-center justify-center">
+                                                <i class="fas fa-spinner fa-spin mr-2"></i>
+                                                Processing...
+                                            </span>
                                         </button>
                                     @endif
                                     
                                     <button 
                                         wire:click="dismissReports({{ $event->id }})"
+                                        x-on:click="loading = true"
                                         wire:confirm="Dismiss all reports for this event?"
-                                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-medium">
-                                        <i class="fas fa-times mr-2"></i>
-                                        Dismiss Reports
+                                        wire:loading.attr="disabled"
+                                        wire:loading.class="opacity-50 cursor-not-allowed"
+                                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all duration-200 font-medium transform hover:scale-105 active:scale-95">
+                                        <span wire:loading.remove wire:target="dismissReports({{ $event->id }})">
+                                            <i class="fas fa-times mr-2"></i>
+                                            Dismiss Reports
+                                        </span>
+                                        <span wire:loading wire:target="dismissReports({{ $event->id }})" class="flex items-center justify-center">
+                                            <i class="fas fa-spinner fa-spin mr-2"></i>
+                                            Dismissing...
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -190,7 +245,20 @@
             
             <div class="space-y-3">
                 @forelse($otherEvents as $event)
-                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
+                    <div 
+                        x-data="{ loading: false }" 
+                        x-on:event-status-changed.window="if ($event.detail.eventId === {{ $event->id }}) { loading = false; }"
+                        class="flex items-center justify-between p-4 border border-gray-200 rounded-lg transition-all duration-300 hover:bg-gray-50 hover:shadow-md hover:border-gray-300"
+                        :class="{ 'opacity-50': loading }">
+                        
+                        <!-- Loading Overlay -->
+                        <div x-show="loading" x-cloak class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center z-10">
+                            <div class="flex items-center gap-2">
+                                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
+                                <span class="text-sm font-medium text-gray-600">Processing...</span>
+                            </div>
+                        </div>
+                        
                         <div class="flex-1">
                             <div class="font-semibold text-gray-900 text-lg">{{ $event->name }}</div>
                             <div class="text-sm text-gray-500 mt-1">
@@ -213,27 +281,46 @@
                         
                         <div class="flex items-center gap-3 ml-4">
                             @if($event->is_active)
-                                <span class="px-3 py-1.5 bg-green-100 text-green-800 rounded-full text-sm font-medium inline-flex items-center">
+                                <span class="px-3 py-1.5 bg-green-100 text-green-800 rounded-full text-sm font-medium inline-flex items-center transition-all duration-200">
                                     <i class="fas fa-eye mr-1.5"></i>
                                     Active
                                 </span>
                                 <button 
                                     wire:click="toggleEventStatus({{ $event->id }})"
+                                    x-on:click="loading = true"
                                     wire:confirm="Are you sure you want to hide this event from volunteers?"
-                                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium inline-flex items-center">
-                                    <i class="fas fa-eye-slash mr-2"></i>
-                                    Hide
+                                    wire:loading.attr="disabled"
+                                    wire:loading.class="opacity-50 cursor-not-allowed"
+                                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 font-medium inline-flex items-center transform hover:scale-105 active:scale-95">
+                                    <span wire:loading.remove wire:target="toggleEventStatus({{ $event->id }})">
+                                        <i class="fas fa-eye-slash mr-2"></i>
+                                        Hide
+                                    </span>
+                                    <span wire:loading wire:target="toggleEventStatus({{ $event->id }})" class="flex items-center">
+                                        <i class="fas fa-spinner fa-spin mr-2"></i>
+                                        Hiding...
+                                    </span>
                                 </button>
                             @else
-                                <span class="px-3 py-1.5 bg-red-100 text-red-800 rounded-full text-sm font-medium inline-flex items-center">
+                                <span class="px-3 py-1.5 bg-red-100 text-red-800 rounded-full text-sm font-medium inline-flex items-center transition-all duration-200">
                                     <i class="fas fa-eye-slash mr-1.5"></i>
                                     Hidden
                                 </span>
                                 <button 
                                     wire:click="toggleEventStatus({{ $event->id }})"
-                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium inline-flex items-center">
-                                    <i class="fas fa-eye mr-2"></i>
-                                    Show
+                                    x-on:click="loading = true"
+                                    wire:confirm="Are you sure you want to show this event to volunteers?"
+                                    wire:loading.attr="disabled"
+                                    wire:loading.class="opacity-50 cursor-not-allowed"
+                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 font-medium inline-flex items-center transform hover:scale-105 active:scale-95">
+                                    <span wire:loading.remove wire:target="toggleEventStatus({{ $event->id }})">
+                                        <i class="fas fa-eye mr-2"></i>
+                                        Show
+                                    </span>
+                                    <span wire:loading wire:target="toggleEventStatus({{ $event->id }})" class="flex items-center">
+                                        <i class="fas fa-spinner fa-spin mr-2"></i>
+                                        Showing...
+                                    </span>
                                 </button>
                             @endif
                         </div>
