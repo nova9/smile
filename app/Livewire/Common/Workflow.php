@@ -3,6 +3,7 @@
 namespace App\Livewire\Common;
 
 use App\Models\Event;
+use App\Models\Task;
 use App\Models\TaskList;
 use Illuminate\Support\Arr;
 use Livewire\Component;
@@ -21,7 +22,11 @@ class Workflow extends Component
 
     public function loadTaskLists()
     {
-        $this->taskLists = $this->event->tasksLists;
+        $this->taskLists = $this->event->tasksLists()->with([
+            'tasks' => function ($query) {
+                $query->orderBy('order');
+            }
+        ])->orderBy('order')->get();
     }
 
     public function addTaskList()
@@ -36,7 +41,8 @@ class Workflow extends Component
         $this->loadTaskLists();
     }
 
-    public function removeTaskList($taskListId) {
+    public function removeTaskList($taskListId)
+    {
         $taskList = $this->taskLists->find($taskListId);
         if ($taskList) {
             $taskList->delete();
@@ -64,6 +70,71 @@ class Workflow extends Component
                 'description' => $description,
             ]);
         }
+        $this->loadTaskLists();
+    }
+
+    public function updateTask($taskId, $name, $description)
+    {
+        foreach ($this->taskLists as $taskList) {
+            $task = $taskList->tasks->find($taskId);
+            if ($task) {
+                $task->name = $name;
+                $task->description = $description;
+                $task->save();
+                break;
+            }
+        }
+        $this->loadTaskLists();
+    }
+
+    public function assignVolunteer($taskId, $volunteerId)
+    {
+        $task = Task::query()->find($taskId);
+        if ($task) {
+            $task->assigned_id = $volunteerId;
+            $task->save();
+        }
+        $this->loadTaskLists();
+    }
+
+    public function removeTask($taskId)
+    {
+        foreach ($this->taskLists as $taskList) {
+            $task = $taskList->tasks->find($taskId);
+            if ($task) {
+                $task->delete();
+                break;
+            }
+        }
+        $this->loadTaskLists();
+    }
+
+    public function updateTaskListOrder($order)
+    {
+        foreach ($order as $item) {
+            $taskList = $this->taskLists->find($item['value']);
+            if ($taskList) {
+                $taskList->order = $item['order'];
+                $taskList->save();
+            }
+        }
+        $this->loadTaskLists();
+    }
+
+    public function updateTaskOrder($taskLists)
+    {
+        foreach ($taskLists as $taskList) {
+            $taskListId = $taskList['value'];
+
+            foreach ($taskList['items'] as $task) {
+                Task::query()->findOrFail($task['value'])
+                    ->update([
+                        'order' => $task['order'],
+                        'task_list_id' => $taskListId,
+                    ]);
+            }
+        }
+
         $this->loadTaskLists();
     }
 
