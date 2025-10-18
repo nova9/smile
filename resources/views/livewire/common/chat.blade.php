@@ -33,13 +33,19 @@
                         $unreadCount = \App\Services\Messaging::getUnreadMessageCount($chat);
                         $messages = \App\Services\Messaging::getMessagesForChat($chat);
                         $lastMessage = $messages->first(); // First message is latest due to desc order
+                        $otherUser = \App\Services\Messaging::getDirectChatOtherParty($chat);
+                        $profilePicture = $otherUser->getProfilePictureUrl();
                     @endphp
                     <li>
                         <a wire:click="openChat({{ $chat->id }})"
                            class="flex items-center gap-3 px-4 py-3 hover:bg-base-300 transition hover:cursor-pointer {{ $hasUnread ? 'bg-blue-50 border-l-4 border-l-blue-500' : '' }}">
                             <div class="relative">
-                                <img src="https://i.pravatar.cc/40?img=1" alt="User"
-                                     class="rounded-full w-10 h-10 border border-base-300">
+                                @if($profilePicture)
+                                    <img src="{{ $profilePicture }}" alt="{{ $otherUser->name }}"
+                                         class="rounded-full w-10 h-10 border border-base-300 object-cover">
+                                @else
+                                    <div class="rounded-full w-10 h-10 border border-base-300 bg-gray-300"></div>
+                                @endif
                                 @if($hasUnread && $unreadCount > 0)
                                     <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                                         {{ $unreadCount > 9 ? '9+' : $unreadCount }}
@@ -48,7 +54,7 @@
                             </div>
                             <div class="flex-1">
                                 <div class="{{ $hasUnread ? 'font-bold text-gray-900' : 'font-medium' }}">
-                                    {{ \App\Services\Messaging::getDirectChatOtherParty($chat)->name }}
+                                    {{ $otherUser->name }}
                                 </div>
                                 <div class="text-xs {{ $hasUnread ? 'text-gray-600 font-semibold' : 'text-base-content/70' }} truncate user-select-none">
                                     @if($lastMessage)
@@ -93,17 +99,21 @@
         >
             <!-- Chat Header -->
             <div class="flex items-center gap-3 px-4 py-3 border-b border-base-300 bg-base-100 rounded-t-lg">
-                <img src="https://i.pravatar.cc/40?img=2" alt="User"
-                     class="rounded-full w-10 h-10 border border-base-300">
+                @php
+                    $otherParty = \App\Services\Messaging::getDirectChatOtherParty($currentChat);
+                    $currentUserRole = auth()->user()->role->name ?? 'volunteer';
+                    $otherPartyPicture = $otherParty->getProfilePictureUrl();
+                @endphp
+                @if($otherPartyPicture)
+                    <img src="{{ $otherPartyPicture }}" alt="{{ $otherParty->name }}"
+                         class="rounded-full w-10 h-10 border border-base-300 object-cover">
+                @else
+                    <div class="rounded-full w-10 h-10 border border-base-300 bg-gray-300"></div>
+                @endif
                 <div>
-                    <div
-                        class="font-semibold">{{ \App\Services\Messaging::getDirectChatOtherParty($currentChat)->name }}</div>
+                    <div class="font-semibold">{{ $otherParty->name }}</div>
                     <div class="text-xs text-base-content/70 flex items-center gap-1">
                         <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        @php
-                            $otherParty = \App\Services\Messaging::getDirectChatOtherParty($currentChat);
-                            $currentUserRole = auth()->user()->role->name ?? 'volunteer';
-                        @endphp
                         @if($currentUserRole === 'lawyer')
                             Ready to Help
                         @elseif($otherParty->role->name === 'lawyer')
