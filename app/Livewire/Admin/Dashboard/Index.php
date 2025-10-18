@@ -18,7 +18,7 @@ class Index extends Component
     public $refreshing = false;
     public $refreshInterval = 30; // seconds
 
-    protected $listeners = ['refreshDashboard' => 'loadAllData'];
+    protected $listeners = ['refreshDashboard' => 'loadAllData', 'keepAlive' => '$refresh'];
 
     public function mount()
     {

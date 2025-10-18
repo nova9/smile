@@ -433,4 +433,45 @@
             <span>Auto-refreshing every {{ $refreshInterval }}s</span>
         </div>
     </div>
+
+    <!-- Keep Session Alive Script -->
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Keep session alive by pinging the server every 3 minutes
+            setInterval(function() {
+                fetch('{{ route('dashboard') }}', {
+                    method: 'HEAD',
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).catch(function(error) {
+                    console.log('Keep-alive ping failed');
+                });
+            }, 180000); // 3 minutes
+
+            // Auto-reload on 419 errors (CSRF token mismatch)
+            window.addEventListener('livewire:request', () => {
+                // Request started
+            });
+
+            window.addEventListener('livewire:request-error', (event) => {
+                if (event.detail && (event.detail.status === 419 || event.detail.status === 401)) {
+                    // Show a friendly message before reload
+                    if (confirm('Your session has expired. Would you like to refresh the page?')) {
+                        window.location.reload();
+                    }
+                }
+            });
+
+            // Prevent browser back button from showing expired pages
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
+    @endpush
 </x-admin.dashboard-layout>
