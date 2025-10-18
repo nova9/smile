@@ -80,6 +80,12 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function chat(): BelongsTo
+    {
+        return $this->belongsTo(Chat::class);
+    }
+
     public function eventCreator()
     {
         // Return the user who created the event
@@ -119,7 +125,7 @@ class Event extends Model
         $eventCreator = $this->eventCreator();
         // dd($eventCreator);
         if ($eventCreator) {
-            $eventCreator->notify(new EventJoinNotification($this));
+                $eventCreator->notify(new EventJoinNotification($this));
             // dd("Notification sent to event creator: " . $eventCreator->name);
         }
 
