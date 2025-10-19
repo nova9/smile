@@ -5,7 +5,7 @@
     wire:poll.5s="refreshChats"
 >
     <input id="my-drawer" wire:model="drawerOpen" type="checkbox" class="drawer-toggle"/>
-    <div class="drawer-content">
+    <div class="drawer-content flex justify-center items-center">
         <label for="my-drawer" class="z-199">
             <div class="p-1.5 rounded-sm drawer-button hover:bg-neutral-200 transition-colors tooltip hover:tooltip-open tooltip-bottom relative" data-tip="Chat">
                 <i data-lucide="message-circle" class="size-5"></i>
