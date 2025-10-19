@@ -9,7 +9,10 @@ class FileManager
 {
     public static function store($file) {
         $filePath = $file->store(path: 'files');
-        return File::query()->create(['name' => $filePath]);
+        return File::query()->create([
+            'name' => $filePath,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
     }
 
     public static function getTemporaryUrl(?int $fileId): ?string {

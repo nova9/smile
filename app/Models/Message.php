@@ -12,6 +12,7 @@ class Message extends Model
         'chat_id',
         'user_id',
         'read_at',
+        'file_id'
     ];
 
     protected $casts = [
@@ -21,5 +22,10 @@ class Message extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function file(): BelongsTo
+    {
+        return $this->belongsTo(File::class);
     }
 }

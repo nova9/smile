@@ -3,14 +3,19 @@
 namespace App\Livewire\Common;
 
 use App\Models\Event;
+use App\Services\FileManager;
 use App\Services\Messaging;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class GroupChat extends Component
 {
+    use WithFileUploads;
+
     public $event;
     public $messages;
     public $inputMessage;
+    public $fileInput;
 
     public function mount($eventId)
     {
@@ -25,14 +30,20 @@ class GroupChat extends Component
 
     public function sendMessage()
     {
-        if (empty($this->inputMessage)) {
-            return;
+        if ($this->fileInput) {
+            $file = FileManager::store($this->fileInput);
         }
 
         if ($this->event->chat) {
-            Messaging::sendMessage($this->inputMessage, $this->event->chat->id);
+            Messaging::sendMessage($this->inputMessage, $this->event->chat->id, $file->id ?? null);
             $this->inputMessage = '';
+            $this->clearFileInput();
         }
+    }
+
+    public function clearFileInput()
+    {
+        $this->fileInput = null;
     }
 
     public function render()
