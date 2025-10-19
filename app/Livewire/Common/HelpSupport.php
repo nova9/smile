@@ -33,7 +33,7 @@ class HelpSupport extends Component
         }
 
         $this->validate();
-
+        $user = Auth::user();
         SupportTicket::create([
             'user_id' => $user->id,
             'user_name' => $user->name,
