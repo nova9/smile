@@ -62,18 +62,21 @@
                             </div>
                             <div class="flex gap-2">
                                 <button class="btn btn-outline btn-sm"
-                                    onclick='openRequestModal(@json($req))'>
-                                    <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                                    data-request-b64="{{ base64_encode(json_encode($req)) }}"
+                                    onclick="openRequestModal(this)">
+                                    <i data-lucide="Eye" class="w-4 h-4 mr-2"></i>
                                     View
                                 </button>
                                 <button class="btn btn-success btn-sm"
-                                    onclick='approveChangeRequest(@json(["id"=>$req["id"]]))'>
-                                    <i data-lucide="check" class="w-4 h-4 mr-2"></i>
+                                    data-request-id="{{ $req['id'] }}"
+                                    onclick="approveChangeRequest(this)">
+                                    <i data-lucide="Check" class="w-4 h-4 mr-2"></i>
                                     Approve
                                 </button>
                                 <button class="btn btn-error btn-sm"
-                                    onclick='rejectChangeRequest(@json(["id"=>$req["id"]]))'>
-                                    <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                                    data-request-id="{{ $req['id'] }}"
+                                    onclick="rejectChangeRequest(this)">
+                                    <i data-lucide="X" class="w-4 h-4 mr-2"></i>
                                     Reject
                                 </button>
                             </div>
@@ -148,7 +151,7 @@
                         Reject
                     </button>
                     <button id="reqApproveBtn" class="btn btn-success">
-                        <i data-lucide="check" class="w-4 h-4 mr-2"></i>
+                        <i data-lucide="Check" class="w-4 h-4 mr-2"></i>
                         Approve
                     </button>
                 </div>
@@ -162,8 +165,29 @@
     var currentRequest = window.currentRequest || null;
     window.currentRequest = currentRequest;
 
+    // Resolvers
+    function resolveRequestArg(arg) {
+        if (arg && arg.dataset && arg.dataset.requestB64) {
+            try {
+                const json = atob(arg.dataset.requestB64);
+                return JSON.parse(json);
+            } catch (e) {
+                console.warn('Failed to decode/parse data-request-b64', e);
+            }
+        }
+        return arg; // assume object
+    }
+
+    function resolveRequestId(arg) {
+        if (arg && arg.dataset && arg.dataset.requestId) return arg.dataset.requestId;
+        if (arg && typeof arg.id !== 'undefined') return arg.id;
+        if (window.currentRequest && window.currentRequest.id) return window.currentRequest.id;
+        return null;
+    }
+
     // Request interactions
-    function openRequestModal(request) {
+    function openRequestModal(arg) {
+        const request = resolveRequestArg(arg);
         currentRequest = request;
         window.currentRequest = currentRequest;
 
@@ -183,14 +207,12 @@
         document.getElementById('reqProposedTerms').textContent = request.proposed_terms || '-';
 
         // Bind footer actions
-        const approve = () => approveChangeRequest({
+        document.getElementById('reqApproveBtn').onclick = () => approveChangeRequest({
             id: request.id
         });
-        const reject = () => rejectChangeRequest({
+        document.getElementById('reqRejectBtn').onclick = () => rejectChangeRequest({
             id: request.id
         });
-        document.getElementById('reqApproveBtn').onclick = approve;
-        document.getElementById('reqRejectBtn').onclick = reject;
 
         // Show modal
         const modal = document.getElementById('requestModal');
@@ -218,8 +240,8 @@
         }
     }
 
-    function approveChangeRequest(payload) {
-        const id = (payload && payload.id) ? payload.id : (currentRequest && currentRequest.id);
+    function approveChangeRequest(arg) {
+        const id = resolveRequestId(arg);
         if (!id) return;
         if (!confirm('Approve this change request?')) return;
 
@@ -233,8 +255,8 @@
         closeRequestModal();
     }
 
-    function rejectChangeRequest(payload) {
-        const id = (payload && payload.id) ? payload.id : (currentRequest && currentRequest.id);
+    function rejectChangeRequest(arg) {
+        const id = resolveRequestId(arg);
         if (!id) return;
         if (!confirm('Reject this change request?')) return;
 

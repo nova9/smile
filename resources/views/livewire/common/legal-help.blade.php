@@ -1,18 +1,17 @@
-
 <div>
     {{-- Toast Notifications --}}
     @if (session()->has('success'))
-        <div 
-            x-data="{ show: false }" 
-            x-init="show = true; setTimeout(() => show = false, 4000)" 
-            x-show="show" 
+        <div
+            x-data="{ show: false }"
+            x-init="show = true; setTimeout(() => show = false, 4000)"
+            x-show="show"
             x-transition:enter="transition ease-out duration-300 transform"
             x-transition:enter-start="translate-x-full opacity-0"
             x-transition:enter-end="translate-x-0 opacity-100"
             x-transition:leave="transition ease-in duration-200 transform"
             x-transition:leave-start="translate-x-0 opacity-100"
             x-transition:leave-end="translate-x-full opacity-0"
-            class="fixed top-4 right-4 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg shadow-xl border border-green-400" 
+            class="fixed top-4 right-4 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg shadow-xl border border-green-400"
             style="z-index: 1000000;"
         >
             <div class="flex items-center gap-3">
@@ -28,17 +27,17 @@
     @endif
 
     @if (session()->has('error'))
-        <div 
-            x-data="{ show: false }" 
-            x-init="show = true; setTimeout(() => show = false, 5000)" 
-            x-show="show" 
+        <div
+            x-data="{ show: false }"
+            x-init="show = true; setTimeout(() => show = false, 5000)"
+            x-show="show"
             x-transition:enter="transition ease-out duration-300 transform"
             x-transition:enter-start="translate-x-full opacity-0"
             x-transition:enter-end="translate-x-0 opacity-100"
             x-transition:leave="transition ease-in duration-200 transform"
             x-transition:leave-start="translate-x-0 opacity-100"
             x-transition:leave-end="translate-x-full opacity-0"
-            class="fixed top-4 right-4 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-4 rounded-lg shadow-xl border border-red-400" 
+            class="fixed top-4 right-4 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-4 rounded-lg shadow-xl border border-red-400"
             style="z-index: 1000000;"
         >
             <div class="flex items-center gap-3">
@@ -54,9 +53,9 @@
     @endif
 
     {{-- Legal Help Sidebar Item --}}
-        <a href="#" 
-           
-           wire:click="requestLegalHelp" 
+        <a href="#"
+
+           wire:click="requestLegalHelp"
            wire:loading.attr="disabled"
            wire:loading.class="opacity-75 cursor-not-allowed">
             <div wire:loading.remove wire:target="requestLegalHelp" class="flex items-center gap-3">
