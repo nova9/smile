@@ -38,6 +38,7 @@
             </div>
 
             <div class="flex gap-3">
+                 <livewire:common.legal-help />
                 <livewire:common.notification />
                 <livewire:common.chat />
                 <livewire:common.help-support />
