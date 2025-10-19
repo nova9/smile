@@ -3,52 +3,157 @@
 namespace App\Livewire\Lawyer\Dashboard;
 
 use Livewire\Component;
+use App\Models\Agreement;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class ContractDrafting extends Component
 {
-    public $contracts;
-    public $templates;
+    // Form fields
+    public $topic = '';
+    public $terms = '';
+
+    // Edit mode
+    public $editingAgreementId = null;
+    public $isEditMode = false;
 
     public function mount()
     {
-        $this->contracts = [
-            [
-                'id' => 1,
-                'title' => 'Service Agreement - TechCorp Ltd',
-                'type' => 'Service Agreement',
-                'status' => 'in_progress',
-                'progress' => 75,
-                'created_at' => '2 days ago'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Employment Contract - Jane Smith',
-                'type' => 'Employment Contract',
-                'status' => 'draft',
-                'progress' => 40,
-                'created_at' => '1 week ago'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Partnership Agreement - ABC Corp',
-                'type' => 'Partnership Agreement',
-                'status' => 'review',
-                'progress' => 90,
-                'created_at' => '3 days ago'
-            ]
-        ];
+        // Set default terms if empty
+        if (empty($this->terms)) {
+            $this->terms = "1. The volunteer agrees to perform assigned duties diligently and responsibly.\n2. The organization will provide necessary guidance and a safe work environment.\n3. Confidential information must not be disclosed without consent.\n4. Either party may terminate this agreement with prior notice.";
+        }
+    }
 
-        $this->templates = [
-            ['name' => 'Volunteer Service Agreement Template', 'category' => 'Community'],
-            ['name' => 'Service Agreement Template', 'category' => 'Business'],
-            ['name' => 'Employment Contract Template', 'category' => 'HR'],
-            ['name' => 'NDA Template', 'category' => 'Legal'],
-            ['name' => 'Partnership Agreement Template', 'category' => 'Business'],
-        ];
+    public function saveAgreement()
+    {
+        // Validate the input
+        $this->validate([
+            'topic' => 'required|string|max:255',
+            'terms' => 'required|string',
+        ]);
+
+        try {
+            if ($this->isEditMode && $this->editingAgreementId) {
+                // Update existing agreement
+                $agreement = Agreement::findOrFail($this->editingAgreementId);
+                $agreement->update([
+                    'topic' => $this->topic,
+                    'terms' => $this->terms,
+                ]);
+
+                Log::info('Agreement updated successfully', [
+                    'id' => $agreement->id,
+                    'topic' => $agreement->topic,
+                    'lawyer_id' => Auth::id()
+                ]);
+
+                session()->flash('message', 'Contract agreement updated successfully!');
+            } else {
+                // Create new agreement
+                $agreement = Agreement::create([
+                    'topic' => $this->topic,
+                    'terms' => $this->terms,
+                ]);
+
+                Log::info('Agreement saved successfully', [
+                    'id' => $agreement->id,
+                    'topic' => $agreement->topic,
+                    'lawyer_id' => Auth::id()
+                ]);
+
+                session()->flash('message', 'Contract agreement saved successfully!');
+            }
+
+            // Reset form fields
+            $this->reset(['topic', 'terms', 'editingAgreementId', 'isEditMode']);
+
+            // Set default terms again after reset
+            $this->terms = "1. The volunteer agrees to perform assigned duties diligently and responsibly.\n2. The organization will provide necessary guidance and a safe work environment.\n3. Confidential information must not be disclosed without consent.\n4. Either party may terminate this agreement with prior notice.";
+
+            // Dispatch browser event to close modal
+            $this->dispatch('agreementSaved');
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Error saving agreement', [
+                'error' => $e->getMessage(),
+                'lawyer_id' => Auth::id()
+            ]);
+
+            // Flash error message
+            session()->flash('error', 'Error saving agreement: ' . $e->getMessage());
+        }
+    }
+
+    public function editAgreement($agreementId)
+    {
+        try {
+            $agreement = Agreement::findOrFail($agreementId);
+
+            $this->editingAgreementId = $agreement->id;
+            $this->topic = $agreement->topic;
+            $this->terms = $agreement->terms;
+            $this->isEditMode = true;
+
+            // Dispatch event to open modal in edit mode
+            $this->dispatch('editAgreement', agreementId: $agreementId);
+
+            Log::info('Editing agreement', [
+                'id' => $agreementId,
+                'lawyer_id' => Auth::id()
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error loading agreement for edit', [
+                'error' => $e->getMessage(),
+                'agreement_id' => $agreementId,
+                'lawyer_id' => Auth::id()
+            ]);
+
+            session()->flash('error', 'Error loading agreement: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteAgreement($agreementId)
+    {
+        try {
+            $agreement = Agreement::findOrFail($agreementId);
+            $agreementTopic = $agreement->topic;
+
+            $agreement->delete();
+
+            Log::info('Agreement deleted successfully', [
+                'id' => $agreementId,
+                'topic' => $agreementTopic,
+                'lawyer_id' => Auth::id()
+            ]);
+
+            session()->flash('message', 'Contract agreement deleted successfully!');
+        } catch (\Exception $e) {
+            Log::error('Error deleting agreement', [
+                'error' => $e->getMessage(),
+                'agreement_id' => $agreementId,
+                'lawyer_id' => Auth::id()
+            ]);
+
+            session()->flash('error', 'Error deleting agreement: ' . $e->getMessage());
+        }
+    }
+
+    public function cancelEdit()
+    {
+        $this->reset(['topic', 'terms', 'editingAgreementId', 'isEditMode']);
+
+        // Set default terms again after reset
+        $this->terms = "1. The volunteer agrees to perform assigned duties diligently and responsibly.\n2. The organization will provide necessary guidance and a safe work environment.\n3. Confidential information must not be disclosed without consent.\n4. Either party may terminate this agreement with prior notice.";
     }
 
     public function render()
     {
-        return view('livewire.lawyer.dashboard.contract-drafting');
+        // Fetch saved agreements from database (latest first)
+        $savedAgreements = Agreement::latest()->get();
+
+        return view('livewire.lawyer.dashboard.contract-drafting', [
+            'savedAgreements' => $savedAgreements
+        ]);
     }
 }

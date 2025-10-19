@@ -1,6 +1,20 @@
 <x-lawyer.dashboard-layout>
     <main class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto space-y-8">
+            <!-- Success Message -->
+            @if (session()->has('message'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('message') }}</span>
+            </div>
+            @endif
+
+            <!-- Error Message -->
+            @if (session()->has('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+            @endif
+
             <!-- Header Section -->
             <div class="text-center space-y-6">
                 <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500/10 to-green-600/10 text-black rounded-full text-sm font-medium shadow-lg backdrop-blur-sm border border-green-500/20">
@@ -28,110 +42,63 @@
                 </button>
             </div>
 
-            <!-- Templates -->
+            <!-- Saved Agreements Section -->
+            @if($savedAgreements->count() > 0)
             <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
-                @php
-                $filteredTemplates = array_values(array_filter($templates, function ($t) {
-                $name = $t['name'] ?? '';
-                return stripos($name, 'Employment') === false
-                && stripos($name, 'NDA') === false
-                && stripos($name, 'Partnership') === false;
-                }));
-                @endphp
                 <div class="flex justify-between items-center mb-8">
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Available Contract Templates</h3>
-                        <p class="text-gray-600">Choose from our professionally crafted legal templates</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Saved Contract Agreements</h3>
+                        <p class="text-gray-600">Recently created contract agreements</p>
                     </div>
                     <div class="flex items-center gap-2 text-sm text-gray-500">
-                        <i data-lucide="file-text" class="w-4 h-4"></i>
-                        <span>{{ count($filteredTemplates) }} Templates</span>
+                        <i data-lucide="file-check" class="w-4 h-4"></i>
+                        <span>{{ $savedAgreements->count() }} Agreements</span>
                     </div>
                 </div>
 
                 <div class="space-y-4">
-                    @foreach($filteredTemplates as $template)
-                    <div class="group bg-gradient-to-r from-white to-gray-50 border-2 border-gray-200 rounded-2xl p-6 hover:border-green-300 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1">
-                        <div class="flex items-center justify-between">
-                            <!-- Left side - Icon and Info -->
-                            <div class="flex items-center gap-6">
-                                <!-- Template Icon -->
-                                <div class="p-4 bg-gradient-to-br from-green-100 to-green-200 rounded-xl group-hover:from-green-200 group-hover:to-green-300 transition-all duration-300">
-                                    <i data-lucide="file-text" class="w-8 h-8 text-green-600"></i>
+                    @foreach($savedAgreements as $agreement)
+                    <div class="bg-gradient-to-r from-white to-gray-50 border-2 border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-300">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h4 class="font-bold text-gray-800 text-xl">{{ $agreement->topic }}</h4>
+                                    <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                                        Saved
+                                    </span>
                                 </div>
-
-                                <!-- Template Info -->
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-3 mb-2">
-                                        <h4 class="font-bold text-gray-800 text-xl group-hover:text-green-600 transition-colors duration-300">
-                                            {{ $template['name'] }}
-                                        </h4>
-                                        <span class="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
-                                            {{ $template['category'] }}
-                                        </span>
-                                    </div>
-                                    <p class="text-gray-500 leading-relaxed max-w-2xl">
-                                        @if(str_contains($template['name'], 'Volunteer'))
-                                        Professional volunteer service agreement template with comprehensive terms and legal protection for both parties.
-                                        @elseif(str_contains($template['name'], 'Employment'))
-                                        Complete employment contract covering salary, duties, benefits, and termination conditions.
-                                        @elseif(str_contains($template['name'], 'NDA'))
-                                        Confidentiality agreement to protect sensitive business information and trade secrets.
-                                        @elseif(str_contains($template['name'], 'Partnership'))
-                                        Business partnership agreement outlining responsibilities, profit sharing, and governance.
-                                        @else
-                                        Professional legal document template ready for customization and immediate use.
-                                        @endif
-                                    </p>
-                                    <div class="flex items-center gap-4 mt-3 text-sm text-gray-500">
-                                        <div class="flex items-center gap-1">
-                                            <i data-lucide="edit-3" class="w-4 h-4 text-green-500"></i>
-                                            <span>Legal Ready</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <i data-lucide="edit-3" class="w-4 h-4 text-blue-500"></i>
-                                            <span>Customizable</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <i data-lucide="eye" class="w-4 h-4 text-purple-500"></i>
-                                            <span>Quick Setup</span>
-                                        </div>
-                                    </div>
+                                <p class="text-gray-600 text-sm mb-3">
+                                    Created: {{ $agreement->created_at->format('F d, Y \a\t h:i A') }}
+                                </p>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <p class="text-sm text-gray-700 font-medium mb-2">Agreement Terms:</p>
+                                    <p class="text-sm text-gray-600 whitespace-pre-line">{{ Str::limit($agreement->terms, 200) }}</p>
+                                    @if(strlen($agreement->terms) > 200)
+                                    <button class="text-blue-600 text-sm mt-2 hover:underline" onclick="alert('{{ addslashes($agreement->terms) }}')">
+                                        Read more...
+                                    </button>
+                                    @endif
                                 </div>
                             </div>
-
-                            <!-- Right side - Action Button -->
-                            <div class="flex-shrink-0">
-                                <button class="btn btn-accent group-hover:shadow-md transition-all duration-300 px-6 py-3"
-                                    data-template="{{ $template['name'] }}"
-                                    onclick="openContractModalWithTemplate(this.dataset.template)">
-                                    <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
-                                    Use Template
+                            <div class="flex flex-col gap-2 ml-4">
+                                <button wire:click="editAgreement({{ $agreement->id }})"
+                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center gap-2">
+                                    <i data-lucide="edit-2" class="w-4 h-4"></i>
+                                    Edit
+                                </button>
+                                <button wire:click="deleteAgreement({{ $agreement->id }})"
+                                    wire:confirm="Are you sure you want to delete this agreement?"
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors duration-200 flex items-center gap-2">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    Delete
                                 </button>
                             </div>
                         </div>
-
-                        <!-- Hover Effect Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-green-500/5 to-green-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     </div>
                     @endforeach
                 </div>
-
-                <!-- Empty State (if no templates) -->
-                @if(count($filteredTemplates) === 0)
-                <div class="text-center py-12">
-                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i data-lucide="file-text" class="w-8 h-8 text-gray-400"></i>
-                    </div>
-                    <h4 class="text-lg font-semibold text-gray-600 mb-2">No Templates Available</h4>
-                    <p class="text-gray-500 mb-6">Create your first contract template to get started</p>
-                    <button class="btn btn-accent" onclick="openContractModal()">
-                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
-                        Create First Template
-                    </button>
-                </div>
-                @endif
             </div>
+            @endif
         </div>
     </main>
 
@@ -158,7 +125,12 @@
                             <i data-lucide="file-text" class="w-5 h-5 text-green-600"></i>
                             Contract Topic
                         </h3>
-                        <input type="text" id="contractTopic" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="e.g., Volunteer Service Agreement for [EVENT]">
+                        <input type="text"
+                            id="contractTopic"
+                            wire:model="topic"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                            placeholder="e.g., Volunteer Service Agreement for [EVENT]">
+                        @error('topic') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Organization / Requestor (read-only placeholders) -->
@@ -227,11 +199,12 @@
                             <i data-lucide="edit-3" class="w-5 h-5 text-green-600"></i>
                             Agreement Terms (Editable)
                         </h3>
-                        <textarea id="termsContent" rows="10" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Enter terms and conditions here...">1. The volunteer agrees to perform assigned duties diligently and responsibly.
-2. The organization will provide necessary guidance and a safe work environment.
-3. Confidential information must not be disclosed without consent.
-4. Either party may terminate this agreement with prior notice.
-                        </textarea>
+                        <textarea id="termsContent"
+                            wire:model="terms"
+                            rows="10"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                            placeholder="Enter terms and conditions here..."></textarea>
+                        @error('terms') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
 
@@ -272,7 +245,7 @@
                 </button>
                 <div class="flex gap-3">
 
-                    <button class="btn btn-accent">
+                    <button type="button" wire:click="saveAgreement" class="btn btn-accent">
                         <i data-lucide="save" class="w-4 h-4 mr-2"></i>
                         Save Template
                     </button>
@@ -283,6 +256,53 @@
 </x-lawyer.dashboard-layout>
 
 <script>
+    // Listen for Livewire events
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('agreementSaved', () => {
+            closeContractModal();
+            // Show success message (already handled by session flash)
+        });
+
+        Livewire.on('editAgreement', (event) => {
+            // Wait a brief moment for Livewire to update the form fields
+            setTimeout(() => {
+                // Open modal in edit mode
+                const modal = document.getElementById('contractModal');
+                if (modal) modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+
+                // Update modal header
+                const titleEl = document.getElementById('modalTitle');
+                const subEl = document.getElementById('modalSubtitle');
+                if (titleEl) titleEl.textContent = 'Edit Contract Agreement';
+                if (subEl) subEl.textContent = 'Update existing agreement';
+
+                // Update button text
+                updateSaveButtonText('Update');
+
+                // Make sure lucide icons are initialized
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }, 100);
+        });
+    });
+
+    function updateSaveButtonText(text) {
+        const saveBtn = document.querySelector('#contractModal .btn-accent');
+        if (saveBtn) {
+            if (text === 'Update') {
+                saveBtn.innerHTML = '<i data-lucide="save" class="w-4 h-4 mr-2"></i>Update Agreement';
+            } else {
+                saveBtn.innerHTML = '<i data-lucide="save" class="w-4 h-4 mr-2"></i>Save Template';
+            }
+            // Re-initialize lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+    }
+
     function openContractModal() {
         clearContractForm();
         setModalMode('edit');
@@ -290,6 +310,15 @@
         const modal = document.getElementById('contractModal');
         if (modal) modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+
+        // Update modal header for new agreement
+        const titleEl = document.getElementById('modalTitle');
+        const subEl = document.getElementById('modalSubtitle');
+        if (titleEl) titleEl.textContent = 'New Contract Template';
+        if (subEl) subEl.textContent = 'Service Agreement Template';
+
+        // Update button text
+        updateSaveButtonText('Save');
     }
 
     function openContractModalWithTemplate(templateName) {
@@ -355,14 +384,18 @@
     }
 
     function clearContractForm() {
-        // Topic and terms (editable)
+        // Topic and terms (editable) - Let Livewire handle clearing via reset
+        // Just clear the input elements for visual feedback
         const topicEl = document.getElementById('contractTopic');
         const termsEl = document.getElementById('termsContent');
-        if (topicEl) topicEl.value = '';
-        if (termsEl) termsEl.value = `1. The volunteer agrees to perform assigned duties diligently and responsibly.
+
+        // Set default values
+        if (termsEl && !termsEl.value.trim()) {
+            termsEl.value = `1. The volunteer agrees to perform assigned duties diligently and responsibly.
 2. The organization will provide necessary guidance and a safe work environment.
 3. Confidential information must not be disclosed without consent.
 4. Either party may terminate this agreement with prior notice.`;
+        }
 
         // Read-only placeholders for backend autofill later
         const setVal = (id, val) => {
@@ -497,6 +530,9 @@
         const cancelBtn = document.querySelector('#contractModal .btn-outline');
         if (saveBtn) saveBtn.style.display = 'inline-flex';
         if (cancelBtn) cancelBtn.textContent = 'Cancel';
+
+        // Call Livewire method to cancel edit mode
+        Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id')).call('cancelEdit');
     }
 
     // Close modal when clicking outside
