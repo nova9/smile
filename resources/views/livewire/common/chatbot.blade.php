@@ -17,7 +17,7 @@
 
     <!-- Chatbot Toggle Button -->
     <button id="chatbot-toggle-btn" aria-label="Toggle chat" x-on:click="toggle()"
-        class="p-3 rounded-full bg-primary text-white shadow-lg  focus:outline-none focus:ring-2 focus:ring-emerald-300 transition "
+        class=" ml-3 p-3 rounded-full bg-primary text-white shadow-lg  focus:outline-none focus:ring-2 focus:ring-emerald-300 transition "
         title="Smile Assistant">
         <i data-lucide="bot" class="w-4 h-4"></i>
     </button>
