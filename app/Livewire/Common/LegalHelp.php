@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Volunteer;
+namespace App\Livewire\Common;
 
 use App\Models\Role;
 use App\Models\User;
@@ -68,6 +68,6 @@ class LegalHelp extends Component
 
     public function render()
     {
-        return view('livewire.volunteer.legal-help');
+        return view('livewire.common.legal-help');
     }
 }

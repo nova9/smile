@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Services\FileManager;
+
 
 class User extends Authenticatable
 {
@@ -119,7 +121,7 @@ class User extends Authenticatable
 
         $user = auth()->user();
         $attributes = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
-//         dd($attributes);
+        //         dd($attributes);
         foreach ($requiredSkills as $key => $value) {
             if (!empty($attributes[$key])) {
                 $initialPercentage += $value;
@@ -200,5 +202,39 @@ class User extends Authenticatable
         } else {
             $this->setCustomAttribute('level', 'advanced');
         }
+    }
+
+    public function getRank()
+    {
+
+        $users = User::has('badges') // get only the users who have earned badges
+            ->with('attributes')
+            ->withSum('badges', 'points') // calculate the total points from badges
+            ->orderByDesc('badges_sum_points')
+            ->get()
+            ->groupBy('badges_sum_points') // group the users with same points into 1 group
+            ->sortKeysDesc() // sort the groups by points in descending order
+            ->values() // reindex the groups
+            ->map(function ($group, $index) {
+                return [$index, $group]; // return the group along with its index
+            })
+            ->flatMap(function ($pair) { // flatten the groups while assigning ranks
+                [$index, $group] = $pair; // get index and group
+                $rank = $index + 1; // rank increments by 1 for each group
+                return $group->map(function ($user) use ($rank) {
+                    $user->rank = $rank; // assign rank to each user in the group
+                    return $user;
+                });
+            });
+        $currentUser = $users->firstWhere('id', $this->id);
+        return $currentUser ? $currentUser->rank : null;
+    }
+    public function getProfilePicture()
+    {
+        $profile_picture = $this->getCustomAttribute('profile_picture');
+        if ($profile_picture) {
+            $this->profile_picture = FileManager::getTemporaryUrl($profile_picture);
+        }
+        return $this->profile_picture;
     }
 }

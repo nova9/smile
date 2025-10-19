@@ -1,3 +1,4 @@
+
 <div>
     {{-- Toast Notifications --}}
     @if (session()->has('success'))
@@ -53,15 +54,15 @@
     @endif
 
     {{-- Legal Help Sidebar Item --}}
-    <li>
         <a href="#" 
-           class="hover:bg-gray-100 px-2 transition-all duration-200 hover:shadow-sm rounded-md" 
+           
            wire:click="requestLegalHelp" 
            wire:loading.attr="disabled"
            wire:loading.class="opacity-75 cursor-not-allowed">
             <div wire:loading.remove wire:target="requestLegalHelp" class="flex items-center gap-3">
-                <i data-lucide="scale" class="size-6 text-blue-600"></i>
-                <span x-show="!navClosed" class="font-medium">Legal Help</span>
+                <span x-show="!navClosed"  class="p-1 rounded-sm drawer-button hover:bg-neutral-200 transition-colors tooltip hover:tooltip-open tooltip-bottom" data-tip="legal help">
+                    <i data-lucide="gavel"></i>
+                </span>
             </div>
             <div wire:loading wire:target="requestLegalHelp" class="flex items-center gap-2">
                 <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -71,5 +72,4 @@
                 <span x-show="!navClosed" class="text-sm">Connecting...</span>
             </div>
         </a>
-    </li>
 </div>
