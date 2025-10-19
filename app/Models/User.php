@@ -78,6 +78,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Event::class)
             ->withTimestamps()
+            ->wherePivotNotIn('status', ['left'])
             ->withPivot('status', 'created_at', 'ends_at');
     }
     public function certificates(): HasMany
