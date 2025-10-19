@@ -13,16 +13,13 @@
         });
     }
 }">
-    <!-- Floating container -->
-
-    <!-- Chatbot Toggle Button -->
+   
     <button id="chatbot-toggle-btn" aria-label="Toggle chat" x-on:click="toggle()"
         class=" ml-3 p-3 rounded-full bg-primary text-white shadow-lg  focus:outline-none focus:ring-2 focus:ring-emerald-300 transition "
         title="Smile Assistant">
         <i data-lucide="bot" class="w-4 h-4"></i>
     </button>
     <div class="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3">
-        <!-- Chatbot Window -->
         <div id="chatbot-window" x-transition.opacity.duration.200
             class="w-80 sm:w-96 bg-white rounded-lg shadow-2xl flex flex-col max-h-[80vh] overflow-hidden ring-1 ring-gray-100"
             x-show="open" x-cloak>

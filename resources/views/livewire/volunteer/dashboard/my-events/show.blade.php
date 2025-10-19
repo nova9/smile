@@ -416,24 +416,37 @@
                             </p>
                         </div>
                         <div class="mb-6">
-                            <form wire:submit="save" class="flex flex-col sm:flex-row items-center gap-4">
+                            <form wire:submit="save" class="flex flex-col sm:flex-row items-center gap-4 w-full">
                                 <label
                                     class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm text-gray-700 hover:bg-gray-50">
-                                    <i data-lucide="upload" class="w-4 h-4"></i>
-                                    <span>Choose photos</span>
-                                    <input type="file" wire:model="photos" multiple accept="image/*" class="hidden">
+                                    <i data-lucide="upload"></i>
+                                    <input type="file" wire:model="photos" multiple accept="image/*" >
                                 </label>
 
                                 <div class="ml-auto flex items-center gap-3">
-
-
                                     <button type="submit"
+                                        wire:click="$refresh"
                                         class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
-                                        <i data-lucide="save" class="w-4 h-4"></i>
+                                        <span wire:loading.remove wire:target="save">
+                                             <i data-lucide="save" class="w-4 h-4"></i>
+                                        </span>
+                                        <span wire:loading wire:target="save">
+                                            <i data-lucide="loader-circle" class="w-4 h-4 animate-spin"></i>
+                                        </span>
+                                       
                                         Save photos
                                     </button>
                                 </div>
                             </form>
+                            @if ($photos && count($photos) > 0)
+                                <div class="flex flex-wrap gap-3 mt-4">
+                                    @foreach ($photos as $photo)
+                                        <div class="w-24 h-24 rounded-lg overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
+                                                <img src="{{ $photo->temporaryUrl() }}" alt="Preview" class="object-cover w-full h-full">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     @else
                         <div class="mb-8">
@@ -447,19 +460,9 @@
                             </p>
                         </div>
                     @endif
-
-
-                    @php
-                        $images = [
-                            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
-                        ];
-                    @endphp
                     <div class="container mx-auto px-4 py-8">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            @foreach ($images as $img)
+                            @foreach ($uploadedPhotos as $img)
                                 <div class="group relative overflow-hidden rounded-lg shadow-lg">
                                     <img src="{{ $img }}" alt="Gallery Image"
                                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
