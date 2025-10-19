@@ -1,12 +1,13 @@
+<div>
     @if (!$this->isAdmin())
         <div class="drawer drawer-end" x-cloak>
             <input id="help-drawer" wire:model="modalOpen" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex justify-center items-center">
                 <label for="help-drawer" class="z-199">
                     <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom"
-                          data-tip="Help & Support">
+                        data-tip="Help & Support">
                         <i data-lucide="help-circle" class="size-5"></i>
-                      
+
                     </div>
                 </label>
             </div>
@@ -22,16 +23,16 @@
                     <div class="p-4 overflow-visible">
                         <!-- Success Alert -->
                         @if ($showAlert)
-                            <div class="alert alert-success mb-4 rounded-lg" x-data="{ show: true }" x-show="show"
-                                x-init="setTimeout(() => { show = false;
-                                    $wire.set('showAlert', false); }, 5000)" x-transition:enter="transition ease-out duration-300"
+                            <div class="alert alert-success mb-4 rounded-lg" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => { show = false;
+                                            $wire.set('showAlert', false); }, 5000)"
+                                x-transition:enter="transition ease-out duration-300"
                                 x-transition:enter-start="opacity-0 transform scale-90"
                                 x-transition:enter-end="opacity-100 transform scale-100"
                                 x-transition:leave="transition ease-in duration-300"
                                 x-transition:leave-start="opacity-100 transform scale-100"
                                 x-transition:leave-end="opacity-0 transform scale-90">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6"
-                                    fill="none" viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                                    viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -88,8 +89,7 @@
 
                                 <!-- Title/Subject -->
                                 <div>
-                                    <label for="subject"
-                                        class="block text-sm font-semibold text-gray-700 mb-1">Subject</label>
+                                    <label for="subject" class="block text-sm font-semibold text-gray-700 mb-1">Subject</label>
                                     <input type="text" id="subject" wire:model="subject"
                                         class="input input-bordered w-full rounded-full px-5 py-2.5 shadow focus:outline-none focus:ring-1 focus:ring-accent transition-all duration-200 border border-gray-200 focus:border-accent"
                                         placeholder="Brief summary of your issue">
@@ -112,8 +112,7 @@
 
                                 <!-- Buttons -->
                                 <div class="flex justify-end space-x-3 mt-6">
-                                    <button type="button" wire:click="closeModal"
-                                        class="btn btn-outline btn-neutral font-bold">
+                                    <button type="button" wire:click="closeModal" class="btn btn-outline btn-neutral font-bold">
                                         Cancel
                                     </button>
                                     <button type="submit" class="btn btn-primary font-bold">
@@ -127,8 +126,7 @@
                                 <div class="mt-8 pt-6 border-t border-base-300">
                                     <div class="flex items-center justify-between mb-3">
                                         <h3 class="text-md font-semibold">Previous Support Requests</h3>
-                                        <button wire:click="togglePreviousRequests"
-                                            class="btn btn-ghost btn-xs text-xs">
+                                        <button wire:click="togglePreviousRequests" class="btn btn-ghost btn-xs text-xs">
                                             @if ($showPreviousRequests)
                                                 <i data-lucide="chevron-up" class="size-4 mr-1"></i>
                                                 Hide
@@ -145,13 +143,14 @@
                                                 <div class="bg-base-100 p-2.5 rounded border border-base-300">
                                                     <div class="flex justify-between items-start mb-1">
                                                         <h4 class="font-medium text-xs truncate pr-2">
-                                                            {{ $ticket->subject }}</h4>
+                                                            {{ $ticket->subject }}
+                                                        </h4>
                                                         <span
                                                             class="badge badge-xs 
-                                                                                                                    @if ($ticket->status === 'open') badge-warning
-                                                                                                                    @elseif($ticket->status === 'in_progress') badge-info  
-                                                                                                                    @elseif($ticket->status === 'resolved') badge-success
-                                                                                                                    @else badge-neutral @endif">
+                                                                                                                                        @if ($ticket->status === 'open') badge-warning
+                                                                                                                                        @elseif($ticket->status === 'in_progress') badge-info  
+                                                                                                                                        @elseif($ticket->status === 'resolved') badge-success
+                                                                                                                                        @else badge-neutral @endif">
                                                             {{ ucfirst($ticket->status) }}
                                                         </span>
                                                     </div>
@@ -161,8 +160,7 @@
                                                         </p>
                                                         @if ($ticket->status !== 'closed' && $ticket->status !== 'resolved')
                                                             <button wire:click="resolveTicket({{ $ticket->id }})"
-                                                                class="btn btn-xs btn-success tooltip tooltip-left"
-                                                                data-tip="Mark as Resolved">
+                                                                class="btn btn-xs btn-success tooltip tooltip-left" data-tip="Mark as Resolved">
                                                                 <i data-lucide="check" class="size-3"></i>
                                                             </button>
                                                         @endif
@@ -187,10 +185,10 @@
                                                         <h4 class="font-medium text-sm">{{ $ticket->subject }}</h4>
                                                         <span
                                                             class="badge badge-sm 
-                                                                                                        @if ($ticket->status === 'open') badge-warning
-                                                                                                        @elseif($ticket->status === 'in_progress') badge-info  
-                                                                                                        @elseif($ticket->status === 'resolved') badge-success
-                                                                                                        @else badge-neutral @endif">
+                                                                                                                        @if ($ticket->status === 'open') badge-warning
+                                                                                                                        @elseif($ticket->status === 'in_progress') badge-info  
+                                                                                                                        @elseif($ticket->status === 'resolved') badge-success
+                                                                                                                        @else badge-neutral @endif">
                                                             {{ ucfirst($ticket->status) }}
                                                         </span>
                                                     </div>
@@ -229,3 +227,4 @@
             </div>
         </div>
     @endif
+</div>
