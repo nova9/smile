@@ -30,7 +30,7 @@
                                 <div class="flex-1">
                                     <div class="flex items-start justify-between gap-3">
                                         <div class="min-w-0">
-                                            <a href="{{ isset($review->event) ? url('/volunteer/dashboard/my-events/' . $review->event->id) : '#' }}"
+                                            <a href="{{ isset($review->event) ? url('/volunteer/dashboard/my-events/' . $review->event->name) : '#' }}"
                                                 class="text-md font-semibold text-gray-800 hover:text-emerald-600 truncate">{{ $review->event->name ?? 'Event #' . ($review->event_id ?? '—') }}</a>
                                             <div class="text-sm text-gray-500">by <span
                                                     class="font-medium text-gray-700">{{ $review->user->name ?? 'You' }}</span>
@@ -42,16 +42,49 @@
 
                                     <div class="mt-3 flex items-center justify-between">
                                         <div class="flex items-center gap-2">
-                                            <div class="flex items-center text-yellow-400">
-                                                @php $r = (int) ($review->rating ?? 0); @endphp
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    @if ($i <= $r)
-                                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                                                    @else
-                                                        <i data-lucide="star" class="w-4 h-4 text-gray-300"></i>
-                                                    @endif
-                                                @endfor
-                                            </div>
+                                                  <div class="rating rating-lg rating-half">
+                                                            {{-- 1 full opacity ,0.2 almost transparert --}}
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="0.5 star"
+                                                                    style="opacity:{{ $review->rating >= 0.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="1 star"
+                                                                    style="opacity:{{ $review->rating >= 1 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="1.5 star"
+                                                                    style="opacity:{{ $review->rating >= 1.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="2 star"
+                                                                    style="opacity:{{ $review->rating >= 2 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="2.5 star"
+                                                                    style="opacity:{{ $review->rating >= 2.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="3 star"
+                                                                    style="opacity:{{ $review->rating >= 3 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="3.5 star"
+                                                                    style="opacity:{{ $review->rating >= 3.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="4 star"
+                                                                    style="opacity:{{ $review->rating >= 4 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                    aria-label="4.5 star"
+                                                                    style="opacity:{{ $review->rating >= 4.5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                    aria-label="5 star"
+                                                                    style="opacity:{{ $review->rating == 5 ? 1 : 0.2 }}">
+                                                                </div>
+                                                            </div>
                                             <div class="text-sm text-gray-600">{{ $review->rating ?? '-' }}/5</div>
                                         </div>
                                         <div

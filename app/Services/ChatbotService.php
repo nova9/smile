@@ -21,7 +21,7 @@ class ChatbotService
         $systemMessage = [
             'role' => 'system',
             'content' => [
-                [
+                [   
                     'type' => 'text',
                     'text' => $context,
                 ]

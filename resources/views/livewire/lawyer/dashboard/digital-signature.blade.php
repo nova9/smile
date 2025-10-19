@@ -23,8 +23,15 @@
             <!-- Contracts Awaiting Signature -->
             <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                 <h3 class="text-xl font-semibold text-gray-800 mb-6">Contracts Awaiting Signature</h3>
+                @php
+                $filteredAwaiting = array_values(array_filter($contracts ?? [], function ($c) {
+                $type = $c['type'] ?? '';
+                $title = $c['title'] ?? '';
+                return stripos($type, 'Employment') === false && stripos($title, 'Employment') === false;
+                }));
+                @endphp
                 <div class="space-y-4">
-                    @foreach($contracts as $contract)
+                    @foreach($filteredAwaiting as $contract)
                     <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all duration-200">
                         <div class="flex justify-between items-start mb-4">
                             <div>
@@ -56,18 +63,18 @@
                                 <p>Ready for legal signature</p>
                             </div>
                             <div class="flex gap-2">
-                                <button class="btn btn-outline btn-sm" onclick="viewContract({{ json_encode($contract) }})">
+                                <button class="btn btn-outline btn-sm" onclick='viewContract(@json($contract))'>
                                     <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
                                     View
                                 </button>
                                 @if($contract['status'] != 'signed')
-                                <button class="btn btn-accent btn-sm" onclick="openSignatureModal({{ json_encode($contract) }})">
+                                <button class="btn btn-accent btn-sm" onclick='openSignatureModal(@json($contract))'>
                                     <i data-lucide="pen-tool" class="w-4 h-4 mr-2"></i>
                                     Sign Contract
                                 </button>
                                 @endif
                                 @if($contract['status'] == 'signed')
-                                <button class="btn btn-success btn-sm" onclick="downloadContract({{ json_encode($contract) }})">
+                                <button class="btn btn-success btn-sm" onclick='downloadContract(@json($contract))'>
                                     <i data-lucide="download" class="w-4 h-4 mr-2"></i>
                                     Download
                                 </button>
@@ -82,8 +89,35 @@
             <!-- Signed Contracts Archive -->
             <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                 <h3 class="text-xl font-semibold text-gray-800 mb-6">Recently Signed Contracts</h3>
+                @php
+                $filteredSigned = array_values(array_filter($signedContracts ?? [], function ($c) {
+                return strcasecmp($c['type'] ?? '', 'Volunteer Service Agreement') === 0;
+                }));
+                $exampleSigned = [
+                [
+                'id' => 901,
+                'title' => 'Community Cleanup Volunteer Agreement',
+                'organization' => 'Acme Goodwill Foundation',
+                'type' => 'Volunteer Service Agreement',
+                'value' => '$0.00',
+                'status' => 'signed',
+                'signed_at' => date('Y-m-d'),
+                'contract_number' => 'VSA-2025-001',
+                'event' => 'Community Clean-up Drive 2025',
+                'start_date' => date('Y-m-01'),
+                'end_date' => date('Y-m-t'),
+                'duration' => '4 weeks',
+                'contact' => '+1 (555) 012-3456',
+                'volunteer_name' => 'John Doe',
+                'volunteer_address' => '123 Main St, Springfield',
+                'volunteer_email' => 'john.doe@example.com',
+                'volunteer_nic' => '901234567V',
+                ],
+                ];
+                $displaySigned = count($filteredSigned) ? $filteredSigned : $exampleSigned;
+                @endphp
                 <div class="space-y-4">
-                    @foreach($signedContracts as $contract)
+                    @foreach($displaySigned as $contract)
                     <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all duration-200 bg-green-50">
                         <div class="flex justify-between items-start mb-4">
                             <div>
@@ -105,7 +139,7 @@
                         <div class="mb-4">
                             <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
                                 <p><span class="font-medium">Signed Date:</span> {{ $contract['signed_at'] }}</p>
-                                <p><span class="font-medium">Contract Value:</span> {{ $contract['value'] }}</p>
+                                <p><span class="font-medium">Contract Value:</span> {{ $contract['value'] ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
@@ -113,11 +147,11 @@
                                 <p>✓ Legally executed contract</p>
                             </div>
                             <div class="flex gap-2">
-                                <button class="btn btn-outline btn-sm" onclick="viewContract({{ json_encode($contract) }})">
+                                <button class="btn btn-outline btn-sm" onclick='viewContract(@json($contract))'>
                                     <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
                                     View
                                 </button>
-                                <button class="btn btn-success btn-sm" onclick="downloadContract({{ json_encode($contract) }})">
+                                <button class="btn btn-success btn-sm" onclick='downloadContract(@json($contract))'>
                                     <i data-lucide="download" class="w-4 h-4 mr-2"></i>
                                     Download
                                 </button>
@@ -196,16 +230,19 @@
                         </div>
                     </div>
 
-                    <!-- Signature Canvas -->
+                    <!-- Signature Upload (replaces canvas) -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Digital Signature</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Your Signature</label>
                         <div class="border-2 border-gray-300 rounded-lg p-4 bg-white">
-                            <canvas id="signatureCanvas" width="500" height="200" class="w-full border border-gray-200 rounded cursor-crosshair"></canvas>
+                            <input id="signatureFile" type="file" accept="image/*" class="block w-full text-sm text-gray-700" onchange="handleSignatureFileChange(event)">
+                            <div id="signaturePreviewWrapper" class="mt-3 hidden">
+                                <img id="signaturePreview" alt="Signature preview" class="max-h-40 object-contain border border-gray-200 rounded p-2 bg-gray-50">
+                            </div>
                         </div>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="text-xs text-gray-500">Sign above to add your digital signature</p>
+                            <p class="text-xs text-gray-500">Upload a clear image (PNG/JPG) of your signature</p>
                             <button type="button" onclick="clearSignature()" class="text-red-600 hover:text-red-800 text-sm">
-                                Clear Signature
+                                Remove Signature
                             </button>
                         </div>
                     </div>
@@ -236,68 +273,48 @@
 </x-lawyer.dashboard-layout>
 
 <script>
-    let currentContract = null;
-    let signatureCanvas = null;
-    let ctx = null;
-    let isDrawing = false;
-    let hasSignature = false;
+    // Replace let with var to avoid redeclaration on Livewire page swaps
+    var currentContract = window.currentContract || null;
+    // let signatureCanvas = null;
+    // let ctx = null;
+    // let isDrawing = false;
+    var hasSignature = window.hasSignature || false;
+    var signatureImageData = window.signatureImageData || null; // base64
+    // Persist back on window for subsequent navigations
+    window.currentContract = currentContract;
+    window.hasSignature = hasSignature;
+    window.signatureImageData = signatureImageData;
 
-    // Initialize signature canvas when modal opens
-    function initializeSignatureCanvas() {
-        signatureCanvas = document.getElementById('signatureCanvas');
-        ctx = signatureCanvas.getContext('2d');
-
-        // Set up drawing
-        ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-
-        // Mouse events
-        signatureCanvas.addEventListener('mousedown', startDrawing);
-        signatureCanvas.addEventListener('mousemove', draw);
-        signatureCanvas.addEventListener('mouseup', stopDrawing);
-        signatureCanvas.addEventListener('mouseout', stopDrawing);
-
-        // Touch events for mobile
-        signatureCanvas.addEventListener('touchstart', handleTouch);
-        signatureCanvas.addEventListener('touchmove', handleTouch);
-        signatureCanvas.addEventListener('touchend', stopDrawing);
-    }
-
-    function startDrawing(e) {
-        isDrawing = true;
-        const rect = signatureCanvas.getBoundingClientRect();
-        ctx.beginPath();
-        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-    }
-
-    function draw(e) {
-        if (!isDrawing) return;
-
-        const rect = signatureCanvas.getBoundingClientRect();
-        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-        ctx.stroke();
-        hasSignature = true;
-    }
-
-    function stopDrawing() {
-        isDrawing = false;
-        ctx.beginPath();
-    }
-
-    function handleTouch(e) {
-        e.preventDefault();
-        const touch = e.touches[0];
-        const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' :
-            e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-        signatureCanvas.dispatchEvent(mouseEvent);
+    // Removed: initializeSignatureCanvas, startDrawing, draw, stopDrawing, handleTouch
+    // Add: file upload handlers
+    function handleSignatureFileChange(e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) {
+            clearSignature();
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            signatureImageData = evt.target.result;
+            const preview = document.getElementById('signaturePreview');
+            const wrapper = document.getElementById('signaturePreviewWrapper');
+            if (preview && wrapper) {
+                preview.src = signatureImageData;
+                wrapper.classList.remove('hidden');
+            }
+            hasSignature = true;
+        };
+        reader.readAsDataURL(file);
     }
 
     function clearSignature() {
-        ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+        const input = document.getElementById('signatureFile');
+        const preview = document.getElementById('signaturePreview');
+        const wrapper = document.getElementById('signaturePreviewWrapper');
+        if (input) input.value = '';
+        if (preview) preview.src = '';
+        if (wrapper) wrapper.classList.add('hidden');
+        signatureImageData = null;
         hasSignature = false;
     }
 
@@ -310,42 +327,36 @@
         document.getElementById('signContractType').textContent = contract.type;
         document.getElementById('signContractValue').textContent = contract.value;
 
-        // Show modal and initialize canvas
+        // Reset signature state
+        clearSignature();
+
+        // Show modal
         document.getElementById('signatureModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-
-        // Initialize canvas after modal is visible
-        setTimeout(() => {
-            initializeSignatureCanvas();
-        }, 100);
     }
 
     function closeSignatureModal() {
         document.getElementById('signatureModal').classList.add('hidden');
         document.body.style.overflow = 'auto';
         currentContract = null;
-        hasSignature = false;
+        clearSignature();
     }
 
     function finalizeSignature() {
-        if (!hasSignature) {
-            alert('Please add your signature before finalizing.');
+        if (!hasSignature || !signatureImageData) {
+            alert('Please upload your signature before finalizing.');
             return;
         }
 
-        // Get signature as base64 image
-        const signatureData = signatureCanvas.toDataURL();
-
-        // Simulate contract signing process
+        // Simulate contract signing process using uploaded image
+        // signatureImageData contains the base64 image to submit to backend in a real implementation
         alert(`Contract "${currentContract.title}" has been successfully signed!\n\nThe contract is now legally executed and ready for download.`);
 
-        // Close modal and refresh page (in real app, this would update the backend)
+        // Close modal and refresh (frontend only)
         closeSignatureModal();
-
-        // Simulate status update
         setTimeout(() => {
             location.reload();
-        }, 1000);
+        }, 600);
     }
 
     function viewContract(contract) {
@@ -396,43 +407,77 @@
 
     function generateContractHTML(contract) {
         if (contract.type === 'Volunteer Service Agreement') {
+            // Filled org/requestor details with dummy fallbacks; removed representative/email/phone
+            const org = {
+                name: contract.organization || 'Acme Goodwill Foundation',
+                event: contract.event || 'Community Clean-up Drive 2025',
+                start: contract.start_date || (contract.created_at ? ('' + contract.created_at).split(' ')[0] : '2025-02-01'),
+                end: contract.end_date || '2025-02-28',
+                duration: contract.duration || '4 weeks',
+                contact: contract.contact || contract.phone || '+1 (555) 012-3456',
+            };
+            const vol = {
+                name: contract.volunteer_name || '[VOLUNTEER_NAME]',
+                address: contract.volunteer_address || '[VOLUNTEER_ADDRESS]',
+                email: contract.volunteer_email || '[VOLUNTEER_EMAIL]',
+                nic: contract.volunteer_nic || '[VOLUNTEER_NIC]',
+            };
             return `
                 <div class="text-center mb-6">
                     <h2 class="text-2xl font-bold text-gray-800">VOLUNTEER SERVICE AGREEMENT</h2>
-                    <p class="text-gray-600 mt-2">Contract No: VSA-2024-001</p>
+                    <p class="text-gray-600 mt-2">Contract No: ${contract.contract_number || 'VSA-2025-001'}</p>
                 </div>
 
-                <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
-                    <p><strong>This Volunteer Service Agreement</strong> ("Agreement") is entered into on ${contract.created_at} between:</p>
-
-                    <div class="ml-4 space-y-4 mb-6">
-                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
-                            <p class="font-semibold text-green-800 mb-3">REQUESTING ORGANIZATION:</p>
-                            <div class="grid grid-cols-2 gap-4 text-sm">
-                                <div>
-                                    <p><strong>Organization:</strong> ${contract.organization}</p>
-                                    <p><strong>Representative:</strong> ${contract.representative || 'John Smith'}</p>
-                                </div>
-                                <div>
-                                    <p><strong>Email:</strong> ${contract.email || 'contact@organization.com'}</p>
-                                    <p><strong>Phone:</strong> ${contract.phone || '+1 (555) 123-4567'}</p>
-                                </div>
-                            </div>
+                <div class="space-y-6 text-sm text-gray-700 leading-relaxed">
+                    <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <p class="font-semibold text-green-800 mb-3">Organization / Requestor</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <p><strong>Organization / Requestor:</strong> <span class="bg-green-200 px-1 rounded font-medium">${org.name}</span></p>
+                            <p><strong>Event:</strong> <span class="bg-green-200 px-1 rounded font-medium">${org.event}</span></p>
+                            <p><strong>Start Date:</strong> <span class="bg-green-200 px-1 rounded font-medium">${org.start}</span></p>
+                            <p><strong>End Date:</strong> <span class="bg-green-200 px-1 rounded font-medium">${org.end}</span></p>
+                            <p><strong>Duration:</strong> <span class="bg-green-200 px-1 rounded font-medium">${org.duration}</span></p>
+                            <p><strong>Contact Number:</strong> <span class="bg-green-200 px-1 rounded font-medium">${org.contact}</span></p>
                         </div>
                     </div>
 
-                    <p><strong>1. SERVICE DESCRIPTION</strong></p>
-                    <p class="ml-4">The Volunteer agrees to provide voluntary services as described in the approved service request.</p>
+                    <div class="p-4 bg-gray-100 border border-gray-300 rounded-lg">
+                        <p class="font-semibold text-gray-700 mb-3">Volunteer Information</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <p><strong>Name:</strong> <span class="bg-gray-200 px-1 rounded font-medium">${vol.name}</span></p>
+                            <p><strong>Address:</strong> <span class="bg-gray-200 px-1 rounded font-medium">${vol.address}</span></p>
+                            <p><strong>Email:</strong> <span class="bg-gray-200 px-1 rounded font-medium">${vol.email}</span></p>
+                            <p><strong>NIC:</strong> <span class="bg-gray-200 px-1 rounded font-medium">${vol.nic}</span></p>
+                        </div>
+                    </div>
 
-                    <p><strong>2. DURATION AND COMMITMENT</strong></p>
-                    <p class="ml-4">Service Period: As specified in the service agreement terms.</p>
+                    <div>
+                        <p class="font-semibold text-gray-800 mb-2">Terms and Conditions</p>
+                        <div class="ml-4 whitespace-pre-wrap">
+1. The volunteer agrees to perform assigned duties diligently and responsibly.
+2. The organization will provide necessary guidance and a safe work environment.
+3. Confidential information must not be disclosed without consent.
+4. Either party may terminate this agreement with prior notice.
+                        </div>
+                    </div>
 
-                    <p><strong>3. LEGAL SIGNATURE</strong></p>
-                    <div class="ml-4 p-4 ${contract.status === 'signed' ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'} border rounded-lg">
-                        ${contract.status === 'signed' ? 
-                            '<p class="text-green-800"><strong>✓ DIGITALLY SIGNED</strong></p><p class="text-sm text-green-600 mt-1">This contract has been legally executed with digital signature.</p><p class="text-xs text-green-500 mt-2">Lawyer: ' + '{{ auth()->user()->name }}' + '<br>License: [LICENSE_NUMBER]<br>Date: ' + (contract.signed_at || 'Recent') + '</p>' : 
-                            '<p class="text-yellow-800"><strong>⚠ AWAITING SIGNATURE</strong></p><p class="text-sm text-yellow-600 mt-1">This contract requires legal signature to be finalized.</p>'
-                        }
+                    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="text-center">
+                            <p class="text-sm font-medium mb-2 text-gray-700">Lawyer Signature</p>
+                            <div class="border-b-2 border-gray-400 mb-3 h-16 flex items-center justify-center">
+                                ${contract.status === 'signed' ?
+                                    '<span class="text-green-700 text-sm">Digitally signed</span>' :
+                                    '<span class="text-yellow-700 text-sm">Awaiting signature</span>'}
+                            </div>
+                            <p class="text-xs text-gray-500">${contract.status === 'signed' ? 'Signed by ' + '{{ auth()->user()->name }}' + ' on ' + (contract.signed_at || 'recently') : 'Upload your signature to finalize'}</p>
+                        </div>
+                        <div class="text-sm text-gray-700">
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" disabled class="mt-1 w-4 h-4 text-green-600 border-gray-300 rounded">
+                                <p>I, <span class="font-medium">${vol.name}</span> (NIC: <span class="font-mono">${vol.nic}</span>), agree to the terms and conditions stated in this contract.</p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">This section is non-editable.</p>
+                        </div>
                     </div>
                 </div>
             `;
@@ -453,17 +498,21 @@
         `;
     }
 
-    // Close modals when clicking outside
-    document.addEventListener('click', function(e) {
-        if (e.target.id === 'viewModal') closeViewModal();
-        if (e.target.id === 'signatureModal') closeSignatureModal();
-    });
+    // Close modals when clicking outside (guard against duplicate listeners)
+    if (!window.__lawyerDSListenersAdded) {
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'viewModal') closeViewModal();
+            if (e.target.id === 'signatureModal') closeSignatureModal();
+        });
 
-    // Close modals with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeViewModal();
-            closeSignatureModal();
-        }
-    });
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeViewModal();
+                closeSignatureModal();
+            }
+        });
+
+        window.__lawyerDSListenersAdded = true;
+    }
 </script>
