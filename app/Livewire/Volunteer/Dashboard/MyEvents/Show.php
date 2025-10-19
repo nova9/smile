@@ -14,6 +14,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 use phpDocumentor\Reflection\Types\This;
 use Livewire\WithFileUploads;
+
 class Show extends Component
 {
     public $event;
@@ -35,20 +36,10 @@ class Show extends Component
     public $reviewCount;
     public $eventReviews;
 
-
-    // public function join()
-    // {
-    //     if (auth()->user()->isProfileCompletionPercentage() != 1) {
-    //         return redirect('/volunteer/dashboard/profile')->with('error', 'Please complete your profile before joining an event.');
-    //     }
-    //     $this->event->users()->attach(auth()->user()->id);
-    //     return redirect('/volunteer/dashboard/my-events');
-    // }
-
     public function mount($id, GoogleMaps $googleMaps)
     {
         // dd($this->event);
-        
+
         $this->event = Event::query()
             ->with(['address', 'users', 'category', 'tags'])
             ->find($id);
@@ -60,14 +51,14 @@ class Show extends Component
         $this->is_favorited = $this->event->isFavourite();
 
         $completedTasksCount = Task::where('assigned_id', auth()->id())
-                ->where('status', 'done')
-                ->count();
+            ->where('status', 'done')
+            ->count();
         if ($completedTasksCount >= 1) {
             $this->reviewbutton = true;
         }
 
         $uploadedPhotos = $this->event->photos;
-        $this->uploadedPhotos = $uploadedPhotos->pluck('file_id')->map(function($fileId){
+        $this->uploadedPhotos = $uploadedPhotos->pluck('file_id')->map(function ($fileId) {
             return FileManager::getTemporaryUrl($fileId);
         });
 
@@ -79,14 +70,22 @@ class Show extends Component
 
     }
 
-    public function loadReviews(){
+    public function loadReviews()
+    {
         $this->reviewCount = $this->event->reviews->count();
         $this->eventReviews = $this->event->reviews;
         $this->avgratings = $this->reviewCount > 0 ? ($this->event->reviews->pluck('rating')->sum()) / $this->reviewCount : 0;
 
     }
 
-    public function submitReview(){
+    public function leaveEvent()
+    {
+        $this->event->users()->detach(auth()->id());
+        return $this->redirect('/volunteer/dashboard/my-events');
+    }
+
+    public function submitReview()
+    {
         $this->validate();
 
         $alreadyReviewed = Review::where('user_id', auth()->id())
@@ -100,21 +99,21 @@ class Show extends Component
                 'rating' => ($this->rating)
             ]);
 
-        }else{
-           $review= Review::where('user_id',auth()->id())
-           ->where('event_id',$this->event->id)
-           ->first();
+        } else {
+            $review = Review::where('user_id', auth()->id())
+                ->where('event_id', $this->event->id)
+                ->first();
 
-           if($review){
+            if ($review) {
                 $review->update([
 
                     'review' => ($this->review),
                     'rating' => ($this->rating)
                 ]);
-           }
+            }
         }
 
-       $this->loadReviews();
+        $this->loadReviews();
 
     }
 
@@ -128,64 +127,17 @@ class Show extends Component
         foreach ($this->photos as $photo) {
             $photo->store(path: 'photos');
             $file = FileManager::store($photo);
-            $isuploaded=EventPhoto::create([
-                'user_id'=> auth()->id(),
-                'event_id'=> $this->event->id,
-                'file_id'=> $file->id,
-                ]);
-
+            $isuploaded = EventPhoto::create([
+                'user_id' => auth()->id(),
+                'event_id' => $this->event->id,
+                'file_id' => $file->id,
+            ]);
         }
-
-
     }
-
-
 
     public function render()
     {
         return view('livewire.volunteer.dashboard.my-events.show');
-    }
-
-    public function updateTaskStatus($taskId, $newStatus)
-    {
-        $task = $this->tasks->where('id', $taskId)->first();
-        if (!$task) {
-            session()->flash('error', 'Task not found.');
-            return;
-        }
-        if (!in_array($newStatus, ['todo', 'doing', 'done'])) {
-            session()->flash('error', 'Invalid status.');
-            return;
-        }
-        if ($newStatus == 'done') {
-            $task->status = 'done';
-            $task->save();
-            $task->TaskCompletion();
-
-            // Check if this is the user's first completed task
-            $user = auth()->user();
-            $completedTasksCount = Task::where('assigned_id', $user->id)
-                ->where('status', 'done')
-                ->count();
-
-            $user->assignBadgesForTasks($completedTasksCount, $user);
-
-            $points=$user->badges->sum('points');
-            $events=$user->participatingEvents()->where('status', 'accepted')->count();
-            // dd($points,$events,$completedTasksCount);
-            $user->setVolunteerLevel($points,$events,$completedTasksCount);
-
-            session()->flash('success', 'Task status updated to Done.');
-            // Optionally, reload tasks to reflect changes
-            $this->tasks = $this->event->tasks()->get();
-            return;
-        }
-
-        $task->status = $newStatus;
-        $task->save();
-        session()->flash('success', 'Task status updated to ' . ucfirst($newStatus) . '.');
-        // Optionally, reload tasks to reflect changes
-        $this->tasks = $this->event->tasks()->get();
     }
 
     public function toggleFavorite()

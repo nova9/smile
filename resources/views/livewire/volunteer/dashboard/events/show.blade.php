@@ -46,9 +46,9 @@
                 </p>
                 <div class="relative flex items-center justify-center">
                     <progress class="progress w-full h-8 text-primary" x-bind:value="profileCompletionPercentage"
-                        max="1"></progress>
+                              max="1"></progress>
                     <span class="absolute text-white text-sm font-medium bg-primary px-1 rounded-sm"
-                        x-text="`${profileCompletionPercentage * 100}%`"></span>
+                          x-text="`${profileCompletionPercentage * 100}%`"></span>
                 </div>
                 <div class="modal-action flex gap-2">
                     <form method="dialog" class="basis-1/2">
@@ -69,11 +69,11 @@
             <!-- Back Button -->
             <div class="p-6 pb-0">
                 <a href="/volunteer/dashboard/events" wire:navigate
-                    class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
+                   class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                         class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     Back to Opportunities
                 </a>
@@ -109,7 +109,6 @@
                                 <div class="font-semibold text-gray-700">{{ $event->starts_at->format('F j') }}
                                     - {{ $event->ends_at->format('F j') }}</div>
                             </div>
-
 
 
                             <div class="bg-gray-50 rounded-xl p-4 text-center">
@@ -177,11 +176,11 @@
                                                 class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
                                                 {{ $resource->name }}
                                             </span>
-                                             <span
+                                            <span
                                                 class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
                                                 {{ $resource->description }}
                                             </span>
-                                              <span
+                                            <span
                                                 class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
                                                 {{ $resource->unit }}
                                             </span>
@@ -201,7 +200,7 @@
                                                 <div
                                                     class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
                                                     <i data-lucide="user-plus" class="w-6 h-6 text-blue-500"
-                                                        aria-hidden="true"></i>
+                                                       aria-hidden="true"></i>
                                                 </div>
                                             </div>
                                             <div>
@@ -217,7 +216,7 @@
                                                         ($event->recruiting_method ?? 'Not specified');
                                                 @endphp
                                                 <div class="text-sm font-medium text-gray-500">
-                                                  We will be recruiting based on {{ $recruitingMethodLabel }} </div>
+                                                    We will be recruiting based on {{ $recruitingMethodLabel }} </div>
                                             </div>
                                         </div>
 
@@ -227,7 +226,7 @@
                                                 <div
                                                     class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center">
                                                     <i data-lucide="users" class="w-6 h-6 text-yellow-500"
-                                                        aria-hidden="true"></i>
+                                                       aria-hidden="true"></i>
                                                 </div>
                                             </div>
                                             <div class="w-full">
@@ -238,8 +237,8 @@
                                                                 <span
                                                                     class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-sm font-medium">
                                                                     <i data-lucide="venus-and-mars"
-                                                                        class="w-4 h-4 text-blue-400"
-                                                                        aria-hidden="true"></i>
+                                                                       class="w-4 h-4 text-blue-400"
+                                                                       aria-hidden="true"></i>
                                                                     <span class="flex items-center gap-1">
                                                                         Men: <span
                                                                             class="font-bold text-blue-700">{{ $req['male_participants'] ?? 0 }}</span>
@@ -257,8 +256,8 @@
                                                                 <span
                                                                     class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium">
                                                                     <i data-lucide="bar-chart"
-                                                                        class="w-4 h-4 text-yellow-400"
-                                                                        aria-hidden="true"></i>
+                                                                       class="w-4 h-4 text-yellow-400"
+                                                                       aria-hidden="true"></i>
                                                                     Level:
                                                                     <span>Beginner <span
                                                                             class="font-bold text-yellow-700">{{ $req['beginner_participants'] ?? 0 }}</span></span>,
@@ -277,7 +276,8 @@
                                                     </div>
                                                 @else
                                                     <div class="mt-2 text-gray-600 text-sm">No specific participant
-                                                        requirements.</div>
+                                                        requirements.
+                                                    </div>
                                                 @endif
 
                                                 <!-- Minimum Age -->
@@ -286,7 +286,7 @@
                                                         <span
                                                             class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
                                                             <i data-lucide="calendar" class="w-4 h-4 text-green-500"
-                                                                aria-hidden="true"></i>
+                                                               aria-hidden="true"></i>
                                                             Minimum Age: <span
                                                                 class="font-bold text-green-700">{{ $event->minimum_age }}</span>
                                                         </span>
@@ -319,14 +319,14 @@
                                         <div
                                             class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden">
                                             <iframe width="100%" height="100%" frameborder="0"
-                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                                allowfullscreen>
+                                                    style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                                    src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                                    allowfullscreen>
                                             </iframe>
                                         </div>
                                         <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                            target="_blank"
-                                            class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                           target="_blank"
+                                           class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                             <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
                                             Open in Google Maps
                                         </a>
@@ -382,7 +382,7 @@
                                     @if ($event->users->contains(auth()->user()))
                                         <button class="w-full btn btn-secondary btn-lg" disabled>
                                             <i data-lucide="check" class="w-5 h-5 mr-2"></i>
-                                            {{--                                    get status from event_user table --}}
+                                            {{-- get status from event_user table --}}
                                             <span
                                                 class="capitalize">{{ $event->users->where('id', auth()->user()->id)->first()->pivot->status }}</span>
                                         </button>
@@ -394,11 +394,11 @@
                                         @if (session()->has('event_full'))
                                             <div role="alert" class="alert alert-warning">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                                    viewBox="0 0 24 24">
+                                                     class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                                          stroke-width="2"
+                                                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                                                 </svg>
                                                 <span>{{ session('event_full') }}</span>
                                             </div>

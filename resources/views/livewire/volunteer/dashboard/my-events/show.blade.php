@@ -63,6 +63,34 @@
                                     <i data-lucide="users" class="w-5 h-5"></i>
                                     <span>Community Space</span>
                                 </a>
+                                @if ($status == 'pending' || $status == 'accepted')
+                                    <button onclick="leaveEvent.showModal()"
+                                        class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                        <i data-lucide="log-out" class="w-5 h-5"></i>
+                                        <span>Leave Event</span>
+                                    </button>
+
+                                    <dialog id="leaveEvent" class="modal">
+                                        <div class="modal-box text-left">
+                                            <form method="dialog">
+                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                                                    ✕
+                                                </button>
+                                            </form>
+                                            <h3 class="text-lg font-bold">Are you sure?</h3>
+                                            <p class="text-sm text-base-content/60 mt-2">Do you wish to leave this event?
+                                            </p>
+                                            <p class="py-4">
+                                                You will not receive any points if you <span class="text-error">leave</span>
+                                                this even early.
+                                            </p>
+
+                                            <button class="btn btn-error" wire:click="leaveEvent" title="Delete task list">
+                                                Leave
+                                            </button>
+                                        </div>
+                                    </dialog>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -96,8 +124,7 @@
                                     </div>
                                 </div>
                             @elseif ($status == 'accepted')
-                                <div
-                                    class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
+                                <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
                                     <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
                                     <div>
                                         <h3 class="text-lg font-bold text-green-700">You're In!</h3>
@@ -186,7 +213,7 @@
                                                     <span
                                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-sm font-medium">
                                                         <i data-lucide="venus-mars" class="w-4 h-4 text-blue-400"
-                                                           aria-hidden="true"></i>
+                                                            aria-hidden="true"></i>
                                                         <span class="flex items-center gap-1">
                                                             Men: <span
                                                                 class="font-bold text-blue-700">{{ $req['male_participants'] ?? 0 }}</span>
@@ -204,7 +231,7 @@
                                                     <span
                                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium">
                                                         <i data-lucide="bar-chart" class="w-4 h-4 text-yellow-400"
-                                                           aria-hidden="true"></i>
+                                                            aria-hidden="true"></i>
                                                         Level:
                                                         <span>Beginner <span
                                                                 class="font-bold text-yellow-700">{{ $req['beginner_participants'] ?? 0 }}</span></span>,
@@ -233,7 +260,7 @@
                                             <span
                                                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
                                                 <i data-lucide="calendar" class="w-4 h-4 text-green-500"
-                                                   aria-hidden="true"></i>
+                                                    aria-hidden="true"></i>
                                                 Minimum Age: <span
                                                     class="font-bold text-green-700">{{ $event->minimum_age }}</span>
                                             </span>
@@ -269,14 +296,14 @@
                                     <div
                                         class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden mb-1">
                                         <iframe width="100%" height="100%" frameborder="0"
-                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                                allowfullscreen>
+                                            style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                            src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                            allowfullscreen>
                                         </iframe>
                                     </div>
                                     <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                       target="_blank"
-                                       class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                        target="_blank"
+                                        class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                         <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
                                         Open in Google Maps
                                     </a>
@@ -319,8 +346,7 @@
                                 <h2 class="text-xl font-bold text-gray-800 mb-4">Tags</h2>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($event->tags as $tag)
-                                        <span
-                                            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                                             #{{ $tag->name }}
                                         </span>
                                     @endforeach
@@ -359,19 +385,19 @@
                 </div>
                 @if ($status == 'accepted')
                     <label class="tab">
-                        <input type="radio" name="my_tabs_4"/>
+                        <input type="radio" name="my_tabs_4" />
                         <i data-lucide="book-check" class="w-4 h-4 mr-2"></i>
                         Workflows
                     </label>
 
                     <div class="tab-content bg-gray-100 border-base-300 p-6">
-                        <livewire:common.workflow :eventId="$event->id"/>
+                        <livewire:common.workflow :eventId="$event->id" />
                     </div>
                 @endif
 
                 {{-- Event Gallery--}}
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4"/>
+                    <input type="radio" name="my_tabs_4" />
                     <i data-lucide="image" class="w-4 h-4 mr-2"></i>
                     Event Gallery
                 </label>
@@ -395,8 +421,7 @@
                                     class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm text-gray-700 hover:bg-gray-50">
                                     <i data-lucide="upload" class="w-4 h-4"></i>
                                     <span>Choose photos</span>
-                                    <input type="file" wire:model="photos" multiple accept="image/*"
-                                        class="hidden">
+                                    <input type="file" wire:model="photos" multiple accept="image/*" class="hidden">
                                 </label>
 
                                 <div class="ml-auto flex items-center gap-3">
@@ -497,9 +522,9 @@
                                                     <label for="rating"
                                                         class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
                                                     {{-- <input type="number" min="1" max="5" wire:model="rating"
-                                                               id="rating"
-                                                               class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
-                                                               placeholder="1-5"> --}}
+                                                        id="rating"
+                                                        class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                                                        placeholder="1-5"> --}}
                                                     <div class="rating rating-lg rating-half">
                                                         <input type="radio" wire:model="rating" name="rating-11"
                                                             class="rating-hidden" />
@@ -595,7 +620,7 @@
                                                         </div>
                                                         <div class="flex items-center gap-2">
                                                             <div class="rating rating-lg rating-half">
-                                                            {{-- 1 full opacity ,0.2 almost transparert --}}
+                                                                {{-- 1 full opacity ,0.2 almost transparert --}}
                                                                 <div class="mask mask-star-2 mask-half-1 bg-green-500"
                                                                     aria-label="0.5 star"
                                                                     style="opacity:{{ $review->rating >= 0.5 ? 1 : 0.2 }}">
