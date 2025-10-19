@@ -104,9 +104,11 @@ import {
     GripHorizontal,
     GripVertical,
     Send,
-    Paperclip
+    Paperclip,
+    Bot,
+    BotMessageSquare,
+    Bookmark,
 } from "lucide";
-
 
 function registerIcons() {
     createIcons({
@@ -215,9 +217,11 @@ function registerIcons() {
             SendHorizontal,
             LoaderCircle,
             MoveUp,
-            CircleX
+            CircleX,
+            Bot,
+            BotMessageSquare,
+            Bookmark,
         },
-
     });
 }
 

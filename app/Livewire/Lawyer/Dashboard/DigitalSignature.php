@@ -18,9 +18,15 @@ class DigitalSignature extends Component
                 'value' => 'Volunteer Service (No monetary compensation)',
                 'created_at' => '2024-01-15',
                 'contract_number' => 'VSA-2024-001',
-                'representative' => 'Maria Rodriguez',
-                'email' => 'maria@greenearth.org',
-                'phone' => '+1 (555) 123-4567'
+                'event' => 'Community Garden Project 2024',
+                'start_date' => '2024-02-01',
+                'end_date' => '2024-02-28',
+                'duration' => '4 weeks',
+                'contact' => '+1 (555) 123-4567',
+                'volunteer_name' => 'John Doe',
+                'volunteer_address' => '123 Main St, Springfield',
+                'volunteer_email' => 'john.doe@example.com',
+                'volunteer_nic' => '901234567V',
             ],
             [
                 'id' => 2,
@@ -31,9 +37,15 @@ class DigitalSignature extends Component
                 'value' => 'Volunteer Service (No monetary compensation)',
                 'created_at' => '2024-01-20',
                 'contract_number' => 'VSA-2024-002',
-                'representative' => 'David Chen',
-                'email' => 'david@cityfoodbank.org',
-                'phone' => '+1 (555) 234-5678'
+                'event' => 'City Food Bank Distribution 2024',
+                'start_date' => '2024-03-01',
+                'end_date' => '2024-03-31',
+                'duration' => '4 weeks',
+                'contact' => '+1 (555) 234-5678',
+                'volunteer_name' => 'Mary Johnson',
+                'volunteer_address' => '456 Elm St, Springfield',
+                'volunteer_email' => 'mary.johnson@example.com',
+                'volunteer_nic' => '812345678V',
             ],
             [
                 'id' => 3,
@@ -44,9 +56,6 @@ class DigitalSignature extends Component
                 'value' => '$85,000',
                 'created_at' => '2024-01-18',
                 'contract_number' => 'EC-2024-001',
-                'representative' => 'Sarah Johnson',
-                'email' => 'hr@techcorp.com',
-                'phone' => '+1 (555) 345-6789'
             ]
         ];
 
@@ -61,9 +70,15 @@ class DigitalSignature extends Component
                 'created_at' => '2024-01-10',
                 'signed_at' => '2024-01-12',
                 'contract_number' => 'VSA-2024-003',
-                'representative' => 'Lisa Park',
-                'email' => 'lisa@oceanconservation.org',
-                'phone' => '+1 (555) 456-7890'
+                'event' => 'Community Clean-up Drive 2024',
+                'start_date' => '2024-01-01',
+                'end_date' => '2024-01-31',
+                'duration' => '4 weeks',
+                'contact' => '+1 (555) 456-7890',
+                'volunteer_name' => 'Jane Smith',
+                'volunteer_address' => '789 Oak Ave, Springfield',
+                'volunteer_email' => 'jane.smith@example.com',
+                'volunteer_nic' => '701234567V',
             ],
             [
                 'id' => 5,
@@ -75,9 +90,6 @@ class DigitalSignature extends Component
                 'created_at' => '2024-01-05',
                 'signed_at' => '2024-01-08',
                 'contract_number' => 'PA-2024-001',
-                'representative' => 'Michael Brown',
-                'email' => 'michael@metrolegalaid.org',
-                'phone' => '+1 (555) 567-8901'
             ]
         ];
 

@@ -20,227 +20,136 @@
                 </div>
             </div>
 
-            <!-- Template Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-600">Total Templates</p>
-                            <p class="text-3xl font-bold text-gray-800">{{ $stats['total_templates'] }}</p>
-                        </div>
-                        <div class="p-3 bg-gray-100 rounded-full">
-                            <i data-lucide="file-text" class="w-6 h-6 text-gray-600"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-600">Active Templates</p>
-                            <p class="text-3xl font-bold text-green-600">{{ $stats['active_templates'] }}</p>
-                        </div>
-                        <div class="p-3 bg-green-100 rounded-full">
-                            <i data-lucide="check-circle" class="w-6 h-6 text-green-600"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-600">Most Used</p>
-                            <p class="text-3xl font-bold text-accent">{{ $stats['most_used'] }}</p>
-                        </div>
-                        <div class="p-3 bg-green-100 rounded-full">
-                            <i data-lucide="trending-up" class="w-6 h-6 text-accent"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-600">Last Modified</p>
-                            <p class="text-3xl font-bold text-black">{{ $stats['last_modified'] }}</p>
-                        </div>
-                        <div class="p-3 bg-gray-100 rounded-full">
-                            <i data-lucide="clock" class="w-6 h-6 text-black"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action Bar -->
-            <div class="flex justify-between items-center">
-                <div class="flex gap-4">
-                    <select id="templateTypeFilter" class="select select-bordered select-sm" onchange="applyFilters()">
-                        <option value="">All Types</option>
-                        <option value="Volunteer Service Agreement">Volunteer Service Agreement</option>
-                        <option value="Employment Contract">Employment Contract</option>
-                        <option value="Partnership Agreement">Partnership Agreement</option>
-                        <option value="NDA">NDA</option>
-                        <option value="General Contract">General Contract</option>
-                    </select>
-                    <select id="statusFilter" class="select select-bordered select-sm" onchange="applyFilters()">
-                        <option value="">All Status</option>
-                        <option value="active">Active</option>
-                        <option value="draft">Draft</option>
-                        <option value="archived">Archived</option>
-                    </select>
-                </div>
-                <button class="btn btn-accent" onclick="openCreateTemplateModal()">
-                    <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
-                    New Template
-                </button>
-            </div>
-
-            <!-- Contract Customization -->
+            <!-- Incoming Change Requests -->
             <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-semibold text-gray-800">Contract Templates</h3>
-                    <span id="resultCount" class="text-sm text-gray-500">Showing {{ count($templates) }} templates</span>
+                    <h3 class="text-xl font-semibold text-gray-800">Incoming Change Requests</h3>
+                    <span class="text-sm text-gray-500">Showing {{ count($changeRequests ?? []) }} requests</span>
                 </div>
 
-                <div id="templatesList" class="space-y-4">
-                    @foreach($templates as $template)
-                    <div class="template-card border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all duration-200"
-                        data-type="{{ $template['type'] }}"
-                        data-status="{{ $template['status'] }}">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <h4 class="font-semibold text-gray-800 text-lg">{{ $template['name'] }}</h4>
-                                    <span class="px-3 py-1 text-xs font-medium rounded-full 
-                                        @if($template['status'] == 'active') bg-green-100 text-green-700
-                                        @elseif($template['status'] == 'draft') bg-yellow-100 text-yellow-700
-                                        @else bg-gray-100 text-gray-700 @endif">
-                                        {{ ucfirst($template['status']) }}
+                @if(($changeRequests ?? []) && count($changeRequests))
+                <div class="space-y-4">
+                    @foreach($changeRequests as $req)
+                    <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all duration-200"
+                        data-request-id="{{ $req['id'] }}">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <div class="flex items-center gap-3 mb-1">
+                                    <h4 class="font-semibold text-gray-800 text-lg">
+                                        {{ $req['template_name'] }}
+                                    </h4>
+                                    <span class="px-3 py-1 text-xs font-medium rounded-full
+                                            @if($req['status'] === 'pending') bg-yellow-100 text-yellow-700
+                                            @elseif($req['status'] === 'approved') bg-green-100 text-green-700
+                                            @else bg-red-100 text-red-700 @endif js-status-badge">
+                                        {{ ucfirst($req['status']) }}
+                                    </span>
+                                    <span class="px-2 py-0.5 text-[10px] rounded-full
+                                            @if(($req['priority'] ?? 'low') === 'high') bg-red-100 text-red-700
+                                            @elseif(($req['priority'] ?? 'low') === 'medium') bg-yellow-100 text-yellow-700
+                                            @else bg-gray-100 text-gray-700 @endif">
+                                        {{ strtoupper($req['priority'] ?? 'low') }}
                                     </span>
                                 </div>
-                                <div class="flex items-center gap-4 text-sm text-gray-600 mb-2">
-                                    <div class="flex items-center gap-1">
-                                        <i data-lucide="scroll-text" class="w-3 h-3 text-gray-500"></i>
-                                        <span>{{ $template['type'] }}</span>
-                                    </div>
-                                    <span class="text-gray-400">•</span>
-                                    <span>{{ $template['usage_count'] }} uses</span>
-                                    <span class="text-gray-400">•</span>
-                                    <span>Modified {{ $template['last_modified'] }}</span>
-                                </div>
-                                <p class="text-sm text-gray-600">{{ $template['description'] }}</p>
+                                <p class="text-sm text-gray-600">
+                                    <span class="font-medium text-gray-800">{{ $req['organization'] }}</span>
+                                    <span class="text-gray-400 mx-1">•</span>
+                                    Requested at {{ $req['requested_at'] }}
+                                </p>
+                                <p class="text-sm text-gray-600 mt-2 line-clamp-2">
+                                    <span class="font-medium">Reason:</span> {{ $req['reason'] }}
+                                </p>
                             </div>
                             <div class="flex gap-2">
-                                <button class="btn btn-outline btn-sm" onclick="previewTemplate({{ json_encode($template) }})">
+                                <button class="btn btn-outline btn-sm"
+                                    onclick='openRequestModal(@json($req))'>
                                     <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
-                                    Preview
+                                    View
                                 </button>
-                                <button class="btn btn-accent btn-sm" onclick="editTemplate({{ json_encode($template) }})">
-                                    <i data-lucide="edit-3" class="w-4 h-4 mr-2"></i>
-                                    Edit
+                                <button class="btn btn-success btn-sm"
+                                    onclick='approveChangeRequest(@json(["id"=>$req["id"]]))'>
+                                    <i data-lucide="check" class="w-4 h-4 mr-2"></i>
+                                    Approve
                                 </button>
-                                <div class="dropdown dropdown-end">
-                                    <div tabindex="0" role="button" class="btn btn-ghost btn-sm">
-                                        <i data-lucide="settings" class="w-4 h-4"></i>
-                                    </div>
-                                    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                                        <li><a onclick="duplicateTemplate({{ json_encode($template) }})">
-                                                <i data-lucide="files" class="w-4 h-4"></i>
-                                                Duplicate
-                                            </a></li>
-                                        <li><a onclick="toggleTemplateStatus({{ json_encode($template) }})">
-                                                <i data-lucide="archive" class="w-4 h-4"></i>
-                                                {{ $template['status'] == 'active' ? 'Archive' : 'Activate' }}
-                                            </a></li>
-                                        <li><a onclick="exportTemplate({{ json_encode($template) }})">
-                                                <i data-lucide="download" class="w-4 h-4"></i>
-                                                Export
-                                            </a></li>
-                                        <li class="border-t pt-2 mt-2"><a onclick="deleteTemplate({{ json_encode($template) }})" class="text-red-600">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                                Delete
-                                            </a></li>
-                                    </ul>
-                                </div>
+                                <button class="btn btn-error btn-sm"
+                                    onclick='rejectChangeRequest(@json(["id"=>$req["id"]]))'>
+                                    <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                                    Reject
+                                </button>
                             </div>
                         </div>
                     </div>
                     @endforeach
                 </div>
-
-                <!-- No Results Message -->
-                <div id="noResults" class="hidden text-center py-12">
-                    <i data-lucide="file-text" class="w-16 h-16 mx-auto text-gray-400 mb-4"></i>
-                    <h3 class="text-lg font-medium text-gray-600 mb-2">No templates found</h3>
-                    <p class="text-gray-500">Try adjusting your filters or create a new template</p>
+                @else
+                <div class="text-center py-12">
+                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="inbox" class="w-8 h-8 text-gray-400"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-600 mb-2">No Incoming Requests</h4>
+                    <p class="text-gray-500">Organizations can submit change requests to appear here</p>
                 </div>
+                @endif
             </div>
         </div>
     </main>
 
-    <!-- Template Preview/Edit Modal -->
-    <div id="templateModal" class="fixed inset-0 bg-white/95 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-gray-200">
-            <!-- Modal Header -->
-            <div class="bg-green-600 text-white p-6">
+    <!-- New: Request Details Modal -->
+    <div id="requestModal" class="fixed inset-0 bg-white/95 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden border border-gray-200">
+            <div class="bg-gray-800 text-white p-6">
                 <div class="flex justify-between items-center">
                     <div>
-                        <h2 id="modalTitle" class="text-2xl font-bold">Template Management</h2>
-                        <p id="modalSubtitle" class="text-green-100 mt-1">Customize your contract template</p>
+                        <h2 id="reqModalTitle" class="text-2xl font-bold">Request Details</h2>
+                        <p id="reqModalSubtitle" class="text-gray-300 mt-1">Review proposed changes before approval</p>
                     </div>
-                    <button onclick="closeTemplateModal()" class="text-white hover:text-gray-200 transition-colors">
+                    <button onclick="closeRequestModal()" class="text-white hover:text-gray-200 transition-colors">
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
                 </div>
             </div>
-
-            <!-- Modal Content -->
-            <div class="p-6 overflow-y-auto max-h-[70vh]">
-                <form id="templateForm" class="space-y-6">
-                    <!-- Template Details -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Template Name</label>
-                            <input type="text" id="templateName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Enter template name">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Contract Type</label>
-                            <select id="templateType" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                                <option>General Contract</option>
-                                <option>Volunteer Service Agreement</option>
-                                <option>Employment Contract</option>
-                                <option>Partnership Agreement</option>
-                                <option>NDA</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                            <textarea id="templateDescription" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Brief description of the template"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Template Content -->
+            <div class="p-6 overflow-y-auto max-h-[70vh] space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Template Content</label>
-                        <textarea id="templateContent" rows="15" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 font-mono text-sm" placeholder="Enter your template content here..."></textarea>
-                        <p class="text-xs text-gray-500 mt-2">Use placeholders like [CLIENT_NAME], [DATE], [AMOUNT] for dynamic content</p>
+                        <p class="text-gray-500">Organization</p>
+                        <p id="reqOrg" class="font-medium text-gray-800">-</p>
                     </div>
-                </form>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-t border-gray-200">
-                <div class="flex items-center gap-4">
-                    <label class="flex items-center gap-2">
-                        <input type="checkbox" id="templateActive" class="checkbox checkbox-sm checkbox-accent">
-                        <span class="text-sm text-gray-700">Set as active template</span>
-                    </label>
+                    <div>
+                        <p class="text-gray-500">Contact</p>
+                        <p id="reqContact" class="font-medium text-gray-800">-</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Requested At</p>
+                        <p id="reqRequestedAt" class="font-medium text-gray-800">-</p>
+                    </div>
                 </div>
-                <div class="flex gap-3">
-                    <button onclick="closeTemplateModal()" class="btn btn-outline">Cancel</button>
-                    <button id="saveTemplateBtn" class="btn btn-accent">
-                        <i data-lucide="save" class="w-4 h-4 mr-2"></i>
-                        Save Template
+
+                <div>
+                    <p class="text-gray-700 font-semibold mb-1">Reason</p>
+                    <p id="reqReason" class="text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded p-3">-</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border rounded-lg">
+                        <div class="px-4 py-2 bg-gray-50 border-b text-sm font-medium text-gray-700">Current Terms</div>
+                        <pre id="reqCurrentTerms" class="p-4 text-sm overflow-auto whitespace-pre-wrap bg-white">-</pre>
+                    </div>
+                    <div class="border rounded-lg">
+                        <div class="px-4 py-2 bg-green-50 border-b text-sm font-medium text-green-700">Proposed Terms</div>
+                        <pre id="reqProposedTerms" class="p-4 text-sm overflow-auto whitespace-pre-wrap bg-white">-</pre>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-t border-gray-200">
+                <button onclick="closeRequestModal()" class="btn btn-outline">Close</button>
+                <div class="flex gap-2">
+                    <button id="reqRejectBtn" class="btn btn-error">
+                        <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                        Reject
+                    </button>
+                    <button id="reqApproveBtn" class="btn btn-success">
+                        <i data-lucide="check" class="w-4 h-4 mr-2"></i>
+                        Approve
                     </button>
                 </div>
             </div>
@@ -249,223 +158,106 @@
 </x-lawyer.dashboard-layout>
 
 <script>
-    let currentTemplate = null;
-    let isEditMode = false;
+    // Keep only request-related globals
+    var currentRequest = window.currentRequest || null;
+    window.currentRequest = currentRequest;
 
-    function applyFilters() {
-        const typeFilter = document.getElementById('templateTypeFilter').value;
-        const statusFilter = document.getElementById('statusFilter').value;
+    // Request interactions
+    function openRequestModal(request) {
+        currentRequest = request;
+        window.currentRequest = currentRequest;
 
-        const templateCards = document.querySelectorAll('.template-card');
-        let visibleCount = 0;
+        // Header
+        const t = request.template_name || 'Request Details';
+        document.getElementById('reqModalTitle').textContent = t;
+        document.getElementById('reqModalSubtitle').textContent = (request.organization || '-') + ' • ' + (request.priority || 'low').toUpperCase();
 
-        templateCards.forEach(card => {
-            const cardType = card.getAttribute('data-type');
-            const cardStatus = card.getAttribute('data-status');
+        // Meta
+        document.getElementById('reqOrg').textContent = request.organization || '-';
+        document.getElementById('reqContact').textContent = `${request.contact_person || '-'} (${request.contact_email || '-'})`;
+        document.getElementById('reqRequestedAt').textContent = request.requested_at || '-';
 
-            const typeMatch = !typeFilter || cardType === typeFilter;
-            const statusMatch = !statusFilter || cardStatus === statusFilter;
+        // Content
+        document.getElementById('reqReason').textContent = request.reason || '-';
+        document.getElementById('reqCurrentTerms').textContent = request.current_terms || '-';
+        document.getElementById('reqProposedTerms').textContent = request.proposed_terms || '-';
 
-            if (typeMatch && statusMatch) {
-                card.style.display = 'block';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
+        // Bind footer actions
+        const approve = () => approveChangeRequest({
+            id: request.id
         });
+        const reject = () => rejectChangeRequest({
+            id: request.id
+        });
+        document.getElementById('reqApproveBtn').onclick = approve;
+        document.getElementById('reqRejectBtn').onclick = reject;
 
-        document.getElementById('resultCount').textContent = `Showing ${visibleCount} templates`;
-
-        const noResults = document.getElementById('noResults');
-        if (visibleCount === 0) {
-            noResults.classList.remove('hidden');
-        } else {
-            noResults.classList.add('hidden');
-        }
-    }
-
-    function openCreateTemplateModal() {
-        isEditMode = false;
-        currentTemplate = null;
-
-        document.getElementById('modalTitle').textContent = 'Create New Template';
-        document.getElementById('modalSubtitle').textContent = 'Design a custom contract template';
-
-        // Clear form
-        document.getElementById('templateName').value = '';
-        document.getElementById('templateType').value = 'General Contract';
-        document.getElementById('templateDescription').value = '';
-        document.getElementById('templateContent').value = '';
-        document.getElementById('templateActive').checked = true;
-
-        document.getElementById('templateModal').classList.remove('hidden');
+        // Show modal
+        const modal = document.getElementById('requestModal');
+        if (modal) modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
 
-    function editTemplate(template) {
-        isEditMode = true;
-        currentTemplate = template;
-
-        document.getElementById('modalTitle').textContent = 'Edit Template';
-        document.getElementById('modalSubtitle').textContent = template.name;
-
-        // Fill form with template data
-        document.getElementById('templateName').value = template.name;
-        document.getElementById('templateType').value = template.type;
-        document.getElementById('templateDescription').value = template.description;
-        document.getElementById('templateContent').value = template.content || getSampleTemplateContent(template.type);
-        document.getElementById('templateActive').checked = template.status === 'active';
-
-        document.getElementById('templateModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function previewTemplate(template) {
-        editTemplate(template);
-
-        // Make form read-only for preview
-        const inputs = document.querySelectorAll('#templateForm input, #templateForm select, #templateForm textarea');
-        inputs.forEach(input => input.disabled = true);
-
-        document.getElementById('modalTitle').textContent = 'Preview Template';
-        document.getElementById('saveTemplateBtn').style.display = 'none';
-    }
-
-    function closeTemplateModal() {
-        document.getElementById('templateModal').classList.add('hidden');
+    function closeRequestModal() {
+        const modal = document.getElementById('requestModal');
+        if (modal) modal.classList.add('hidden');
         document.body.style.overflow = 'auto';
-
-        // Re-enable form elements
-        const inputs = document.querySelectorAll('#templateForm input, #templateForm select, #templateForm textarea');
-        inputs.forEach(input => input.disabled = false);
-
-        document.getElementById('saveTemplateBtn').style.display = 'inline-flex';
+        currentRequest = null;
+        window.currentRequest = null;
     }
 
-    function duplicateTemplate(template) {
-        if (confirm(`Create a copy of "${template.name}"?`)) {
-            alert(`Template "${template.name}" has been duplicated successfully!`);
-            // In real implementation, this would create a copy
+    function setStatusBadge(el, status) {
+        el.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+        el.classList.remove('bg-yellow-100', 'text-yellow-700', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+        if (status === 'approved') {
+            el.classList.add('bg-green-100', 'text-green-700');
+        } else if (status === 'rejected') {
+            el.classList.add('bg-red-100', 'text-red-700');
+        } else {
+            el.classList.add('bg-yellow-100', 'text-yellow-700');
         }
     }
 
-    function toggleTemplateStatus(template) {
-        const action = template.status === 'active' ? 'archive' : 'activate';
-        if (confirm(`${action.charAt(0).toUpperCase() + action.slice(1)} template "${template.name}"?`)) {
-            alert(`Template "${template.name}" has been ${action}d successfully!`);
-            // In real implementation, this would update the status
-        }
-    }
+    function approveChangeRequest(payload) {
+        const id = (payload && payload.id) ? payload.id : (currentRequest && currentRequest.id);
+        if (!id) return;
+        if (!confirm('Approve this change request?')) return;
 
-    function exportTemplate(template) {
-        alert(`Exporting template "${template.name}"...\n\nThe template would be downloaded as a file in a real implementation.`);
-    }
-
-    function deleteTemplate(template) {
-        if (confirm(`Are you sure you want to delete template "${template.name}"?\n\nThis action cannot be undone.`)) {
-            alert(`Template "${template.name}" has been deleted successfully!`);
-            // In real implementation, this would delete the template
-        }
-    }
-
-    function getSampleTemplateContent(type) {
-        const templates = {
-            'Volunteer Service Agreement': `VOLUNTEER SERVICE AGREEMENT
-
-This Volunteer Service Agreement ("Agreement") is entered into on [DATE] between:
-
-ORGANIZATION: [ORGANIZATION_NAME]
-VOLUNTEER: [VOLUNTEER_NAME]
-
-1. SERVICE DESCRIPTION
-The Volunteer agrees to provide voluntary services as described in the service request.
-
-2. DURATION
-Service Period: From [START_DATE] to [END_DATE]
-
-3. RESPONSIBILITIES
-• Volunteer Responsibilities: [VOLUNTEER_RESPONSIBILITIES]
-• Organization Responsibilities: [ORGANIZATION_RESPONSIBILITIES]
-
-4. COMPENSATION
-This is a voluntary service agreement. No monetary compensation will be provided.
-
-5. TERMINATION
-Either party may terminate this agreement with 7 days written notice.`,
-
-            'Employment Contract': `EMPLOYMENT CONTRACT
-
-This Employment Contract is entered into on [DATE] between:
-
-EMPLOYER: [EMPLOYER_NAME]
-EMPLOYEE: [EMPLOYEE_NAME]
-
-1. POSITION
-Position: [POSITION_TITLE]
-Department: [DEPARTMENT]
-
-2. COMPENSATION
-Salary: [SALARY_AMOUNT] per [PERIOD]
-
-3. BENEFITS
-[BENEFITS_DESCRIPTION]
-
-4. TERM
-Start Date: [START_DATE]
-Employment Type: [EMPLOYMENT_TYPE]`,
-
-            'General Contract': `GENERAL CONTRACT
-
-This Contract is entered into on [DATE] between:
-
-PARTY 1: [PARTY1_NAME]
-PARTY 2: [PARTY2_NAME]
-
-1. PURPOSE
-[CONTRACT_PURPOSE]
-
-2. TERMS AND CONDITIONS
-[TERMS_AND_CONDITIONS]
-
-3. CONSIDERATION
-[CONSIDERATION_AMOUNT]
-
-4. DURATION
-From [START_DATE] to [END_DATE]`
-        };
-
-        return templates[type] || templates['General Contract'];
-    }
-
-    // Save template functionality
-    document.getElementById('saveTemplateBtn').addEventListener('click', function() {
-        const templateData = {
-            name: document.getElementById('templateName').value,
-            type: document.getElementById('templateType').value,
-            description: document.getElementById('templateDescription').value,
-            content: document.getElementById('templateContent').value,
-            active: document.getElementById('templateActive').checked
-        };
-
-        if (!templateData.name || !templateData.content) {
-            alert('Please fill in the template name and content.');
-            return;
+        const card = document.querySelector(`[data-request-id="${id}"]`);
+        if (card) {
+            const badge = card.querySelector('.js-status-badge');
+            if (badge) setStatusBadge(badge, 'approved');
         }
 
-        const action = isEditMode ? 'updated' : 'created';
-        alert(`Template "${templateData.name}" has been ${action} successfully!`);
+        alert('Change request has been approved. (Front-end only)');
+        closeRequestModal();
+    }
 
-        closeTemplateModal();
-        // In real implementation, this would save to backend
-    });
+    function rejectChangeRequest(payload) {
+        const id = (payload && payload.id) ? payload.id : (currentRequest && currentRequest.id);
+        if (!id) return;
+        if (!confirm('Reject this change request?')) return;
 
-    // Close modal when clicking outside
-    document.addEventListener('click', function(e) {
-        if (e.target.id === 'templateModal') closeTemplateModal();
-    });
+        const card = document.querySelector(`[data-request-id="${id}"]`);
+        if (card) {
+            const badge = card.querySelector('.js-status-badge');
+            if (badge) setStatusBadge(badge, 'rejected');
+        }
 
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeTemplateModal();
-    });
+        alert('Change request has been rejected. (Front-end only)');
+        closeRequestModal();
+    }
+
+    // Guarded listeners to avoid duplicates
+    if (!window.__contractCustomizationListenersAdded) {
+        // Close request modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'requestModal') closeRequestModal();
+        });
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeRequestModal();
+        });
+        window.__contractCustomizationListenersAdded = true;
+    }
 </script>

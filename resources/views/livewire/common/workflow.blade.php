@@ -8,8 +8,8 @@
         @enderror
     </div>
 
-
-    <div class="flex gap-4 overflow-x-auto pb-6" wire:sortable="updateTaskListOrder"
+{{-- max-w-96 work but dont know how --}}
+    <div class="flex flex-wrap gap-4 pb-6" wire:sortable="updateTaskListOrder"
          wire:sortable-group="updateTaskOrder">
         @forelse($taskLists as $taskList)
             <section wire:key="tasklist-{{ $taskList->id }}" wire:sortable.item="{{ $taskList->id }}"

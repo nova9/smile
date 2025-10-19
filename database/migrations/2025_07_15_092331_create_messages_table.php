@@ -16,7 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(\App\Models\User::class);
             $table->foreignIdFor(\App\Models\Chat::class);
-            $table->text('content');
+            $table->text('content')->nullable();
+            $table->foreignIdFor(\App\Models\File::class)->nullable();
             $table->foreignId('reply_to_id')->nullable()->constrained('messages')->nullOnDelete();
         });
     }
