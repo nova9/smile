@@ -39,10 +39,11 @@ class ContractDrafting extends Component
         ];
 
         $this->templates = [
+            ['name' => 'Volunteer Service Agreement Template', 'category' => 'Community'],
             ['name' => 'Service Agreement Template', 'category' => 'Business'],
             ['name' => 'Employment Contract Template', 'category' => 'HR'],
             ['name' => 'NDA Template', 'category' => 'Legal'],
-            ['name' => 'Partnership Agreement Template', 'category' => 'Business']
+            ['name' => 'Partnership Agreement Template', 'category' => 'Business'],
         ];
     }
 
