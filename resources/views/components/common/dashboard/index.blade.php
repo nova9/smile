@@ -37,8 +37,10 @@
                 {{-- spacer --}}
             </div>
 
-            <div class="flex  gap-1">
+            <div class="flex ">
+                @if(auth()->user()->role['name'] == 'volunteer' || auth()->user()->role['name'] == 'requester')
                 <livewire:common.legal-help />
+                @endif
                 <livewire:common.notification />
                 <livewire:common.chat />
                 <livewire:common.help-support />
