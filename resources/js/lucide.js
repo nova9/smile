@@ -106,9 +106,9 @@ import {
     Send,
     Paperclip,
     Bot,
-    BotMessageSquare
+    BotMessageSquare,
+    Bookmark,
 } from "lucide";
-
 
 function registerIcons() {
     createIcons({
@@ -219,9 +219,9 @@ function registerIcons() {
             MoveUp,
             CircleX,
             Bot,
-            BotMessageSquare
+            BotMessageSquare,
+            Bookmark,
         },
-
     });
 }
 
