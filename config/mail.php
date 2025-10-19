@@ -111,7 +111,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'smile@noufa.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@smilevolunteer.org'),
         'name' => env('MAIL_FROM_NAME', 'SMILE'),
     ],
 
