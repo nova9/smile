@@ -31,7 +31,7 @@
                             <p class="text-3xl font-bold text-gray-800">{{ $stats['total_contracts'] }}</p>
                         </div>
                         <div class="p-3 bg-green-100 rounded-full">
-                            <i data-lucide="file-text" class="w-6 h-6 text-green-600"></i>
+                            <i data-lucide="FileText" class="w-6 h-6 text-green-600"></i>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                             <p class="text-3xl font-bold text-red-600">{{ $stats['pending_approval'] }}</p>
                         </div>
                         <div class="p-3 bg-red-100 rounded-full">
-                            <i data-lucide="clock" class="w-6 h-6 text-red-600"></i>
+                            <i data-lucide="Clock" class="w-6 h-6 text-red-600"></i>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                             <p class="text-3xl font-bold text-green-600">{{ $stats['active_contracts'] }}</p>
                         </div>
                         <div class="p-3 bg-green-100 rounded-full">
-                            <i data-lucide="check-circle" class="w-6 h-6 text-green-600"></i>
+                            <i data-lucide="CheckCircle" class="w-6 h-6 text-green-600"></i>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                             <p class="text-3xl font-bold text-black">{{ $stats['completed_this_month'] }}</p>
                         </div>
                         <div class="p-3 bg-gray-100 rounded-full">
-                            <i data-lucide="trending-up" class="w-6 h-6 text-black"></i>
+                            <i data-lucide="TrendingUp" class="w-6 h-6 text-black"></i>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     <a href="/lawyer/contract-drafting" class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-green-100 rounded-full">
-                                <i data-lucide="edit-3" class="w-5 h-5 text-green-600"></i>
+                                <i data-lucide="Edit3" class="w-5 h-5 text-green-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Contract Drafting</h4>
                         </div>
@@ -93,7 +93,7 @@
                     <a href="/lawyer/approval-workflow" class="p-4 border border-gray-200 rounded-lg hover:bg-red-50 hover:border-red-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-red-100 rounded-full">
-                                <i data-lucide="workflow" class="w-5 h-5 text-red-600"></i>
+                                <i data-lucide="Workflow" class="w-5 h-5 text-red-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Approval Workflow</h4>
                         </div>
@@ -105,7 +105,7 @@
                     <a href="/lawyer/digital-signature" class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-green-100 rounded-full">
-                                <i data-lucide="pen-tool" class="w-5 h-5 text-green-600"></i>
+                                <i data-lucide="PenTool" class="w-5 h-5 text-green-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Digital Signature</h4>
                         </div>
@@ -117,7 +117,7 @@
                     <a href="/lawyer/contract-archive" class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-gray-100 rounded-full">
-                                <i data-lucide="archive" class="w-5 h-5 text-gray-600"></i>
+                                <i data-lucide="Archive" class="w-5 h-5 text-gray-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Contract Archive</h4>
                         </div>
@@ -129,7 +129,7 @@
                     <a href="/lawyer/contract-customization" class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-green-100 rounded-full">
-                                <i data-lucide="settings" class="w-5 h-5 text-green-600"></i>
+                                <i data-lucide="Settings" class="w-5 h-5 text-green-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Contract Customization</h4>
                         </div>
@@ -141,7 +141,7 @@
                     <a href="/lawyer/legal-qa" class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-gray-100 rounded-full">
-                                <i data-lucide="help-circle" class="w-5 h-5 text-gray-600"></i>
+                                <i data-lucide="HelpCircle" class="w-5 h-5 text-gray-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Legal Q&A Support</h4>
                         </div>
