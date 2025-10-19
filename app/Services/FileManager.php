@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Storage;
 class FileManager
 {
     public static function store($file) {
-        $filePath = $file->store(path: 'files');
+        // Store in public disk so files are directly accessible
+        $filePath = $file->store('files', 'public');
         return File::query()->create(['name' => $filePath]);
     }
 
@@ -17,6 +18,12 @@ class FileManager
             return null;
         }
         $file = File::query()->find($fileId);
-        return Storage::temporaryUrl($file->name, now()->addMinutes(5));
+        
+        if (!$file) {
+            return null;
+        }
+        
+        // Use public URL for local storage (works immediately)
+        return Storage::disk('public')->url($file->name);
     }
 }

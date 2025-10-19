@@ -121,7 +121,7 @@ class User extends Authenticatable
 
         $user = auth()->user();
         $attributes = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
-        //         dd($attributes);
+//         dd($attributes);
         foreach ($requiredSkills as $key => $value) {
             if (!empty($attributes[$key])) {
                 $initialPercentage += $value;
@@ -236,5 +236,11 @@ class User extends Authenticatable
             $this->profile_picture = FileManager::getTemporaryUrl($profile_picture);
         }
         return $this->profile_picture;
+    }
+
+    public function getProfilePictureUrl(): ?string
+    {
+        $fileId = $this->getCustomAttribute('profile_picture');
+        return \App\Services\FileManager::getTemporaryUrl($fileId);
     }
 }

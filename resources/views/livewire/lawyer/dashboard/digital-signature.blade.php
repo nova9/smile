@@ -63,18 +63,27 @@
                                 <p>Ready for legal signature</p>
                             </div>
                             <div class="flex gap-2">
-                                <button class="btn btn-outline btn-sm" onclick='viewContract(@json($contract))'>
+                                <button
+                                    class="btn btn-outline btn-sm"
+                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
+                                    onclick="viewContract(this)">
                                     <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
                                     View
                                 </button>
                                 @if($contract['status'] != 'signed')
-                                <button class="btn btn-accent btn-sm" onclick='openSignatureModal(@json($contract))'>
+                                <button
+                                    class="btn btn-accent btn-sm"
+                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
+                                    onclick="openSignatureModal(this)">
                                     <i data-lucide="pen-tool" class="w-4 h-4 mr-2"></i>
                                     Sign Contract
                                 </button>
                                 @endif
                                 @if($contract['status'] == 'signed')
-                                <button class="btn btn-success btn-sm" onclick='downloadContract(@json($contract))'>
+                                <button
+                                    class="btn btn-success btn-sm"
+                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
+                                    onclick="downloadContract(this)">
                                     <i data-lucide="download" class="w-4 h-4 mr-2"></i>
                                     Download
                                 </button>
@@ -147,11 +156,17 @@
                                 <p>✓ Legally executed contract</p>
                             </div>
                             <div class="flex gap-2">
-                                <button class="btn btn-outline btn-sm" onclick='viewContract(@json($contract))'>
+                                <button
+                                    class="btn btn-outline btn-sm"
+                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
+                                    onclick="viewContract(this)">
                                     <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
                                     View
                                 </button>
-                                <button class="btn btn-success btn-sm" onclick='downloadContract(@json($contract))'>
+                                <button
+                                    class="btn btn-success btn-sm"
+                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
+                                    onclick="downloadContract(this)">
                                     <i data-lucide="download" class="w-4 h-4 mr-2"></i>
                                     Download
                                 </button>
@@ -318,7 +333,40 @@
         hasSignature = false;
     }
 
-    function openSignatureModal(contract) {
+    // Helper to resolve a contract from either an element (data-contract-b64 / data-contract) or a plain object
+    function resolveContractArg(arg) {
+        if (arg && arg.dataset) {
+            // Prefer base64 if present (robust against quotes/entities)
+            if (arg.dataset.contractB64) {
+                try {
+                    const json = atob(arg.dataset.contractB64);
+                    return JSON.parse(json);
+                } catch (e) {
+                    console.warn('Failed to decode/parse data-contract-b64', e);
+                }
+            }
+            // Fallback: plain JSON in data-contract (handle potential HTML entities)
+            if (arg.dataset.contract) {
+                const raw = arg.dataset.contract;
+                try {
+                    return JSON.parse(raw);
+                } catch (e1) {
+                    try {
+                        const ta = document.createElement('textarea');
+                        ta.innerHTML = raw;
+                        const decoded = ta.value;
+                        return JSON.parse(decoded);
+                    } catch (e2) {
+                        console.warn('Failed to parse data-contract JSON', e2);
+                    }
+                }
+            }
+        }
+        return arg; // assume it's already a plain object
+    }
+
+    function openSignatureModal(arg) {
+        const contract = resolveContractArg(arg);
         currentContract = contract;
 
         // Update contract details in modal
@@ -359,7 +407,8 @@
         }, 600);
     }
 
-    function viewContract(contract) {
+    function viewContract(arg) {
+        const contract = resolveContractArg(arg);
         currentContract = contract;
 
         // Update modal title
@@ -397,7 +446,8 @@
         document.body.style.overflow = 'auto';
     }
 
-    function downloadContract(contract) {
+    function downloadContract(arg) {
+        const contract = resolveContractArg(arg);
         // Simulate PDF download
         alert(`Downloading signed contract: "${contract.title}"\n\nThe PDF file would be generated and downloaded in a real implementation.`);
 
