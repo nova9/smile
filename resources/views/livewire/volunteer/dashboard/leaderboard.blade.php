@@ -16,10 +16,10 @@
                             <div class="relative">
 
                                 <div class="avatar">
-                                    <div class="mask mask-squircle h-20 w-20 ring-4 ring-primary/20">
-                                        <img src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                                            alt="Your Avatar" />
-                                    </div>
+                                        <div class="mask mask-squircle h-20 w-20 ring-4 ring-primary/20 overflow-hidden">
+                                            <img src="{{ auth()->user()->getProfilePicture() ?? 'https://img.daisyui.com/images/profile/demo/1@94.webp' }}"
+                                                alt="Your Avatar" class="object-cover w-full h-full" />
+                                        </div>
                                 </div>
                                 <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
                                     <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -35,7 +35,7 @@
                                     <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                     </svg>
-                                    <span class="text-gray-600 font-medium">UCSC</span>
+                                    <span class="text-gray-600 font-medium">{{ $location  }}</span>
                                 </div>
                             </div>
                         </div>
@@ -76,13 +76,13 @@
 
                     <!-- Table Container -->
                     <div class="overflow-x-auto">
-                        <table class="table w-full">
+                        <table class="table w-full border-collapse">
                             <!-- Head -->
                             <thead>
-                                <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-                                    <th class="px-8 py-4 text-left font-semibold text-accent">Volunteer</th>
-                                    <th class="px-8 py-4 text-left font-semibold text-accent">Points</th>
-                                    <th class="px-8 py-4 text-left font-semibold text-accent">Rank</th>
+                                <tr class="bg-gray-50 border-b border-gray-200">
+                                    <th class="px-6 py-3 text-left font-semibold text-sm text-slate-700">Volunteer</th>
+                                    <th class="px-4 py-3 text-left font-semibold text-sm text-slate-700">Points</th>
+                                    <th class="px-4 py-3 text-left font-semibold text-sm text-slate-700">Rank</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
@@ -110,7 +110,7 @@
                                                     <div class="relative">
                                                         <div class="avatar">
                                                             <div class="mask mask-squircle h-14 w-14 ring-2 {{ $user->rank == 1 ? 'ring-yellow-400/50' : ($user->rank == 2 ? 'ring-gray-400/50' : 'ring-orange-400/50') }}">
-                                                                <img src="https://img.daisyui.com/images/profile/demo/{{ $index + 2 }}@94.webp"
+                                                                <img src="{{ $user->getProfilePicture() ?? "https://img.daisyui.com/images/profile/demo/1@94.webp"}}"
                                                                     alt="Avatar" />
                                                             </div>
                                                         </div>
@@ -124,12 +124,12 @@
                                                         <div class="font-bold text-lg {{ $isTopThree ? 'bg-gradient-to-r ' . $textClasses . ' bg-clip-text text-transparent' : 'text-accent' }}">
                                                             {{ $user->name }}
                                                         </div>
-                                                        <div class="flex items-center gap-2">
+                                                        {{-- <div class="flex items-center gap-2">
                                                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                                             </svg>
                                                             <span class="text-sm text-gray-600 font-medium">UCSC</span>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
                                             </td>
@@ -168,7 +168,7 @@
                                             <div class="flex items-center gap-4">
                                                 <div class="avatar">
                                                     <div class="mask mask-squircle h-12 w-12 ring-2 ring-gray-200/50 group-hover:ring-primary/30 transition-all duration-200">
-                                                        <img src="https://img.daisyui.com/images/profile/demo/5@94.webp"
+                                                        <img src="{{ $user->getProfilePicture() ?? "https://img.daisyui.com/images/profile/demo/3@94.webp"}}"
                                                             alt="Avatar" />
                                                     </div>
                                                 </div>
@@ -176,12 +176,12 @@
                                                     <div class="font-bold text-lg text-accent group-hover:text-primary transition-colors duration-200">
                                                         {{ $user->name }}
                                                     </div>
-                                                    <div class="flex items-center gap-2">
+                                                    {{-- <div class="flex items-center gap-2">
                                                         <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                                         </svg>
                                                         <span class="text-sm text-gray-600 font-medium">Brazil</span>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </td>

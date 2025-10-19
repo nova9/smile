@@ -7,17 +7,17 @@
                     <div class="flex gap-1 flex-1">
                         <label class="input w-full">
                             <i data-lucide="search" class="w-4 h-4"></i>
-                              <input type="text" wire:model.live="search" class="grow">
+                            <input type="text" wire:model.live="search" class="grow">
 
-                                    {{-- <ul>
+                            {{-- <ul>
                                         @foreach ($users as $user)
                                             <li wire:key="{{ $user->id }}">{{ $user->name }}</li>
                                         @endforeach
                                     </ul> --}}
                         </label>
                         <label class="flex items-center gap-2 ml-2 select-none">
-                            <input type="checkbox"
-                                class="checkbox checkbox-accent checkbox-sm" wire:model.change="favouriteEventsFilter">
+                            <input type="checkbox" class="checkbox checkbox-accent checkbox-sm"
+                                wire:model.change="favouriteEventsFilter">
                             <span class="text-sm text-slate-700">favourites</span>
                         </label>
 
@@ -176,6 +176,15 @@
                         No events found.
                     </div>
                 @endforelse
+                @if (session('message'))
+                    <div class="toast toast-end">
+                        <div class="alert alert-success">
+                            <span>
+                                <div class="mb-3 text-center">{{ session('message') }}</div>
+                            </span>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -219,5 +228,6 @@
                 <i data-lucide="filter" class="w-5 h-5"></i>
             </button>
         </div> --}}
+
     </div>
 </x-volunteer.dashboard-layout>

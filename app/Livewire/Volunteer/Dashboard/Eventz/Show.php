@@ -38,55 +38,54 @@ class Show extends Component
         $currentParticipants = $this->event->users()->count();
         $slotAvailable = $maxParticipants - $currentParticipants;
 
-        if($slotAvailable > 0){
+        if ($slotAvailable > 0) {
             if ((int)$maxParticipants < (int)$currentParticipants) {
                 session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
                 return redirect()->back();
             } else {
-    
+
                 $this->event->userJoinsNotify();
                 $user = auth()->user();
-                $this->event->users()->attach(auth()->user()->id);
-    
+
+
+                $method = $this->event->recruiting_method;
+             switch ($method) {
+                    case 'first_come':
+                        $this->event->users()->attach(auth()->id(), ['status' => 'accepted']);
+                        session()->flash('message', '🎉 You have successfully joined the event!');
+                        break;
+                
+                    case 'application_review':
+                        $this->event->users()->attach(auth()->id(), ['status' => 'pending']);
+                        session()->flash('message', '✅ Your application has been submitted and is under review.');
+                        break;
+                
+                    case 'skill_assessment':
+                        $this->event->users()->attach(auth()->id(), ['status' => 'pending']);
+                        session()->flash('message', '🧠 Your skill assessment is being reviewed. We’ll notify you soon!');
+                        break;
+                
+                    case 'metrics':
+                        if (auth()->user()->getRank() <= 10) {
+                            $this->event->users()->attach(auth()->id(), ['status' => 'accepted']);
+                            session()->flash('message', '🏆 You’ve qualified and successfully joined the event!');
+                        } else {
+                            $this->event->users()->attach(auth()->id(), ['status' => 'pending']);
+                            session()->flash('message', '⚙️ You don’t currently meet the event criteria. Your application is pending review.');
+                        }
+                        break;
+                
+                    default:
+                        $this->event->users()->attach(auth()->id(), ['status' => 'pending']);
+                        session()->flash('message', '📨 Your application has been received and is pending review.');
+                        break;
+                }
+
                 $participatedEventsCount = $user->participatingEvents()->count();
                 $user->assignBadgesForEvents($participatedEventsCount, $user);
                 return redirect('/volunteer/dashboard/my-events');
             }
-
-            $method = $this->event->recruiting_method;
-            // dd($method);
-            switch($method){
-                case "first_come":
-                    if($slotAvailable > 0){
-                        $this->event->users()->updateExistingPivot(auth()->id(), ['status' => 'accepted']);
-                    } else {
-                        session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
-                    }
-                    break;
-                case 'application_review':
-                    $this->event->users()->updateExistingPivot(auth()->id(), ['status' => 'pending']);
-                    break;
-        
-                case 'skill_assessment':
-                    $this->event->users()->updateExistingPivot(auth()->id(), ['status' => 'pending']);
-                    break;
-        
-                case 'metrics':
-                    if ($applicant->rank <= 10) { // for example, top 10 ranks
-                        $applicant->status = 'approved';
-                    } else {
-                        $applicant->status = 'rejected';
-                    }
-                    break;
-        
-                default:
-                    $applicant->status = 'pending_review';
-    
-            }
         }
-        else {
-                    session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
-         }
     }
 
     public function render()
