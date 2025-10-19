@@ -319,14 +319,14 @@
                                         <div
                                             class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden">
                                             <iframe width="100%" height="100%" frameborder="0"
-                                                    style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                                    src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                                    allowfullscreen>
+                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                                allowfullscreen>
                                             </iframe>
                                         </div>
                                         <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                           target="_blank"
-                                           class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                            target="_blank"
+                                            class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                             <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
                                             Open in Google Maps
                                         </a>
@@ -382,7 +382,7 @@
                                     @if ($event->users->contains(auth()->user()))
                                         <button class="w-full btn btn-secondary btn-lg" disabled>
                                             <i data-lucide="check" class="w-5 h-5 mr-2"></i>
-                                            {{-- get status from event_user table --}}
+                                            {{--                                    get status from event_user table --}}
                                             <span
                                                 class="capitalize">{{ $event->users->where('id', auth()->user()->id)->first()->pivot->status }}</span>
                                         </button>
@@ -391,18 +391,7 @@
                                             <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
                                             Join This Event
                                         </button>
-                                        @if (session()->has('event_full'))
-                                            <div role="alert" class="alert alert-warning">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     class="h-6 w-6 shrink-0 stroke-current" fill="none"
-                                                     viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          stroke-width="2"
-                                                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                                                </svg>
-                                                <span>{{ session('event_full') }}</span>
-                                            </div>
-                                        @endif
+
                                     @endif
                                     <button class="w-full btn btn-outline" wire:click="chat">
                                         <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>

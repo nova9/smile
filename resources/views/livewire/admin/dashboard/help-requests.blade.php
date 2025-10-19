@@ -178,26 +178,19 @@
                                             <button wire:click="chatWithUser({{ $ticket->id }})"
                                                 onclick="view_ticket_{{ $ticket->id }}.close()" wire:loading.attr="disabled"
                                                 wire:loading.class="opacity-75 cursor-not-allowed"
-                                                class="btn btn-primary rounded-xl">
-                                                <div wire:loading.remove wire:target="chatWithUser({{ $ticket->id }})">
-                                                    <i data-lucide="message-circle" class="w-4 h-4 mr-1"></i>
-                                                    Chat with User
-                                                </div>
-                                                <div wire:loading wire:target="chatWithUser({{ $ticket->id }})"
-                                                    class="flex items-center">
-                                                    <svg class="animate-spin h-4 w-4 mr-1"
-                                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                        <circle class="opacity-25" cx="12" cy="12" r="10"
-                                                            stroke="currentColor" stroke-width="4"></circle>
-                                                        <path class="opacity-75" fill="currentColor"
-                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                                        </path>
-                                                    </svg>
-                                                    Connecting...
-                                                </div>
+                                                class="btn btn-primary rounded-xl flex items-center">
+                                                <i data-lucide="message-circle" class="w-4 h-4 mr-2" wire:loading.remove wire:target="chatWithUser({{ $ticket->id }})"></i>
+                                                <svg wire:loading wire:target="chatWithUser({{ $ticket->id }})" class="animate-spin h-4 w-4 mr-2"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                        stroke="currentColor" stroke-width="4"></circle>
+                                                    <path class="opacity-75" fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                    </path>
+                                                </svg>
+                                                <span wire:loading.remove wire:target="chatWithUser({{ $ticket->id }})">Chat with User</span>
+                                                <span wire:loading wire:target="chatWithUser({{ $ticket->id }})">Connecting...</span>
                                             </button>
-                                            <button wire:click="updateStatus({{ $ticket->id }}, 'resolved')"
-                                                class="btn btn-success rounded-xl">Mark as Resolved</button>
                                             <button onclick="view_ticket_{{ $ticket->id }}.close()"
                                                 class="btn btn-ghost rounded-xl">Close</button>
                                         </div>
