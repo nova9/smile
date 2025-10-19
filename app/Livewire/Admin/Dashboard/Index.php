@@ -18,7 +18,7 @@ class Index extends Component
     public $refreshing = false;
     public $refreshInterval = 30; // seconds
 
-    protected $listeners = ['refreshDashboard' => 'loadAllData'];
+    protected $listeners = ['refreshDashboard' => 'loadAllData', 'keepAlive' => '$refresh'];
 
     public function mount()
     {
@@ -195,19 +195,37 @@ class Index extends Component
     public function toggleEventStatus($eventId)
     {
         $event = Event::findOrFail($eventId);
+        $previousStatus = $event->is_active;
         $event->update(['is_active' => !$event->is_active]);
         
-        $status = $event->is_active ? 'visible' : 'hidden';
-        session()->flash('message', "Event is now {$status} to volunteers!");
+        $action = $event->is_active ? 'enabled' : 'disabled';
+        $icon = $event->is_active ? 'check-circle' : 'ban';
+        
+        session()->flash('message', "Event '{$event->name}' has been {$action} successfully!");
+        session()->flash('message_type', 'success');
+        session()->flash('message_icon', $icon);
+        
+        // Dispatch browser event for smooth UI updates
+        $this->dispatch('event-status-changed', eventId: $eventId, isActive: $event->is_active);
     }
 
     public function dismissReports($eventId)
     {
+        $event = Event::findOrFail($eventId);
+        $reportCount = EventReport::where('event_id', $eventId)
+            ->where('status', 'pending')
+            ->count();
+            
         EventReport::where('event_id', $eventId)
             ->where('status', 'pending')
             ->update(['status' => 'dismissed']);
         
-        session()->flash('message', 'Reports dismissed successfully!');
+        session()->flash('message', "{$reportCount} " . Str::plural('report', $reportCount) . " dismissed for '{$event->name}'");
+        session()->flash('message_type', 'info');
+        session()->flash('message_icon', 'check');
+        
+        // Dispatch browser event for smooth UI updates
+        $this->dispatch('reports-dismissed', eventId: $eventId);
     }
 
     public function render()

@@ -55,21 +55,16 @@
     {{-- Legal Help Sidebar Item --}}
     <li>
         <a href="#" 
-           class="hover:bg-gray-100 px-2 transition-all duration-200 hover:shadow-sm rounded-md" 
+           class="hover:bg-gray-100 px-2" 
            wire:click="requestLegalHelp" 
            wire:loading.attr="disabled"
            wire:loading.class="opacity-75 cursor-not-allowed">
-            <div wire:loading.remove wire:target="requestLegalHelp" class="flex items-center gap-3">
-                <i data-lucide="scale" class="size-6 text-blue-600"></i>
-                <span x-show="!navClosed" class="font-medium">Legal Help</span>
-            </div>
-            <div wire:loading wire:target="requestLegalHelp" class="flex items-center gap-2">
-                <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span x-show="!navClosed" class="text-sm">Connecting...</span>
-            </div>
+            <i data-lucide="gavel" class="size-6" wire:loading.remove wire:target="requestLegalHelp"></i>
+            <svg wire:loading wire:target="requestLegalHelp" class="animate-spin size-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span x-show="!navClosed">Legal Help</span>
         </a>
     </li>
 </div>
