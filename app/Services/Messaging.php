@@ -23,7 +23,7 @@ class Messaging
             ->whereHas('users', fn($q) => $q->where('users.id', $authUser->id))
             ->with('users')
             ->get();
-        
+
         // Find the chat that has exactly 2 users: the auth user and the target user
         return $chats->first(function ($chat) use ($authUser, $user) {
             $userIds = $chat->users->pluck('id')->sort()->values();
@@ -45,12 +45,13 @@ class Messaging
         return $message->user->id === auth()->id();
     }
 
-    public static function sendMessage($content, $chatId)
+    public static function sendMessage($content, $chatId, $fileId = null)
     {
         Message::query()->create([
             'user_id' => auth()->id(),
             'chat_id' => $chatId,
             'content' => $content,
+            'file_id' => $fileId,
         ]);
     }
 
@@ -79,7 +80,7 @@ class Messaging
 
         // Create a new chat
         $chat = Chat::create();
-        
+
         // Attach both users to the chat
         $chat->users()->attach([$authUser->id, $user->id]);
 
