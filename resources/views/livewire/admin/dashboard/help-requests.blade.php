@@ -1,5 +1,4 @@
 <x-admin.dashboard-layout>
-    <!-- Header Section (matching Dispute Handling style) -->
     <div class="mb-8 mt-8 ml-4 lg:ml-8">
         <div class="flex items-center justify-between">
             <div>
@@ -13,7 +12,6 @@
                     requests
                 </p>
             </div>
-            <!-- Optionally, you can add a badge or quick action here if needed -->
         </div>
     </div>
     <div class="px-4 sm:px-6 lg:px-8 py-8 ml-4 lg:ml-8">
@@ -86,29 +84,25 @@
                                     <td class="px-6 py-4">{{ $ticket->subject }}</td>
                                     <td class="px-6 py-4">
                                         <span class="badge 
-                                                @if($ticket->priority === 'urgent') badge-error
-                                                @elseif($ticket->priority === 'high') badge-warning  
-                                                @elseif($ticket->priority === 'medium') badge-info
-                                                @else badge-neutral @endif badge-sm">
+                                                            @if($ticket->priority === 'urgent') badge-error
+                                                            @elseif($ticket->priority === 'high') badge-warning  
+                                                            @elseif($ticket->priority === 'medium') badge-info
+                                                            @else badge-neutral @endif badge-sm">
                                             {{ ucfirst($ticket->priority) }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <select wire:change="updateStatus({{ $ticket->id }}, $event.target.value)" class="select select-bordered select-xs
-                                                @if($ticket->status === 'open') border-blue-300 text-blue-700
-                                                @elseif($ticket->status === 'in_progress') border-yellow-300 text-yellow-700
-                                                @elseif($ticket->status === 'resolved') border-green-300 text-green-700
-                                                @else border-gray-300 text-gray-700 @endif">
-                                            <option value="open" {{ $ticket->status === 'open' ? 'selected' : '' }}>Open
-                                            </option>
-                                            <option value="in_progress" {{ $ticket->status === 'in_progress' ? 'selected' : '' }}>In Progress
-                                            </option>
-                                            <option value="resolved" {{ $ticket->status === 'resolved' ? 'selected' : '' }}>
-                                                Resolved
-                                            </option>
-                                            <option value="closed" {{ $ticket->status === 'closed' ? 'selected' : '' }}>Closed
-                                            </option>
-                                        </select>
+                                        <span class="badge 
+                                                            @if($ticket->status === 'open') badge-warning
+                                                            @elseif($ticket->status === 'in_progress') badge-info
+                                                            @elseif($ticket->status === 'resolved') badge-success
+                                                            @else badge-neutral @endif badge-md whitespace-nowrap">
+                                            @if($ticket->status === 'in_progress')
+                                                Active
+                                            @else
+                                                {{ ucfirst(str_replace('_', ' ', $ticket->status)) }}
+                                            @endif
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4">{{ $ticket->created_at->format('Y-m-d') }}</td>
                                     <td class="px-6 py-4 flex gap-2">
@@ -119,14 +113,6 @@
                                             <span
                                                 class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">View
                                                 Details
-                                            </span>
-                                        </button>
-                                        <button wire:click="resolveTicket({{ $ticket->id }})"
-                                            class="font-bold flex items-center justify-center w-10 h-10 rounded-xl bg-white text-black hover:bg-black/10 transition group relative"
-                                            title="Resolve">
-                                            <i data-lucide="check-circle" class="w-5 h-5"></i>
-                                            <span
-                                                class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Resolve
                                             </span>
                                         </button>
                                     </td>
@@ -192,6 +178,27 @@
                                         </div>
                                         <!-- Action Buttons -->
                                         <div class="modal-action flex gap-2">
+                                            <button wire:click="chatWithUser({{ $ticket->id }})"
+                                                onclick="view_ticket_{{ $ticket->id }}.close()" wire:loading.attr="disabled"
+                                                wire:loading.class="opacity-75 cursor-not-allowed"
+                                                class="btn btn-outline btn-primary">
+                                                <div wire:loading.remove wire:target="chatWithUser({{ $ticket->id }})">
+                                                    <i data-lucide="message-circle" class="w-4 h-4 mr-1"></i>
+                                                    Chat with User
+                                                </div>
+                                                <div wire:loading wire:target="chatWithUser({{ $ticket->id }})"
+                                                    class="flex items-center">
+                                                    <svg class="animate-spin h-4 w-4 mr-1"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                            stroke="currentColor" stroke-width="4"></circle>
+                                                        <path class="opacity-75" fill="currentColor"
+                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                        </path>
+                                                    </svg>
+                                                    Connecting...
+                                                </div>
+                                            </button>
                                             <button wire:click="updateStatus({{ $ticket->id }}, 'resolved')"
                                                 class="btn btn-outline btn-success">Mark as Resolved</button>
                                             <button onclick="view_ticket_{{ $ticket->id }}.close()"
@@ -226,11 +233,73 @@
 
     <!-- Success Toast -->
     @if (session()->has('success'))
-        <div class="toast toast-end">
+        <div class="toast toast-end" id="success-toast" x-data="{ show: true }" x-show="show"
+            x-init="setTimeout(() => show = false, 3000)" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform translate-x-full"
+            x-transition:enter-end="opacity-100 transform translate-x-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 transform translate-x-0"
+            x-transition:leave-end="opacity-0 transform translate-x-full">
             <div class="alert alert-success">
                 <i data-lucide="check-circle" class="w-4 h-4"></i>
                 <span>{{ session('success') }}</span>
             </div>
         </div>
     @endif
+
+    <!-- Error Toast -->
+    @if (session()->has('error'))
+        <div class="toast toast-end">
+            <div class="alert alert-error">
+                <i data-lucide="x-circle" class="w-4 h-4"></i>
+                <span>{{ session('error') }}</span>
+            </div>
+        </div>
+    @endif
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            // Handle forced modal closing when chat opens
+            Livewire.on('forceCloseModal', (event) => {
+                const ticketId = event.ticketId;
+                const modal = document.getElementById(`view_ticket_${ticketId}`);
+                if (modal && modal.open) {
+                    modal.close();
+                }
+
+                // Also close any other open modals as a fallback
+                setTimeout(() => {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        if (modal.open) {
+                            modal.close();
+                        }
+                    });
+                }, 100);
+            });
+
+            // Hide success toast when chat opens
+            Livewire.on('openChat', () => {
+                const successToast = document.getElementById('success-toast');
+                if (successToast) {
+                    // Use Alpine.js to hide the toast smoothly
+                    const alpineData = Alpine.$data(successToast);
+                    if (alpineData) {
+                        alpineData.show = false;
+                    }
+                }
+            });
+
+            // Also hide success toast when chat closes or any interaction happens
+            document.addEventListener('click', (e) => {
+                // Hide toast when clicking anywhere outside the toast
+                const successToast = document.getElementById('success-toast');
+                if (successToast && !successToast.contains(e.target)) {
+                    const alpineData = Alpine.$data(successToast);
+                    if (alpineData) {
+                        alpineData.show = false;
+                    }
+                }
+            });
+        });
+    </script>
 </x-admin.dashboard-layout>

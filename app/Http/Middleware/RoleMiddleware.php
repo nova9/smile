@@ -16,7 +16,7 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, string $role): Response
     {
 //        dd(auth()->user()->role->name, $role);
-        if (!auth()->check() || !auth()->user()->role->name === $role) {
+        if (!auth()->check() || auth()->user()->role->name !== $role) {
             // Redirect to a 403 Forbidden page or any other action
             return redirect('/');
         }
