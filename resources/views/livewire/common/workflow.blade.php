@@ -60,15 +60,15 @@
                                 </button>
                                 <dialog id="addTask{{$taskList->id}}" class="modal">
                                     <div class="modal-box" x-data="
-                                        {
-                                            name: '',
-                                            description: '',
-                                            addTask() {
-                                                $wire.addTask({{$taskList->id}}, this.name, this.description);
-                                                this.name = '';
-                                                this.description = '';
-                                            }
-                                        }">
+                                            {
+                                                name: '',
+                                                description: '',
+                                                addTask() {
+                                                    $wire.addTask({{$taskList->id}}, this.name, this.description);
+                                                    this.name = '';
+                                                    this.description = '';
+                                                }
+                                            }">
                                         <form method="dialog">
                                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                                                 ✕
@@ -252,14 +252,14 @@
                                         <!-- Toggle Status circular button -->
                                         @if($task->status === 'done')
                                             <button wire:click="toggleTaskStatus({{ $task->id }})"
-                                                    class="size-6 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center transition-colors"
-                                                    title="Mark as doing">
+                                                class="size-6 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center transition-colors"
+                                                title="Mark as doing">
                                                 <i data-lucide="check" class="size-3"></i>
                                             </button>
                                         @else
                                             <button wire:click="toggleTaskStatus({{ $task->id }})"
-                                                    class="size-6 rounded-full bg-gray-100 hover:bg-green-100 text-gray-400 hover:text-green-600 flex items-center justify-center transition-colors border border-gray-200"
-                                                    title="Mark as done">
+                                                class="size-6 rounded-full bg-gray-100 hover:bg-green-100 text-gray-400 hover:text-green-600 flex items-center justify-center transition-colors border border-gray-200"
+                                                title="Mark as done">
                                                 <i data-lucide="check" class="size-3"></i>
                                             </button>
                                         @endif

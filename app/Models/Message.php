@@ -12,6 +12,7 @@ class Message extends Model
         'chat_id',
         'user_id',
         'read_at',
+        'file_id'
     ];
 
     protected $casts = [
