@@ -84,7 +84,6 @@
                                     <td class="px-6 py-4 flex gap-2">
                                         <x-admin.action-button type="view"
                                             url="{{ url('/admin/dashboard/organization-details/' . $org->id) }}" />
-                                        <x-admin.action-button type="delete" />
                                     </td>
                                 </tr>
                             @endforeach

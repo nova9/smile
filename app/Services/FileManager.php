@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\Storage;
 class FileManager
 {
     public static function store($file) {
-        // Store in public disk so files are directly accessible
-        $filePath = $file->store('files', 'public');
-        return File::query()->create(['name' => $filePath]);
+        $filePath = $file->store(path: 'files');
+        return File::query()->create([
+            'name' => $filePath,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
     }
 
     public static function getTemporaryUrl(?int $fileId): ?string {
@@ -18,12 +20,6 @@ class FileManager
             return null;
         }
         $file = File::query()->find($fileId);
-        
-        if (!$file) {
-            return null;
-        }
-        
-        // Use public URL for local storage (works immediately)
-        return Storage::disk('public')->url($file->name);
+        return Storage::temporaryUrl($file->name, now()->addMinutes(5));
     }
 }

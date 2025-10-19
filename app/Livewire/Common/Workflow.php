@@ -109,6 +109,16 @@ class Workflow extends Component
         $this->loadTaskLists();
     }
 
+    public function toggleTaskStatus($taskId)
+    {
+        $task = Task::query()->find($taskId);
+        if ($task) {
+            $task->status = $task->status === 'done' ? 'doing' : 'done';
+            $task->save();
+        }
+        $this->loadTaskLists();
+    }
+
     public function updateTaskListOrder($order)
     {
         foreach ($order as $item) {
