@@ -201,4 +201,10 @@ class User extends Authenticatable
             $this->setCustomAttribute('level', 'advanced');
         }
     }
+
+    public function getProfilePictureUrl(): ?string
+    {
+        $fileId = $this->getCustomAttribute('profile_picture');
+        return \App\Services\FileManager::getTemporaryUrl($fileId);
+    }
 }
