@@ -81,10 +81,10 @@
                                 <td class="px-6 py-4 text-sm text-slate-600">{{ $volunteer->email }}</td>
                                 <td class="px-6 py-4">
                                     <span class="inline-flex items-center px-3 py-1 rounded-xl text-xs font-medium 
-                                            @if($volunteer->status === 'active') bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700
-                                            @elseif($volunteer->status === 'suspended') bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700
-                                            @elseif($volunteer->status === 'inactive') bg-gradient-to-r from-rose-100 to-red-100 text-rose-700
-                                            @else bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 @endif">
+                                                @if($volunteer->status === 'active') bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700
+                                                @elseif($volunteer->status === 'suspended') bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700
+                                                @elseif($volunteer->status === 'inactive') bg-gradient-to-r from-rose-100 to-red-100 text-rose-700
+                                                @else bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 @endif">
                                         {{ ucfirst($volunteer->status ?? 'Active') }}
                                     </span>
                                 </td>
@@ -103,14 +103,6 @@
                                                 class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">View
                                                 Details</span>
                                         </a>
-                                        <button
-                                            onclick="openDeleteModal({{ $volunteer->id }}, '{{ $volunteer->name }}', '{{ $volunteer->email }}', '{{ $volunteer->status ?? 'Active' }}')"
-                                            class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors border border-slate-200 shadow-sm group relative"
-                                            title="Delete">
-                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                            <span
-                                                class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Delete</span>
-                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -140,75 +132,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Delete Modal -->
-    <dialog id="deleteModal" class="modal">
-        <div class="modal-box w-11/12 max-w-2xl bg-white/90 backdrop-blur-sm border border-white/20 rounded-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="font-bold text-xl text-accent">Delete Volunteer</h3>
-                <button onclick="closeDeleteModal()" class="btn btn-sm btn-circle btn-ghost hover:bg-slate-100">✕
-                </button>
-            </div>
-
-            <!-- Volunteer Information -->
-            <div class="mb-6">
-                <h4 class="font-semibold text-base text-slate-700 mb-3">Volunteer Information</h4>
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    <div class="space-y-2">
-                        <p class="text-sm"><span class="font-medium text-slate-600">Name:</span> <span
-                                class="text-slate-900" id="modalName"></span></p>
-                        <p class="text-sm"><span class="font-medium text-slate-600">Email:</span> <span
-                                class="text-slate-900" id="modalEmail"></span></p>
-                        <p class="text-sm"><span class="font-medium text-slate-600">Current Status:</span> <span
-                                class="text-slate-900" id="modalStatus"></span></p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Delete Reason -->
-            <div class="mb-6">
-                <label for="deleteReason" class="block text-sm font-medium text-slate-700 mb-2">
-                    Reason for Deletion <span class="text-red-500">*</span>
-                </label>
-                <textarea id="deleteReason"
-                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all duration-200 bg-white"
-                    placeholder="Please provide a detailed reason for deletion..." rows="4" required></textarea>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="modal-action flex gap-3">
-                <button onclick="viewFullProfile()" class="btn btn-ghost rounded-xl">View Full Profile</button>
-                <button onclick="confirmDelete()" class="btn btn-error rounded-xl">Delete Volunteer</button>
-            </div>
-        </div>
-        <div class="modal-backdrop" onclick="closeDeleteModal()"></div>
-    </dialog>
-
-    <script>
-        function openDeleteModal(id, name, email, status) {
-            document.getElementById('modalName').textContent = name;
-            document.getElementById('modalEmail').textContent = email;
-            document.getElementById('modalStatus').textContent = status;
-            document.getElementById('deleteModal').showModal();
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').close();
-        }
-
-        function viewFullProfile() {
-            // Implementation for viewing full profile
-            closeDeleteModal();
-        }
-
-        function confirmDelete() {
-            const reason = document.getElementById('deleteReason').value;
-            if (!reason.trim()) {
-                alert('Please provide a reason for deletion.');
-                return;
-            }
-            // Implementation for delete confirmation
-            closeDeleteModal();
-        }
-    </script>
 </x-admin.dashboard-layout>
