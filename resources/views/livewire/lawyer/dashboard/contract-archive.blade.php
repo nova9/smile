@@ -85,11 +85,17 @@
                                 <p>✓ Legally executed contract</p>
                             </div>
                             <div class="flex gap-2">
-                                <button class="btn btn-outline btn-sm" onclick='viewSignedContract(@json($contract))'>
+                                <button
+                                    class="btn btn-outline btn-sm"
+                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
+                                    onclick="viewSignedContract(this)">
                                     <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
                                     View
                                 </button>
-                                <button class="btn btn-success btn-sm" onclick='downloadContract(@json($contract))'>
+                                <button
+                                    class="btn btn-success btn-sm"
+                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
+                                    onclick="downloadContract(this)">
                                     <i data-lucide="download" class="w-4 h-4 mr-2"></i>
                                     Download
                                 </button>
@@ -133,7 +139,21 @@
     var currentSignedContract = window.currentSignedContract || null;
     window.currentSignedContract = currentSignedContract;
 
-    function viewSignedContract(contract) {
+    // Resolve a contract from element (data-contract-b64) or plain object
+    function resolveContractArg(arg) {
+        if (arg && arg.dataset && arg.dataset.contractB64) {
+            try {
+                const json = atob(arg.dataset.contractB64);
+                return JSON.parse(json);
+            } catch (e) {
+                console.warn('Failed to decode/parse data-contract-b64', e);
+            }
+        }
+        return arg;
+    }
+
+    function viewSignedContract(arg) {
+        const contract = resolveContractArg(arg);
         currentSignedContract = contract;
         document.getElementById('signedViewModalTitle').textContent = contract.title || 'Contract Preview';
         document.getElementById('signedViewModalSubtitle').textContent = `${contract.type || ''} • ${contract.organization || ''}`.trim();
@@ -149,7 +169,8 @@
         currentSignedContract = null;
     }
 
-    function downloadContract(contract) {
+    function downloadContract(arg) {
+        const contract = resolveContractArg(arg);
         alert(`Downloading signed contract: "${contract.title}"\n\nThe PDF file would be generated and downloaded in a real implementation.`);
     }
 
