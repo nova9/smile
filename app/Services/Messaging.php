@@ -23,7 +23,7 @@ class Messaging
             ->whereHas('users', fn($q) => $q->where('users.id', $authUser->id))
             ->with('users')
             ->get();
-        
+
         // Find the chat that has exactly 2 users: the auth user and the target user
         return $chats->first(function ($chat) use ($authUser, $user) {
             $userIds = $chat->users->pluck('id')->sort()->values();
@@ -45,25 +45,24 @@ class Messaging
         return $message->user->id === auth()->id();
     }
 
-    public static function sendMessage($content, $chatId, $fileId = null, $messageType = 'text')
+    public static function sendMessage($content, $chatId, $fileId = null)
     {
         Message::query()->create([
             'user_id' => auth()->id(),
             'chat_id' => $chatId,
             'content' => $content,
             'file_id' => $fileId,
-            'message_type' => $messageType,
         ]);
     }
 
     public static function getMessagesForChat(Chat $chat)
     {
-        return $chat->messages()->with(['user', 'file'])->orderBy('created_at', 'desc')->get();
+        return $chat->messages()->with('user')->orderBy('created_at', 'desc')->get();
     }
 
     public static function getMessagesForChatDisplay(Chat $chat)
     {
-        return $chat->messages()->with(['user', 'file'])->orderBy('created_at', 'asc')->get();
+        return $chat->messages()->with('user')->orderBy('created_at', 'asc')->get();
     }
 
     public static function getDirectChatOtherParty($chat)
@@ -81,7 +80,7 @@ class Messaging
 
         // Create a new chat
         $chat = Chat::create();
-        
+
         // Attach both users to the chat
         $chat->users()->attach([$authUser->id, $user->id]);
 

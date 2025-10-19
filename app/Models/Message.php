@@ -7,17 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Message extends Model
 {
-    const TYPE_TEXT = 'text';
-    const TYPE_IMAGE = 'image';
-    const TYPE_DOCUMENT = 'document';
-
     protected $fillable = [
         'content',
         'chat_id',
         'user_id',
         'read_at',
-        'file_id',
-        'message_type',
     ];
 
     protected $casts = [
