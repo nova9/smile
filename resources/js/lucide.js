@@ -108,8 +108,7 @@ import {
     Bot,
     BotMessageSquare,
     Bookmark,
-    FileCheck,
-    Edit2,
+    Upload
 } from "lucide";
 
 function registerIcons() {
@@ -223,8 +222,7 @@ function registerIcons() {
             Bot,
             BotMessageSquare,
             Bookmark,
-            FileCheck,
-            Edit2,
+            Upload
         },
     });
 }

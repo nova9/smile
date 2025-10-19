@@ -1,6 +1,6 @@
 <div class="drawer drawer-end" x-cloak>
     <input id="drawer" wire:model="drawerOpen" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">
+    <div class="drawer-content flex justify-center items-center">
         <label for="drawer" class="z-199">
             <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom"
                 data-tip="Notifications">

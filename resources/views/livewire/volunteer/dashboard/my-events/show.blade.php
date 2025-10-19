@@ -63,6 +63,34 @@
                                     <i data-lucide="users" class="w-5 h-5"></i>
                                     <span>Community Space</span>
                                 </a>
+                                @if ($status == 'pending' || $status == 'accepted')
+                                    <button onclick="leaveEvent.showModal()"
+                                        class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                        <i data-lucide="log-out" class="w-5 h-5"></i>
+                                        <span>Leave Event</span>
+                                    </button>
+
+                                    <dialog id="leaveEvent" class="modal">
+                                        <div class="modal-box text-left">
+                                            <form method="dialog">
+                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                                                    ✕
+                                                </button>
+                                            </form>
+                                            <h3 class="text-lg font-bold">Are you sure?</h3>
+                                            <p class="text-sm text-base-content/60 mt-2">Do you wish to leave this event?
+                                            </p>
+                                            <p class="py-4">
+                                                You will not receive any points if you <span class="text-error">leave</span>
+                                                this even early.
+                                            </p>
+
+                                            <button class="btn btn-error" wire:click="leaveEvent" title="Delete task list">
+                                                Leave
+                                            </button>
+                                        </div>
+                                    </dialog>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -96,8 +124,7 @@
                                     </div>
                                 </div>
                             @elseif ($status == 'accepted')
-                                <div
-                                    class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
+                                <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
                                     <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
                                     <div>
                                         <h3 class="text-lg font-bold text-green-700">You're In!</h3>
@@ -186,7 +213,7 @@
                                                     <span
                                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-sm font-medium">
                                                         <i data-lucide="venus-mars" class="w-4 h-4 text-blue-400"
-                                                           aria-hidden="true"></i>
+                                                            aria-hidden="true"></i>
                                                         <span class="flex items-center gap-1">
                                                             Men: <span
                                                                 class="font-bold text-blue-700">{{ $req['male_participants'] ?? 0 }}</span>
@@ -204,7 +231,7 @@
                                                     <span
                                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium">
                                                         <i data-lucide="bar-chart" class="w-4 h-4 text-yellow-400"
-                                                           aria-hidden="true"></i>
+                                                            aria-hidden="true"></i>
                                                         Level:
                                                         <span>Beginner <span
                                                                 class="font-bold text-yellow-700">{{ $req['beginner_participants'] ?? 0 }}</span></span>,
@@ -233,7 +260,7 @@
                                             <span
                                                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
                                                 <i data-lucide="calendar" class="w-4 h-4 text-green-500"
-                                                   aria-hidden="true"></i>
+                                                    aria-hidden="true"></i>
                                                 Minimum Age: <span
                                                     class="font-bold text-green-700">{{ $event->minimum_age }}</span>
                                             </span>
@@ -269,14 +296,14 @@
                                     <div
                                         class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden mb-1">
                                         <iframe width="100%" height="100%" frameborder="0"
-                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                                allowfullscreen>
+                                            style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                            src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                            allowfullscreen>
                                         </iframe>
                                     </div>
                                     <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                       target="_blank"
-                                       class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                        target="_blank"
+                                        class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                         <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
                                         Open in Google Maps
                                     </a>
@@ -319,8 +346,7 @@
                                 <h2 class="text-xl font-bold text-gray-800 mb-4">Tags</h2>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($event->tags as $tag)
-                                        <span
-                                            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                                             #{{ $tag->name }}
                                         </span>
                                     @endforeach
@@ -359,19 +385,19 @@
                 </div>
                 @if ($status == 'accepted')
                     <label class="tab">
-                        <input type="radio" name="my_tabs_4"/>
+                        <input type="radio" name="my_tabs_4" />
                         <i data-lucide="book-check" class="w-4 h-4 mr-2"></i>
                         Workflows
                     </label>
 
                     <div class="tab-content bg-gray-100 border-base-300 p-6">
-                        <livewire:common.workflow :eventId="$event->id"/>
+                        <livewire:common.workflow :eventId="$event->id" />
                     </div>
                 @endif
 
                 {{-- Event Gallery--}}
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4"/>
+                    <input type="radio" name="my_tabs_4" />
                     <i data-lucide="image" class="w-4 h-4 mr-2"></i>
                     Event Gallery
                 </label>
@@ -390,25 +416,37 @@
                             </p>
                         </div>
                         <div class="mb-6">
-                            <form wire:submit="save" class="flex flex-col sm:flex-row items-center gap-4">
+                            <form wire:submit="save" class="flex flex-col sm:flex-row items-center gap-4 w-full">
                                 <label
                                     class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm text-gray-700 hover:bg-gray-50">
-                                    <i data-lucide="upload" class="w-4 h-4"></i>
-                                    <span>Choose photos</span>
-                                    <input type="file" wire:model="photos" multiple accept="image/*"
-                                        class="hidden">
+                                    <i data-lucide="upload"></i>
+                                    <input type="file" wire:model="photos" multiple accept="image/*" >
                                 </label>
 
                                 <div class="ml-auto flex items-center gap-3">
-
-
                                     <button type="submit"
+                                        wire:click="$refresh"
                                         class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
-                                        <i data-lucide="save" class="w-4 h-4"></i>
+                                        <span wire:loading.remove wire:target="save">
+                                             <i data-lucide="save" class="w-4 h-4"></i>
+                                        </span>
+                                        <span wire:loading wire:target="save">
+                                            <i data-lucide="loader-circle" class="w-4 h-4 animate-spin"></i>
+                                        </span>
+                                       
                                         Save photos
                                     </button>
                                 </div>
                             </form>
+                            @if ($photos && count($photos) > 0)
+                                <div class="flex flex-wrap gap-3 mt-4">
+                                    @foreach ($photos as $photo)
+                                        <div class="w-24 h-24 rounded-lg overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
+                                                <img src="{{ $photo->temporaryUrl() }}" alt="Preview" class="object-cover w-full h-full">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     @else
                         <div class="mb-8">
@@ -422,19 +460,9 @@
                             </p>
                         </div>
                     @endif
-
-
-                    @php
-                        $images = [
-                            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
-                        ];
-                    @endphp
                     <div class="container mx-auto px-4 py-8">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            @foreach ($images as $img)
+                            @foreach ($uploadedPhotos as $img)
                                 <div class="group relative overflow-hidden rounded-lg shadow-lg">
                                     <img src="{{ $img }}" alt="Gallery Image"
                                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
@@ -497,9 +525,9 @@
                                                     <label for="rating"
                                                         class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
                                                     {{-- <input type="number" min="1" max="5" wire:model="rating"
-                                                               id="rating"
-                                                               class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
-                                                               placeholder="1-5"> --}}
+                                                        id="rating"
+                                                        class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                                                        placeholder="1-5"> --}}
                                                     <div class="rating rating-lg rating-half">
                                                         <input type="radio" wire:model="rating" name="rating-11"
                                                             class="rating-hidden" />
@@ -595,7 +623,7 @@
                                                         </div>
                                                         <div class="flex items-center gap-2">
                                                             <div class="rating rating-lg rating-half">
-                                                            {{-- 1 full opacity ,0.2 almost transparert --}}
+                                                                {{-- 1 full opacity ,0.2 almost transparert --}}
                                                                 <div class="mask mask-star-2 mask-half-1 bg-green-500"
                                                                     aria-label="0.5 star"
                                                                     style="opacity:{{ $review->rating >= 0.5 ? 1 : 0.2 }}">

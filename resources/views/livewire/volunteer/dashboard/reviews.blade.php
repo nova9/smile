@@ -105,7 +105,7 @@
                     <p class="text-gray-500">When you submit reviews for events, they'll appear here.</p>
                     <div class="mt-4">
                         <a href="/volunteer/dashboard/my-events"
-                            class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700">Browse
+                            class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80">Browse
                             events</a>
                     </div>
                 </div>

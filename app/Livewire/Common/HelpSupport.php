@@ -27,10 +27,13 @@ class HelpSupport extends Component
 
     public function submitConcern()
     {
+        // Prevent admin users from submitting support requests
+        if ($this->isAdmin()) {
+            return;
+        }
+
         $this->validate();
-
         $user = Auth::user();
-
         SupportTicket::create([
             'user_id' => $user->id,
             'user_name' => $user->name,
@@ -63,6 +66,11 @@ class HelpSupport extends Component
 
     public function getUserTickets()
     {
+        // Don't return tickets for admin users
+        if ($this->isAdmin()) {
+            return collect();
+        }
+
         return SupportTicket::where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
@@ -98,6 +106,11 @@ class HelpSupport extends Component
 
     public function resolveTicket($ticketId)
     {
+        // Prevent admin users from resolving tickets through this component
+        if ($this->isAdmin()) {
+            return;
+        }
+
         $ticket = SupportTicket::find($ticketId);
 
         if ($ticket && $ticket->user_id == Auth::id() && $ticket->status !== 'closed') {
@@ -114,6 +127,12 @@ class HelpSupport extends Component
         $this->showForm = true;
         $this->showAlert = false;
         $this->reset();
+    }
+
+    public function isAdmin()
+    {
+        $user = Auth::user();
+        return $user && $user->role && $user->role->name === 'admin';
     }
 
     public function render()
