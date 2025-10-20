@@ -71,9 +71,9 @@
                 <a href="/volunteer/dashboard/events" wire:navigate
                     class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                         class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     Back to Opportunities
                 </a>
@@ -127,7 +127,8 @@
                                 </div>
                                 <div class="text-sm text-gray-500">Volunteers</div>
                                 <div class="font-semibold text-gray-700">{{ count($Volunteers) }} /
-                                    {{ $event->maximum_participants }}</div>
+                                    {{ $event->maximum_participants }}
+                                </div>
                             </div>
                         </div>
 
@@ -192,16 +193,18 @@
                                             @endforeach
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div class="mt-8">
-                                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                                        Eligibility & Selection Criteria
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Eligibility & Selection Criteria
                                     </h2>
-                                    <div
-                                        class="bg-gradient-to-br from-gray-50 to-white border border-gray-100 rounded-xl p-6">
+
+                                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-4">
                                         <!-- Recruiting Method -->
+                                        <div class="flex items-start gap-3">
+                                            <div
+                                                class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i>
                                         <div class="flex items-center gap-4">
                                             <div class="flex-shrink-0">
                                                 <div
@@ -211,6 +214,7 @@
                                                 </div>
                                             </div>
                                             <div>
+                                                <h3 class="font-semibold text-gray-900 mb-1">Selection Method</h3>
                                                 @php
                                                     $recruitingMethodLabels = [
                                                         'first_come' => 'First Come, First Served',
@@ -222,81 +226,101 @@
                                                         $recruitingMethodLabels[$event->recruiting_method] ??
                                                         ($event->recruiting_method ?? 'Not specified');
                                                 @endphp
-                                                <div class="text-sm font-medium text-gray-500">
-                                                    We will be recruiting based on {{ $recruitingMethodLabel }} </div>
+                                                <p class="text-gray-600 text-sm">{{ $recruitingMethodLabel }}</p>
                                             </div>
                                         </div>
 
                                         <!-- Participant Requirements -->
-                                        <div class="flex items-start gap-4">
-                                            <div class="flex-shrink-0">
-                                                <div
-                                                    class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center">
-                                                    <i data-lucide="users" class="w-6 h-6 text-yellow-500"
-                                                        aria-hidden="true"></i>
-                                                </div>
+                                        <div class="flex items-start gap-3">
+                                            <div
+                                                class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <i data-lucide="users" class="w-4 h-4 text-green-600"></i>
                                             </div>
-                                            <div class="w-full">
+                                            <div class="flex-1">
+                                                <h3 class="font-semibold text-gray-900 mb-2">Participant Requirements
+                                                </h3>
+
                                                 @if (!empty($event->participant_requirements))
-                                                    <div class="flex flex-wrap gap-2 mt-2">
+                                                    <div class="space-y-3">
                                                         @foreach ($event->participant_requirements as $req)
                                                             @if (isset($req['filter_types']) && $req['filter_types'] === 'gender')
-                                                                <span
-                                                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-sm font-medium">
-                                                                    <i data-lucide="venus-and-mars"
-                                                                        class="w-4 h-4 text-blue-400"
-                                                                        aria-hidden="true"></i>
-                                                                    <span class="flex items-center gap-1">
-                                                                        Men: <span
-                                                                            class="font-bold text-blue-700">{{ $req['male_participants'] ?? 0 }}</span>
-                                                                    </span>
-                                                                    <span class="flex items-center gap-1">
-                                                                        Women: <span
-                                                                            class="font-bold text-pink-700">{{ $req['female_participants'] ?? 0 }}</span>
-                                                                    </span>
-                                                                    <span class="flex items-center gap-1">
-                                                                        Non-Binary: <span
-                                                                            class="font-bold text-purple-700">{{ $req['non_binary_participants'] ?? 0 }}</span>
-                                                                    </span>
-                                                                </span>
+                                                                <div
+                                                                    class="bg-white border border-gray-200 rounded-md p-3">
+                                                                    <div class="text-sm font-medium text-gray-700 mb-2">
+                                                                        Gender
+                                                                        Distribution
+                                                                    </div>
+                                                                    <div
+                                                                        class="grid grid-cols-3 gap-2 text-center text-xs">
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['male_participants'] ?? 0 }}</div>
+                                                                            <div class="text-gray-600">Men</div>
+                                                                        </div>
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['female_participants'] ?? 0 }}</div>
+                                                                            <div class="text-gray-600">Women</div>
+                                                                        </div>
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['non_binary_participants'] ?? 0 }}</div>
+                                                                            <div class="text-gray-600">Non-Binary</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             @elseif (isset($req['filter_types']) && $req['filter_types'] === 'level')
-                                                                <span
-                                                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium">
-                                                                    <i data-lucide="bar-chart"
-                                                                        class="w-4 h-4 text-yellow-400"
-                                                                        aria-hidden="true"></i>
-                                                                    Level:
-                                                                    <span>Beginner <span
-                                                                            class="font-bold text-yellow-700">{{ $req['beginner_participants'] ?? 0 }}</span></span>,
-                                                                    <span>Intermediate <span
-                                                                            class="font-bold text-orange-700">{{ $req['intermediate_participants'] ?? 0 }}</span></span>,
-                                                                    <span>Advanced <span
-                                                                            class="font-bold text-green-700">{{ $req['advanced_participants'] ?? 0 }}</span></span>
-                                                                </span>
+                                                                <div
+                                                                    class="bg-white border border-gray-200 rounded-md p-3">
+                                                                    <div class="text-sm font-medium text-gray-700 mb-2">
+                                                                        Experience
+                                                                        Level
+                                                                    </div>
+                                                                    <div
+                                                                        class="grid grid-cols-3 gap-2 text-center text-xs">
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['beginner_participants'] ?? 0 }}</div>
+                                                                            <div class="text-gray-600">Beginner</div>
+                                                                        </div>
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['intermediate_participants'] ?? 0 }}</div>
+                                                                            <div class="text-gray-600">Intermediate
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['advanced_participants'] ?? 0 }}</div>
+                                                                            <div class="text-gray-600">Advanced</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             @else
-                                                                <span
-                                                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium">
-                                                                    {{ is_string($req) ? $req : 'Custom requirement' }}
-                                                                </span>
+                                                                <div
+                                                                    class="bg-white border border-gray-200 rounded-md p-2">
+                                                                    <span
+                                                                        class="text-sm text-gray-700">{{ is_string($req) ? $req : 'Custom requirement' }}</span>
+                                                                </div>
                                                             @endif
                                                         @endforeach
                                                     </div>
                                                 @else
-                                                    <div class="mt-2 text-gray-600 text-sm">No specific participant
-                                                        requirements.
+                                                    <div class="text-sm text-gray-600">No specific requirements -
+                                                        Everyone
+                                                        is welcome!
                                                     </div>
                                                 @endif
 
                                                 <!-- Minimum Age -->
                                                 @if (isset($event->minimum_age))
-                                                    <div class="mt-3">
-                                                        <span
-                                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
-                                                            <i data-lucide="calendar" class="w-4 h-4 text-green-500"
-                                                                aria-hidden="true"></i>
-                                                            Minimum Age: <span
-                                                                class="font-bold text-green-700">{{ $event->minimum_age }}</span>
-                                                        </span>
+                                                    <div class="mt-3 bg-white border border-gray-200 rounded-md p-2">
+                                                        <div class="flex items-center gap-2">
+                                                            <i data-lucide="calendar" class="w-4 h-4 text-gray-600"></i>
+                                                            <span class="text-sm text-gray-700">Minimum Age: <span
+                                                                    class="font-semibold">{{ $event->minimum_age }}
+                                                                    years</span></span>
+                                                        </div>
                                                     </div>
                                                 @endif
                                             </div>
@@ -326,14 +350,14 @@
                                         <div
                                             class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden">
                                             <iframe width="100%" height="100%" frameborder="0"
-                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                                allowfullscreen>
+                                                    style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                                    src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                                    allowfullscreen>
                                             </iframe>
                                         </div>
                                         <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                            target="_blank"
-                                            class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                           target="_blank"
+                                           class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                             <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
                                             Open in Google Maps
                                         </a>
@@ -389,7 +413,7 @@
                                     @if ($event->users->contains(auth()->user()))
                                         <button class="w-full btn btn-secondary btn-lg" disabled>
                                             <i data-lucide="check" class="w-5 h-5 mr-2"></i>
-                                            {{--                                    get status from event_user table --}}
+                                            {{-- get status from event_user table --}}
                                             <span
                                                 class="capitalize">{{ $event->users->where('id', auth()->user()->id)->first()->pivot->status }}</span>
                                         </button>
@@ -398,6 +422,7 @@
                                             <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
                                             Join This Event
                                         </button>
+
                                     @endif
                                     <button class="w-full btn btn-outline" wire:click="chat">
                                         <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
