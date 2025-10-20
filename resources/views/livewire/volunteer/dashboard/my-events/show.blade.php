@@ -48,8 +48,6 @@
                                     <i data-lucide="heart"
                                        class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
                                 </button>
-                                <button id="share-event-btn" type="button"
-                                        class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
                                 <button id="share-event-btn" type="button" onclick="my_modal_1.showModal()"
                                     class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition-all duration-200 text-sm font-medium text-gray-700">
                                     <i data-lucide="share-2" class="w-5 h-5"></i>
