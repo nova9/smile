@@ -47,13 +47,13 @@
                 <div class="flex gap-2 w-full md:w-auto">
                     <input type="text" wire:model.live="search" placeholder="Search volunteers..."
                         class="input input-bordered w-full md:w-64 rounded-xl px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all duration-200 border border-slate-200 focus:border-accent bg-white" />
-                    <select wire:model.live="statusFilter"
+                    <select wire:model.live="activityFilter"
                         class="select select-bordered rounded-xl px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all duration-200 border border-slate-200 focus:border-accent bg-white">
-                        <option value="">All Status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                        <option value="suspended">Suspended</option>
-                        <option value="pending">Pending</option>
+                        <option value="">All Activity Levels</option>
+                        <option value="high">High Activity (5+ events)</option>
+                        <option value="medium">Medium Activity (2-4 events)</option>
+                        <option value="low">Low Activity (1 event)</option>
+                        <option value="none">No Activity (0 events)</option>
                     </select>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                             <th class="px-6 py-4 text-left text-sm font-semibold text-accent">ID</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Name</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Email</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Status</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Activity Level</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Badges</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Activities</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-accent">Joined</th>
@@ -80,12 +80,24 @@
                                 <td class="px-6 py-4 text-sm font-medium text-slate-900">{{ $volunteer->name }}</td>
                                 <td class="px-6 py-4 text-sm text-slate-600">{{ $volunteer->email }}</td>
                                 <td class="px-6 py-4">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-xl text-xs font-medium 
-                                                @if($volunteer->status === 'active') bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700
-                                                @elseif($volunteer->status === 'suspended') bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700
-                                                @elseif($volunteer->status === 'inactive') bg-gradient-to-r from-rose-100 to-red-100 text-rose-700
-                                                @else bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 @endif">
-                                        {{ ucfirst($volunteer->status ?? 'Active') }}
+                                    @php
+                                        $eventCount = $volunteer->participatingEvents->count();
+                                        if ($eventCount >= 5) {
+                                            $activityLevel = 'High';
+                                            $colorClass = 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700';
+                                        } elseif ($eventCount >= 2) {
+                                            $activityLevel = 'Medium';
+                                            $colorClass = 'bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700';
+                                        } elseif ($eventCount == 1) {
+                                            $activityLevel = 'Low';
+                                            $colorClass = 'bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700';
+                                        } else {
+                                            $activityLevel = 'No Activity';
+                                            $colorClass = 'bg-gradient-to-r from-gray-100 to-slate-100 text-gray-700';
+                                        }
+                                    @endphp
+                                    <span class="inline-flex items-center px-3 py-1 rounded-xl text-xs font-medium {{ $colorClass }}">
+                                        {{ $activityLevel }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-sm text-slate-600">{{ $volunteer->badges->count() }}</td>
