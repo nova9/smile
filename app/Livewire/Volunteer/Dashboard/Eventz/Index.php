@@ -30,7 +30,8 @@ class Index extends Component
 //        dd(auth()->user());
 //        dd($eventRecommenderService->recommendEventsToUser(auth()->user(), $events, 10));
         // dd($googleMaps->getNearestCity('7.8731', '80.7718'));
-
+        // $event=Event::find(33);
+        // dd($event->getAvgRating());
     }
 
     public function render(EventRecommenderService $eventRecommenderService)
@@ -60,7 +61,7 @@ class Index extends Component
         $perPage = 12;
         $currentPage = $this->getPage(); // Livewire manages the page property
         $paginatedEvents = $this->paginateCollection($recommendedEvents, $perPage, $currentPage);
-
+        
         return view('livewire.volunteer.dashboard.events.index', [
             'events' => $paginatedEvents
         ]);
