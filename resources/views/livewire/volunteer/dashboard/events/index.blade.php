@@ -15,11 +15,21 @@
         <!-- Search and Filter Section -->
         <div class="flex flex-col lg:flex-row gap-4 mb-4">
             <!-- Search Bar -->
-            <label class="input flex-grow-1">
+            <label class="input flex-grow">
                 <i data-lucide="search" class="opacity-50"></i>
                 <input type="search" class="grow" placeholder="Search events..."
-                       wire:model.live.debounce.300ms="search"/>
+                    wire:model.live.debounce.300ms="search" />
             </label>
+
+            <!-- Category Filter -->
+            <div class="relative">
+                <select class="select select-bordered w-full lg:w-48" wire:model.live="categoryFilter">
+                    <option value="">All Categories</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
         <!-- Opportunities Grid -->
@@ -28,11 +38,11 @@
             @forelse($events as $item)
                 <div
                     class="flex flex-col bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 transform overflow-hidden">
-                    {{--                    <img src="https://picsum.photos/seed/{{$item->id}}/350/200" alt="image" class="w-full">--}}
+                    {{-- <img src="https://picsum.photos/seed/{{$item->id}}/350/200" alt="image" class="w-full">--}}
                     <div class="p-6 flex flex-col grow">
                         <div class="flex justify-between items-center mb-2 flex-wrap">
                             <div class="px-3 py-1 bg-green-100 rounded-full text-sm font-medium"
-                                 style="color: {{ $item->category->color }}; background-color: {{ hexToRgba($item->category->color, 0.1) }}">
+                                style="color: {{ $item->category->color }}; background-color: {{ hexToRgba($item->category->color, 0.1) }}">
                                 {{ $item->category->name }}
                             </div>
                             <div class="text-sm text-gray-500">{{ $item->created_at->diffForHumans() }}</div>
@@ -42,8 +52,7 @@
 
                         <div class="flex flex-wrap gap-2 mb-4">
                             @foreach($item->tags as $tag)
-                                <div
-                                    class="px-2 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs">{{ $tag->name }}</div>
+                                <div class="px-2 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs">{{ $tag->name }}</div>
 
                             @endforeach
                         </div>
@@ -55,11 +64,9 @@
                         <!-- Event Creator -->
                         <div class="flex items-center gap-2 mb-3 py-2 px-3 bg-gray-50 rounded-lg">
                             @if($item->user->getCustomAttribute('profile_picture'))
-                                <img
-                                    class="size-8 rounded-full object-cover"
+                                <img class="size-8 rounded-full object-cover"
                                     src="{{ \App\Services\FileManager::getTemporaryUrl($item->user->getCustomAttribute('profile_picture')) }}"
-                                    alt="organizer profile picture"
-                                >
+                                    alt="organizer profile picture">
                             @else
                                 <div
                                     class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
@@ -74,30 +81,30 @@
                             </div>
                             <div class="flex items-center gap-1 text-yellow-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor"
-                                     viewBox="0 0 24 24">
+                                    viewBox="0 0 24 24">
                                     <path
-                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                                 </svg>
-                                <span class="text-sm font-medium text-gray-700">4.8</span>
+                                <span class="text-sm font-medium text-gray-700">{{$item->reviews->avg('rating') ?? 0}}</span>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
                             <div class="flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor">
+                                    stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
                                 {{ $item->city }}
                             </div>
                             <div class="flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor">
+                                    stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 {{$item->starts_at->diffForHumans($item->ends_at, true)}}
                             </div>
@@ -120,9 +127,9 @@
                                 </button>
                             </a>
                             <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
-                                    wire:click="toggleFavorite({{ $item->id }})">
+                                wire:click="toggleFavorite({{ $item->id }})">
                                 <i data-lucide="heart"
-                                   class="w-5 h-5 {{ $item->isFavourite() ? 'text-red-500 fill-current' : 'text-gray-600'}}"></i>
+                                    class="w-5 h-5 {{ $item->isFavourite() ? 'text-red-500 fill-current' : 'text-gray-600'}}"></i>
                             </button>
                         </div>
                     </div>

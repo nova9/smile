@@ -16,7 +16,7 @@
         <div class="p-4">
             <div class="tabs tabs-lift">
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4" checked="checked" />
+                    <input type="radio" name="my_tabs_4" checked="checked"/>
                     <i data-lucide="info" class="w-4 h-4 mr-2"></i>
                     Event Details
                 </label>
@@ -44,28 +44,70 @@
                         <div class="mb-10 text-center">
                             <div class="flex flex-col sm:flex-row items-center gap-3 justify-center">
                                 <button class="p-2 bg-white/90 rounded-full hover:bg-white transition-colors shadow-sm"
-                                    wire:click="toggleFavorite">
+                                        wire:click="toggleFavorite">
                                     <i data-lucide="heart"
-                                        class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
+                                       class="w-5 h-5 {{ $is_favorited ? 'text-red-500 fill-current' : 'text-gray-600' }}"></i>
                                 </button>
                                 <button id="share-event-btn" type="button"
-                                    class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                        class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                <button id="share-event-btn" type="button" onclick="my_modal_1.showModal()"
+                                    class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition-all duration-200 text-sm font-medium text-gray-700">
                                     <i data-lucide="share-2" class="w-5 h-5"></i>
                                     <span>Share</span>
                                 </button>
+                                <dialog id="my_modal_1" class="modal">
+                                    <div class="modal-box bg-white rounded-2xl shadow-xl border border-gray-100">
+                                        <button onclick="my_modal_1.close()" type="button"
+                                            class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors">
+                                            <i data-lucide="x" class="w-5 h-5"></i>
+                                        </button>
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">Share Event</h3>
+                                        <p class="text-gray-600 text-sm mb-6">Share this event with your network</p>
+                                        <div class="space-y-2">
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left border border-gray-200">
+                                                <i data-lucide="instagram" class="w-5 h-5 text-gray-700"></i>
+                                                <span class="text-gray-700 font-medium">Instagram</span>
+                                            </button>
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left border border-gray-200">
+                                                <i data-lucide="facebook" class="w-5 h-5 text-gray-700"></i>
+                                                <span class="text-gray-700 font-medium">Facebook</span>
+                                            </button>
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left border border-gray-200">
+                                                <i data-lucide="twitter" class="w-5 h-5 text-gray-700"></i>
+                                                <span class="text-gray-700 font-medium">Twitter</span>
+                                            </button>
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left border border-gray-200">
+                                                <i data-lucide="linkedin" class="w-5 h-5 text-gray-700"></i>
+                                                <span class="text-gray-700 font-medium">LinkedIn</span>
+                                            </button>
+                                        </div>
+                                        <div class="mt-6">
+                                            <form method="dialog">
+                                                <button class="btn btn-outline w-full">Close</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dialog>
                                 <!-- Tiny toast for copy review -->
                                 <div id="share-toast"
-                                    class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
+                                     class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
                                     Link copied to clipboard
                                 </div>
-                                <a href="{{ route('community.space', ['id' => $event->id]) }}"
-                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                @if ($status == 'accepted')
+                                    {{-- queryselectorall finds all the radio inputs with the name my_tabs_4 4th index on and programmatically clicks that radio button to activate that tab --}}
+                                    <button onclick="document.querySelectorAll('input[name=my_tabs_4]')[4].click()"
+                                   class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
                                     <i data-lucide="users" class="w-5 h-5"></i>
                                     <span>Community Space</span>
-                                </a>
+                                </button>
+                                @endif
                                 @if ($status == 'pending' || $status == 'accepted')
                                     <button onclick="leaveEvent.showModal()"
-                                        class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                            class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors duration-200 text-sm">
                                         <i data-lucide="log-out" class="w-5 h-5"></i>
                                         <span>Leave Event</span>
                                     </button>
@@ -78,14 +120,17 @@
                                                 </button>
                                             </form>
                                             <h3 class="text-lg font-bold">Are you sure?</h3>
-                                            <p class="text-sm text-base-content/60 mt-2">Do you wish to leave this event?
+                                            <p class="text-sm text-base-content/60 mt-2">Do you wish to leave this
+                                                event?
                                             </p>
                                             <p class="py-4">
-                                                You will not receive any points if you <span class="text-error">leave</span>
+                                                You will not receive any points if you <span
+                                                    class="text-error">leave</span>
                                                 this even early.
                                             </p>
 
-                                            <button class="btn btn-error" wire:click="leaveEvent" title="Delete task list">
+                                            <button class="btn btn-error" wire:click="leaveEvent"
+                                                    title="Delete task list">
                                                 Leave
                                             </button>
                                         </div>
@@ -124,7 +169,8 @@
                                     </div>
                                 </div>
                             @elseif ($status == 'accepted')
-                                <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
+                                <div
+                                    class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex text-left gap-4">
                                     <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
                                     <div>
                                         <h3 class="text-lg font-bold text-green-700">You're In!</h3>
@@ -168,20 +214,19 @@
                         </div>
                     </div>
 
-                    <div class="my-8">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                            Eligibility & Selection Criteria
+                    <div class="my-4">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Eligibility & Selection Criteria
                         </h2>
-                        <div
-                            class="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl p-6 flex flex-col gap-6 shadow-sm">
+
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-4">
                             <!-- Recruiting Method -->
-                            <div class="flex items-center gap-4">
-                                <div class="flex-shrink-0">
-                                    <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
-                                        <i data-lucide="user-plus" class="w-6 h-6 text-blue-500" aria-hidden="true"></i>
-                                    </div>
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i>
                                 </div>
                                 <div>
+                                    <h3 class="font-semibold text-gray-900 mb-1">Selection Method</h3>
                                     @php
                                         $recruitingMethodLabels = [
                                             'first_come' => 'First Come, First Served',
@@ -193,77 +238,92 @@
                                             $recruitingMethodLabels[$event->recruiting_method] ??
                                             ($event->recruiting_method ?? 'Not specified');
                                     @endphp
-                                    <div class="text-sm font-medium text-gray-500">
-                                        We will be recruiting based on {{ $recruitingMethodLabel }} </div>
+                                    <p class="text-gray-600 text-sm">{{ $recruitingMethodLabel }}</p>
                                 </div>
                             </div>
 
                             <!-- Participant Requirements -->
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0">
-                                    <div class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center">
-                                        <i data-lucide="users" class="w-6 h-6 text-yellow-500" aria-hidden="true"></i>
-                                    </div>
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i data-lucide="users" class="w-4 h-4 text-green-600"></i>
                                 </div>
-                                <div class="w-full">
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 mb-2">Participant Requirements
+                                    </h3>
+
                                     @if (!empty($event->participant_requirements))
-                                        <div class="flex flex-wrap gap-2 mt-2">
+                                        <div class="space-y-3">
                                             @foreach ($event->participant_requirements as $req)
                                                 @if (isset($req['filter_types']) && $req['filter_types'] === 'gender')
-                                                    <span
-                                                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-sm font-medium">
-                                                        <i data-lucide="venus-mars" class="w-4 h-4 text-blue-400"
-                                                            aria-hidden="true"></i>
-                                                        <span class="flex items-center gap-1">
-                                                            Men: <span
-                                                                class="font-bold text-blue-700">{{ $req['male_participants'] ?? 0 }}</span>
-                                                        </span>
-                                                        <span class="flex items-center gap-1">
-                                                            Women: <span
-                                                                class="font-bold text-pink-700">{{ $req['female_participants'] ?? 0 }}</span>
-                                                        </span>
-                                                        <span class="flex items-center gap-1">
-                                                            Non-Binary: <span
-                                                                class="font-bold text-purple-700">{{ $req['non_binary_participants'] ?? 0 }}</span>
-                                                        </span>
-                                                    </span>
+                                                    <div class="bg-white border border-gray-200 rounded-md p-3">
+                                                        <div class="text-sm font-medium text-gray-700 mb-2">Gender
+                                                            Distribution
+                                                        </div>
+                                                        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                                                            <div class="bg-gray-50 rounded p-2">
+                                                                <div class="font-bold text-gray-800">
+                                                                    {{ $req['male_participants'] ?? 0 }}</div>
+                                                                <div class="text-gray-600">Men</div>
+                                                            </div>
+                                                            <div class="bg-gray-50 rounded p-2">
+                                                                <div class="font-bold text-gray-800">
+                                                                    {{ $req['female_participants'] ?? 0 }}</div>
+                                                                <div class="text-gray-600">Women</div>
+                                                            </div>
+                                                            <div class="bg-gray-50 rounded p-2">
+                                                                <div class="font-bold text-gray-800">
+                                                                    {{ $req['non_binary_participants'] ?? 0 }}</div>
+                                                                <div class="text-gray-600">Non-Binary</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @elseif (isset($req['filter_types']) && $req['filter_types'] === 'level')
-                                                    <span
-                                                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium">
-                                                        <i data-lucide="bar-chart" class="w-4 h-4 text-yellow-400"
-                                                            aria-hidden="true"></i>
-                                                        Level:
-                                                        <span>Beginner <span
-                                                                class="font-bold text-yellow-700">{{ $req['beginner_participants'] ?? 0 }}</span></span>,
-                                                        <span>Intermediate <span
-                                                                class="font-bold text-orange-700">{{ $req['intermediate_participants'] ?? 0 }}</span></span>,
-                                                        <span>Advanced <span
-                                                                class="font-bold text-green-700">{{ $req['advanced_participants'] ?? 0 }}</span></span>
-                                                    </span>
+                                                    <div class="bg-white border border-gray-200 rounded-md p-3">
+                                                        <div class="text-sm font-medium text-gray-700 mb-2">Experience
+                                                            Level
+                                                        </div>
+                                                        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                                                            <div class="bg-gray-50 rounded p-2">
+                                                                <div class="font-bold text-gray-800">
+                                                                    {{ $req['beginner_participants'] ?? 0 }}</div>
+                                                                <div class="text-gray-600">Beginner</div>
+                                                            </div>
+                                                            <div class="bg-gray-50 rounded p-2">
+                                                                <div class="font-bold text-gray-800">
+                                                                    {{ $req['intermediate_participants'] ?? 0 }}</div>
+                                                                <div class="text-gray-600">Intermediate</div>
+                                                            </div>
+                                                            <div class="bg-gray-50 rounded p-2">
+                                                                <div class="font-bold text-gray-800">
+                                                                    {{ $req['advanced_participants'] ?? 0 }}</div>
+                                                                <div class="text-gray-600">Advanced</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @else
-                                                    <span
-                                                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium">
-                                                        {{ is_string($req) ? $req : 'Custom requirement' }}
-                                                    </span>
+                                                    <div class="bg-white border border-gray-200 rounded-md p-2">
+                                                                    <span
+                                                                        class="text-sm text-gray-700">{{ is_string($req) ? $req : 'Custom requirement' }}</span>
+                                                    </div>
                                                 @endif
                                             @endforeach
                                         </div>
                                     @else
-                                        <div class="mt-2 text-gray-600 text-sm">No specific participant
-                                            requirements.
+                                        <div class="text-sm text-gray-600">No specific requirements - Everyone
+                                            is welcome!
                                         </div>
                                     @endif
 
                                     <!-- Minimum Age -->
                                     @if (isset($event->minimum_age))
-                                        <div class="mt-3">
-                                            <span
-                                                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
-                                                <i data-lucide="calendar" class="w-4 h-4 text-green-500"
-                                                    aria-hidden="true"></i>
-                                                Minimum Age: <span
-                                                    class="font-bold text-green-700">{{ $event->minimum_age }}</span>
-                                            </span>
+                                        <div class="mt-3 bg-white border border-gray-200 rounded-md p-2">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="calendar" class="w-4 h-4 text-gray-600"></i>
+                                                <span class="text-sm text-gray-700">Minimum Age: <span
+                                                        class="font-semibold">{{ $event->minimum_age }}
+                                                                    years</span></span>
+                                            </div>
                                         </div>
                                     @endif
                                 </div>
@@ -282,6 +342,27 @@
                                     <p class="text-gray-600 leading-relaxed">{{ $event->notes }}</p>
                                 </div>
                             </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
+                                <div class="space-y-3">
+                                    @foreach ($event->resources as $resource)
+                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                            <div class="flex items-start justify-between gap-4">
+                                                <div class="flex-1">
+                                                    <h3 class="font-semibold text-gray-800 mb-1">{{ $resource->name }}
+                                                    </h3>
+                                                    <p class="text-sm text-gray-600">{{ $resource->description }}</p>
+                                                </div>
+                                                <div class="text-right flex-shrink-0">
+                                                    <div class="text-lg font-bold text-gray-800">
+                                                        {{ $resource->pivot->quantity }}</div>
+                                                    <div class="text-xs text-gray-500">{{ $resource->unit }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
 
                             <!-- Map -->
                             <div>
@@ -296,14 +377,14 @@
                                     <div
                                         class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden mb-1">
                                         <iframe width="100%" height="100%" frameborder="0"
-                                            style="border:0; min-height: 120px; border-radius: 0.5rem;"
-                                            src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
-                                            allowfullscreen>
+                                                style="border:0; min-height: 120px; border-radius: 0.5rem;"
+                                                src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
+                                                allowfullscreen>
                                         </iframe>
                                     </div>
                                     <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                        target="_blank"
-                                        class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                       target="_blank"
+                                       class="w-full btn btn-outline btn-sm flex items-center justify-center">
                                         <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
                                         Open in Google Maps
                                     </a>
@@ -346,7 +427,8 @@
                                 <h2 class="text-xl font-bold text-gray-800 mb-4">Tags</h2>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($event->tags as $tag)
-                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                        <span
+                                            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                                             #{{ $tag->name }}
                                         </span>
                                     @endforeach
@@ -375,7 +457,8 @@
                                         <div class="flex items-center gap-3">
                                             <i data-lucide="twitter" class="w-5 h-5 text-blue-400"></i>
                                             <span class="text-gray-700 font-medium">Social:</span>
-                                            <a href="#" class="text-blue-600 hover:underline font-medium">Twitter</a>
+                                            <a href="#"
+                                                class="text-blue-600 hover:underline font-medium">Twitter</a>
                                         </div>
                                     </div>
                                 </div>
@@ -385,19 +468,19 @@
                 </div>
                 @if ($status == 'accepted')
                     <label class="tab">
-                        <input type="radio" name="my_tabs_4" />
+                        <input type="radio" name="my_tabs_4"/>
                         <i data-lucide="book-check" class="w-4 h-4 mr-2"></i>
                         Workflows
                     </label>
 
                     <div class="tab-content bg-gray-100 border-base-300 p-6">
-                        <livewire:common.workflow :eventId="$event->id" />
+                        <livewire:common.workflow :eventId="$event->id"/>
                     </div>
                 @endif
 
-                {{-- Event Gallery--}}
+                {{-- Event Gallery --}}
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4" />
+                    <input type="radio" name="my_tabs_4"/>
                     <i data-lucide="image" class="w-4 h-4 mr-2"></i>
                     Event Gallery
                 </label>
@@ -420,20 +503,18 @@
                                 <label
                                     class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm text-gray-700 hover:bg-gray-50">
                                     <i data-lucide="upload"></i>
-                                    <input type="file" wire:model="photos" multiple accept="image/*" >
+                                    <input type="file" wire:model="photos" multiple accept="image/*">
                                 </label>
 
                                 <div class="ml-auto flex items-center gap-3">
-                                    <button type="submit"
-                                        wire:click="$refresh"
-                                        class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
+                                    <button type="submit" wire:click="$refresh"
+                                            class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
                                         <span wire:loading.remove wire:target="save">
-                                             <i data-lucide="save" class="w-4 h-4"></i>
+                                            <i data-lucide="save" class="w-4 h-4"></i>
                                         </span>
                                         <span wire:loading wire:target="save">
                                             <i data-lucide="loader-circle" class="w-4 h-4 animate-spin"></i>
                                         </span>
-                                       
                                         Save photos
                                     </button>
                                 </div>
@@ -441,8 +522,10 @@
                             @if ($photos && count($photos) > 0)
                                 <div class="flex flex-wrap gap-3 mt-4">
                                     @foreach ($photos as $photo)
-                                        <div class="w-24 h-24 rounded-lg overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
-                                                <img src="{{ $photo->temporaryUrl() }}" alt="Preview" class="object-cover w-full h-full">
+                                        <div
+                                            class="w-24 h-24 rounded-lg overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
+                                            <img src="{{ $photo->temporaryUrl() }}" alt="Preview"
+                                                class="object-cover w-full h-full">
                                         </div>
                                     @endforeach
                                 </div>
@@ -465,7 +548,7 @@
                             @foreach ($uploadedPhotos as $img)
                                 <div class="group relative overflow-hidden rounded-lg shadow-lg">
                                     <img src="{{ $img }}" alt="Gallery Image"
-                                        class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
                                 </div>
                             @endforeach
                         </div>
@@ -474,7 +557,7 @@
 
                 {{-- Reviews --}}
                 <label class="tab">
-                    <input type="radio" name="my_tabs_4" />
+                    <input type="radio" name="my_tabs_4"/>
                     <i data-lucide="star" class="w-4 h-4 mr-2"></i>
                     Reviews
                 </label>
@@ -502,8 +585,8 @@
                                     {{-- @if ($reviewbutton) --}}
                                     <!-- Event-level review modal (unique per event) -->
                                     <button onclick="my_modal_4.showModal()"
-                                        class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
-                                        for="event_review_modal_{{ $event->id }}">
+                                            class="btn inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700"
+                                            for="event_review_modal_{{ $event->id }}">
                                         <i data-lucide="message-circle" class="w-5 h-5 text-emerald-600"></i>
                                         <span>Review</span>
                                     </button>
@@ -511,7 +594,7 @@
                                         <div
                                             class="modal-box w-full max-w-lg p-8 bg-white rounded-2xl shadow-xl relative">
                                             <button onclick="my_modal_4.close()" type="button"
-                                                class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
+                                                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none">
                                                 <i data-lucide="x" class="w-6 h-6"></i>
                                             </button>
                                             <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
@@ -523,69 +606,69 @@
                                             <form method="dialog" wire:submit="submitReview" class="space-y-5">
                                                 <div>
                                                     <label for="rating"
-                                                        class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                                                           class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
                                                     {{-- <input type="number" min="1" max="5" wire:model="rating"
                                                         id="rating"
                                                         class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none"
                                                         placeholder="1-5"> --}}
                                                     <div class="rating rating-lg rating-half">
                                                         <input type="radio" wire:model="rating" name="rating-11"
-                                                            class="rating-hidden" />
+                                                               class="rating-hidden"/>
                                                         <input type="radio" wire:model="rating" value="0.5"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                            aria-label="0.5 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                               aria-label="0.5 star"/>
                                                         <input type="radio" wire:model="rating" value="1"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                            aria-label="1 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                               aria-label="1 star"/>
                                                         <input type="radio" wire:model="rating" value="1.5"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                            aria-label="1.5 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                               aria-label="1.5 star"/>
                                                         <input type="radio" wire:model="rating" value="2"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                            aria-label="2 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                               aria-label="2 star"/>
                                                         <input type="radio" wire:model="rating" value="2.5"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                            aria-label="2.5 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                               aria-label="2.5 star"/>
                                                         <input type="radio" wire:model="rating" value="3"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                            aria-label="3 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                               aria-label="3 star"/>
                                                         <input type="radio" wire:model="rating" value="3.5"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                            aria-label="3.5 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                               aria-label="3.5 star"/>
                                                         <input type="radio" wire:model="rating" value="4"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                            aria-label="4 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                               aria-label="4 star"/>
                                                         <input type="radio" wire:model="rating" value="4.5"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                            aria-label="4.5 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                               aria-label="4.5 star"/>
                                                         <input type="radio" wire:model="rating" value="5"
-                                                            name="rating-11"
-                                                            class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                            aria-label="5 star" />
+                                                               name="rating-11"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                               aria-label="5 star"/>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <label for="review"
-                                                        class="block text-sm font-medium text-gray-700 mb-1">Your
+                                                           class="block text-sm font-medium text-gray-700 mb-1">Your
                                                         Review</label>
                                                     <textarea wire:model="review" id="review" rows="4"
-                                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
-                                                        placeholder="Write your review..."></textarea>
+                                                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 outline-none resize-none"
+                                                              placeholder="Write your review..."></textarea>
                                                 </div>
                                                 <div class="flex justify-end gap-2 mt-6">
 
                                                     <button onclick="my_modal_4.close()"
-                                                        class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
-                                                        type="submit">Send
+                                                            class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold shadow"
+                                                            type="submit">Send
                                                     </button>
                                                 </div>
                                             </form>
@@ -604,8 +687,8 @@
                                                     class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 flex-shrink-0">
                                                     @if (isset($review->user) && isset($review->user->profile_photo_url))
                                                         <img src="{{ $review->user->profile_photo_url }}"
-                                                            alt="{{ $review->user->name }}"
-                                                            class="w-full h-full object-cover rounded-full">
+                                                             alt="{{ $review->user->name }}"
+                                                             class="w-full h-full object-cover rounded-full">
                                                     @else
                                                         <span
                                                             class="font-semibold">{{ strtoupper(substr($review->user->name ?? 'U', 0, 1)) }}</span>
@@ -624,45 +707,45 @@
                                                         <div class="flex items-center gap-2">
                                                             <div class="rating rating-lg rating-half">
                                                                 {{-- 1 full opacity ,0.2 almost transparert --}}
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                                    aria-label="0.5 star"
-                                                                    style="opacity:{{ $review->rating >= 0.5 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                                     aria-label="0.5 star"
+                                                                     style="opacity:{{ $review->rating >= 0.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                                    aria-label="1 star"
-                                                                    style="opacity:{{ $review->rating >= 1 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                                     aria-label="1 star"
+                                                                     style="opacity:{{ $review->rating >= 1 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                                    aria-label="1.5 star"
-                                                                    style="opacity:{{ $review->rating >= 1.5 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                                     aria-label="1.5 star"
+                                                                     style="opacity:{{ $review->rating >= 1.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                                    aria-label="2 star"
-                                                                    style="opacity:{{ $review->rating >= 2 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                                     aria-label="2 star"
+                                                                     style="opacity:{{ $review->rating >= 2 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                                    aria-label="2.5 star"
-                                                                    style="opacity:{{ $review->rating >= 2.5 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                                     aria-label="2.5 star"
+                                                                     style="opacity:{{ $review->rating >= 2.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                                    aria-label="3 star"
-                                                                    style="opacity:{{ $review->rating >= 3 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                                     aria-label="3 star"
+                                                                     style="opacity:{{ $review->rating >= 3 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                                    aria-label="3.5 star"
-                                                                    style="opacity:{{ $review->rating >= 3.5 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                                     aria-label="3.5 star"
+                                                                     style="opacity:{{ $review->rating >= 3.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                                    aria-label="4 star"
-                                                                    style="opacity:{{ $review->rating >= 4 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                                     aria-label="4 star"
+                                                                     style="opacity:{{ $review->rating >= 4 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
-                                                                    aria-label="4.5 star"
-                                                                    style="opacity:{{ $review->rating >= 4.5 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
+                                                                     aria-label="4.5 star"
+                                                                     style="opacity:{{ $review->rating >= 4.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
-                                                                    aria-label="5 star"
-                                                                    style="opacity:{{ $review->rating == 5 ? 1 : 0.2 }}">
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
+                                                                     aria-label="5 star"
+                                                                     style="opacity:{{ $review->rating == 5 ? 1 : 0.2 }}">
                                                                 </div>
                                                             </div>
                                                             <div class="text-sm text-gray-600">
@@ -685,12 +768,12 @@
                 {{-- Chat --}}
                 @if ($status == 'accepted')
                     <label class="tab">
-                        <input type="radio" name="my_tabs_4" />
+                        <input type="radio" name="my_tabs_4"/>
                         <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>
                         Chat
                     </label>
                     <div class="tab-content bg-base-100 border-base-300 p-0">
-                        <livewire:common.group-chat :eventId="$event->id" />
+                        <livewire:common.group-chat :eventId="$event->id"/>
                     </div>
                 @endif
             </div>

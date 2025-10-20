@@ -63,8 +63,9 @@
 
             <!-- Events List Items -->
             <div class="px-6">
-                @forelse ($participatingEvents as $item)
-                    <div class="hover:bg-white/60 transition-all duration-200 group">
+         
+                @forelse ($this->participatingEvents as $item)
+                    <div class="hover:bg-white/60 transition-all duration-200 group" wire:key="{{ $item->id }}">
                         <div class="grid grid-cols-12 gap-4 items-center">
 
                             <!-- Event Details -->
@@ -94,7 +95,7 @@
                             <div class="col-span-2">
                                 <div class="bg-white/50 rounded-xl p-3">
                                     <div class="text-sm font-bold text-slate-900 mb-1">
-                                        {{ date('M j, Y', strtotime($item->starts_at)) }}
+                                        {{ date('M j, Y', strtotime($item->starts_at ?? null)) }}
                                     </div>
                                     <div class="text-sm text-slate-600 flex items-center gap-1">
                                         <i data-lucide="clock" class="w-3 h-3"></i>
@@ -103,7 +104,7 @@
                                     </div>
                                     <div class="text-xs text-slate-400 mt-2 flex items-center gap-1">
                                         <i data-lucide="calendar-plus" class="w-3 h-3"></i>
-                                        Applied {{ date('M j', strtotime($item->pivot->created_at)) }}
+                                        Applied {{ date('M j', strtotime($item->pivot->created_at ?? null)) }}
                                     </div>
                                 </div>
                             </div>
@@ -121,31 +122,33 @@
 
                             <!-- Status -->
                             <div class="col-span-1">
-                                @if ($item->pivot->status === 'accepted')
+                            @if(isset($item->pivot['status']))
+                                @if ($item->pivot['status'] == 'accepted')
                                     <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 shadow-sm">
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700">
                                         <div class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
                                         Confirmed
                                     </span>
-                                @elseif($item->pivot->status === 'pending')
+                                @elseif($item->pivot['status'] == 'pending')
                                     <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 shadow-sm">
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700">
                                         <div class="w-2 h-2 bg-amber-500 rounded-full mr-2 animate-pulse"></div>
                                         Pending
                                     </span>
-                                @elseif($item->pivot->status === 'completed')
+                                @elseif($item->pivot['status'] == 'completed')
                                     <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 shadow-sm">
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700">
                                         <i data-lucide="check-circle" class="w-3 h-3 mr-2"></i>
                                         Completed
                                     </span>
-                                @elseif($item->pivot->status === 'rejected' || $item->pivot->status === 'cancelled')
+                                @elseif($item->pivot['status'] === 'rejected' || $item->pivot->status === 'cancelled')
                                     <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-rose-100 to-red-100 text-rose-700 shadow-sm">
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-rose-100 to-red-100 text-rose-700">
                                         <i data-lucide="x-circle" class="w-3 h-3 mr-2"></i>
                                         Cancelled
                                     </span>
                                 @endif
+                            @endif
                             </div>
 
                             <!-- Organizer -->
