@@ -12,5 +12,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/digital-signature', \App\Livewire\Lawyer\Dashboard\DigitalSignature::class)->name('lawyer.digital-signature');
     Route::get('/contract-archive', \App\Livewire\Lawyer\Dashboard\ContractArchive::class)->name('lawyer.contract-archive');
     Route::get('/contract-customization', \App\Livewire\Lawyer\Dashboard\ContractCustomization::class)->name('lawyer.contract-customization');
-    Route::get('/legal-qa', \App\Livewire\Lawyer\Dashboard\LegalQA::class)->name('lawyer.legal-qa');
 });

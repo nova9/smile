@@ -31,7 +31,7 @@
                             <p class="text-3xl font-bold text-gray-800">{{ $stats['total_contracts'] }}</p>
                         </div>
                         <div class="p-3 bg-green-100 rounded-full">
-                            <i data-lucide="FileText" class="w-6 h-6 text-green-600"></i>
+                            <i data-lucide="file-text" class="w-6 h-6 text-green-600"></i>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                             <p class="text-3xl font-bold text-green-600">{{ $stats['active_contracts'] }}</p>
                         </div>
                         <div class="p-3 bg-green-100 rounded-full">
-                            <i data-lucide="CheckCircle" class="w-6 h-6 text-green-600"></i>
+                            <i data-lucide="check-circle" class="w-6 h-6 text-green-600"></i>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                             <p class="text-3xl font-bold text-black">{{ $stats['completed_this_month'] }}</p>
                         </div>
                         <div class="p-3 bg-gray-100 rounded-full">
-                            <i data-lucide="TrendingUp" class="w-6 h-6 text-black"></i>
+                            <i data-lucide="trending-up" class="w-6 h-6 text-black"></i>
                         </div>
                     </div>
                 </div>
@@ -86,31 +86,19 @@
                             <h4 class="font-medium text-gray-800">Contract Drafting</h4>
                         </div>
                         <p class="text-sm text-gray-600 mb-2">Create legal contracts</p>
-                        <span class="text-xs text-green-600 font-medium">15 in progress</span>
-                    </a>
-
-                    <!-- Contract Approval Workflow -->
-                    <a href="/lawyer/approval-workflow" class="p-4 border border-gray-200 rounded-lg hover:bg-red-50 hover:border-red-300 transition-all duration-200 cursor-pointer">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="p-2 bg-red-100 rounded-full">
-                                <i data-lucide="Workflow" class="w-5 h-5 text-red-600"></i>
-                            </div>
-                            <h4 class="font-medium text-gray-800">Approval Workflow</h4>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-2">Manage approvals</p>
-                        <span class="text-xs text-red-600 font-medium">8 pending</span>
+                        <span class="text-xs text-green-600 font-medium">{{ $processCounts['pending_approval'] }} pending</span>
                     </a>
 
                     <!-- Digital Signature -->
                     <a href="/lawyer/digital-signature" class="p-4 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="p-2 bg-green-100 rounded-full">
-                                <i data-lucide="PenTool" class="w-5 h-5 text-green-600"></i>
+                                <i data-lucide="pen-tool" class="w-5 h-5 text-green-600"></i>
                             </div>
                             <h4 class="font-medium text-gray-800">Digital Signature</h4>
                         </div>
                         <p class="text-sm text-gray-600 mb-2">Handle signatures</p>
-                        <span class="text-xs text-green-600 font-medium">12 awaiting</span>
+                        <span class="text-xs text-green-600 font-medium">{{ $processCounts['awaiting_signature'] }} awaiting</span>
                     </a>
 
                     <!-- Contract Archive -->
@@ -122,7 +110,7 @@
                             <h4 class="font-medium text-gray-800">Contract Archive</h4>
                         </div>
                         <p class="text-sm text-gray-600 mb-2">View archived contracts</p>
-                        <span class="text-xs text-gray-600 font-medium">127 archived</span>
+                        <span class="text-xs text-gray-600 font-medium">{{ $processCounts['archived'] }} archived</span>
                     </a>
 
                     <!-- Contract Customization -->
@@ -134,19 +122,7 @@
                             <h4 class="font-medium text-gray-800">Contract Customization</h4>
                         </div>
                         <p class="text-sm text-gray-600 mb-2">Customize templates</p>
-                        <span class="text-xs text-green-600 font-medium">5 templates</span>
-                    </a>
-
-                    <!-- Legal Q&A Support -->
-                    <a href="/lawyer/legal-qa" class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 cursor-pointer">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="p-2 bg-gray-100 rounded-full">
-                                <i data-lucide="HelpCircle" class="w-5 h-5 text-gray-600"></i>
-                            </div>
-                            <h4 class="font-medium text-gray-800">Legal Q&A Support</h4>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-2">Provide consultation</p>
-                        <span class="text-xs text-gray-600 font-medium">5 pending</span>
+                        <span class="text-xs text-green-600 font-medium">{{ $processCounts['customization_requests'] }} requests</span>
                     </a>
                 </div>
             </div>
@@ -164,13 +140,13 @@
                             @if($activity['status'] == 'completed') bg-green-100 
                             @elseif($activity['status'] == 'pending') bg-red-100 
                             @else bg-gray-100 @endif">
-                            <i data-lucide="
-                            @if($activity['status'] == 'completed') check-circle 
-                            @elseif($activity['status'] == 'pending') clock 
-                            @else activity @endif" class="w-4 h-4 
-                            @if($activity['status'] == 'completed') text-green-600 
-                            @elseif($activity['status'] == 'pending') text-red-600 
-                            @else text-gray-600 @endif"></i>
+                            @if($activity['status'] == 'completed')
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-600"></i>
+                            @elseif($activity['status'] == 'pending')
+                            <i data-lucide="clock" class="w-4 h-4 text-red-600"></i>
+                            @else
+                            <i data-lucide="activity" class="w-4 h-4 text-gray-600"></i>
+                            @endif
                         </div>
                         <div class="flex-1">
                             <p class="font-medium text-gray-800 text-sm">{{ $activity['title'] }}</p>
