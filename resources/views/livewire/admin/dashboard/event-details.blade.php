@@ -2,7 +2,8 @@
     <div class="p-6">
         <!-- Back Button -->
         <div class="mb-6">
-            <a href="/admin/dashboard" wire:navigate class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors">
+            <a href="/admin/dashboard" wire:navigate
+                class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors">
                 <i class="fas fa-arrow-left"></i>
                 Back to Dashboard
             </a>
@@ -36,16 +37,18 @@
                         </span>
                     </div>
                 </div>
-                
+
                 <!-- Status Badge -->
                 <div>
                     @if($event->is_active)
-                        <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium inline-flex items-center">
+                        <span
+                            class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium inline-flex items-center">
                             <i class="fas fa-eye mr-2"></i>
                             Active
                         </span>
                     @else
-                        <span class="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium inline-flex items-center">
+                        <span
+                            class="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium inline-flex items-center">
                             <i class="fas fa-eye-slash mr-2"></i>
                             Hidden
                         </span>
@@ -56,16 +59,15 @@
             <!-- Quick Actions -->
             <div class="flex gap-3 border-t border-gray-200 pt-6">
                 @if($event->is_active)
-                    <button 
-                        wire:click="toggleEventStatus"
-                        wire:confirm="Are you sure you want to hide this event from volunteers?"
+                    <button wire:click="toggleEventStatus"
+                        wire:confirm="{{ $event->reports_count >= 3 ? 'Are you sure you want to hide this event from volunteers?' : 'Warning: This event has only ' . $event->reports_count . ' report(s). Events typically require 3+ reports to be hidden. Hide anyway?' }}"
                         class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium inline-flex items-center">
                         <i class="fas fa-ban mr-2"></i>
                         Disable Event
                     </button>
                 @else
-                    <button 
-                        wire:click="toggleEventStatus"
+                    <button wire:click="toggleEventStatus"
+                        wire:confirm="Are you sure you want to show this event to volunteers?"
                         class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium inline-flex items-center">
                         <i class="fas fa-check mr-2"></i>
                         Enable Event
@@ -73,9 +75,7 @@
                 @endif
 
                 @if($event->reports_count > 0)
-                    <button 
-                        wire:click="dismissReports"
-                        wire:confirm="Dismiss all pending reports for this event?"
+                    <button wire:click="dismissReports" wire:confirm="Dismiss all pending reports for this event?"
                         class="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-medium inline-flex items-center">
                         <i class="fas fa-times mr-2"></i>
                         Dismiss {{ $event->reports_count }} {{ Str::plural('Report', $event->reports_count) }}
@@ -91,7 +91,7 @@
                     <i class="fas fa-exclamation-triangle"></i>
                     Reports ({{ $event->reports->where('status', 'pending')->count() }})
                 </h2>
-                
+
                 <div class="space-y-4">
                     @foreach($event->reports->where('status', 'pending') as $report)
                         <div class="bg-white rounded-lg p-4 border-l-4 border-red-500">
@@ -129,23 +129,28 @@
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
                             <i class="fas fa-calendar text-blue-600 w-5"></i>
-                            <span class="text-gray-700">Starts: <strong>{{ $event->starts_at->format('M d, Y h:i A') }}</strong></span>
+                            <span class="text-gray-700">Starts:
+                                <strong>{{ $event->starts_at->format('M d, Y h:i A') }}</strong></span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="fas fa-calendar-check text-green-600 w-5"></i>
-                            <span class="text-gray-700">Ends: <strong>{{ $event->ends_at->format('M d, Y h:i A') }}</strong></span>
+                            <span class="text-gray-700">Ends:
+                                <strong>{{ $event->ends_at->format('M d, Y h:i A') }}</strong></span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="fas fa-users text-purple-600 w-5"></i>
-                            <span class="text-gray-700">Max Participants: <strong>{{ $event->maximum_participants }}</strong></span>
+                            <span class="text-gray-700">Max Participants:
+                                <strong>{{ $event->maximum_participants }}</strong></span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="fas fa-user-check text-orange-600 w-5"></i>
-                            <span class="text-gray-700">Current Volunteers: <strong>{{ $event->users->count() }}</strong></span>
+                            <span class="text-gray-700">Current Volunteers:
+                                <strong>{{ $event->users->count() }}</strong></span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="fas fa-child text-pink-600 w-5"></i>
-                            <span class="text-gray-700">Minimum Age: <strong>{{ $event->minimum_age }} years</strong></span>
+                            <span class="text-gray-700">Minimum Age: <strong>{{ $event->minimum_age }}
+                                    years</strong></span>
                         </div>
                     </div>
                 </div>
@@ -154,7 +159,7 @@
                 @if($event->skills || $event->tags->count() > 0)
                     <div class="bg-white rounded-2xl shadow-xl p-6">
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Skills & Tags</h3>
-                        
+
                         @if($event->skills)
                             <div class="mb-4">
                                 <p class="text-sm text-gray-600 mb-2">Required Skills:</p>
@@ -191,13 +196,15 @@
                     <h3 class="text-xl font-bold text-gray-900 mb-4">
                         Volunteers ({{ $event->users->count() }})
                     </h3>
-                    
+
                     @if($event->users->count() > 0)
                         <div class="space-y-3 max-h-96 overflow-y-auto">
                             @foreach($event->users as $volunteer)
-                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                <div
+                                    class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                                        <div
+                                            class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
                                             {{ strtoupper(substr($volunteer->name, 0, 1)) }}
                                         </div>
                                         <div>
@@ -205,7 +212,8 @@
                                             <p class="text-sm text-gray-500">{{ $volunteer->email }}</p>
                                         </div>
                                     </div>
-                                    <span class="px-3 py-1 bg-{{ $volunteer->pivot->status === 'accepted' ? 'green' : ($volunteer->pivot->status === 'pending' ? 'yellow' : 'red') }}-100 text-{{ $volunteer->pivot->status === 'accepted' ? 'green' : ($volunteer->pivot->status === 'pending' ? 'yellow' : 'red') }}-800 rounded-full text-xs font-medium capitalize">
+                                    <span
+                                        class="px-3 py-1 bg-{{ $volunteer->pivot->status === 'accepted' ? 'green' : ($volunteer->pivot->status === 'pending' ? 'yellow' : 'red') }}-100 text-{{ $volunteer->pivot->status === 'accepted' ? 'green' : ($volunteer->pivot->status === 'pending' ? 'yellow' : 'red') }}-800 rounded-full text-xs font-medium capitalize">
                                         {{ $volunteer->pivot->status }}
                                     </span>
                                 </div>
