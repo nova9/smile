@@ -14,6 +14,7 @@ Route::middleware(['auth', 'role:requester'])->group(function () {
         Route::get('/issued-certificates', \App\Livewire\Requester\Dashboard\Certificates\IssuedCertificates::class);
         Route::get('/volunteers/{id}', \App\Livewire\Requester\Dashboard\Volunteers\Show::class)->name('requester.dashboard.volunteers.show');
         Route::get('/upgrade', \App\Livewire\Requester\Dashboard\Upgrade::class);
+        Route::get('/reviews', \App\Livewire\Requester\Dashboard\Reviews::class)->name('requester.dashboard.reviews');
     });
 });
 // action="{{ route('certificates.issue', ['volunteer' => $volunteer->id, 'event' => $event->id]) }}"
