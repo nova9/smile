@@ -59,7 +59,8 @@ class Index extends Component
                     ->orWhere('events.notes', 'like', '%' . $this->search . '%');
             });
         }
-
+    
+    
         if (!empty($this->statusFilter)) {
             $query->wherePivot('status', $this->statusFilter);
         }
