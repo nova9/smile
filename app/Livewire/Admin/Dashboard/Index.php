@@ -27,6 +27,20 @@ class Index extends Component
         session()->flash('message_type', 'success');
         session()->flash('message_icon', $icon);
 
+        // After toggling, update owner's restricted flag if they have 2 or more hidden events
+        try {
+            $owner = $event->user;
+            if ($owner) {
+                $hiddenCount = Event::where('user_id', $owner->id)->where('is_active', false)->count();
+                $shouldRestrict = $hiddenCount >= 2;
+                if ($owner->is_restricted !== $shouldRestrict) {
+                    $owner->update(['is_restricted' => $shouldRestrict]);
+                }
+            }
+        } catch (\Exception $e) {
+            Log::warning('Failed to update owner restricted flag: ' . $e->getMessage());
+        }
+
         // Dispatch browser event for smooth UI updates
         $this->dispatch('event-status-changed', eventId: $eventId, isActive: $event->is_active);
     }
