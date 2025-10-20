@@ -21,4 +21,9 @@ class Pro
             ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->count();
     }
+
+    public static function isProUser($user)
+    {
+        return $user->upgrade()->exists();
+    }
 }
