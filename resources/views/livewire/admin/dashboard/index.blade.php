@@ -5,7 +5,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-4xl sm:text-5xl font-bold text-accent mb-2">
-                        Dispute
+                        Report
                         <span class="bg-gradient-to-r from-primary to-green-600 bg-clip-text text-transparent">
                             Handling
                         </span>
