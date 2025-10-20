@@ -29,6 +29,9 @@ class User extends Authenticatable
         'password',
         'role_id',
         'embedding',
+        'phone',
+        'organization',
+        'address',
     ];
 
     /**
@@ -109,6 +112,16 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function contractRequestsAsRequester(): HasMany
+    {
+        return $this->hasMany(ContractRequest::class, 'requester_id');
+    }
+
+    public function contractRequestsAsLawyer(): HasMany
+    {
+        return $this->hasMany(ContractRequest::class, 'lawyer_id');
+    }
+
     public function profileCompletionPercentage()
     {
         $initialPercentage = 0.4;
@@ -122,7 +135,7 @@ class User extends Authenticatable
 
         $user = auth()->user();
         $attributes = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
-//         dd($attributes);
+        //         dd($attributes);
         foreach ($requiredSkills as $key => $value) {
             if (!empty($attributes[$key])) {
                 $initialPercentage += $value;

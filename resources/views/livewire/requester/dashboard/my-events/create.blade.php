@@ -30,11 +30,11 @@
                                 class="select select-bordered w-full @error('category_id') select-error @enderror">
                                 <option value="">Select a category</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
                             @error('category_id')
-                                <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -47,7 +47,7 @@
                                 class="textarea textarea-bordered w-full @error('description') textarea-error @enderror"
                                 placeholder="Describe the event, activities, and what volunteers will be doing..."></textarea>
                             @error('description')
-                                <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -179,10 +179,10 @@
                                         <calendar-month></calendar-month>
                                     </calendar-range>
                                     @error('starts_at')
-                                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                     @enderror
                                     @error('ends_at')
-                                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
@@ -208,8 +208,8 @@
                                 class="input input-bordered w-full" placeholder="e.g., 50"
                                 aria-describedby="maximum_participants_error">
                             @error('maximum_participants')
-                                <p class="text-xs text-red-500 mt-1" id="maximum_participants_error">{{ $message }}
-                                </p>
+                            <p class="text-xs text-red-500 mt-1" id="maximum_participants_error">{{ $message }}
+                            </p>
                             @enderror
                         </div>
 
@@ -259,7 +259,7 @@
                                             placeholder="e.g., 10" aria-describedby="non_binary_participants_error">
                                     </div>
                                     @error('participant_gender_requirements')
-                                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
@@ -293,7 +293,7 @@
                                             placeholder="e.g., 10" aria-describedby="advanced_participants_error">
                                     </div>
                                     @error('participant_level_requirements')
-                                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="mt-2 text-xs text-gray-500">
@@ -358,7 +358,7 @@
                                 </div>
                             </template>
                             @error('skills')
-                                <p class="text-xs text-red-500 mt-1" id="skills_error">{{ $message }}</p>
+                            <p class="text-xs text-red-500 mt-1" id="skills_error">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -371,7 +371,7 @@
                                     class="input input-bordered w-full" placeholder="e.g., 16" min="16"
                                     aria-describedby="minimum_age_error">
                                 @error('minimum_age')
-                                    <p class="text-xs text-red-500 mt-1" id="minimum_age_error">{{ $message }}</p>
+                                <p class="text-xs text-red-500 mt-1" id="minimum_age_error">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
@@ -386,8 +386,8 @@
                                     <option value="metrics">Based on Metrics (Rank)</option>
                                 </select>
                                 @error('recruiting_method')
-                                    <p class="text-xs text-red-500 mt-1" id="recruiting_method_error">{{ $message }}
-                                    </p>
+                                <p class="text-xs text-red-500 mt-1" id="recruiting_method_error">{{ $message }}
+                                </p>
                                 @enderror
                             </div>
                         </div>
@@ -400,7 +400,7 @@
                                 placeholder="Any additional information for volunteers (e.g., dress code, time commitment)"
                                 aria-describedby="notes_error"></textarea>
                             @error('notes')
-                                <p class="text-xs text-red-500 mt-1" id="notes_error">{{ $message }}</p>
+                            <p class="text-xs text-red-500 mt-1" id="notes_error">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
@@ -434,8 +434,8 @@
                                                 class="select select-bordered w-full">
                                                 <option value="">Select a resource</option>
                                                 @foreach ($resources as $resource)
-                                                    <option value="{{ $resource->id }}">{{ $resource->name }}
-                                                        @if($resource->unit) ({{ $resource->unit }}) @endif</option>
+                                                <option value="{{ $resource->id }}">{{ $resource->name }}
+                                                    @if($resource->unit) ({{ $resource->unit }}) @endif</option>
                                                 @endforeach
                                             </select>
                                         </template>
@@ -466,7 +466,13 @@
                                     <div class="col-span-1 flex justify-end items-center">
                                         <button type="button" class="btn btn-sm"
                                             x-on:click="rows.splice(index, 1)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2 size-4"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2 size-4">
+                                                <path d="M10 11v6" />
+                                                <path d="M14 11v6" />
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                                <path d="M3 6h18" />
+                                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
@@ -482,13 +488,13 @@
                         </div>
 
                         @error('event_resources')
-                            <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
                         @enderror
                         @error('event_resources.*.resource_id')
-                            <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
                         @enderror
                         @error('event_resources.*.quantity')
-                            <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -564,18 +570,186 @@
                         </div>
 
                         @error('latitude')
-                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                         @error('longitude')
-                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
             </div>
 
             <!-- Form Actions -->
-            <div class="flex justify-between items-center p-6">
-                <a href="/requester/dashboard/my-events" class="btn btn-outline">
+            <!-- Contract Request Section -->
+            <div class="card bg-white shadow-md">
+                <div class="card-body">
+                    <h2 class="card-title text-xl mb-4 flex items-center">
+                        <i data-lucide="file-text" class="size-5 mr-2 text-primary"></i>
+                        Request Contract from Lawyer (Optional)
+                    </h2>
+
+                    <!-- Warning about event publishing -->
+                    <div class="alert alert-warning mb-4">
+                        <i data-lucide="alert-circle" class="size-5"></i>
+                        <span>
+                            <strong>Important:</strong> If you request a contract, your event will not be published until a lawyer signs it.
+                        </span>
+                    </div>
+
+                    <p class="text-sm text-gray-600 mb-4">
+                        Select a contract template below to request legal documentation for your event. Your organization details will be automatically included.
+                    </p>
+
+                    @if($availableAgreements && $availableAgreements->count() > 0)
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        @foreach($availableAgreements as $agreement)
+                        <div class="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors {{ $selectedAgreementId == $agreement->id ? 'border-primary bg-green-50' : '' }}">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-800 mb-2 flex items-center">
+                                        <i data-lucide="file-check" class="w-4 h-4 mr-2 text-green-600"></i>
+                                        {{ $agreement->topic }}
+                                    </h3>
+                                    <p class="text-sm text-gray-600 line-clamp-3">
+                                        {{ Str::limit($agreement->terms, 150) }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
+                                <span class="text-xs text-gray-500">
+                                    Created {{ $agreement->created_at->diffForHumans() }}
+                                </span>
+
+                                <div class="flex gap-2">
+                                    <!-- View Button -->
+                                    <button type="button" wire:click="viewTemplate({{ $agreement->id }})"
+                                        class="btn btn-sm btn-outline btn-info">
+                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
+                                        View
+                                    </button>
+
+                                    <!-- Select/Unselect Button -->
+                                    @if($selectedAgreementId == $agreement->id)
+                                    <button type="button" wire:click="toggleContractRequest"
+                                        class="btn btn-sm btn-error">
+                                        <i data-lucide="x" class="w-4 h-4 mr-1"></i>
+                                        Unselect
+                                    </button>
+                                    @else
+                                    <button type="button" wire:click="toggleContractRequest({{ $agreement->id }})"
+                                        class="btn btn-sm btn-primary">
+                                        <i data-lucide="check" class="w-4 h-4 mr-1"></i>
+                                        Select
+                                    </button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Additional Requirements Option -->
+                    @if($requestContract && $selectedAgreementId)
+                    <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-start mb-3">
+                            <input type="checkbox" wire:model.live="requestAdditionalRequirements" id="requestAdditionalRequirements"
+                                class="checkbox checkbox-primary mt-1 mr-3">
+                            <div class="flex-1">
+                                <label for="requestAdditionalRequirements" class="font-medium text-gray-700 cursor-pointer">
+                                    Request Additional Requirements
+                                </label>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    Check this if you need the lawyer to customize the contract with specific requirements.
+                                    Otherwise, the lawyer will simply sign the template as-is.
+                                </p>
+                            </div>
+                        </div>
+
+                        @if($requestAdditionalRequirements)
+                        <div class="mt-4 animate-fade-in">
+                            <label for="contractNotes" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i data-lucide="message-square" class="w-4 h-4 inline mr-1"></i>
+                                Specify Your Requirements *
+                            </label>
+                            <textarea wire:model="contractNotes" id="contractNotes" rows="5"
+                                class="textarea textarea-bordered w-full"
+                                placeholder="Example:&#10;• Add a liability clause for equipment damage&#10;• Increase insurance coverage to $1,000,000&#10;• Include provisions for participants under 18 years&#10;• Add emergency contact requirements&#10;• Specify refund policy for cancellations"></textarea>
+                            <p class="text-xs text-gray-600 mt-2">
+                                <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
+                                Be specific about what modifications you need. Your organization details will be automatically included.
+                            </p>
+                        </div>
+                        @endif
+                    </div>
+                    @endif
+                    @else
+                    <div class="text-center py-8 text-gray-500">
+                        <i data-lucide="file-x" class="w-12 h-12 mx-auto mb-3 text-gray-400"></i>
+                        <p>No contract templates available at the moment.</p>
+                        <p class="text-sm">Please check back later or contact a lawyer directly.</p>
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- View Template Modal -->
+            @if($showTemplateModal && $viewingAgreement)
+            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                wire:click="closeTemplateModal">
+                <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] flex flex-col"
+                    wire:click.stop onclick="event.stopPropagation()">
+                    <!-- Modal Header -->
+                    <div class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-lg">
+                        <div>
+                            <h3 class="text-xl font-bold flex items-center">
+                                <i data-lucide="file-text" class="w-6 h-6 mr-2"></i>
+                                {{ $viewingAgreement->topic }}
+                            </h3>
+                            <p class="text-sm text-blue-100 mt-1">
+                                Created {{ $viewingAgreement->created_at->diffForHumans() }}
+                            </p>
+                        </div>
+                        <button wire:click="closeTemplateModal" class="text-white hover:text-gray-200 transition-colors">
+                            <i data-lucide="x" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+
+                    <!-- Modal Body (Scrollable) -->
+                    <div class="p-6 overflow-y-auto flex-1">
+                        <h4 class="font-semibold text-gray-700 mb-3">Contract Terms:</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <div class="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap">{{ $viewingAgreement->terms }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+                        <button wire:click="closeTemplateModal" class="btn btn-ghost">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                            Close
+                        </button>
+
+                        @if($selectedAgreementId == $viewingAgreement->id)
+                        <button type="button" wire:click="toggleContractRequest; closeTemplateModal()"
+                            class="btn btn-error">
+                            <i data-lucide="x" class="w-4 h-4 mr-1"></i>
+                            Unselect Template
+                        </button>
+                        @else
+                        <button type="button" wire:click="toggleContractRequest({{ $viewingAgreement->id }}); closeTemplateModal()"
+                            class="btn btn-primary">
+                            <i data-lucide="check" class="w-4 h-4 mr-1"></i>
+                            Select This Template
+                        </button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <div class="flex items-center justify-between">
+                <a href="/requester/dashboard/my-events" class="btn btn-ghost">
                     <i data-lucide="arrow-left" class="size-4 mr-2"></i>
                     Cancel
                 </a>
@@ -583,7 +757,7 @@
                 <div>
                     <button type="submit" class="btn btn-primary">
                         <i data-lucide="calendar-plus" class="size-4 mr-2"></i>
-                        Create Event
+                        Create Event {{ $requestContract ? '& Request Contract' : '' }}
                     </button>
                 </div>
             </div>
@@ -652,7 +826,7 @@
     function getCurrentLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                function (position) {
+                function(position) {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     console.log("Latitude:", latitude);
@@ -665,7 +839,7 @@
                     map.setCenter(pos);
                     placeMarker(pos)
                 },
-                function (error) {
+                function(error) {
                     console.error("Error getting location:", error.message);
                 }
             );
