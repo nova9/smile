@@ -5,6 +5,7 @@ namespace App\Livewire\Common;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notifiable;
 
 class Notification extends Component
 {
@@ -15,32 +16,33 @@ class Notification extends Component
 
     public function mount()
     {
-        $this->notifications = Auth::user()->notifications()// notifiable id = authuser id
-            ->whereNull('read_at')
-            ->orderBy('created_at', 'desc')
-            ->get();
-        
+        $this->loadNotifications();
+
     }
 
-    public function markAsRead($id)
+    public function loadNotifications()
     {
-        $notification = Auth::user()->notifications()->find($id);
-        if (!$notification) return;
-
-        $data = is_array($notification->data)
-            ? $notification->data
-            : json_decode($notification->data, true);
-
-        if ($notification && $notification->read_at === null) {
-            $notification->read_at = now();
-            $notification->save();
-        }
         $this->notifications = Auth::user()->notifications()
             ->whereNull('read_at')
             ->orderBy('created_at', 'desc')
             ->get();
-        redirect($data['event_url'] ?? '/');
     }
+
+    public function markasRead($id)
+    {
+        // dd($id);
+        auth()->user()->notifications->find($id)?->markAsRead();
+        $this->loadNotifications();
+        
+    }
+    public function markAllAsRead()
+    {
+        foreach (auth()->user()->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+        $this->loadNotifications();
+    }
+
 
     public function render()
     {
