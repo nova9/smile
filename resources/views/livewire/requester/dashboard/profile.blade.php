@@ -33,7 +33,9 @@
                             class="flex gap-4"
                         >
                             <div class="flex flex-col gap-2 items-center">
-
+                                <x-common.avatar size="100"
+                                                 :src="$profile_picture ? $profile_picture->temporaryUrl() : ($profile_picture_url ? $profile_picture_url : '')"
+                                                 :name="$name"/>
 
                                 <div class="flex gap-1">
 
@@ -64,10 +66,6 @@
                                         <i data-lucide="mail" class="w-4 h-4 text-accent"></i>
                                         {{ auth()->user()->email }}
                                     </h2>
-                                    <div
-                                        class="flex w-fit items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
-                                        {{ $volunteer_level }}
-                                    </div>
                                 </div>
                                 <!-- Progress Bar -->
                                 <div x-show="uploading">
