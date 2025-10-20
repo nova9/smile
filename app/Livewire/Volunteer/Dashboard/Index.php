@@ -18,10 +18,21 @@ class Index extends Component
     public $categories;
     public $categoryFilter = '';
     public $search = '';
+    public $hoursVolunteered = 0;
+    public $certificateIssued;
 
     public function mount()
     {
         $this->loadEvents();
+        $participatingEvents = auth()->user()->participatingEvents;
+
+        foreach ($participatingEvents as $event) {
+            // Calculate duration in hours between starts_at and ends_at
+            $duration = $event->ends_at->diffInHours($event->starts_at);
+            $this->hoursVolunteered += $duration;
+        }
+        $this->certificateIssued = auth()->user()->certificates()->count();
+        
     }
 
     public function updatedStatusFilter()
@@ -39,12 +50,12 @@ class Index extends Component
             ->where('is_active', true) // Only show active events
             ->orderBy('created_at', 'desc');
         $this->totalEvents = $query->count();
-        if(!empty($this->statusFilter)){
-            
-            $query->wherePivot('status',$this->statusFilter);
+        if (!empty($this->statusFilter)) {
+
+            $query->wherePivot('status', $this->statusFilter);
         }
-        if(!empty($this->categoryFilter)){
-            $query->where('category_id',$this->categoryFilter);
+        if (!empty($this->categoryFilter)) {
+            $query->where('category_id', $this->categoryFilter);
         }
         $this->participatingEvents = $query->get();
 
@@ -71,17 +82,18 @@ class Index extends Component
 
         $this->categories = Category::all();
     }
-    
+
     public function render()
     {
-        return view('livewire.volunteer.dashboard.index',
-         $participatingEvents= auth()->user()->participatingEvents()
-            ->where('is_active', true) // Only show active events
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(5)
+        return view(
+            'livewire.volunteer.dashboard.index',
+            $participatingEvents = auth()->user()->participatingEvents()
+                ->where('is_active', true) // Only show active events
+                ->when($this->search, function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(5)
         );
     }
 }

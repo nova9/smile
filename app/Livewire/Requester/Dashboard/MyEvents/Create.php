@@ -121,6 +121,11 @@ class Create extends Component
     {
         $this->validate();
 
+        if (Pro::numberOfCreatedEventsThisMonth(auth()->user()) >= 5) {
+            session()->flash('error', 'You have reached your event creation limit for this month. Please upgrade your plan to create more events.');
+            return redirect('/requester/dashboard/my-events/create');
+        }
+
         $chat = Chat::query()->create([
             'is_group' => true,
         ]);
