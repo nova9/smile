@@ -44,7 +44,12 @@ class Index extends Component
 
         $this->upcomingEvents = $user->events()->where('starts_at', '>', now())->limit(3)->get();
         $this->completedEvents = $user->events()->where('ends_at', '<', now())->count();
-        $this->completedRate = ($this->completedEvents / $this->totalEvents) * 100;
+        if($this->totalEvents == 0){
+            $this->completedRate = 0;
+        }
+        else{
+            $this->completedRate = ($this->completedEvents / $this->totalEvents) * 100;
+        }
         $approvelVol = $user->events()
             ->with(['users' => function ($query) {
                 $query->wherePivot('status', 'accepted');
