@@ -3,7 +3,7 @@
         <!-- Header Section -->
         <div class="mb-8">
             <div class="flex items-center gap-3 mb-2">
-                <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                     <i data-lucide="award" class="w-6 h-6 text-white"></i>
                 </div>
                 <div>
