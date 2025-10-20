@@ -249,6 +249,30 @@ class Create extends Component
     }
 
     /**
+     * Format user address from latitude/longitude or custom attribute
+     */
+    private function formatAddress($user)
+    {
+        // First, try to get city from attributes
+        $city = $user->getCustomAttribute('city');
+
+        // If no city, try to construct from lat/lng
+        if (!$city) {
+            $lat = $user->getCustomAttribute('latitude');
+            $lng = $user->getCustomAttribute('longitude');
+
+            if ($lat && $lng) {
+                // Return coordinates as address fallback
+                return "Lat: {$lat}, Lng: {$lng}";
+            }
+        } else {
+            return $city;
+        }
+
+        return null;
+    }
+
+    /**
      * Request a contract for the event
      */
     public function requestContractForEvent($eventId, $agreementId)
@@ -256,13 +280,13 @@ class Create extends Component
         try {
             $user = Auth::user();
 
-            // Get requester details
+            // Get requester details from user's profile attributes
             $requesterDetails = [
                 'name' => $user->name,
                 'email' => $user->email,
-                'phone' => $user->phone ?? 'N/A',
-                'organization' => $user->organization ?? 'N/A',
-                'address' => $user->address ?? 'N/A',
+                'phone' => $user->getCustomAttribute('contact_number') ?? 'N/A',
+                'organization' => $user->getCustomAttribute('description') ?? $user->name,
+                'address' => $this->formatAddress($user) ?? 'N/A',
             ];
 
             // Determine the type of request based on whether additional requirements are requested
