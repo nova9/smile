@@ -114,7 +114,13 @@ class HelpRequests extends Component
             ->when($this->categoryFilter !== 'all', function ($query) {
                 $query->where('category', $this->categoryFilter);
             })
-            ->orderBy('created_at', 'desc');
+            ->orderByRaw("CASE 
+                WHEN status = 'open' THEN 1
+                WHEN status = 'in_progress' THEN 2
+                WHEN status = 'resolved' THEN 3
+                ELSE 4
+            END")
+            ->orderBy('created_at', 'asc');
 
         $tickets = $query->paginate(10);
 

@@ -30,7 +30,7 @@ class DashboardHome extends Component
         $hiddenEvents = Event::where('is_active', false)->count();
 
         $pendingReports = EventReport::where('status', 'pending')->count();
-        $openHelpRequests = SupportTicket::where('status', 'open')->count();
+        $openHelpRequests = SupportTicket::count();
         $restrictedOrganizations = User::whereHas('role', function ($query) {
             $query->where('name', 'requester');
         })->where('is_restricted', true)->count();
@@ -43,8 +43,8 @@ class DashboardHome extends Component
             ->get();
 
         $recentHelpRequests = SupportTicket::with('user')
-            ->where('status', 'open')
-            ->orderBy('created_at', 'desc')
+            ->whereIn('status', ['open', 'in_progress'])
+            ->orderBy('created_at', 'asc')
             ->take(5)
             ->get();
 
