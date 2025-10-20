@@ -5,6 +5,9 @@ namespace App\Livewire\Common;
 use Livewire\Component;
 use App\Models\SupportTicket;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\DatabaseNotification;
 
 class HelpSupport extends Component
 {
@@ -34,7 +37,7 @@ class HelpSupport extends Component
 
         $this->validate();
         $user = Auth::user();
-        SupportTicket::create([
+        $ticket = SupportTicket::create([
             'user_id' => $user->id,
             'user_name' => $user->name,
             'user_role' => $user->role ?? 'user',
@@ -43,6 +46,28 @@ class HelpSupport extends Component
             'subject' => $this->subject,
             'message' => $this->message,
         ]);
+
+        // Notify all admin users
+        $admins = User::whereHas('role', function ($query) {
+            $query->where('name', 'admin');
+        })->get();
+
+        foreach ($admins as $admin) {
+            $admin->notifications()->create([
+                'id' => \Illuminate\Support\Str::uuid(),
+                'type' => 'App\Notifications\HelpRequestSubmitted',
+                'notifiable_type' => User::class,
+                'notifiable_id' => $admin->id,
+                'data' => json_encode([
+                    'name' => 'New Help Request',
+                    'message' => $user->name . ' submitted a help request: ' . $this->subject,
+                    'ticket_id' => $ticket->id,
+                    'category' => $this->category,
+                    'priority' => $this->priority,
+                ]),
+                'read_at' => null,
+            ]);
+        }
 
         $this->reset(['category', 'priority', 'subject', 'message']);
 
@@ -118,6 +143,23 @@ class HelpSupport extends Component
 
             $this->showAlert = true;
             $this->alertMessage = 'Ticket marked as resolved successfully!';
+        }
+    }
+
+    public function reopenTicket($ticketId)
+    {
+        // Prevent admin users from reopening tickets through this component
+        if ($this->isAdmin()) {
+            return;
+        }
+
+        $ticket = SupportTicket::find($ticketId);
+
+        if ($ticket && $ticket->user_id == Auth::id() && $ticket->status === 'resolved') {
+            $ticket->update(['status' => 'open']);
+
+            $this->showAlert = true;
+            $this->alertMessage = 'Ticket reopened successfully!';
         }
     }
 
