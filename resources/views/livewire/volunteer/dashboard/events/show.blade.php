@@ -340,7 +340,8 @@
                                                     <p class="font-medium text-gray-800">{{ $city }}</p>
                                                 </div>
                                             </div>
-                                            <div class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden">
+                                            <div
+                                                class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden">
                                                 <iframe width="100%" height="100%" frameborder="0"
                                                     style="border:0; min-height: 120px; border-radius: 0.5rem;"
                                                     src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
