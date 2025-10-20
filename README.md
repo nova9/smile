@@ -17,8 +17,6 @@
 -   [Core Features](#core-features)
 -   [AI-Powered Features](#ai-powered-features)
 -   [Testing](#testing)
--   [Development](#development)
--   [Contributing](#contributing)
 
 ## 🎯 Overview
 
