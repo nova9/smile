@@ -19,6 +19,7 @@
             <!-- Header -->
             <div class="flex items-center justify-between px-4 py-3 border-b border-base-300">
                 <span class="font-semibold text-lg">Notifications</span>
+                <button wire:click="markAllAsRead"  class="btn btn-xs btn-outline ml-2">Mark All as Read</button>
             </div>
             <!-- Notification Items -->
             <ul>
@@ -32,7 +33,8 @@
                         <div class="flex items-center gap-3">
                             <i data-lucide="info" class="size-5 text-blue-500"></i>
                             <div class="flex-1">
-                                <a href="{{ $data['event_url'] ?? '#' }}" wire:click.prevent="markAsRead('{{ $notification->id }}')">
+                                <a href="{{ $data['event_url'] ?? '#' }}"
+                                    wire:click.prevent="markasRead('{{$notification->id }}')">
                                     <div class="font-medium">
                                         {{ $data['name'] ?? 'New notification' }}
                                     </div>
