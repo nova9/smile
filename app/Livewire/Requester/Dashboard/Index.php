@@ -22,6 +22,8 @@ class Index extends Component
     public $recentNotificationTime;
     public $recentEventCreation;
     public $recentCertificateIssued;
+    public $recentEventCreationName;
+    public $recentEventCreationTime;
     // public $upcomingEventsCount;
 
     public function mount()
@@ -44,10 +46,9 @@ class Index extends Component
 
         $this->upcomingEvents = $user->events()->where('starts_at', '>', now())->limit(3)->get();
         $this->completedEvents = $user->events()->where('ends_at', '<', now())->count();
-        if($this->totalEvents == 0){
+        if ($this->totalEvents == 0) {
             $this->completedRate = 0;
-        }
-        else{
+        } else {
             $this->completedRate = ($this->completedEvents / $this->totalEvents) * 100;
         }
         $approvelVol = $user->events()
@@ -85,7 +86,8 @@ class Index extends Component
         }
 
 
-        $this->recentEventCreation = $user->organizingEvents()->orderBy('created_at', 'desc')->first();
+        $this->recentEventCreationName = $user->events()->orderBy('created_at', 'desc')->first()->name ?? 'no events yet';
+        $this->recentEventCreationTime = $user->events()->orderBy('created_at', 'desc')->first() ? $user->events()->orderBy('created_at', 'desc')->first()->created_at->diffForHumans() : '';
         // $this->recentCertificateIssued = $user->events()->with('certificates')->get()->pluck('certificates')
         // dd($this->recentEventCreation);
 
