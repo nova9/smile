@@ -44,9 +44,10 @@
                     <livewire:common.legal-help />
                 @endif
                 <livewire:common.notification />
-                {{-- <livewire:common.help-support /> --}}
                 <livewire:common.chat />
+                @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester','lawyer']))
                 <livewire:common.help-support />
+                @endif
                 <livewire:common.chatbot />
 
             </div>
