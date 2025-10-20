@@ -50,19 +50,61 @@
                                 </button>
                                 <button id="share-event-btn" type="button"
                                         class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 text-sm font-medium text-gray-700">
+                                <button id="share-event-btn" type="button" onclick="my_modal_1.showModal()"
+                                    class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition-all duration-200 text-sm font-medium text-gray-700">
                                     <i data-lucide="share-2" class="w-5 h-5"></i>
                                     <span>Share</span>
                                 </button>
+                                <dialog id="my_modal_1" class="modal">
+                                    <div class="modal-box bg-white rounded-2xl shadow-xl border border-gray-100">
+                                        <button onclick="my_modal_1.close()" type="button"
+                                            class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors">
+                                            <i data-lucide="x" class="w-5 h-5"></i>
+                                        </button>
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">Share Event</h3>
+                                        <p class="text-gray-600 text-sm mb-6">Share this event with your network</p>
+                                        <div class="space-y-2">
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left border border-gray-200">
+                                                <i data-lucide="instagram" class="w-5 h-5 text-gray-700"></i>
+                                                <span class="text-gray-700 font-medium">Instagram</span>
+                                            </button>
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left border border-gray-200">
+                                                <i data-lucide="facebook" class="w-5 h-5 text-gray-700"></i>
+                                                <span class="text-gray-700 font-medium">Facebook</span>
+                                            </button>
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left border border-gray-200">
+                                                <i data-lucide="twitter" class="w-5 h-5 text-gray-700"></i>
+                                                <span class="text-gray-700 font-medium">Twitter</span>
+                                            </button>
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left border border-gray-200">
+                                                <i data-lucide="linkedin" class="w-5 h-5 text-gray-700"></i>
+                                                <span class="text-gray-700 font-medium">LinkedIn</span>
+                                            </button>
+                                        </div>
+                                        <div class="mt-6">
+                                            <form method="dialog">
+                                                <button class="btn btn-outline w-full">Close</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dialog>
                                 <!-- Tiny toast for copy review -->
                                 <div id="share-toast"
                                      class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
                                     Link copied to clipboard
                                 </div>
-                                <a href="{{ route('community.space', ['id' => $event->id]) }}"
+                                @if ($status == 'accepted')
+                                    {{-- queryselectorall finds all the radio inputs with the name my_tabs_4 4th index on and programmatically clicks that radio button to activate that tab --}}
+                                    <button onclick="document.querySelectorAll('input[name=my_tabs_4]')[4].click()"
                                    class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
                                     <i data-lucide="users" class="w-5 h-5"></i>
                                     <span>Community Space</span>
-                                </a>
+                                </button>
+                                @endif
                                 @if ($status == 'pending' || $status == 'accepted')
                                     <button onclick="leaveEvent.showModal()"
                                             class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors duration-200 text-sm">
@@ -300,6 +342,27 @@
                                     <p class="text-gray-600 leading-relaxed">{{ $event->notes }}</p>
                                 </div>
                             </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
+                                <div class="space-y-3">
+                                    @foreach ($event->resources as $resource)
+                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                            <div class="flex items-start justify-between gap-4">
+                                                <div class="flex-1">
+                                                    <h3 class="font-semibold text-gray-800 mb-1">{{ $resource->name }}
+                                                    </h3>
+                                                    <p class="text-sm text-gray-600">{{ $resource->description }}</p>
+                                                </div>
+                                                <div class="text-right flex-shrink-0">
+                                                    <div class="text-lg font-bold text-gray-800">
+                                                        {{ $resource->pivot->quantity }}</div>
+                                                    <div class="text-xs text-gray-500">{{ $resource->unit }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
 
                             <!-- Map -->
                             <div>
@@ -394,7 +457,8 @@
                                         <div class="flex items-center gap-3">
                                             <i data-lucide="twitter" class="w-5 h-5 text-blue-400"></i>
                                             <span class="text-gray-700 font-medium">Social:</span>
-                                            <a href="#" class="text-blue-600 hover:underline font-medium">Twitter</a>
+                                            <a href="#"
+                                                class="text-blue-600 hover:underline font-medium">Twitter</a>
                                         </div>
                                     </div>
                                 </div>
@@ -414,7 +478,7 @@
                     </div>
                 @endif
 
-                {{-- Event Gallery--}}
+                {{-- Event Gallery --}}
                 <label class="tab">
                     <input type="radio" name="my_tabs_4"/>
                     <i data-lucide="image" class="w-4 h-4 mr-2"></i>
@@ -435,24 +499,37 @@
                             </p>
                         </div>
                         <div class="mb-6">
-                            <form wire:submit="save" class="flex flex-col sm:flex-row items-center gap-4">
+                            <form wire:submit="save" class="flex flex-col sm:flex-row items-center gap-4 w-full">
                                 <label
                                     class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg cursor-pointer text-sm text-gray-700 hover:bg-gray-50">
-                                    <i data-lucide="upload" class="w-4 h-4"></i>
-                                    <span>Choose photos</span>
-                                    <input type="file" wire:model="photos" multiple accept="image/*" class="hidden">
+                                    <i data-lucide="upload"></i>
+                                    <input type="file" wire:model="photos" multiple accept="image/*">
                                 </label>
 
                                 <div class="ml-auto flex items-center gap-3">
-
-
-                                    <button type="submit"
+                                    <button type="submit" wire:click="$refresh"
                                             class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow">
-                                        <i data-lucide="save" class="w-4 h-4"></i>
+                                        <span wire:loading.remove wire:target="save">
+                                            <i data-lucide="save" class="w-4 h-4"></i>
+                                        </span>
+                                        <span wire:loading wire:target="save">
+                                            <i data-lucide="loader-circle" class="w-4 h-4 animate-spin"></i>
+                                        </span>
                                         Save photos
                                     </button>
                                 </div>
                             </form>
+                            @if ($photos && count($photos) > 0)
+                                <div class="flex flex-wrap gap-3 mt-4">
+                                    @foreach ($photos as $photo)
+                                        <div
+                                            class="w-24 h-24 rounded-lg overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
+                                            <img src="{{ $photo->temporaryUrl() }}" alt="Preview"
+                                                class="object-cover w-full h-full">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     @else
                         <div class="mb-8">
@@ -466,19 +543,9 @@
                             </p>
                         </div>
                     @endif
-
-
-                    @php
-                        $images = [
-                            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
-                        ];
-                    @endphp
                     <div class="container mx-auto px-4 py-8">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            @foreach ($images as $img)
+                            @foreach ($uploadedPhotos as $img)
                                 <div class="group relative overflow-hidden rounded-lg shadow-lg">
                                     <img src="{{ $img }}" alt="Gallery Image"
                                          class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
@@ -549,43 +616,43 @@
                                                                class="rating-hidden"/>
                                                         <input type="radio" wire:model="rating" value="0.5"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                aria-label="0.5 star"/>
                                                         <input type="radio" wire:model="rating" value="1"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                aria-label="1 star"/>
                                                         <input type="radio" wire:model="rating" value="1.5"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                aria-label="1.5 star"/>
                                                         <input type="radio" wire:model="rating" value="2"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                aria-label="2 star"/>
                                                         <input type="radio" wire:model="rating" value="2.5"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                aria-label="2.5 star"/>
                                                         <input type="radio" wire:model="rating" value="3"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                aria-label="3 star"/>
                                                         <input type="radio" wire:model="rating" value="3.5"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                aria-label="3.5 star"/>
                                                         <input type="radio" wire:model="rating" value="4"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                aria-label="4 star"/>
                                                         <input type="radio" wire:model="rating" value="4.5"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                aria-label="4.5 star"/>
                                                         <input type="radio" wire:model="rating" value="5"
                                                                name="rating-11"
-                                                               class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                               class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                aria-label="5 star"/>
                                                     </div>
                                                 </div>
@@ -640,43 +707,43 @@
                                                         <div class="flex items-center gap-2">
                                                             <div class="rating rating-lg rating-half">
                                                                 {{-- 1 full opacity ,0.2 almost transparert --}}
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                      aria-label="0.5 star"
                                                                      style="opacity:{{ $review->rating >= 0.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                      aria-label="1 star"
                                                                      style="opacity:{{ $review->rating >= 1 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                      aria-label="1.5 star"
                                                                      style="opacity:{{ $review->rating >= 1.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                      aria-label="2 star"
                                                                      style="opacity:{{ $review->rating >= 2 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                      aria-label="2.5 star"
                                                                      style="opacity:{{ $review->rating >= 2.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                      aria-label="3 star"
                                                                      style="opacity:{{ $review->rating >= 3 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                      aria-label="3.5 star"
                                                                      style="opacity:{{ $review->rating >= 3.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                      aria-label="4 star"
                                                                      style="opacity:{{ $review->rating >= 4 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                      aria-label="4.5 star"
                                                                      style="opacity:{{ $review->rating >= 4.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                      aria-label="5 star"
                                                                      style="opacity:{{ $review->rating == 5 ? 1 : 0.2 }}">
                                                                 </div>

@@ -1,4 +1,4 @@
-<div x-data="chat({ drawerOpen: $wire.entangle('drawerOpen') })" class="drawer drawer-end z-99999" x-cloak
+<div x-data="chat({ drawerOpen: $wire.entangle('drawerOpen') })" class="drawer drawer-end" x-cloak
     wire:poll.5s="refreshChats">
     <input id="my-drawer" wire:model="drawerOpen" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex justify-center items-center">
