@@ -14,6 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     registerIcons();
 });
 
-Livewire.hook("morph.added", ({el}) => {
+Livewire.hook("morph.added", ({ el }) => {
     registerIcons();
 });

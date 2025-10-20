@@ -17,7 +17,6 @@ class Notification extends Component
     public function mount()
     {
         $this->loadNotifications();
-
     }
 
     public function loadNotifications()
@@ -30,10 +29,18 @@ class Notification extends Component
 
     public function markasRead($id)
     {
-        // dd($id);
-        auth()->user()->notifications->find($id)?->markAsRead();
+
+        $notification = auth()->user()->notifications->find($id);
+        $markThatAsRead = $notification?->markAsRead();
+        $routeReq = '/requester/dashboard/my-events/' . $notification['data']['event_id'];
+        $routeVol = '/volunteer/dashboard/my-events/' . $notification['data']['event_id'];
         $this->loadNotifications();
-        
+
+        $route = auth()->user()->role->name === 'requester'
+            ? $routeReq
+            : $routeVol;
+
+        return $this->redirect($route);
     }
     public function markAllAsRead()
     {
