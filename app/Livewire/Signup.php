@@ -193,9 +193,9 @@ class Signup extends Component
         GenerateEmbedding::dispatch($user, textToEmbed: json_encode($user->getAllAttributes()));
 
         event(new Registered($user));
-        auth()->login($user);
-        
-        return redirect()->route('dashboard')->with('success', 'Account created successfully!');
+
+
+        return redirect()->route('home')->with('success', 'Account created successfully! Please check your email to verify your account before logging in.');
     }
 
     public function render()

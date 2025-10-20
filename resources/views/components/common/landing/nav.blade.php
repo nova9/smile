@@ -35,12 +35,12 @@
                     <span
                         class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="#donate"
+                {{-- <a href="#donate"
                     class="nav-link text-gray-700 hover:text-primary transition-colors duration-300 font-medium relative group">
                     Donate
                     <span
                         class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
+                </a> --}}
             </div>
 
             <!-- Auth Buttons -->
