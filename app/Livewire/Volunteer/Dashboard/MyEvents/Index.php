@@ -3,9 +3,10 @@
 namespace App\Livewire\Volunteer\Dashboard\MyEvents;
 
 use App\Models\Category;
+use App\Models\Event;
 use App\Models\Favourites;
 use Livewire\Component;
-
+use Livewire\Attributes\Url;
 class Index extends Component
 {
     public $participatingEvents;
@@ -73,13 +74,16 @@ class Index extends Component
 
     
         $this->categories = Category::all();
-       
+    //    dd($this->participatingEvents);
             
 
     }
 
+    
     public function render()
     {
-        return view('livewire.volunteer.dashboard.my-events.index');
+        return view('livewire.volunteer.dashboard.my-events.index',[
+            'events' => Event::search($this->search)->get(),
+        ]);
     }
 }

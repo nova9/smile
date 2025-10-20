@@ -1,4 +1,3 @@
-<div>
     @if (!$this->isAdmin())
         <div class="drawer drawer-end" x-cloak>
             <input id="help-drawer" wire:model="modalOpen" type="checkbox" class="drawer-toggle" />
@@ -226,4 +225,3 @@
             </div>
         </div>
     @endif
-</div>
