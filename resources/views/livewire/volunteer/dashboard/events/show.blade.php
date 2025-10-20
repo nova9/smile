@@ -46,9 +46,9 @@
                 </p>
                 <div class="relative flex items-center justify-center">
                     <progress class="progress w-full h-8 text-primary" x-bind:value="profileCompletionPercentage"
-                              max="1"></progress>
+                        max="1"></progress>
                     <span class="absolute text-white text-sm font-medium bg-primary px-1 rounded-sm"
-                          x-text="`${profileCompletionPercentage * 100}%`"></span>
+                        x-text="`${profileCompletionPercentage * 100}%`"></span>
                 </div>
                 <div class="modal-action flex gap-2">
                     <form method="dialog" class="basis-1/2">
@@ -69,7 +69,7 @@
             <!-- Back Button -->
             <div class="p-6 pb-0">
                 <a href="/volunteer/dashboard/events" wire:navigate
-                   class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
+                    class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
@@ -92,7 +92,7 @@
 
                             <div>
                                 <div class="px-4 py-2 text-white backdrop-blur-sm rounded-full text-sm font-medium"
-                                     style="background-color: {{ $event->category->color }}">
+                                    style="background-color: {{ $event->category->color }}">
                                     {{ $event->category->name }}
                                 </div>
                             </div>
@@ -170,22 +170,28 @@
                                             @endforeach
                                         </div>
                                     @endif
-                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
-                                    <div class="flex flex-wrap gap-2 mb-6">
-                                        @foreach ($event->resources as $resource)
-                                            <span
-                                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
-                                                {{ $resource->name }}
-                                            </span>
-                                            <span
-                                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
-                                                {{ $resource->description }}
-                                            </span>
-                                            <span
-                                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
-                                                {{ $resource->unit }}
-                                            </span>
-                                        @endforeach
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
+                                        <div class="space-y-3">
+                                            @foreach ($event->resources as $resource)
+                                                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                                    <div class="flex items-start justify-between gap-4">
+                                                        <div class="flex-1">
+                                                            <h3 class="font-semibold text-gray-800 mb-1">
+                                                                {{ $resource->name }}</h3>
+                                                            <p class="text-sm text-gray-600">
+                                                                {{ $resource->description }}</p>
+                                                        </div>
+                                                        <div class="text-right flex-shrink-0">
+                                                            <div class="text-lg font-bold text-gray-800">
+                                                                {{ $resource->pivot->quantity }}</div>
+                                                            <div class="text-xs text-gray-500">{{ $resource->unit }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
 
@@ -199,6 +205,13 @@
                                             <div
                                                 class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                                                 <i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i>
+                                        <div class="flex items-center gap-4">
+                                            <div class="flex-shrink-0">
+                                                <div
+                                                    class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
+                                                    <i data-lucide="user-plus" class="w-6 h-6 text-blue-500"
+                                                        aria-hidden="true"></i>
+                                                </div>
                                             </div>
                                             <div>
                                                 <h3 class="font-semibold text-gray-900 mb-1">Selection Method</h3>

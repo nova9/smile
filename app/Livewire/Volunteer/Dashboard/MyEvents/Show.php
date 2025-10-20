@@ -56,11 +56,9 @@ class Show extends Component
         if ($completedTasksCount >= 1) {
             $this->reviewbutton = true;
         }
+        // dd($this->event->resources);
 
-        $uploadedPhotos = $this->event->photos;
-        $this->uploadedPhotos = $uploadedPhotos->pluck('file_id')->map(function ($fileId) {
-            return FileManager::getTemporaryUrl($fileId);
-        });
+        $this->loadImages();
 
         $this->loadReviews();
         // dd()
@@ -75,7 +73,6 @@ class Show extends Component
         $this->reviewCount = $this->event->reviews->count();
         $this->eventReviews = $this->event->reviews;
         $this->avgratings = $this->reviewCount > 0 ? ($this->event->reviews->pluck('rating')->sum()) / $this->reviewCount : 0;
-
     }
 
     public function leaveEvent()
@@ -98,7 +95,6 @@ class Show extends Component
                 'review' => ($this->review),
                 'rating' => ($this->rating)
             ]);
-
         } else {
             $review = Review::where('user_id', auth()->id())
                 ->where('event_id', $this->event->id)
@@ -114,7 +110,6 @@ class Show extends Component
         }
 
         $this->loadReviews();
-
     }
 
     use WithFileUploads;
@@ -133,6 +128,16 @@ class Show extends Component
                 'file_id' => $file->id,
             ]);
         }
+        $this->photos = [];
+        $this->loadImages();
+    }
+
+    public function loadImages()
+    {
+        $uploadedPhotos = $this->event->photos;
+        $this->uploadedPhotos = $uploadedPhotos->pluck('file_id')->map(function ($fileId) {
+            return FileManager::getTemporaryUrl($fileId);
+        });
     }
 
     public function render()

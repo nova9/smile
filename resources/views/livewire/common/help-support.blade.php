@@ -1,4 +1,3 @@
-<div>
     @if (!$this->isAdmin())
         <div class="drawer drawer-end" x-cloak>
             <input id="help-drawer" wire:model="modalOpen" type="checkbox" class="drawer-toggle" />
@@ -7,7 +6,6 @@
                     <div class="p-1.5 rounded-md hover:bg-gray-100 transition-colors tooltip hover:tooltip-open tooltip-bottom"
                         data-tip="Help & Support">
                         <i data-lucide="help-circle" class="size-5"></i>
-
                     </div>
                 </label>
             </div>
@@ -24,7 +22,7 @@
                         <!-- Success Alert -->
                         @if ($showAlert)
                             <div class="alert alert-success mb-4 rounded-lg" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => { show = false;
-                                            $wire.set('showAlert', false); }, 5000)"
+                                                    $wire.set('showAlert', false); }, 5000)"
                                 x-transition:enter="transition ease-out duration-300"
                                 x-transition:enter-start="opacity-0 transform scale-90"
                                 x-transition:enter-end="opacity-100 transform scale-100"
@@ -147,10 +145,10 @@
                                                         </h4>
                                                         <span
                                                             class="badge badge-xs 
-                                                                                                                                        @if ($ticket->status === 'open') badge-warning
-                                                                                                                                        @elseif($ticket->status === 'in_progress') badge-info  
-                                                                                                                                        @elseif($ticket->status === 'resolved') badge-success
-                                                                                                                                        @else badge-neutral @endif">
+                                                                                                                                                            @if ($ticket->status === 'open') badge-warning
+                                                                                                                                                            @elseif($ticket->status === 'in_progress') badge-info  
+                                                                                                                                                            @elseif($ticket->status === 'resolved') badge-success
+                                                                                                                                                            @else badge-neutral @endif">
                                                             {{ ucfirst($ticket->status) }}
                                                         </span>
                                                     </div>
@@ -185,10 +183,10 @@
                                                         <h4 class="font-medium text-sm">{{ $ticket->subject }}</h4>
                                                         <span
                                                             class="badge badge-sm 
-                                                                                                                        @if ($ticket->status === 'open') badge-warning
-                                                                                                                        @elseif($ticket->status === 'in_progress') badge-info  
-                                                                                                                        @elseif($ticket->status === 'resolved') badge-success
-                                                                                                                        @else badge-neutral @endif">
+                                                                                                                                        @if ($ticket->status === 'open') badge-warning
+                                                                                                                                        @elseif($ticket->status === 'in_progress') badge-info  
+                                                                                                                                        @elseif($ticket->status === 'resolved') badge-success
+                                                                                                                                        @else badge-neutral @endif">
                                                             {{ ucfirst($ticket->status) }}
                                                         </span>
                                                     </div>
@@ -227,4 +225,3 @@
             </div>
         </div>
     @endif
-</div>
