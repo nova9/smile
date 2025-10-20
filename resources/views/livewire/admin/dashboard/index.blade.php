@@ -203,18 +203,6 @@
                                             </button>
                                         @endif
 
-                                        <!-- Dismiss Reports (only if has reports) -->
-                                        @if($event->reports_count > 0)
-                                            <button wire:click="dismissReports({{ $event->id }})" x-on:click="loading = true"
-                                                wire:confirm="Dismiss all {{ $event->reports_count }} reports for this event?"
-                                                class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white text-slate-600 hover:bg-amber-50 hover:text-amber-600 transition-colors border border-slate-200 shadow-sm group relative"
-                                                title="Dismiss Reports">
-                                                <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                                <span
-                                                    class="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Dismiss
-                                                    Reports</span>
-                                            </button>
-                                        @endif
                                     </div>
                                 </td>
                             </tr>
