@@ -109,8 +109,8 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="text-sm font-medium text-gray-900">Event Created</div>
-                            <div class="text-xs text-gray-600">{{ $recentEventCreation->name }}</div>
-                            <div class="text-xs text-gray-500 mt-1">{{$recentEventCreation->created_at->diffForHumans()}}</div>
+                            <div class="text-xs text-gray-600">{{ $recentEventCreationName}}</div>
+                            <div class="text-xs text-gray-500 mt-1">{{ $recentEventCreationTime }}</div>
                         </div>
                     </div>
                     <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
