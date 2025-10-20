@@ -39,14 +39,13 @@
 
             <div class="flex gap-2 ">
                 {{-- Show legal help only for volunteer or requester roles --}}
-              
+
                 @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester']))
                     <livewire:common.legal-help />
                 @endif
                 <livewire:common.notification />
-                <livewire:common.help-support />
                 <livewire:common.chat />
-               
+                <livewire:common.help-support />
                 <livewire:common.chatbot />
 
             </div>

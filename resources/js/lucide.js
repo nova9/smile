@@ -108,12 +108,21 @@ import {
     Bot,
     BotMessageSquare,
     Bookmark,
-    Upload
+    Phone,
+    File,
+    MoreVertical,
+    Video,
+    Venus
 } from "lucide";
 
 function registerIcons() {
     createIcons({
         icons: {
+            Venus,
+            Video,
+            File,
+            MoreVertical,
+            Phone,
             Paperclip,
             Send,
             GripVertical,
@@ -222,7 +231,6 @@ function registerIcons() {
             Bot,
             BotMessageSquare,
             Bookmark,
-            Upload
         },
     });
 }
