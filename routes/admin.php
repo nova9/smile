@@ -10,7 +10,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/volunteer-details/{id}', \App\Livewire\Admin\Dashboard\VolunteerDetails::class);
     Route::get('/dashboard/event-details/{id}', \App\Livewire\Admin\Dashboard\EventDetails::class);
 
-    Route::get('/dashboard/dispute-handling', \App\Livewire\Admin\Dashboard\DisputeHandling::class);
+    Route::get('/dashboard/dashboard-home', \App\Livewire\Admin\Dashboard\DashboardHome::class);
     Route::get('/dashboard/help-requests', \App\Livewire\Admin\Dashboard\HelpRequests::class);
 
     Route::get('/dashboard/analytics', \App\Livewire\Admin\Dashboard\Analytics::class);
