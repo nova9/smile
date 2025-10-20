@@ -25,4 +25,14 @@ class ProfileController extends Controller
 
         return redirect($route);
     }
+    
+    public function changeEmail(string $new_email){
+        
+        auth()->user()->update([
+            'email' => base64_decode($new_email)
+        ]);
+        session()->flash('message','Successfully changed the emalil');
+        return redirect('/');
+        
+    }
 }
