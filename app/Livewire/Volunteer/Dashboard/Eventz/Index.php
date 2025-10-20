@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Volunteer\Dashboard\Eventz;
 
+use App\Models\Category;
 use App\Models\Event;
 use App\Services\EventRecommenderService;
 use App\Services\Favorite;
@@ -22,9 +23,13 @@ class Index extends Component
     #[Url]
     public $page = 1;
 
+    public $categoryFilter;
+    public $categories;
+
 
     public function mount(EventRecommenderService $eventRecommenderService)
     {
+        $this->categories = Category::all();
 //        $events = Event::query()
 //            ->with(['category', 'tags', 'address', 'user'])->get();
 //        dd(auth()->user());
@@ -42,14 +47,19 @@ class Index extends Component
         $dob = Carbon::parse(auth()->user()->getCustomAttribute('date_of_birth'));
 
         // Fetch all events with relationships
-        $events = Event::query()
+        $query = Event::query()
             ->with(['category', 'tags', 'address', 'user'])
             ->where('is_active', true) // Only show active events to volunteers
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
-            ->where('minimum_age', '<=', $dob->age) // Filter by user's age
-            ->get(); // Get all events as a collection
+            ->where('minimum_age', '<=', $dob->age); // Filter by user's age
+
+        if ($this->categoryFilter) {
+            $query->where('category_id', $this->categoryFilter);
+        }
+
+        $events = $query->get();
 
 
         // Get recommended events from the service
