@@ -111,9 +111,16 @@ return "rgba($r, $g, $b, $opacity)";
                         <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
                             <i data-lucide="scroll-text" class="w-5 h-5 mr-2 text-blue-600"></i>
                             Contract Terms & Conditions
+                            @if($signedContract->customized_terms)
+                            <span class="ml-2 px-2 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
+                                Customized
+                            </span>
+                            @endif
                         </h4>
                         <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 max-h-96 overflow-y-auto">
-                            <div class="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">{{ $signedContract->agreement->terms }}</div>
+                            <div class="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">
+                                {{ $signedContract->customized_terms ?? $signedContract->agreement->terms }}
+                            </div>
                         </div>
                     </div>
 
