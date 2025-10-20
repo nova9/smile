@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="flex-1">
                                         <div class="flex items-center gap-2">
-                                            <span class="font-semibold text-amber-800 text-sm">Organization Pro</span>
+                                            <span class="font-semibold text-amber-800 text-sm">Organization</span>
                                             <span
                                                 class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-sm">
                                                 Premium
