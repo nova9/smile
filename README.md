@@ -63,9 +63,8 @@ To streamline volunteer coordination, enhance community engagement, and recogniz
 ### For Legal Professionals (Lawyers)
 
 -   📄 **Contract Drafting** - Create legal agreements for volunteer programs
--   ✍️ **Digital Signatures** - Secure electronic signing capabilities
 -   📚 **Contract Archive** - Maintain legal document repository
--   ⚖️ **Legal Q&A** - Provide legal guidance through AI-powered chatbot
+-   ⚖️ **Legal Q&A** - Provide legal guidance through a real lawyer
 -   🔧 **Contract Customization** - Template-based legal document creation
 
 ## 🛠️ Technology Stack
@@ -75,10 +74,8 @@ To streamline volunteer coordination, enhance community engagement, and recogniz
 -   **Framework**: Laravel 12.0 (Latest)
 -   **PHP**: 8.2+
 -   **Real-time Components**: Livewire 3.6 & Volt 1.7
--   **Queue Management**: Redis with Predis
 -   **Database**: MySQL/PostgreSQL (Eloquent ORM)
 -   **File Storage**: AWS S3
--   **PDF Generation**: DomPDF
 -   **Search**: Laravel Scout
 -   **Monitoring**: Laravel Telescope
 
@@ -97,8 +94,8 @@ To streamline volunteer coordination, enhance community engagement, and recogniz
 -   **Embedding Model**: text-embedding-3-small
 -   **Use Cases**:
     -   Event recommendations via cosine similarity
-    -   Legal Q&A chatbot
-    -   Content personalization
+    -   AI chatbot
+
 
 ### Development Tools
 
@@ -188,7 +185,7 @@ php artisan storage:link
 The platform uses OpenAI for:
 
 -   **Event Recommendations**: Generates embeddings for users and events, matches using cosine similarity
--   **Legal Chatbot**: Provides legal guidance through GPT models
+-   **Legal Chatbot**: Provides platform guidance through GPT models
 
 Ensure you have sufficient OpenAI API credits and configure the API key in your `.env` file.
 
@@ -196,13 +193,6 @@ Ensure you have sufficient OpenAI API credits and configure the API key in your 
 
 File uploads (certificates, event photos, documents) are stored on AWS S3. Configure your S3 bucket with appropriate permissions.
 
-### Queue Configuration
-
-Background jobs (embedding generation, notifications) run on Redis queues. Ensure Redis is running:
-
-```bash
-redis-server
-```
 
 ## 🏃 Running the Application
 
@@ -596,13 +586,6 @@ The platform tracks:
 -   **Volunteer Metrics**: Hours volunteered, events attended, badges earned
 -   **Platform Metrics**: Total engagement, geographic distribution
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ### Coding Standards
 
@@ -612,17 +595,6 @@ The platform tracks:
 -   Update documentation as needed
 -   Use Laravel Pint for code formatting
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👨‍💻 Development Team
-
-Developed by the SMILE team with a vision to revolutionize volunteer management and community engagement.
-
-## 📞 Support
-
-For support, please open an issue in the repository or contact the development team.
 
 ---
 
