@@ -3,6 +3,7 @@
 namespace App\Livewire\Volunteer\Dashboard\Eventz;
 
 use App\Models\Event;
+use App\Models\Review;
 use App\Models\User;
 use App\Services\GoogleMaps;
 use App\Services\Messaging;
@@ -22,6 +23,9 @@ class Show extends Component
     public $showContractModal = false;
     public $signedContract = null;
     public $agreedToTerms = false;
+    public $orgRatings = 0;
+    public $reviews;
+
 
     public function mount($id, GoogleMaps $googleMaps)
     {
@@ -38,6 +42,35 @@ class Show extends Component
             ->whereNotNull('signed_at')
             ->with('agreement')
             ->first();
+        $eventIds = $this->organizer->organizingEvents()->pluck('id');
+        $this->reviews = Review::query()
+            ->whereIn('event_id', $eventIds)
+            ->whereNotNull('review')
+            ->whereNotNull('rating')
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->map(function ($review) {
+                return (object) [
+                    'id' => $review->id,
+                    'event_id' => $review->event_id,
+                    'user_id' => $review->user_id,
+                    'rating' => $review->rating,
+                    'review' => $review->review,
+                    'created_at' => \Carbon\Carbon::parse($review->created_at),
+                    'updated_at' => \Carbon\Carbon::parse($review->updated_at),
+                    'user' => User::find($review->user_id),
+                    'event' => Event::find($review->event_id),
+                ];
+            });
+
+        if ($this->reviews->count() > 0) {
+            foreach ($this->reviews as $review) {
+                $this->orgRatings += $review->rating;
+            }
+            $this->orgRatings = ($this->orgRatings / $this->reviews->count());
+        } else {
+            $this->orgRatings = 0;
+        }
     }
 
     public function join()

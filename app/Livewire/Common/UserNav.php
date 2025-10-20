@@ -15,6 +15,7 @@ class UserNav extends Component
     {
         $profilePictureId = auth()->user()->getCustomAttribute('profile_picture');
         $this->profilePicture = FileManager::getTemporaryUrl($profilePictureId);
+        // dd($profilePictureId, $this->profilePicture);
     }
 
     public function render()
