@@ -26,10 +26,10 @@
                 <x-common.landing.involved />
             </section>
 
-            <!-- Donate Section -->
+            {{-- <!-- Donate Section -->
             <section class="scroll-mt-20" id="donate">
                 <x-common.landing.donate />
-            </section>
+            </section> --}}
 
             <!-- Testimonials Section -->
             <section class="scroll-mt-20" id="testimonials">
@@ -41,7 +41,7 @@
 
     @if (session()->has('message'))
         <div class="toast toast-end">
-            <div class="alert alert-info">
+            <div class="alert alert-success">
                 <span>{{ session('message') }}</span>
             </div>
         </div>

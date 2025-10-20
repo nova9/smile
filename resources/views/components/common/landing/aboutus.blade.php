@@ -19,7 +19,8 @@
                 About
                 <span class="relative">
                     Us
-                    <svg class="absolute -bottom-2 left-0 w-full h-3 text-primary/30" viewBox="0 0 100 12" fill="none">
+                    <svg class="absolute -bottom-2 left-0 w-full h-3 text-primary/30" viewBox="0 0 100 12"
+                        fill="none">
                         <path d="M2 6C20 1 40 1 50 6C60 11 80 11 98 6" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" />
                     </svg>
@@ -127,14 +128,14 @@
 
         <!-- CTA Section -->
         <div class="text-center">
-            <button
-                class="group bg-gradient-to-r from-primary to-green-600 hover:from-green-600 hover:to-primary text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <button @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+                class="group bg-gradient-to-r from-primary to-green-600 hover:from-green-600 hover:to-primary text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                 <svg class="inline-block w-5 h-5 mr-2 group-hover:rotate-45 transition-transform duration-300"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
                     </path>
                 </svg>
-                Learn More About Us
+                Back to Top
             </button>
         </div>
     </div>
