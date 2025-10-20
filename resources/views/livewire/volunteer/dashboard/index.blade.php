@@ -247,7 +247,7 @@
                                 <i data-lucide="award" class="w-4 h-4"></i>
                                 <span class="text-sm">Certificates</span>
                             </div>
-                            {{-- <div class="text-2xl font-bold text-gray-900">{{  }}</div> --}}
+                            <div class="text-2xl font-bold text-gray-900">{{ $certificateIssued  }}</div>
                         </div>
 
                         <div class="flex items-center justify-between">
