@@ -4,7 +4,7 @@
             <x-common.dashboard.item to="/requester/dashboard" icon="house" title="Dashboard"/>
             <x-common.dashboard.item to="/requester/dashboard/my-events" icon="calendar-days" title="My Events"/>
             <x-common.dashboard.item to="/requester/dashboard/issued-certificates" icon="shield-check" title="Issued Certificates"/>
-
+            <x-common.dashboard.item to="/requester/dashboard/reviews" icon="star" title="Reviews"/>
         </x-slot>
 
         {{ $slot }}
