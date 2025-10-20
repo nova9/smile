@@ -3,8 +3,11 @@
 namespace App\Livewire\Volunteer\Dashboard;
 
 use App\Jobs\GenerateEmbedding;
+use App\Mail\ChangeEmail;
 use App\Services\FileManager;
+use App\Services\Notifications\ChangeEmailNotification;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -41,6 +44,7 @@ class Profile extends Component
     public $institution;
     public $qualification;
     public $year_of_completion;
+    public $new_email;
 
     public function mount()
     {
@@ -71,10 +75,10 @@ class Profile extends Component
         $this->gender = $user->attributes()->where('name', 'gender')->get()->pluck('pivot.value')->first();
         $this->age = $user->attributes()->where('name', 'age')->get()->pluck('pivot.value')->first(); // Initialize age
 
-//        $points = $user->badges()->sum('points');
-//        $events = $user->events()->count();
-//        $tasks = $user->tasks()->count();
-//        $user->setVolunteerLevel($points, $events, $tasks);//just sets the level
+        //        $points = $user->badges()->sum('points');
+        //        $events = $user->events()->count();
+        //        $tasks = $user->tasks()->count();
+        //        $user->setVolunteerLevel($points, $events, $tasks);//just sets the level
         $this->volunteer_level = $user->getCustomAttribute('level');
     }
 
@@ -119,7 +123,26 @@ class Profile extends Component
         session()->flash('success', 'Profile picture updated successfully!');
         $this->redirect('/volunteer/dashboard/profile');
     }
+    public function sendEmailToNewEmail()
+    {
+        $this->validate([
+            'new_email' => 'required|email|unique:users,email',
+        ]);
 
+        // Send notification to verify email change
+        Mail::to($this->new_email)->send(new ChangeEmail($this->new_email));
+
+        // Clear the input
+        $this->new_email = '';
+
+        // Show success message
+        session()->flash('success', 'Verification email sent! Please check your inbox to confirm the email change.');
+
+        // Optional: redirect or just show message
+        $this->dispatch('email-verification-sent');
+    }
+    
+   
 
     public function save()
     {
@@ -145,23 +168,23 @@ class Profile extends Component
      * Insert or update user attributes (only non-empty values).
      * @param array $attributes
      */
-//    protected function insertUserAttributes(array $attributes)
-//    {
-//        $attributesToSync = [];
-//        $i = 1;
-//        foreach ($attributes as $val) {
-//            if (!empty($val)) {
-//                $attributesToSync[$i] = ['value' => $val];
-//            }
-//            $i++;
-//        }
-//        if (!empty($attributesToSync)) {
-//            auth()->user()->attributes()->syncWithoutDetaching($attributesToSync);
-//        }
-//
-//        session()->flash('success', 'Profile updated successfully!');
-//        return redirect()->route('profile');
-//    }
+    //    protected function insertUserAttributes(array $attributes)
+    //    {
+    //        $attributesToSync = [];
+    //        $i = 1;
+    //        foreach ($attributes as $val) {
+    //            if (!empty($val)) {
+    //                $attributesToSync[$i] = ['value' => $val];
+    //            }
+    //            $i++;
+    //        }
+    //        if (!empty($attributesToSync)) {
+    //            auth()->user()->attributes()->syncWithoutDetaching($attributesToSync);
+    //        }
+    //
+    //        session()->flash('success', 'Profile updated successfully!');
+    //        return redirect()->route('profile');
+    //    }
 
     #[On('coordinates')]
     public function handleNewPost($lat = null, $lng = null)
