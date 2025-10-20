@@ -3,12 +3,16 @@
 namespace App\Livewire\Requester\Dashboard\MyEvents;
 
 use App\Jobs\GenerateEmbedding;
+use App\Models\Agreement;
 use App\Models\Category;
 use App\Models\Chat;
+use App\Models\ContractRequest;
 use App\Models\Resource;
 use App\Models\Tag;
 use App\Services\EmbeddingService;
 use App\Services\GoogleMaps;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -58,16 +62,26 @@ class Create extends Component
     public $intermediate_participants;
     public $advanced_participants;
 
+    // Contract request properties
+    public $availableAgreements;
+    public $selectedAgreementId;
+    public $requestContract = false;
+    public $contractNotes;
+    public $requestAdditionalRequirements = false; // New: for additional requirements request
+    public $showTemplateModal = false; // New: for viewing template
+    public $viewingAgreement = null; // New: current template being viewed
+
     public function mount()
     {
         $this->categories = Category::all();
         $this->availableTags = Tag::all()->pluck('name')->sort()->values();
         $this->resources = Resource::all();
+        $this->availableAgreements = Agreement::all();
     }
 
     protected function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'maximum_participants' => 'required|integer|min:1',
@@ -88,7 +102,19 @@ class Create extends Component
             'recruiting_method' => 'required|string',
             'notes' => 'nullable|string|max:500',
             'minimum_age' => 'integer|min:0|max:120',
+            'requestContract' => 'nullable|boolean',
+            'selectedAgreementId' => 'nullable|exists:agreements,id',
+            'requestAdditionalRequirements' => 'nullable|boolean',
         ];
+
+        // Require contractNotes if requesting additional requirements
+        if ($this->requestAdditionalRequirements) {
+            $rules['contractNotes'] = 'required|string|min:10|max:1000';
+        } else {
+            $rules['contractNotes'] = 'nullable|string|max:1000';
+        }
+
+        return $rules;
     }
 
     public function save(GoogleMaps $googleMaps, EmbeddingService $embeddingService)
@@ -114,7 +140,6 @@ class Create extends Component
                     'advanced_participants' => $this->advanced_participants
                 ];
             }
-
         }
 
         $genderSum = 0;
@@ -143,7 +168,10 @@ class Create extends Component
         }
         // dd($this->participant_requirements);
 
-        $event = auth()->user()->organizingEvents()->create([
+        // Determine if event should be active based on contract request
+        $isActive = !($this->requestContract && $this->selectedAgreementId);
+
+        $event = Auth::user()->organizingEvents()->create([
             'name' => $this->name,
             'category_id' => $this->category_id,
             'maximum_participants' => $this->maximum_participants,
@@ -158,7 +186,8 @@ class Create extends Component
             'participant_requirements' => $this->participant_requirements,
             'recruiting_method' => $this->recruiting_method,
             'chat_id' => $chat->id,
-            'city' => $googleMaps->getNearestCity($this->latitude, $this->longitude)
+            'city' => $googleMaps->getNearestCity($this->latitude, $this->longitude),
+            'is_active' => $isActive, // Set based on contract request
         ]);
 
 
@@ -203,9 +232,13 @@ class Create extends Component
             $event->resources()->sync($resources);
         }
 
+        // Handle contract request if selected
+        if ($this->requestContract && $this->selectedAgreementId) {
+            $this->requestContractForEvent($event->id, $this->selectedAgreementId);
+        }
 
         return redirect('/requester/dashboard/my-events')
-            ->with('success', 'Event created successfully!');
+            ->with('success', 'Event created successfully!' . ($this->requestContract ? ' Contract request has been sent to lawyers. Event will be published after contract approval.' : ''));
     }
 
     #[On('coordinates')]
@@ -213,6 +246,119 @@ class Create extends Component
     {
         $this->latitude = $lat;
         $this->longitude = $lng;
+    }
+
+    /**
+     * Format user address from latitude/longitude or custom attribute
+     */
+    private function formatAddress($user)
+    {
+        // First, try to get city from attributes
+        $city = $user->getCustomAttribute('city');
+
+        // If no city, try to construct from lat/lng
+        if (!$city) {
+            $lat = $user->getCustomAttribute('latitude');
+            $lng = $user->getCustomAttribute('longitude');
+
+            if ($lat && $lng) {
+                // Return coordinates as address fallback
+                return "Lat: {$lat}, Lng: {$lng}";
+            }
+        } else {
+            return $city;
+        }
+
+        return null;
+    }
+
+    /**
+     * Request a contract for the event
+     */
+    public function requestContractForEvent($eventId, $agreementId)
+    {
+        try {
+            $user = Auth::user();
+
+            // Get requester details from user's profile attributes
+            $requesterDetails = [
+                'name' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->getCustomAttribute('contact_number') ?? 'N/A',
+                'organization' => $user->getCustomAttribute('description') ?? $user->name,
+                'address' => $this->formatAddress($user) ?? 'N/A',
+            ];
+
+            // Determine the type of request based on whether additional requirements are requested
+            $notes = null;
+            if ($this->requestAdditionalRequirements && !empty($this->contractNotes)) {
+                $notes = $this->contractNotes;
+            }
+
+            // Create the contract request
+            ContractRequest::create([
+                'event_id' => $eventId,
+                'requester_id' => $user->id,
+                'agreement_id' => $agreementId,
+                'status' => 'pending',
+                'requester_details' => $requesterDetails,
+                'notes' => $notes, // Will be null for sign requests, filled for custom requests
+            ]);
+
+            Log::info('Contract request created', [
+                'event_id' => $eventId,
+                'requester_id' => $user->id,
+                'agreement_id' => $agreementId,
+                'type' => $this->requestAdditionalRequirements ? 'custom_requirements' : 'sign_only',
+            ]);
+
+            $message = $this->requestAdditionalRequirements
+                ? 'Contract customization request sent! A lawyer will review your requirements.'
+                : 'Contract signing request sent! A lawyer will review and sign the contract.';
+
+            session()->flash('success', $message);
+
+            // Reset contract form
+            $this->selectedAgreementId = null;
+            $this->contractNotes = null;
+            $this->requestContract = false;
+            $this->requestAdditionalRequirements = false;
+        } catch (\Exception $e) {
+            Log::error('Error creating contract request: ' . $e->getMessage());
+            session()->flash('error', 'Failed to send contract request. Please try again.');
+        }
+    }
+
+    /**
+     * View template in modal
+     */
+    public function viewTemplate($agreementId)
+    {
+        $this->viewingAgreement = Agreement::find($agreementId);
+        $this->showTemplateModal = true;
+    }
+
+    /**
+     * Close template modal
+     */
+    public function closeTemplateModal()
+    {
+        $this->showTemplateModal = false;
+        $this->viewingAgreement = null;
+    }
+
+    /**
+     * Toggle contract request section
+     */
+    public function toggleContractRequest($agreementId = null)
+    {
+        $this->requestContract = !$this->requestContract;
+        $this->selectedAgreementId = $agreementId;
+
+        if (!$this->requestContract) {
+            $this->selectedAgreementId = null;
+            $this->contractNotes = null;
+        }
     }
 
     public function render()
