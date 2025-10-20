@@ -7,6 +7,7 @@ use App\Models\EventPhoto;
 use App\Models\File;
 use App\Models\Review;
 use App\Models\Task;
+use App\Models\User;
 use App\Services\Favorite;
 use App\Services\FileManager;
 use App\Services\GoogleMaps;
@@ -26,6 +27,9 @@ class Show extends Component
     public $is_favorited;
     public $uploadedPhotos = [];
     public $avgratings;
+    public $orgRatings;
+    public $organizer;
+    public $reviews;
 
     #[Validate('nullable|string|max:500')]
     public $review;
@@ -65,6 +69,37 @@ class Show extends Component
         // dd($this->event->reviews);
         //map function replaces the id with temporary url
         // dd($this->uploadedPhotos);
+        $this->organizer = User::find($this->event->user_id);
+        $eventIds = $this->organizer->organizingEvents()->pluck('id');
+        $this->reviews = Review::query()
+            ->whereIn('event_id', $eventIds)
+            ->whereNotNull('review')
+            ->whereNotNull('rating')
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->map(function ($review) {
+                return (object) [
+                    'id' => $review->id,
+                    'event_id' => $review->event_id,
+                    'user_id' => $review->user_id,
+                    'rating' => $review->rating,
+                    'review' => $review->review,
+                    'created_at' => \Carbon\Carbon::parse($review->created_at),
+                    'updated_at' => \Carbon\Carbon::parse($review->updated_at),
+                    'user' => User::find($review->user_id),
+                    'event' => Event::find($review->event_id),
+                ];
+            });
+
+        if ($this->reviews->count() > 0) {
+            foreach ($this->reviews as $review) {
+                $this->orgRatings += $review->rating;
+            }
+            $this->orgRatings = ($this->orgRatings / $this->reviews->count());
+        } else {
+            $this->orgRatings = 0;
+        }
+        
 
     }
 

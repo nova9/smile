@@ -1,12 +1,12 @@
 @php
-function hexToRgba($hex, $opacity = 0.2)
-{
-$hex = str_replace('#', '', $hex);
-$r = hexdec(substr($hex, 0, 2));
-$g = hexdec(substr($hex, 2, 2));
-$b = hexdec(substr($hex, 4, 2));
-return "rgba($r, $g, $b, $opacity)";
-}
+    function hexToRgba($hex, $opacity = 0.2)
+    {
+        $hex = str_replace('#', '', $hex);
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+        return "rgba($r, $g, $b, $opacity)";
+    }
 @endphp
 
 <x-volunteer.dashboard-layout>
@@ -66,130 +66,139 @@ return "rgba($r, $g, $b, $opacity)";
         </dialog>
 
         <!-- Contract Agreement Modal -->
-        @if($showContractModal && $signedContract)
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-            <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+        @if ($showContractModal && $signedContract)
+            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+                <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
 
-                <!-- Modal Header -->
-                <div class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-2xl">
-                    <div>
-                        <h3 class="text-2xl font-bold flex items-center">
-                            <i data-lucide="file-text" class="w-7 h-7 mr-3"></i>
-                            Contract Agreement Required
-                        </h3>
-                        <p class="text-sm text-blue-100 mt-2">
-                            Please review and agree to the contract terms before joining this event
-                        </p>
+                    <!-- Modal Header -->
+                    <div
+                        class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-2xl">
+                        <div>
+                            <h3 class="text-2xl font-bold flex items-center">
+                                <i data-lucide="file-text" class="w-7 h-7 mr-3"></i>
+                                Contract Agreement Required
+                            </h3>
+                            <p class="text-sm text-blue-100 mt-2">
+                                Please review and agree to the contract terms before joining this event
+                            </p>
+                        </div>
+                        <button wire:click="cancelContractAgreement"
+                            class="text-white hover:text-gray-200 transition-colors">
+                            <i data-lucide="x" class="w-7 h-7"></i>
+                        </button>
                     </div>
-                    <button wire:click="cancelContractAgreement" class="text-white hover:text-gray-200 transition-colors">
-                        <i data-lucide="x" class="w-7 h-7"></i>
-                    </button>
-                </div>
 
-                <!-- Modal Body (Scrollable) -->
-                <div class="p-6 overflow-y-auto flex-1">
-                    <!-- Contract Info -->
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="info" class="w-5 h-5 text-white"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-1">{{ $signedContract->agreement->topic }}</h4>
-                                <p class="text-sm text-gray-600">
-                                    This event requires volunteers to agree to the contract terms established by the organizer and lawyer.
-                                </p>
-                                <div class="mt-2 text-xs text-gray-500">
-                                    <span class="font-medium">Signed by lawyer on:</span> {{ $signedContract->signed_at->format('M j, Y') }}
+                    <!-- Modal Body (Scrollable) -->
+                    <div class="p-6 overflow-y-auto flex-1">
+                        <!-- Contract Info -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="info" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-1">{{ $signedContract->agreement->topic }}
+                                    </h4>
+                                    <p class="text-sm text-gray-600">
+                                        This event requires volunteers to agree to the contract terms established by the
+                                        organizer and lawyer.
+                                    </p>
+                                    <div class="mt-2 text-xs text-gray-500">
+                                        <span class="font-medium">Signed by lawyer on:</span>
+                                        {{ $signedContract->signed_at->format('M j, Y') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Contract Terms -->
-                    <div class="mb-6">
-                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
-                            <i data-lucide="scroll-text" class="w-5 h-5 mr-2 text-blue-600"></i>
-                            Contract Terms & Conditions
-                            @if($signedContract->customized_terms)
-                            <span class="ml-2 px-2 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
-                                Customized
-                            </span>
-                            @endif
-                        </h4>
-                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 max-h-96 overflow-y-auto">
-                            <div class="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">
-                                {{ $signedContract->customized_terms ?? $signedContract->agreement->terms }}
+                        <!-- Contract Terms -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                                <i data-lucide="scroll-text" class="w-5 h-5 mr-2 text-blue-600"></i>
+                                Contract Terms & Conditions
+                                @if ($signedContract->customized_terms)
+                                    <span
+                                        class="ml-2 px-2 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
+                                        Customized
+                                    </span>
+                                @endif
+                            </h4>
+                            <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 max-h-96 overflow-y-auto">
+                                <div
+                                    class="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">
+                                    {{ $signedContract->customized_terms ?? $signedContract->agreement->terms }}
+                                </div>
                             </div>
+                        </div>
+
+                        <!-- Agreement Checkbox -->
+                        <div class="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4">
+                            <label class="flex items-start gap-3 cursor-pointer group">
+                                <input type="checkbox" wire:model="agreedToTerms"
+                                    class="checkbox checkbox-primary mt-1 flex-shrink-0">
+                                <div class="flex-1">
+                                    <span
+                                        class="font-semibold text-gray-800 group-hover:text-primary transition-colors">
+                                        I have read and agree to the contract terms and conditions
+                                    </span>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        By checking this box, you acknowledge that you have reviewed the contract and
+                                        agree to abide by all terms and conditions outlined above.
+                                    </p>
+                                </div>
+                            </label>
+                            @error('agreedToTerms')
+                                <p class="text-sm text-red-600 mt-2 flex items-center">
+                                    <i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
                     </div>
 
-                    <!-- Agreement Checkbox -->
-                    <div class="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4">
-                        <label class="flex items-start gap-3 cursor-pointer group">
-                            <input type="checkbox" wire:model="agreedToTerms"
-                                class="checkbox checkbox-primary mt-1 flex-shrink-0">
-                            <div class="flex-1">
-                                <span class="font-semibold text-gray-800 group-hover:text-primary transition-colors">
-                                    I have read and agree to the contract terms and conditions
-                                </span>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    By checking this box, you acknowledge that you have reviewed the contract and agree to abide by all terms and conditions outlined above.
-                                </p>
-                            </div>
-                        </label>
-                        @error('agreedToTerms')
-                        <p class="text-sm text-red-600 mt-2 flex items-center">
-                            <i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i>
-                            {{ $message }}
-                        </p>
-                        @enderror
+                    <!-- Modal Footer -->
+                    <div
+                        class="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50 rounded-b-2xl gap-4">
+                        <button wire:click="cancelContractAgreement" class="btn btn-outline btn-neutral flex-1">
+                            <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                            Cancel
+                        </button>
+
+                        <button wire:click="agreeAndJoin" class="btn btn-primary flex-1" wire:loading.attr="disabled"
+                            wire:loading.class="opacity-50 cursor-not-allowed">
+                            <span wire:loading.remove>
+                                <i data-lucide="check-circle" class="w-4 h-4 mr-2 inline"></i>
+                                Agree & Join Event
+                            </span>
+                            <span wire:loading>
+                                <i data-lucide="loader" class="w-4 h-4 mr-2 inline animate-spin"></i>
+                                Processing...
+                            </span>
+                        </button>
                     </div>
                 </div>
-
-                <!-- Modal Footer -->
-                <div class="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50 rounded-b-2xl gap-4">
-                    <button wire:click="cancelContractAgreement" class="btn btn-outline btn-neutral flex-1">
-                        <i data-lucide="x" class="w-4 h-4 mr-2"></i>
-                        Cancel
-                    </button>
-
-                    <button wire:click="agreeAndJoin"
-                        class="btn btn-primary flex-1"
-                        wire:loading.attr="disabled"
-                        wire:loading.class="opacity-50 cursor-not-allowed">
-                        <span wire:loading.remove>
-                            <i data-lucide="check-circle" class="w-4 h-4 mr-2 inline"></i>
-                            Agree & Join Event
-                        </span>
-                        <span wire:loading>
-                            <i data-lucide="loader" class="w-4 h-4 mr-2 inline animate-spin"></i>
-                            Processing...
-                        </span>
-                    </button>
-                </div>
             </div>
-        </div>
         @endif
 
         <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
             <!-- Flash Messages -->
-            @if(session()->has('message'))
-            <div class="p-6 pb-0">
-                <div class="alert alert-success rounded-lg shadow-lg animate-fade-in">
-                    <i data-lucide="check-circle" class="w-5 h-5"></i>
-                    <span>{{ session('message') }}</span>
+            @if (session()->has('message'))
+                <div class="p-6 pb-0">
+                    <div class="alert alert-success rounded-lg shadow-lg animate-fade-in">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span>{{ session('message') }}</span>
+                    </div>
                 </div>
-            </div>
             @endif
 
-            @if(session()->has('event_full'))
-            <div class="p-6 pb-0">
-                <div class="alert alert-warning rounded-lg shadow-lg animate-fade-in">
-                    <i data-lucide="alert-circle" class="w-5 h-5"></i>
-                    <span>{{ session('event_full') }}</span>
+            @if (session()->has('event_full'))
+                <div class="p-6 pb-0">
+                    <div class="alert alert-warning rounded-lg shadow-lg animate-fade-in">
+                        <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                        <span>{{ session('event_full') }}</span>
+                    </div>
                 </div>
-            </div>
             @endif
 
             <!-- Back Button -->
@@ -197,8 +206,8 @@ return "rgba($r, $g, $b, $opacity)";
                 <a href="/volunteer/dashboard/events" wire:navigate
                     class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
+                        class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                     Back to Opportunities
@@ -277,48 +286,48 @@ return "rgba($r, $g, $b, $opacity)";
                                     <h2 class="text-2xl font-bold text-gray-800 mb-4">Tags</h2>
                                     <div class="flex flex-wrap gap-2 mb-6">
                                         @foreach ($event->tags as $tag)
-                                        <span
-                                            class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
-                                            {{ $tag->name }}
-                                        </span>
+                                            <span
+                                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
+                                                {{ $tag->name }}
+                                            </span>
                                         @endforeach
                                     </div>
                                     @if (!empty($event->skills))
-                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Skills</h2>
-                                    <div class="flex flex-wrap gap-2 mb-6">
-                                        @foreach (is_array($event->skills) ? $event->skills : explode(',', $event->skills) as $skill)
-                                        @if (trim($skill) !== '')
-                                        <span
-                                            class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-green-100 to-blue-100 border border-green-200 text-green-800 text-xs font-semibold shadow-sm">
-                                            {{ trim($skill) }}
-                                        </span>
-                                        @endif
-                                        @endforeach
-                                    </div>
+                                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Skills</h2>
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            @foreach (is_array($event->skills) ? $event->skills : explode(',', $event->skills) as $skill)
+                                                @if (trim($skill) !== '')
+                                                    <span
+                                                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-green-100 to-blue-100 border border-green-200 text-green-800 text-xs font-semibold shadow-sm">
+                                                        {{ trim($skill) }}
+                                                    </span>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     @endif
                                     <div>
                                         <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
                                         <div class="space-y-3">
                                             @foreach ($event->resources as $resource)
-                                            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                                                <div class="flex items-start justify-between gap-4">
-                                                    <div class="flex-1">
-                                                        <h3 class="font-semibold text-gray-800 mb-1">
-                                                            {{ $resource->name }}
-                                                        </h3>
-                                                        <p class="text-sm text-gray-600">
-                                                            {{ $resource->description }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="text-right flex-shrink-0">
-                                                        <div class="text-lg font-bold text-gray-800">
-                                                            {{ $resource->pivot->quantity }}
+                                                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                                    <div class="flex items-start justify-between gap-4">
+                                                        <div class="flex-1">
+                                                            <h3 class="font-semibold text-gray-800 mb-1">
+                                                                {{ $resource->name }}
+                                                            </h3>
+                                                            <p class="text-sm text-gray-600">
+                                                                {{ $resource->description }}
+                                                            </p>
                                                         </div>
-                                                        <div class="text-xs text-gray-500">{{ $resource->unit }}
+                                                        <div class="text-right flex-shrink-0">
+                                                            <div class="text-lg font-bold text-gray-800">
+                                                                {{ $resource->pivot->quantity }}
+                                                            </div>
+                                                            <div class="text-xs text-gray-500">{{ $resource->unit }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -338,15 +347,15 @@ return "rgba($r, $g, $b, $opacity)";
                                             <div class="flex-1">
                                                 <h3 class="font-semibold text-gray-900 mb-1">Selection Method</h3>
                                                 @php
-                                                $recruitingMethodLabels = [
-                                                'first_come' => 'First Come, First Served',
-                                                'application_review' => 'Application Review',
-                                                'skill_assessment' => 'Skill-Based Assessment',
-                                                'metrics' => 'Based on Metrics (Rank)',
-                                                ];
-                                                $recruitingMethodLabel =
-                                                $recruitingMethodLabels[$event->recruiting_method] ??
-                                                ($event->recruiting_method ?? 'Not specified');
+                                                    $recruitingMethodLabels = [
+                                                        'first_come' => 'First Come, First Served',
+                                                        'application_review' => 'Application Review',
+                                                        'skill_assessment' => 'Skill-Based Assessment',
+                                                        'metrics' => 'Based on Metrics (Rank)',
+                                                    ];
+                                                    $recruitingMethodLabel =
+                                                        $recruitingMethodLabels[$event->recruiting_method] ??
+                                                        ($event->recruiting_method ?? 'Not specified');
                                                 @endphp
                                                 <p class="text-gray-600 text-sm">{{ $recruitingMethodLabel }}</p>
                                             </div>
@@ -363,83 +372,93 @@ return "rgba($r, $g, $b, $opacity)";
                                                 </h3>
 
                                                 @if (!empty($event->participant_requirements))
-                                                <div class="space-y-3">
-                                                    @foreach ($event->participant_requirements as $req)
-                                                    @if (isset($req['filter_types']) && $req['filter_types'] === 'gender')
-                                                    <div class="bg-white border border-gray-200 rounded-md p-3">
-                                                        <div class="text-sm font-medium text-gray-700 mb-2">
-                                                            Gender Distribution
-                                                        </div>
-                                                        <div class="grid grid-cols-3 gap-2 text-center text-xs">
-                                                            <div class="bg-gray-50 rounded p-2">
-                                                                <div class="font-bold text-gray-800">
-                                                                    {{ $req['male_participants'] ?? 0 }}
+                                                    <div class="space-y-3">
+                                                        @foreach ($event->participant_requirements as $req)
+                                                            @if (isset($req['filter_types']) && $req['filter_types'] === 'gender')
+                                                                <div
+                                                                    class="bg-white border border-gray-200 rounded-md p-3">
+                                                                    <div
+                                                                        class="text-sm font-medium text-gray-700 mb-2">
+                                                                        Gender Distribution
+                                                                    </div>
+                                                                    <div
+                                                                        class="grid grid-cols-3 gap-2 text-center text-xs">
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['male_participants'] ?? 0 }}
+                                                                            </div>
+                                                                            <div class="text-gray-600">Men</div>
+                                                                        </div>
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['female_participants'] ?? 0 }}
+                                                                            </div>
+                                                                            <div class="text-gray-600">Women</div>
+                                                                        </div>
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['non_binary_participants'] ?? 0 }}
+                                                                            </div>
+                                                                            <div class="text-gray-600">Non-Binary</div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="text-gray-600">Men</div>
-                                                            </div>
-                                                            <div class="bg-gray-50 rounded p-2">
-                                                                <div class="font-bold text-gray-800">
-                                                                    {{ $req['female_participants'] ?? 0 }}
+                                                            @elseif (isset($req['filter_types']) && $req['filter_types'] === 'level')
+                                                                <div
+                                                                    class="bg-white border border-gray-200 rounded-md p-3">
+                                                                    <div
+                                                                        class="text-sm font-medium text-gray-700 mb-2">
+                                                                        Experience Level
+                                                                    </div>
+                                                                    <div
+                                                                        class="grid grid-cols-3 gap-2 text-center text-xs">
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['beginner_participants'] ?? 0 }}
+                                                                            </div>
+                                                                            <div class="text-gray-600">Beginner</div>
+                                                                        </div>
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['intermediate_participants'] ?? 0 }}
+                                                                            </div>
+                                                                            <div class="text-gray-600">Intermediate
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="bg-gray-50 rounded p-2">
+                                                                            <div class="font-bold text-gray-800">
+                                                                                {{ $req['advanced_participants'] ?? 0 }}
+                                                                            </div>
+                                                                            <div class="text-gray-600">Advanced</div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="text-gray-600">Women</div>
-                                                            </div>
-                                                            <div class="bg-gray-50 rounded p-2">
-                                                                <div class="font-bold text-gray-800">
-                                                                    {{ $req['non_binary_participants'] ?? 0 }}
+                                                            @else
+                                                                <div
+                                                                    class="bg-white border border-gray-200 rounded-md p-2">
+                                                                    <span
+                                                                        class="text-sm text-gray-700">{{ is_string($req) ? $req : 'Custom requirement' }}</span>
                                                                 </div>
-                                                                <div class="text-gray-600">Non-Binary</div>
-                                                            </div>
-                                                        </div>
+                                                            @endif
+                                                        @endforeach
                                                     </div>
-                                                    @elseif (isset($req['filter_types']) && $req['filter_types'] === 'level')
-                                                    <div class="bg-white border border-gray-200 rounded-md p-3">
-                                                        <div class="text-sm font-medium text-gray-700 mb-2">
-                                                            Experience Level
-                                                        </div>
-                                                        <div class="grid grid-cols-3 gap-2 text-center text-xs">
-                                                            <div class="bg-gray-50 rounded p-2">
-                                                                <div class="font-bold text-gray-800">
-                                                                    {{ $req['beginner_participants'] ?? 0 }}
-                                                                </div>
-                                                                <div class="text-gray-600">Beginner</div>
-                                                            </div>
-                                                            <div class="bg-gray-50 rounded p-2">
-                                                                <div class="font-bold text-gray-800">
-                                                                    {{ $req['intermediate_participants'] ?? 0 }}
-                                                                </div>
-                                                                <div class="text-gray-600">Intermediate</div>
-                                                            </div>
-                                                            <div class="bg-gray-50 rounded p-2">
-                                                                <div class="font-bold text-gray-800">
-                                                                    {{ $req['advanced_participants'] ?? 0 }}
-                                                                </div>
-                                                                <div class="text-gray-600">Advanced</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @else
-                                                    <div class="bg-white border border-gray-200 rounded-md p-2">
-                                                        <span
-                                                            class="text-sm text-gray-700">{{ is_string($req) ? $req : 'Custom requirement' }}</span>
-                                                    </div>
-                                                    @endif
-                                                    @endforeach
-                                                </div>
                                                 @else
-                                                <div class="text-sm text-gray-600">No specific requirements - Everyone
-                                                    is welcome!</div>
+                                                    <div class="text-sm text-gray-600">No specific requirements -
+                                                        Everyone
+                                                        is welcome!</div>
                                                 @endif
 
                                                 <!-- Minimum Age -->
                                                 @if (isset($event->minimum_age))
-                                                <div class="mt-3 bg-white border border-gray-200 rounded-md p-2">
-                                                    <div class="flex items-center gap-2">
-                                                        <i data-lucide="calendar" class="w-4 h-4 text-gray-600"></i>
-                                                        <span class="text-sm text-gray-700">Minimum Age: <span
-                                                                class="font-semibold">{{ $event->minimum_age }}
-                                                                years</span></span>
+                                                    <div class="mt-3 bg-white border border-gray-200 rounded-md p-2">
+                                                        <div class="flex items-center gap-2">
+                                                            <i data-lucide="calendar"
+                                                                class="w-4 h-4 text-gray-600"></i>
+                                                            <span class="text-sm text-gray-700">Minimum Age: <span
+                                                                    class="font-semibold">{{ $event->minimum_age }}
+                                                                    years</span></span>
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 @endif
                                             </div>
                                         </div>
@@ -496,27 +515,78 @@ return "rgba($r, $g, $b, $opacity)";
                                             class="w-16 h-16 rounded-full aspect-square bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold">
                                             {{ ucfirst(substr($organizer->name, 0, 1)) }}
                                         </div>
-                                        <div>
-                                            <h4 class="font-semibold text-gray-800">{{ $organizer->name }}</h4>
-                                            {{-- <p class="text-gray-600 text-sm">Environmental Organization</p> --}}
-                                            <div class="flex items-center gap-1 mt-1">
-                                                <div class="flex text-yellow-400">
-                                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-gray-900 text-lg mb-2">
+                                                {{ $organizer->name }}</h4>
+
+                                            <!-- Rating Display -->
+                                            <div class="flex items-center gap-3">
+                                                <!-- Stars -->
+                                                <div class="flex items-center gap-0.5">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($orgRatings >= $i)
+                                                            <!-- Full star -->
+                                                            <svg class="w-5 h-5 text-yellow-400 fill-current"
+                                                                viewBox="0 0 20 20">
+                                                                <path
+                                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                                            </svg>
+                                                        @elseif ($orgRatings >= $i - 0.5)
+                                                            <!-- Half star -->
+                                                            <div class="relative">
+                                                                <svg class="w-5 h-5 text-gray-300 fill-current"
+                                                                    viewBox="0 0 20 20">
+                                                                    <path
+                                                                        d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                                                </svg>
+                                                                <svg class="w-5 h-5 text-yellow-400 fill-current absolute top-0 left-0"
+                                                                    viewBox="0 0 20 20"
+                                                                    style="clip-path: inset(0 50% 0 0);">
+                                                                    <path
+                                                                        d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                                                </svg>
+                                                            </div>
+                                                        @else
+                                                            <!-- Empty star -->
+                                                            <svg class="w-5 h-5 text-gray-300 fill-current"
+                                                                viewBox="0 0 20 20">
+                                                                <path
+                                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                                            </svg>
+                                                        @endif
+                                                    @endfor
                                                 </div>
-                                                <span class="text-sm text-gray-600 ml-1">4.8 (124 reviews)</span>
+
+                                                <!-- Rating Number & Review Count -->
+                                                <div class="flex items-baseline gap-2">
+                                                    <span
+                                                        class="text-lg font-bold text-gray-900">{{ number_format($orgRatings, 1) }}</span>
+                                                    <span class="text-sm text-gray-500">
+                                                        ({{ $reviews->count() }}
+                                                        {{ $reviews->count() === 1 ? 'review' : 'reviews' }})
+                                                    </span>
+                                                </div>
                                             </div>
+
+                                            <!-- Rating Badge (Optional - shows quality level) -->
+                                            @if ($orgRatings >= 4.5)
+                                                <div
+                                                    class="mt-2 inline-flex items-center gap-1 px-2 py-1 bg-yellow-50 border border-yellow-200 rounded-full">
+                                                    <i data-lucide="award" class="w-3 h-3 text-yellow-600"></i>
+                                                    <span class="text-xs font-medium text-yellow-700">Highly
+                                                        Rated</span>
+                                                </div>
+                                            @elseif($orgRatings >= 4.0)
+                                                <div
+                                                    class="mt-2 inline-flex items-center gap-1 px-2 py-1 bg-green-50 border border-green-200 rounded-full">
+                                                    <i data-lucide="thumbs-up" class="w-3 h-3 text-green-600"></i>
+                                                    <span class="text-xs font-medium text-green-700">Great
+                                                        Reviews</span>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
-                                    <p class="text-gray-600 text-sm mb-4">
-                                        Dedicated to marine conservation with over 50 successful cleanup events
-                                        and
-                                        1000+
-                                        volunteers mobilized.
-                                    </p>
+
                                     <div class="space-y-2">
                                         <div class="flex items-center gap-2 text-sm text-gray-600">
                                             <i data-lucide="calendar" class="w-4 h-4"></i>
@@ -532,18 +602,17 @@ return "rgba($r, $g, $b, $opacity)";
                                 <!-- Action Buttons -->
                                 <div class="space-y-3">
                                     @if ($event->users->contains(auth()->user()))
-                                    <button class="w-full btn btn-secondary btn-lg" disabled>
-                                        <i data-lucide="check" class="w-5 h-5 mr-2"></i>
-                                        {{-- get status from event_user table --}}
-                                        <span
-                                            class="capitalize">{{ $event->users->where('id', auth()->user()->id)->first()->pivot->status }}</span>
-                                    </button>
+                                        <button class="w-full btn btn-secondary btn-lg" disabled>
+                                            <i data-lucide="check" class="w-5 h-5 mr-2"></i>
+                                            {{-- get status from event_user table --}}
+                                            <span
+                                                class="capitalize">{{ $event->users->where('id', auth()->user()->id)->first()->pivot->status }}</span>
+                                        </button>
                                     @else
-                                    <button class="w-full btn btn-primary btn-lg" x-on:click="join">
-                                        <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
-                                        Join This Event
-                                    </button>
-
+                                        <button class="w-full btn btn-primary btn-lg" x-on:click="join">
+                                            <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
+                                            Join This Event
+                                        </button>
                                     @endif
                                     <button class="w-full btn btn-outline" wire:click="chat">
                                         <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
@@ -556,8 +625,7 @@ return "rgba($r, $g, $b, $opacity)";
                                     <!-- Report Event Button -->
                                     <div class="w-full">
                                         @livewire('volunteer.dashboard.eventz.report-event', [
-                                        'eventId' =>
-                                        $event->id
+                                            'eventId' => $event->id,
                                         ])
                                     </div>
                                 </div>
