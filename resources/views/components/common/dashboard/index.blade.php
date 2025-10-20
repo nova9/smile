@@ -44,7 +44,7 @@
                     <livewire:common.legal-help />
                 @endif
                 <livewire:common.notification />
-                <livewire:common.help-support />
+                {{-- <livewire:common.help-support /> --}}
                 <livewire:common.chat />
                
                 <livewire:common.chatbot />
