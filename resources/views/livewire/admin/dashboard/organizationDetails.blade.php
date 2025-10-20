@@ -19,6 +19,12 @@
                             <i class="fas fa-ban"></i>
                             Restricted
                         </span>
+                        <button wire:click="unrestrictOrganization"
+                            wire:confirm="Are you sure you want to unrestrict this organization?"
+                            class="btn btn-success btn-sm font-bold">
+                            <i class="fas fa-unlock"></i>
+                            Unrestrict
+                        </button>
                     @else
                         <span
                             class="px-4 py-1.5 bg-green-100 text-green-800 text-sm font-semibold rounded-full shadow inline-flex items-center gap-1">
@@ -98,58 +104,53 @@
                     Reports for {{ $organization->name }}
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Report Card 1 -->
-                    <div class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-3">
-                        <div class="flex items-center justify-between">
-                            <span class="font-semibold text-accent">Report ID: RPT-001</span>
-                            <span
-                                class="px-3 py-1 bg-red-100 text-red-800 text-xs font-bold rounded-full shadow">Open</span>
-                        </div>
+                    @forelse($reports as $report)
+                        <!-- Report Card -->
+                        <div class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold text-accent">Report ID: RPT-{{ $report->id }}</span>
+                            </div>
 
-                        <div>
-                            <span class="font-medium text-gray-700">Reason:</span>
-                            <span class="text-gray-900">Financial misconduct</span>
-                        </div>
-                        <div>
-                            <span class="font-medium text-gray-700">Date:</span>
-                            <span class="text-gray-900">2024-06-20</span>
-                        </div>
-                        <div>
-                            <span class="font-medium text-gray-700">Details:</span>
-                            <span class="text-gray-900">Did not disclose how they handled fimaces</span>
-                        </div>
-                        <div class="flex gap-2 mt-2">
-                            <button class="btn btn-outline btn-success font-bold">Resolve</button>
-                            <button class="btn btn-outline btn-error font-bold">Dismiss</button>
-                        </div>
-                    </div>
-                    <!-- Report Card 2 -->
-                    <div class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-3">
-                        <div class="flex items-center justify-between">
-                            <span class="font-semibold text-accent">Report ID: RPT-002</span>
-                            <span
-                                class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full shadow">Closed</span>
-                        </div>
+                            <div>
+                                <span class="font-medium text-gray-700">Event:</span>
+                                <span class="text-gray-900">{{ $report->event->name ?? 'N/A' }}</span>
+                            </div>
 
-                        <div>
-                            <span class="font-medium text-gray-700">Reason:</span>
-                            <span class="text-gray-900">Late attendance</span>
-                        </div>
-                        <div>
-                            <span class="font-medium text-gray-700">Date:</span>
-                            <span class="text-gray-900">2024-05-10</span>
-                        </div>
-                        <div>
-                            <span class="font-medium text-gray-700">Details:</span>
-                            <span class="text-gray-900">Did not start thge event on time , people had to wait for
-                                hours</span>
-                        </div>
+                            <div>
+                                <span class="font-medium text-gray-700">Reported by:</span>
+                                <span class="text-gray-900">{{ $report->user->name ?? 'N/A' }}</span>
+                            </div>
 
-                    </div>
+                            <div>
+                                <span class="font-medium text-gray-700">Reason:</span>
+                                <span class="text-gray-900">{{ $report->reason }}</span>
+                            </div>
+
+                            <div>
+                                <span class="font-medium text-gray-700">Date:</span>
+                                <span class="text-gray-900">{{ $report->created_at->format('Y-m-d') }}</span>
+                            </div>
+
+                            @if($report->details)
+                                <div>
+                                    <span class="font-medium text-gray-700">Details:</span>
+                                    <span class="text-gray-900">{{ $report->details }}</span>
+                                </div>
+                            @endif
+                        </div>
+                    @empty
+                        <div class="col-span-2 text-center py-8 text-gray-500">
+                            No reports found for this organization's events.
+                        </div>
+                    @endforelse
                 </div>
-                <div class="mt-8 flex justify-end">
-                    <button class="btn btn-error font-bold">Suspend organization</button>
-                </div>
+                @if($reports->count() > 0)
+                    <div class="mt-8 flex justify-end">
+                        <button wire:click="suspendOrganization"
+                            wire:confirm="Are you sure you want to suspend this organization?"
+                            class="btn btn-error font-bold">Suspend organization</button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
