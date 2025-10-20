@@ -1,4 +1,4 @@
-````markdown
+
 # 🌟 SMILE - Volunteer Management Platform
 
 **SMILE** is a comprehensive volunteer management and event coordination platform built with modern web technologies. It connects volunteers, event organizers, and legal professionals in a unified ecosystem that facilitates community service, volunteer recognition, and legal support.
@@ -627,4 +627,3 @@ For support, please open an issue in the repository or contact the development t
 ---
 
 **Built with ❤️ using Laravel, Livewire, and AI**
-````
