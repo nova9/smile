@@ -239,7 +239,7 @@
                                 <i data-lucide="clock" class="w-4 h-4"></i>
                                 <span class="text-sm">Hours Volunteered</span>
                             </div>
-                            <div class="text-2xl font-bold text-gray-900">{{ count($completedEvents) * 4 }}</div>
+                            <div class="text-2xl font-bold text-gray-900">{{ $hoursVolunteered }}</div>
                         </div>
 
                         <div class="flex items-center justify-between">
@@ -247,7 +247,7 @@
                                 <i data-lucide="award" class="w-4 h-4"></i>
                                 <span class="text-sm">Certificates</span>
                             </div>
-                            <div class="text-2xl font-bold text-gray-900">{{ count($completedEvents) }}</div>
+                            {{-- <div class="text-2xl font-bold text-gray-900">{{  }}</div> --}}
                         </div>
 
                         <div class="flex items-center justify-between">
