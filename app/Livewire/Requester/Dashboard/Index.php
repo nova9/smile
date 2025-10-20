@@ -54,10 +54,9 @@ class Index extends Component
             ->flatten()
             ->count();
         $this->totalVol = $user->events()->get()->pluck('users')->flatten()->count();
-        if($this->totalVol == 0){
+        if ($this->totalVol == 0) {
             $this->approvalRate = 0;
-        }
-        else {
+        } else {
             $this->approvalRate = ($approvelVol / $this->totalVol) * 100;
         }
 
@@ -72,14 +71,20 @@ class Index extends Component
         $this->recentNotification = $user->notifications()
             ->orderBy('created_at', 'desc')
             ->first();
-        $this->recentNotificationTime = $this->recentNotification['created_at']->diffForHumans();
-        $this->recentNotificationText = $this->recentNotification->data['message']; 
-        
-        $this->recentEventCreation = $user->organizingEvents()->orderBy('created_at','desc')->first();
+        if ($this->recentNotification != null) {
+            $this->recentNotificationTime = $this->recentNotification['created_at']->diffForHumans();
+            $this->recentNotificationText = $this->recentNotification->data['message'];
+        } else {
+            $this->recentNotificationText = 'No notifications';
+            $this->recentNotificationTime = '';
+        }
+
+
+        $this->recentEventCreation = $user->organizingEvents()->orderBy('created_at', 'desc')->first();
         // $this->recentCertificateIssued = $user->events()->with('certificates')->get()->pluck('certificates')
         // dd($this->recentEventCreation);
-     
-        
+
+
     }
 
     public function render()
