@@ -2,124 +2,124 @@
 
 namespace App\Livewire\Lawyer\Dashboard;
 
+use App\Models\ContractRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class ContractCustomization extends Component
 {
+    public $selectedRequestId;
+    public $showReviewModal = false;
+    public $customizedTerms = '';
+
+    /**
+     * Open review modal for a contract request with custom requirements
+     */
+    public function openReviewModal($contractRequestId)
+    {
+        $contractRequest = ContractRequest::with(['event', 'requester', 'agreement'])
+            ->findOrFail($contractRequestId);
+
+        $this->selectedRequestId = $contractRequestId;
+        $this->customizedTerms = $contractRequest->agreement->terms ?? '';
+        $this->showReviewModal = true;
+    }
+
+    /**
+     * Close review modal
+     */
+    public function closeReviewModal()
+    {
+        $this->showReviewModal = false;
+        $this->selectedRequestId = null;
+        $this->customizedTerms = '';
+    }
+
+    /**
+     * Approve custom requirements and move to digital signature with modified terms
+     */
+    public function approveCustomization()
+    {
+        try {
+            $contractRequest = ContractRequest::with(['event', 'agreement'])
+                ->findOrFail($this->selectedRequestId);
+
+            // Append the new requirements to the existing contract terms
+            $originalTerms = $contractRequest->agreement->terms ?? '';
+            $additionalRequirements = $contractRequest->notes ?? '';
+
+            // Combine original terms with additional requirements
+            $combinedTerms = $originalTerms . "\n\n--- ADDITIONAL REQUIREMENTS ---\n\n" . $additionalRequirements;
+
+            // Store the combined terms in the contract request
+            $contractRequest->update([
+                'customized_terms' => $combinedTerms,
+                'customization_status' => 'approved',
+            ]);
+
+            Log::info('Contract customization approved', [
+                'contract_request_id' => $contractRequest->id,
+                'lawyer_id' => Auth::id(),
+            ]);
+
+            session()->flash('success', 'Additional requirements approved and added to contract! Ready for signature.');
+
+            $this->closeReviewModal();
+
+            // Redirect to digital signature page
+            return redirect()->route('lawyer.digital-signature');
+        } catch (\Exception $e) {
+            Log::error('Error approving customization: ' . $e->getMessage());
+            session()->flash('error', 'Failed to approve customization. Please try again.');
+        }
+    }
+
+    /**
+     * Reject custom requirements and move to digital signature with default terms
+     */
+    public function rejectCustomization()
+    {
+        try {
+            $contractRequest = ContractRequest::with(['event', 'agreement'])
+                ->findOrFail($this->selectedRequestId);
+
+            // Clear the notes and mark as rejected, use default terms
+            $contractRequest->update([
+                'notes' => null, // Clear the custom requirements
+                'customization_status' => 'rejected',
+                'customized_terms' => null, // Use default terms from agreement
+            ]);
+
+            Log::info('Contract customization rejected', [
+                'contract_request_id' => $contractRequest->id,
+                'lawyer_id' => Auth::id(),
+            ]);
+
+            session()->flash('success', 'Customization rejected. Contract moved to Digital Signature with default terms.');
+
+            $this->closeReviewModal();
+
+            // Redirect to digital signature page
+            return redirect()->route('lawyer.digital-signature');
+        } catch (\Exception $e) {
+            Log::error('Error rejecting customization: ' . $e->getMessage());
+            session()->flash('error', 'Failed to reject customization. Please try again.');
+        }
+    }
+
     public function render()
     {
-        $stats = [
-            'total_templates' => 25,
-            'active_templates' => 18,
-            'most_used' => 'VSA',
-            'last_modified' => '2 days'
-        ];
+        // Get contract requests with custom requirements (notes not null)
+        $customizationRequests = ContractRequest::with(['event', 'requester', 'agreement'])
+            ->whereNotNull('notes') // Custom requirements requested
+            ->where('status', 'pending')
+            ->whereNull('customization_status') // Not yet approved or rejected
+            ->latest()
+            ->get();
 
-        $templates = [
-            [
-                'id' => 1,
-                'name' => 'Standard Volunteer Service Agreement',
-                'type' => 'Volunteer Service Agreement',
-                'status' => 'active',
-                'description' => 'Comprehensive template for volunteer service agreements with standard terms and conditions.',
-                'usage_count' => 45,
-                'last_modified' => '2 days ago',
-                'content' => null // Will be generated dynamically
-            ],
-            [
-                'id' => 2,
-                'name' => 'Employment Contract - Full Time',
-                'type' => 'Employment Contract',
-                'status' => 'active',
-                'description' => 'Full-time employment contract template with benefits and compensation details.',
-                'usage_count' => 32,
-                'last_modified' => '5 days ago',
-                'content' => null
-            ],
-            [
-                'id' => 3,
-                'name' => 'Partnership Agreement - Business',
-                'type' => 'Partnership Agreement',
-                'status' => 'active',
-                'description' => 'Business partnership agreement template for joint ventures and collaborations.',
-                'usage_count' => 18,
-                'last_modified' => '1 week ago',
-                'content' => null
-            ],
-            [
-                'id' => 4,
-                'name' => 'Non-Disclosure Agreement - Standard',
-                'type' => 'NDA',
-                'status' => 'active',
-                'description' => 'Standard NDA template for confidentiality agreements.',
-                'usage_count' => 28,
-                'last_modified' => '3 days ago',
-                'content' => null
-            ],
-            [
-                'id' => 5,
-                'name' => 'General Contract Template',
-                'type' => 'General Contract',
-                'status' => 'active',
-                'description' => 'Flexible general contract template for various purposes.',
-                'usage_count' => 15,
-                'last_modified' => '1 week ago',
-                'content' => null
-            ],
-            [
-                'id' => 6,
-                'name' => 'Short-term Volunteer Agreement',
-                'type' => 'Volunteer Service Agreement',
-                'status' => 'draft',
-                'description' => 'Simplified template for short-term volunteer engagements.',
-                'usage_count' => 8,
-                'last_modified' => '2 weeks ago',
-                'content' => null
-            ],
-            [
-                'id' => 7,
-                'name' => 'Consultant Agreement Template',
-                'type' => 'Employment Contract',
-                'status' => 'archived',
-                'description' => 'Template for independent contractor and consultant agreements.',
-                'usage_count' => 22,
-                'last_modified' => '1 month ago',
-                'content' => null
-            ]
-        ];
-
-        // New: incoming change requests (front-end only mock data)
-        $changeRequests = [
-            [
-                'id' => 1001,
-                'template_id' => 1,
-                'template_name' => 'Standard Volunteer Service Agreement',
-                'organization' => 'Acme Goodwill Foundation',
-                'contact_person' => 'Grace Lee',
-                'contact_email' => 'grace.lee@acme.org',
-                'requested_at' => date('Y-m-d H:i'),
-                'status' => 'pending', // pending | approved | rejected
-                'priority' => 'high',
-                'reason' => 'Update liability clause to reflect event insurance coverage.',
-                'current_terms' => "1. The volunteer agrees to perform assigned duties diligently and responsibly.\n2. The organization will provide necessary guidance and a safe work environment.\n3. Confidential information must not be disclosed without consent.\n4. Either party may terminate this agreement with prior notice.",
-                'proposed_terms' => "1. The volunteer agrees to perform assigned duties diligently and responsibly.\n2. The organization will provide necessary guidance and a safe work environment, including event insurance coverage where applicable.\n3. Confidential information must not be disclosed without consent.\n4. Either party may terminate this agreement with 7 days prior notice.",
-            ],
-            [
-                'id' => 1002,
-                'template_id' => 6,
-                'template_name' => 'Short-term Volunteer Agreement',
-                'organization' => 'City Food Bank',
-                'contact_person' => 'David Chen',
-                'contact_email' => 'david.chen@cityfoodbank.org',
-                'requested_at' => date('Y-m-d H:i', strtotime('-1 day')),
-                'status' => 'pending',
-                'priority' => 'medium',
-                'reason' => 'Clarify time commitment and add rest breaks during distribution days.',
-                'current_terms' => "1. Volunteer services are provided without compensation.\n2. The volunteer will be assigned tasks by the organization.\n3. The volunteer may terminate services at any time with notice.",
-                'proposed_terms' => "1. Volunteer services are provided without compensation.\n2. The volunteer will be assigned tasks by the organization, with a maximum of 6 hours per day including rest breaks.\n3. The volunteer may terminate services at any time with 24 hours notice.",
-            ],
-        ];
-
-        return view('livewire.lawyer.dashboard.contract-customization', compact('stats', 'templates', 'changeRequests'));
+        return view('livewire.lawyer.dashboard.contract-customization', [
+            'customizationRequests' => $customizationRequests,
+        ]);
     }
 }

@@ -119,13 +119,18 @@ class Event extends Model
         return $this->hasMany(EventReport::class);
     }
 
+    public function contractRequests(): HasMany
+    {
+        return $this->hasMany(ContractRequest::class);
+    }
+
     public function userJoinsNotify()
     {
         // Send notification to event creator
         $eventCreator = $this->eventCreator();
         // dd($eventCreator);
         if ($eventCreator) {
-                $eventCreator->notify(new EventJoinNotification($this));
+            $eventCreator->notify(new EventJoinNotification($this));
             // dd("Notification sent to event creator: " . $eventCreator->name);
         }
 
