@@ -98,10 +98,10 @@
                                 @if ($status == 'accepted')
                                     {{-- queryselectorall finds all the radio inputs with the name my_tabs_4 4th index on and programmatically clicks that radio button to activate that tab --}}
                                     <button onclick="document.querySelectorAll('input[name=my_tabs_4]')[4].click()"
-                                   class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
-                                    <i data-lucide="users" class="w-5 h-5"></i>
-                                    <span>Community Space</span>
-                                </button>
+                                       class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors duration-200 text-sm">
+                                        <i data-lucide="users" class="w-5 h-5"></i>
+                                        <span>Community Space</span>
+                                    </button>
                                 @endif
                                 @if ($status == 'pending' || $status == 'accepted')
                                     <button onclick="leaveEvent.showModal()"

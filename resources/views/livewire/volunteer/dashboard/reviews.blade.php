@@ -44,43 +44,43 @@
                                         <div class="flex items-center gap-2">
                                                   <div class="rating rating-lg rating-half">
                                                             {{-- 1 full opacity ,0.2 almost transparert --}}
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                     aria-label="0.5 star"
                                                                     style="opacity:{{ $review->rating >= 0.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                     aria-label="1 star"
                                                                     style="opacity:{{ $review->rating >= 1 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                     aria-label="1.5 star"
                                                                     style="opacity:{{ $review->rating >= 1.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                     aria-label="2 star"
                                                                     style="opacity:{{ $review->rating >= 2 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                     aria-label="2.5 star"
                                                                     style="opacity:{{ $review->rating >= 2.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                     aria-label="3 star"
                                                                     style="opacity:{{ $review->rating >= 3 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                     aria-label="3.5 star"
                                                                     style="opacity:{{ $review->rating >= 3.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                     aria-label="4 star"
                                                                     style="opacity:{{ $review->rating >= 4 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-1 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-1 bg-yellow-400"
                                                                     aria-label="4.5 star"
                                                                     style="opacity:{{ $review->rating >= 4.5 ? 1 : 0.2 }}">
                                                                 </div>
-                                                                <div class="mask mask-star-2 mask-half-2 bg-green-500"
+                                                                <div class="mask mask-star-2 mask-half-2 bg-yellow-400"
                                                                     aria-label="5 star"
                                                                     style="opacity:{{ $review->rating == 5 ? 1 : 0.2 }}">
                                                                 </div>
