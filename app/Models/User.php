@@ -29,6 +29,9 @@ class User extends Authenticatable
         'password',
         'role_id',
         'embedding',
+        'phone',
+        'organization',
+        'address',
     ];
 
     /**
@@ -107,6 +110,16 @@ class User extends Authenticatable
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function contractRequestsAsRequester(): HasMany
+    {
+        return $this->hasMany(ContractRequest::class, 'requester_id');
+    }
+
+    public function contractRequestsAsLawyer(): HasMany
+    {
+        return $this->hasMany(ContractRequest::class, 'lawyer_id');
     }
 
     public function profileCompletionPercentage()

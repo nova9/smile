@@ -125,6 +125,11 @@ class Event extends Model
         return $this->hasMany(Certificate::class);
     }
 
+    public function contractRequests(): HasMany
+    {
+        return $this->hasMany(ContractRequest::class);
+    }
+
     public function userJoinsNotify()
     {
         // Send notification to event creator
