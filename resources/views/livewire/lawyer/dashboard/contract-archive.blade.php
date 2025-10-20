@@ -20,52 +20,26 @@
                 </div>
             </div>
 
-            <!-- Signed Contracts (replaces archived content) -->
-            @php
-            $filteredSigned = array_values(array_filter($signedContracts ?? [], function ($c) {
-            return strcasecmp($c['type'] ?? '', 'Volunteer Service Agreement') === 0;
-            }));
-            $exampleSigned = [
-            [
-            'id' => 901,
-            'title' => 'Community Cleanup Volunteer Agreement',
-            'organization' => 'Acme Goodwill Foundation',
-            'type' => 'Volunteer Service Agreement',
-            'value' => '$0.00',
-            'status' => 'signed',
-            'signed_at' => date('Y-m-d'),
-            'contract_number' => 'VSA-2025-001',
-            'event' => 'Community Clean-up Drive 2025',
-            'start_date' => date('Y-m-01'),
-            'end_date' => date('Y-m-t'),
-            'duration' => '4 weeks',
-            'contact' => '+1 (555) 012-3456',
-            'volunteer_name' => 'John Doe',
-            'volunteer_address' => '123 Main St, Springfield',
-            'volunteer_email' => 'john.doe@example.com',
-            'volunteer_nic' => '901234567V',
-            ],
-            ];
-            $displaySigned = count($filteredSigned) ? $filteredSigned : $exampleSigned;
-            @endphp
+            <!-- Signed Contracts -->
             <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-xl font-semibold text-gray-800">Signed Contracts</h3>
-                    <span class="text-sm text-gray-500">Showing {{ count($displaySigned) }} contracts</span>
+                    <span class="text-sm text-gray-500">Showing {{ $signedContracts->count() }} contracts</span>
                 </div>
 
+                @if($signedContracts->count() > 0)
                 <div class="space-y-4">
-                    @foreach($displaySigned as $contract)
+                    @foreach($signedContracts as $contractRequest)
                     <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all duration-200 bg-green-50">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <h4 class="font-semibold text-gray-800 text-lg">{{ $contract['title'] }}</h4>
+                                <h4 class="font-semibold text-gray-800 text-lg">{{ $contractRequest->event->name }} - {{ $contractRequest->agreement->topic }}</h4>
                                 <div class="flex items-center gap-3 mt-2">
-                                    <p class="text-sm text-gray-600">{{ $contract['organization'] }}</p>
+                                    <p class="text-sm text-gray-600">{{ $contractRequest->requester->name ?? $contractRequest->requester_details['organization'] ?? 'N/A' }}</p>
                                     <span class="text-gray-400">•</span>
                                     <div class="flex items-center gap-1">
                                         <i data-lucide="scroll-text" class="w-3 h-3 text-green-600"></i>
-                                        <span class="text-sm text-green-600 font-medium">{{ $contract['type'] }}</span>
+                                        <span class="text-sm text-green-600 font-medium">Volunteer Service Agreement</span>
                                     </div>
                                 </div>
                             </div>
@@ -76,34 +50,27 @@
                         </div>
                         <div class="mb-4">
                             <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
-                                <p><span class="font-medium">Signed Date:</span> {{ $contract['signed_at'] ?? ($contract['signed_date'] ?? '-') }}</p>
-                                <p><span class="font-medium">Contract Value:</span> {{ $contract['value'] ?? '-' }}</p>
+                                <p><span class="font-medium">Signed Date:</span> {{ $contractRequest->signed_at->format('M d, Y H:i') }}</p>
+                                <p><span class="font-medium">Event:</span> {{ $contractRequest->event->name }}</p>
+                                <p><span class="font-medium">Event Date:</span> {{ $contractRequest->event->starts_at->format('M d, Y') }}</p>
+                                <p><span class="font-medium">Event Published:</span> {{ $contractRequest->event->is_active ? 'Yes ✓' : 'No' }}</p>
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="text-sm text-green-600 font-medium">
                                 <p>✓ Legally executed contract</p>
                             </div>
-                            <div class="flex gap-2">
-                                <button
-                                    class="btn btn-outline btn-sm"
-                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
-                                    onclick="viewSignedContract(this)">
-                                    <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
-                                    View
-                                </button>
-                                <button
-                                    class="btn btn-success btn-sm"
-                                    data-contract-b64="{{ base64_encode(json_encode($contract)) }}"
-                                    onclick="downloadContract(this)">
-                                    <i data-lucide="download" class="w-4 h-4 mr-2"></i>
-                                    Download
-                                </button>
-                            </div>
                         </div>
                     </div>
                     @endforeach
                 </div>
+                @else
+                <div class="text-center py-12 text-gray-500">
+                    <i data-lucide="file-check" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+                    <p class="text-lg font-medium">No signed contracts yet</p>
+                    <p class="text-sm mt-2">Sign your first contract to see it here.</p>
+                </div>
+                @endif
             </div>
         </div>
     </main>
