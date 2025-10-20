@@ -56,7 +56,7 @@ class Show extends Component
         if ($completedTasksCount >= 1) {
             $this->reviewbutton = true;
         }
-
+        // dd($this->event->resources);
 
         $this->loadImages();
 
