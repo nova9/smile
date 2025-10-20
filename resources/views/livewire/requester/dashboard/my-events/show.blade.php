@@ -57,8 +57,29 @@
                                     <span>Community Space</span>
                                 </a>
                             </div>
+                            
                         </div>
+                        
                     </div>
+                    <div>
+                                <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
+                                <div class="space-y-3 mb-2">
+                                    @foreach($event->resources as $resource)
+                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                            <div class="flex items-start justify-between gap-4">
+                                                <div class="flex-1">
+                                                    <h3 class="font-semibold text-gray-800 mb-1">{{ $resource->name }}</h3>
+                                                    <p class="text-sm text-gray-600">{{ $resource->description }}</p>
+                                                </div>
+                                                <div class="text-right flex-shrink-0">
+                                                    <div class="text-lg font-bold text-gray-800">{{ $resource->pivot->quantity }}</div>
+                                                    <div class="text-xs text-gray-500">{{ $resource->unit }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
 
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Volunteers</h2>
 

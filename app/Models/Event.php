@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Services\Notifications\EventJoinNotification;
+use Laravel\Scout\Searchable;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'name',
@@ -143,6 +144,7 @@ class Event extends Model
             $user->notify(new ApprovalNotification($this));
         }
     }
+
 
     // In App\Models\Event.php
 

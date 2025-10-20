@@ -49,7 +49,7 @@
                 @foreach ($messages as $msg)
                     <div class="flex {{ $msg['role'] === 'user' ? 'justify-end' : 'justify-start' }}">
                         <div
-                            class="max-w-[80%] text-sm px-4 py-2 rounded-lg shadow-sm leading-relaxed break-words 
+                            class="max-w-[80%] text-sm px-4 py-2 rounded-lg shadow-sm leading-relaxed break-words
                             {{ $msg['role'] === 'user' ? 'bg-primary text-white rounded-br-none' : 'bg-white text-gray-800 rounded-bl-none' }}">
                             {!! nl2br(e(strip_tags($msg['content']))) !!}
                             {{-- nl2br replaces newline characters ("\n") with HTML <br /> tags so line breaks show in the browser. --}}
