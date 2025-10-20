@@ -9,6 +9,7 @@ use App\Models\Resource;
 use App\Models\Tag;
 use App\Services\EmbeddingService;
 use App\Services\GoogleMaps;
+use App\Services\Pro;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -94,6 +95,11 @@ class Create extends Component
     public function save(GoogleMaps $googleMaps, EmbeddingService $embeddingService)
     {
         $this->validate();
+
+        if (Pro::numberOfCreatedEventsThisMonth(auth()->user()) >= 5) {
+            $this->addError('pro_limit', 'You have reached your event creation limit for this month. Please upgrade your plan to create more events.');
+            return back();
+        }
 
         $chat = Chat::query()->create([
             'is_group' => true,

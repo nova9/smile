@@ -18,9 +18,7 @@
                             class="flex gap-4"
                         >
                             <div class="flex flex-col gap-2 items-center">
-                                <x-common.avatar size="100"
-                                                 :src="$profile_picture ? $profile_picture->temporaryUrl() : ($profile_picture_url ? $profile_picture_url : '')"
-                                                 :name="$name"/>
+                                <x-common.avatar size="100" :src="$profile_picture ? $profile_picture->temporaryUrl() : ($profile_picture_url ? $profile_picture_url : '')" :name="$name" />
 
                                 <div class="flex gap-1">
 
@@ -31,6 +29,7 @@
                                         <input accept="image/*" wire:model="profile_picture" type="file"
                                                class="hidden"/>
                                     </label>
+
 
                                     @if($profile_picture)
                                         <button

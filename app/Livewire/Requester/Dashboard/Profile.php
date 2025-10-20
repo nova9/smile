@@ -9,7 +9,6 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Profile extends Component
-
 {
     use WithFileUploads;
     public $attribute;
@@ -70,7 +69,7 @@ class Profile extends Component
 
         $this->contact_number = $this->user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
         $this->logo = $this->user->attributes()->where('name', 'logo')->get()->pluck('pivot.value')->first();
-           if ($this->latitude === null) {
+        if ($this->latitude === null) {
             $this->latitude = $this->user->attributes()->where('name', 'latitude')->get()->pluck('pivot.value')->first();
         }
         if ($this->longitude === null) {
@@ -110,6 +109,26 @@ class Profile extends Component
         auth()->user()->setCustomAttribute('longitude', $this->longitude);
         auth()->user()->setCustomAttribute('description', $this->description);
         auth()->user()->setCustomAttribute('verification_details', json_encode($verificationDetails));
+    }
+
+    public function downgradeAccount()
+    {
+        $user = auth()->user();
+
+        // Check if user has an organization upgrade
+        if ($user->upgrade()->exists()) {
+            // Delete the upgrade record to downgrade to basic
+            $user->upgrade()->delete();
+
+            // Flash success message
+            session()->flash('success', 'Account successfully downgraded to Basic. You can upgrade again anytime.');
+
+            // Redirect to refresh the page and show updated status
+            return $this->redirect('/requester/dashboard/profile');
+        }
+
+        // If no upgrade exists, show error message
+        session()->flash('error', 'No organization upgrade found to downgrade.');
     }
 
 
