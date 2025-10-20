@@ -31,7 +31,7 @@ class Index extends Component
             $duration = $event->ends_at->diffInHours($event->starts_at);
             $this->hoursVolunteered += $duration;
         }
-        $this->certificateIssued = auth()->user()->
+        $this->certificateIssued = auth()->user()->certificates()->count();
         
     }
 
