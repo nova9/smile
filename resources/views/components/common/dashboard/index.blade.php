@@ -39,17 +39,13 @@
 
             <div class="flex items-center gap-5">
                 {{-- Group 1: Legal Help, Notifications, Chat, Help & Support --}}
-                <div class="flex gap-0">
-                    @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester']))
-                    <livewire:common.legal-help />
+                <div class="flex gap-1">
+                    @if (auth()->user()->role && in_array(auth()->user()->role->name, ['volunteer', 'requester']))
+                        <livewire:common.legal-help />
                     @endif
                     <livewire:common.notification />
                     <livewire:common.chat />
-                    @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester','lawyer']))
-                    <div class="ml-2">
-                        <livewire:common.help-support />
-                    </div>
-                    @endif
+                    <livewire:common.help-support />
                 </div>
 
                 {{-- Group 2: Smile Assistant (separated with larger gap) --}}
