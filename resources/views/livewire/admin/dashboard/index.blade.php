@@ -25,10 +25,10 @@
                 x-transition:leave-start="opacity-100 transform translate-y-0"
                 x-transition:leave-end="opacity-0 transform translate-y-2"
                 class="mb-6 {{ session('message_type') === 'info' ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-green-50 border-green-200 text-green-700' }} border px-4 py-3 rounded-lg flex items-center shadow-lg">
-                <i class="fas fa-{{ session('message_icon', 'check-circle') }} mr-2 text-xl"></i>
+                <i data-lucide="{{ session('message_icon', 'check-circle') }}" class="w-5 h-5 mr-2"></i>
                 <span class="font-medium">{{ session('message') }}</span>
                 <button @click="show = false" class="ml-auto text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
+                    <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
         @endif
@@ -152,7 +152,7 @@
                                     @else
                                         <span
                                             class="inline-flex items-center px-3 py-1 rounded-xl text-xs font-medium bg-gradient-to-r from-gray-100 to-slate-100 text-gray-700">
-                                            <i class="CircleX mr-1.5"></i>
+                                            <i data-lucide="eye-off" class="w-3 h-3 mr-1.5"></i>
                                             Hidden
                                         </span>
                                     @endif
