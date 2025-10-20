@@ -28,11 +28,10 @@ class Index extends Component
 
         foreach ($participatingEvents as $event) {
             // Calculate duration in hours between starts_at and ends_at
-            $duration = $event->ends_at->diffInHours($event->starts_at);
+            $duration = abs($event->ends_at->diffInHours($event->starts_at));
             $this->hoursVolunteered += $duration;
         }
         $this->certificateIssued = auth()->user()->certificates()->count();
-        
     }
 
     public function updatedStatusFilter()
