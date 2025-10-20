@@ -122,7 +122,7 @@ class User extends Authenticatable
 
         $user = auth()->user();
         $attributes = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
-//         dd($attributes);
+        //         dd($attributes);
         foreach ($requiredSkills as $key => $value) {
             if (!empty($attributes[$key])) {
                 $initialPercentage += $value;
@@ -243,5 +243,10 @@ class User extends Authenticatable
     {
         $fileId = $this->getCustomAttribute('profile_picture');
         return \App\Services\FileManager::getTemporaryUrl($fileId);
+    }
+
+    public function isCertificateIssued(): bool
+    {
+        return $this->certificates()->whereNotNull('issued_at')->exists();
     }
 }

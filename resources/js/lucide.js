@@ -112,7 +112,10 @@ import {
     File,
     MoreVertical,
     Video,
-    Venus
+    Venus,
+    UserMinus,
+    Upload,
+    List
 } from "lucide";
 
 function registerIcons() {
@@ -231,6 +234,9 @@ function registerIcons() {
             Bot,
             BotMessageSquare,
             Bookmark,
+            UserMinus,
+            Upload,
+            List
         },
     });
 }

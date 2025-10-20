@@ -119,6 +119,11 @@ class Event extends Model
     {
         return $this->hasMany(EventReport::class);
     }
+    
+    public function certificates():HasMany
+    {
+        return $this->hasMany(Certificate::class);
+    }
 
     public function userJoinsNotify()
     {
