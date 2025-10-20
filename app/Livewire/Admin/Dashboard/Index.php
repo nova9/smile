@@ -45,25 +45,6 @@ class Index extends Component
         $this->dispatch('event-status-changed', eventId: $eventId, isActive: $event->is_active);
     }
 
-    public function dismissReports($eventId)
-    {
-        $event = Event::findOrFail($eventId);
-        $reportCount = EventReport::where('event_id', $eventId)
-            ->where('status', 'pending')
-            ->count();
-
-        EventReport::where('event_id', $eventId)
-            ->where('status', 'pending')
-            ->update(['status' => 'dismissed']);
-
-        session()->flash('message', "{$reportCount} " . Str::plural('report', $reportCount) . " dismissed for '{$event->name}'");
-        session()->flash('message_type', 'info');
-        session()->flash('message_icon', 'check');
-
-        // Dispatch browser event for smooth UI updates
-        $this->dispatch('reports-dismissed', eventId: $eventId);
-    }
-
     public function render()
     {
         // Get events with 3 or more reports, sorted by most reported first
