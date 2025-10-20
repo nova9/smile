@@ -392,7 +392,7 @@ Professional legal document handling:
 
 **Code Location**: `app/Services/EventRecommenderService.php`
 
-### Legal AI Chatbot
+### AI Chatbot
 
 **Technology**: OpenAI GPT Models
 
