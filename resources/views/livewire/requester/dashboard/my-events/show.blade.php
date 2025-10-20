@@ -57,29 +57,30 @@
                                     <span>Community Space</span>
                                 </a>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                     <div>
-                                <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
-                                <div class="space-y-3 mb-2">
-                                    @foreach($event->resources as $resource)
-                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                                            <div class="flex items-start justify-between gap-4">
-                                                <div class="flex-1">
-                                                    <h3 class="font-semibold text-gray-800 mb-1">{{ $resource->name }}</h3>
-                                                    <p class="text-sm text-gray-600">{{ $resource->description }}</p>
-                                                </div>
-                                                <div class="text-right flex-shrink-0">
-                                                    <div class="text-lg font-bold text-gray-800">{{ $resource->pivot->quantity }}</div>
-                                                    <div class="text-xs text-gray-500">{{ $resource->unit }}</div>
-                                                </div>
-                                            </div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Resources Required</h2>
+                        <div class="space-y-3 mb-2">
+                            @foreach ($event->resources as $resource)
+                                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                    <div class="flex items-start justify-between gap-4">
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-gray-800 mb-1">{{ $resource->name }}</h3>
+                                            <p class="text-sm text-gray-600">{{ $resource->description }}</p>
                                         </div>
-                                    @endforeach
+                                        <div class="text-right flex-shrink-0">
+                                            <div class="text-lg font-bold text-gray-800">
+                                                {{ $resource->pivot->quantity }}</div>
+                                            <div class="text-xs text-gray-500">{{ $resource->unit }}</div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
+                        </div>
+                    </div>
 
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Volunteers</h2>
 
@@ -129,10 +130,9 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-4 flex-1">
                                         <div class="relative">
-                                            <x-common.avatar
-                                                size="50"
-                                                :src="\App\Services\Profile::getProfilePictureUrl($user)"
-                                                :name="$user->name"/>
+                                            <x-common.avatar size="50"
+                                                             :src="\App\Services\Profile::getProfilePictureUrl($user)"
+                                                             :name="$user->name"/>
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <div class="flex items-center gap-3 mb-1">
@@ -170,10 +170,17 @@
                                             </button>
                                         </div>
                                     @else
-                                        <span
-                                            class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full font-medium ml-4">
-                                            <i data-lucide="check-circle" class="w-4 h-4"></i> Approved
-                                        </span>
+                                        <div class="flex items-center gap-2 ml-4">
+                                            <span
+                                                class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full font-medium">
+                                                <i data-lucide="check-circle" class="w-4 h-4"></i> Approved
+                                            </span>
+                                            <button wire:click="removeUser({{ $user->id }})"
+                                                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200">
+                                                <i data-lucide="user-minus" class="w-4 h-4"></i>
+                                                Remove
+                                            </button>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -191,16 +198,18 @@
                 </div>
 
                 {{-- Workflows Tab --}}
-                <label class="tab">
-                    <input type="radio" name="my_tabs_4"/>
-                    <div class="flex gap-1">
-                        <i data-lucide="book-check" class="w-4 h-4"></i>
-                        <span>Workflows</span>
+                @if (\App\Services\Pro::isProUser(auth()->user()))
+                    <label class="tab">
+                        <input type="radio" name="my_tabs_4"/>
+                        <div class="flex gap-1">
+                            <i data-lucide="book-check" class="w-4 h-4"></i>
+                            <span>Workflows</span>
+                        </div>
+                    </label>
+                    <div class="tab-content overflow-scroll bg-gray-100 border-base-300 p-6">
+                        <livewire:common.workflow :eventId="$event->id"/>
                     </div>
-                </label>
-                <div class="tab-content overflow-scroll bg-gray-100 border-base-300 p-6">
-                    <livewire:common.workflow :eventId="$event->id"/>
-                </div>
+                @endif
 
                 <label class="tab">
                     <input type="radio" name="my_tabs_4"/>
@@ -222,83 +231,80 @@
                     </div>
                 </label>
                 <div class="tab-content bg-base-100 border-base-300 p-6">
-                    @if (isset($acceptedUsers) && $acceptedUsers->count() > 0)
-                        <div class="mt-12 mb-8">
-                            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-gray-800">
-                                <i data-lucide="award" class="w-6 h-6 text-yellow-500"></i> Issue Certificates
+                    @if ($deadline < now() && $volunteers->count() > 0)
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-gray-900">
+                                <i data-lucide="award" class="w-6 h-6 text-gray-600"></i> Issue Certificates
                             </h3>
                             <div class="overflow-x-auto">
-                                <table class="min-w-full bg-white rounded-xl shadow border border-gray-200">
-                                    <thead class="bg-gray-100">
+                                <table class="min-w-full bg-white rounded-xl shadow-sm border border-gray-200">
+                                    <thead class="bg-gray-50">
                                     <tr>
                                         <th
-                                            class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider rounded-tl-xl">
-                                            Name
+                                            class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                            Volunteer
                                         </th>
                                         <th
-                                            class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                                            Tasks Status
+                                            class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                            Status
                                         </th>
                                         <th
-                                            class="px-6 py-3 flex justify-end text-left text-xs font-bold text-gray-700 uppercase tracking-wider rounded-tr-xl">
-                                            Certificate
+                                            class="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                            Actions
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    @foreach ($acceptedUsers as $volunteer)
-                                        @php
-                                            $assignedTasks = $tasks->where('assigned_id', $volunteer->id);
-                                            $doneTasksCount = $assignedTasks->where('status', 'done')->count();
-                                            $totalAssignedCount = $assignedTasks->count();
-                                        @endphp
-                                        <tr class="border-b last:border-b-0 hover:bg-gray-50 transition">
-                                            <td class="px-6 py-4 flex items-center gap-3">
-                                                <img
-                                                    src="{{ $volunteer->profile_photo_url ?? 'https://randomuser.me/api/portraits/men/' . $volunteer->id . '.jpg' }}"
-                                                    alt="{{ $volunteer->name }}"
-                                                    class="w-8 h-8 rounded-full border-2 border-blue-100">
-                                                <span class="font-semibold text-gray-800">{{ $volunteer->name }}</span>
+                                    <tbody class="divide-y divide-gray-200">
+                                    @foreach ($volunteers as $volunteer)
+                                        <tr class="hover:bg-gray-50 transition-colors">
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-3">
+                                                    <img
+                                                        src="{{ $volunteer->getProfilePicture() ?? 'https://randomuser.me/api/portraits/men/' . $volunteer->id . '.jpg' }}"
+                                                        alt="{{ $volunteer->name }}"
+                                                        class="w-10 h-10 rounded-full border-2 border-gray-200">
+                                                    <span
+                                                        class="font-semibold text-gray-900">{{ $volunteer->name }}</span>
+                                                </div>
                                             </td>
                                             <td class="px-6 py-4">
-                                                @if ($totalAssignedCount > 0 && $doneTasksCount === $totalAssignedCount)
                                                     <span
-                                                        class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-bold">
-                                                            <i data-lucide="check-circle" class="w-4 h-4"></i> All Tasks Completed
-                                                        </span>
-                                                @else
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">
-                                                            <i data-lucide="alert-circle" class="w-4 h-4"></i> Pending Tasks
-                                                        </span>
-                                                @endif
+                                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg">
+                                                        <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                                                        @if( $volunteer->isCertificateIssued())
+                                                            Certificate Issued
+                                                        @else
+                                                            Not Issued
+                                                        @endif
+                                                    </span>
                                             </td>
-                                            <td class="px-6 py-4 flex justify-end">
-                                                @if ($totalAssignedCount > 0 && $doneTasksCount === $totalAssignedCount)
-                                                    <form method="GET"
-                                                          action="{{ route('certificate.show', ['id' => $event->id, 'volunteerid' => $volunteer->id]) }}"
-                                                          class="inline">
-                                                        <button class="btn btn-info">
-                                                            <i data-lucide="eye" class="w-4 h-4"></i> View Certificate
-                                                        </button>
-                                                    </form>
-                                                @elseif(!empty($volunteer->certificate_issued))
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-full">
-                                                            <i data-lucide="award" class="w-4 h-4"></i> Certificate Issued
-                                                        </span>
-                                                @else
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2 py-1 bg-gray-50 text-gray-400 text-xs rounded-full">
-                                                            <i data-lucide="slash" class="w-4 h-4"></i> Not Eligible
-                                                        </span>
-                                                @endif
+                                            <td class="px-6 py-4 text-right">
+                                                <form method="GET"
+                                                      action="{{ route('certificate.show', ['id' => $event->id, 'volunteerid' => $volunteer->id]) }}"
+                                                      class="inline">
+                                                    <button type="submit"
+                                                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 rounded-lg transition-colors">
+                                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                                        View Certificate
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    @else
+                        <div class="text-center py-16">
+                            <div
+                                class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="clock" class="w-8 h-8 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Event In Progress</h3>
+                            <p class="text-gray-600 max-w-md mx-auto">Certificates can only be issued after the event
+                                has concluded. Please wait until the event ends to generate certificates for volunteers.
+                            </p>
                         </div>
                     @endif
                 </div>

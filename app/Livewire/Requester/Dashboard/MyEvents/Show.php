@@ -6,6 +6,9 @@ use App\Models\Task;
 use App\Models\User;
 use App\Services\Favorite;
 use App\Services\GoogleMaps;
+use App\Services\Notifications\ApprovalNotification;
+use App\Services\Notifications\DeclineNotification;
+use App\Services\Notifications\RemovedNotification;
 use App\Services\Notifications\TaskCompletionNotification;
 use Livewire\Component;
 
@@ -23,12 +26,16 @@ class Show extends Component
     public $searchFilter;
 
     public $is_favorited;
+    public $deadline;
+    public $status;
 
     public function mount($id)
     {
         $this->event = auth()->user()->organizingEvents()->with('users', 'category')->find($id);
         $this->loadVolunteers();
         $this->is_favorited = $this->event->isFavourite();
+        $this->deadline = $this->event['ends_at'];
+;       
     }
 
     public function toggleFavorite()
@@ -63,12 +70,19 @@ class Show extends Component
     public function approve($userId)
     {
         $this->event->users()->updateExistingPivot($userId, ['status' => 'accepted']);
+        User::find($userId)->notify(new ApprovalNotification($this->event));
         $this->loadVolunteers();
     }
 
     public function decline($userId)
     {
         $this->event->users()->updateExistingPivot($userId, ['status' => 'rejected']);
+        User::find($userId)->notify(new DeclineNotification($this->event));
+        $this->loadVolunteers();
+    }
+    public function removeUser($userId){
+        $this->event->users()->updateExistingPivot($userId, ['status' => 'pending']);
+        User::find($userId)->notify(new RemovedNotification($this->event));
         $this->loadVolunteers();
     }
 
