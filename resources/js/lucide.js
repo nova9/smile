@@ -112,7 +112,10 @@ import {
     File,
     MoreVertical,
     Video,
-    Venus
+    Venus,
+    Upload,
+    AlertCircle,
+    FileCheck
 } from "lucide";
 
 function registerIcons() {
@@ -231,6 +234,9 @@ function registerIcons() {
             Bot,
             BotMessageSquare,
             Bookmark,
+            Upload,
+            AlertCircle,
+            FileCheck
         },
     });
 }
