@@ -18,21 +18,59 @@ class Show extends Component
     public $Volunteers;
     public $resources;
 
+    // Contract agreement properties
+    public $showContractModal = false;
+    public $signedContract = null;
+    public $agreedToTerms = false;
+
     public function mount($id, GoogleMaps $googleMaps)
     {
         $this->profileCompletionPercentage = auth()->user()->profileCompletionPercentage();
-        $this->event = Event::query()->with(['address', 'users'])->find($id);
-        // dd($this->event);
+        $this->event = Event::query()->with(['address', 'users', 'contractRequests.agreement'])->find($id);
         $this->Volunteers = $this->event->users;
-        // dd($this->event);
         $this->organizer = User::find($this->event->user_id);
-        // dd($this->organizer);
         $this->city = $googleMaps->getNearestCity($this->event->latitude, $this->event->longitude);
         $this->resources = $this->event->resources;
-        // dd($this->resources);
+
+        // Check if event has a signed contract (status: approved with signed_at)
+        $this->signedContract = $this->event->contractRequests()
+            ->where('status', 'approved')
+            ->whereNotNull('signed_at')
+            ->with('agreement')
+            ->first();
     }
 
     public function join()
+    {
+        // Check if event has a signed contract requirement
+        if ($this->signedContract) {
+            $this->showContractModal = true;
+            return;
+        }
+
+        // If no contract, proceed with normal join flow
+        $this->processJoin();
+    }
+
+    public function agreeAndJoin()
+    {
+        $this->validate([
+            'agreedToTerms' => 'accepted'
+        ], [
+            'agreedToTerms.accepted' => 'You must agree to the contract terms to join this event.'
+        ]);
+
+        $this->showContractModal = false;
+        $this->processJoin();
+    }
+
+    public function cancelContractAgreement()
+    {
+        $this->showContractModal = false;
+        $this->agreedToTerms = false;
+    }
+
+    private function processJoin()
     {
         $maxParticipants = $this->event->maximum_participants;
         $currentParticipants = $this->event->users()->count();
@@ -41,7 +79,7 @@ class Show extends Component
         if ($slotAvailable > 0) {
             if ((int)$maxParticipants < (int)$currentParticipants) {
                 session()->flash('event_full', 'Sorry, this event has reached its maximum number of participants.');
-                return redirect()->back();
+                return;
             } else {
 
                 $this->event->userJoinsNotify();
@@ -49,22 +87,22 @@ class Show extends Component
 
 
                 $method = $this->event->recruiting_method;
-             switch ($method) {
+                switch ($method) {
                     case 'first_come':
                         $this->event->users()->attach(auth()->id(), ['status' => 'accepted']);
                         session()->flash('message', '🎉 You have successfully joined the event!');
                         break;
-                
+
                     case 'application_review':
                         $this->event->users()->attach(auth()->id(), ['status' => 'pending']);
                         session()->flash('message', '✅ Your application has been submitted and is under review.');
                         break;
-                
+
                     case 'skill_assessment':
                         $this->event->users()->attach(auth()->id(), ['status' => 'pending']);
                         session()->flash('message', '🧠 Your skill assessment is being reviewed. We’ll notify you soon!');
                         break;
-                
+
                     case 'metrics':
                         if (auth()->user()->getRank() <= 10) {
                             $this->event->users()->attach(auth()->id(), ['status' => 'accepted']);
@@ -74,7 +112,7 @@ class Show extends Component
                             session()->flash('message', '⚙️ You don’t currently meet the event criteria. Your application is pending review.');
                         }
                         break;
-                
+
                     default:
                         $this->event->users()->attach(auth()->id(), ['status' => 'pending']);
                         session()->flash('message', '📨 Your application has been received and is pending review.');
@@ -83,7 +121,7 @@ class Show extends Component
 
                 $participatedEventsCount = $user->participatingEvents()->count();
                 $user->assignBadgesForEvents($participatedEventsCount, $user);
-                return redirect('/volunteer/dashboard/my-events');
+                return $this->redirect('/volunteer/dashboard/my-events', navigate: true);
             }
         }
     }
