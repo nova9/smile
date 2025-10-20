@@ -258,6 +258,7 @@ function registerIcons() {
             Venus,
             Video,
             ArrowRightCircle,
+
         },
     });
 }

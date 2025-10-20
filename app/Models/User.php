@@ -257,4 +257,9 @@ class User extends Authenticatable
         $fileId = $this->getCustomAttribute('profile_picture');
         return \App\Services\FileManager::getTemporaryUrl($fileId);
     }
+
+    public function isCertificateIssued(): bool
+    {
+        return $this->certificates()->whereNotNull('issued_at')->exists();
+    }
 }
