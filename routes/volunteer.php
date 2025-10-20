@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'role:volunteer'])->group(function () {
     Route::prefix('/dashboard')->group(function () {
         Route::get('/', \App\Livewire\Volunteer\Dashboard\Index::class);
-        Route::get('/events', \App\Livewire\Volunteer\Dashboard\Eventz\Index::class);
+        Route::get('/events', \App\Livewire\Volunteer\Dashboard\Eventz\Index::class)->name('events');
         Route::get('/profile', \App\Livewire\Volunteer\Dashboard\Profile::class);
         Route::get('/leaderboard', \App\Livewire\Volunteer\Dashboard\Leaderboard::class);
 
