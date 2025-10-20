@@ -16,7 +16,6 @@
 -   [Project Structure](#project-structure)
 -   [Core Features](#core-features)
 -   [AI-Powered Features](#ai-powered-features)
--   [Testing](#testing)
 
 ## 🎯 Overview
 
@@ -73,7 +72,6 @@ To streamline volunteer coordination, enhance community engagement, and recogniz
 -   **PHP**: 8.2+
 -   **Real-time Components**: Livewire 3.6 & Volt 1.7
 -   **Database**: MySQL/PostgreSQL (Eloquent ORM)
--   **File Storage**: AWS S3
 -   **Search**: Laravel Scout
 -   **Monitoring**: Laravel Telescope
 
@@ -94,15 +92,6 @@ To streamline volunteer coordination, enhance community engagement, and recogniz
     -   Event recommendations via cosine similarity
     -   AI chatbot
 
-
-### Development Tools
-
--   **Testing**: Pest PHP 3.8
--   **Code Quality**: Laravel Pint
--   **Local Development**: Laravel Sail
--   **Debugging**: Laravel Pail, Telescope
--   **API Client**: Axios
-
 ## 👥 User Roles
 
 The platform supports four distinct user roles:
@@ -119,8 +108,6 @@ The platform supports four distinct user roles:
 -   **Node.js** >= 18.x
 -   **npm** or **yarn**
 -   **MySQL** >= 8.0 or **PostgreSQL** >= 13
--   **Redis** (for queues and caching)
--   **AWS Account** (for S3 file storage)
 -   **OpenAI API Key** (for AI features)
 
 ## 🚀 Installation
@@ -186,11 +173,6 @@ The platform uses OpenAI for:
 -   **Legal Chatbot**: Provides platform guidance through GPT models
 
 Ensure you have sufficient OpenAI API credits and configure the API key in your `.env` file.
-
-### AWS S3 Setup
-
-File uploads (certificates, event photos, documents) are stored on AWS S3. Configure your S3 bucket with appropriate permissions.
-
 
 ## 🏃 Running the Application
 
@@ -410,46 +392,9 @@ GenerateEmbedding::dispatch(
 );
 ```
 
-**Code Location**: `app/Jobs/GenerateEmbedding.php`
-
-## 🧪 Testing
-
-The project uses **Pest PHP** for elegant and expressive testing.
-
-### Run All Tests
-
-```bash
-php artisan test
-```
-
-Or:
-
-```bash
-./vendor/bin/pest
-```
-
-### Run Specific Test Suite
-
-```bash
-php artisan test --testsuite=Feature
-php artisan test --testsuite=Unit
-```
-
-### Run with Coverage
-
-```bash
-./vendor/bin/pest --coverage
-```
+**Code Location**: `app/Jobs/GenerateEmbedding.php``
 
 ## 💻 Development
-
-### Code Style
-
-The project uses Laravel Pint for code formatting:
-
-```bash
-./vendor/bin/pint
-```
 
 ### Debugging
 
@@ -564,35 +509,6 @@ $result = OpenAI::chat()->create([
     'messages' => $messages,
 ]);
 ```
-
-### AWS S3 Integration
-
-```php
-// Upload file
-Storage::disk('s3')->put($path, $contents);
-
-// Get file URL
-$url = Storage::disk('s3')->url($path);
-```
-
-## 📊 Analytics
-
-The platform tracks:
-
--   **User Metrics**: Registration trends, active users, retention
--   **Event Metrics**: Creation rate, completion rate, popularity
--   **Volunteer Metrics**: Hours volunteered, events attended, badges earned
--   **Platform Metrics**: Total engagement, geographic distribution
-
-
-### Coding Standards
-
--   Follow PSR-12 coding standards
--   Write meaningful commit messages
--   Add tests for new features
--   Update documentation as needed
--   Use Laravel Pint for code formatting
-
 
 ---
 
