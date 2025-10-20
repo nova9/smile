@@ -123,25 +123,25 @@
                             <div class="col-span-1">
                                 @if ($item->pivot->status === 'accepted')
                                     <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 shadow-sm">
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700">
                                         <div class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
                                         Confirmed
                                     </span>
                                 @elseif($item->pivot->status === 'pending')
                                     <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 shadow-sm">
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700">
                                         <div class="w-2 h-2 bg-amber-500 rounded-full mr-2 animate-pulse"></div>
                                         Pending
                                     </span>
                                 @elseif($item->pivot->status === 'completed')
                                     <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 shadow-sm">
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700">
                                         <i data-lucide="check-circle" class="w-3 h-3 mr-2"></i>
                                         Completed
                                     </span>
                                 @elseif($item->pivot->status === 'rejected' || $item->pivot->status === 'cancelled')
                                     <span
-                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-rose-100 to-red-100 text-rose-700 shadow-sm">
+                                        class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-rose-100 to-red-100 text-rose-700">
                                         <i data-lucide="x-circle" class="w-3 h-3 mr-2"></i>
                                         Cancelled
                                     </span>

@@ -37,13 +37,12 @@
                 {{-- spacer --}}
             </div>
 
-            <div class="flex  gap-1">
+            <div class="flex gap-1">
                 <livewire:common.legal-help />
                 <livewire:common.notification />
                 <livewire:common.chat />
                 <livewire:common.help-support />
                 <livewire:common.chatbot />
-
             </div>
         </div>
         <div class="overflow-scroll">
