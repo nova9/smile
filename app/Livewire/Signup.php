@@ -15,6 +15,7 @@ use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Auth\Events\Registered;
 
 class Signup extends Component
 {
@@ -191,7 +192,7 @@ class Signup extends Component
 
         GenerateEmbedding::dispatch($user, textToEmbed: json_encode($user->getAllAttributes()));
 
-
+        event(new Registered($user));
         auth()->login($user);
         
         return redirect()->route('dashboard')->with('success', 'Account created successfully!');

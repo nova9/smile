@@ -38,6 +38,15 @@
         </div>
     </div>
 
+
+    @if (session()->has('message'))
+        <div class="toast toast-end">
+            <div class="alert alert-info">
+                <span>{{ session('message') }}</span>
+            </div>
+        </div>
+    @endif
     <!-- Footer -->
     <x-common.landing.footer />
+
 </div>
