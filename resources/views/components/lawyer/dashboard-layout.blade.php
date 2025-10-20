@@ -6,7 +6,6 @@
             <x-common.dashboard.item to="/lawyer/digital-signature" icon="pen-tool" title="Digital Signature" />
             <x-common.dashboard.item to="/lawyer/contract-archive" icon="archive" title="Contract Archive" />
             <x-common.dashboard.item to="/lawyer/contract-customization" icon="settings" title="Contract Customization" />
-            <x-common.dashboard.item to="/lawyer/legal-qa" icon="help-circle" title="Legal Q&A Support" />
         </x-slot>
 
         {{ $slot }}
