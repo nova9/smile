@@ -108,13 +108,17 @@ import {
     Bot,
     BotMessageSquare,
     Bookmark,
+<<<<<<< HEAD
     Upload,
+=======
+>>>>>>> db8fb5d373560c719c82e58310058d3b6f3c6a61
     Phone,
     Smartphone,
     File,
     MoreVertical,
     Venus,
     Video,
+<<<<<<< HEAD
     Flag,
     AlertTriangle,
     AlertCircle,
@@ -122,6 +126,12 @@ import {
     Inbox,
     FileCheck,
     ArrowRightCircle,
+=======
+    Venus,
+    Upload,
+    AlertCircle,
+    FileCheck
+>>>>>>> db8fb5d373560c719c82e58310058d3b6f3c6a61
 } from "lucide";
 
 function registerIcons() {
@@ -245,10 +255,15 @@ function registerIcons() {
             BotMessageSquare,
             Bookmark,
             Upload,
+<<<<<<< HEAD
             Flag,
             List,
             Inbox,
             FileCheck,
+=======
+            AlertCircle,
+            FileCheck
+>>>>>>> db8fb5d373560c719c82e58310058d3b6f3c6a61
         },
     });
 }

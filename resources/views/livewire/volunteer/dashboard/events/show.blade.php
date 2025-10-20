@@ -71,9 +71,9 @@
                 <a href="/volunteer/dashboard/events" wire:navigate
                     class="inline-flex items-center gap-2 text-gray-600 hover:text-accent transition-colors group">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                         class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                     Back to Opportunities
                 </a>
@@ -178,13 +178,16 @@
                                                     <div class="flex items-start justify-between gap-4">
                                                         <div class="flex-1">
                                                             <h3 class="font-semibold text-gray-800 mb-1">
-                                                                {{ $resource->name }}</h3>
+                                                                {{ $resource->name }}
+                                                            </h3>
                                                             <p class="text-sm text-gray-600">
-                                                                {{ $resource->description }}</p>
+                                                                {{ $resource->description }}
+                                                            </p>
                                                         </div>
                                                         <div class="text-right flex-shrink-0">
                                                             <div class="text-lg font-bold text-gray-800">
-                                                                {{ $resource->pivot->quantity }}</div>
+                                                                {{ $resource->pivot->quantity }}
+                                                            </div>
                                                             <div class="text-xs text-gray-500">{{ $resource->unit }}
                                                             </div>
                                                         </div>
@@ -205,15 +208,8 @@
                                             <div
                                                 class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                                                 <i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i>
-                                        <div class="flex items-center gap-4">
-                                            <div class="flex-shrink-0">
-                                                <div
-                                                    class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
-                                                    <i data-lucide="user-plus" class="w-6 h-6 text-blue-500"
-                                                        aria-hidden="true"></i>
-                                                </div>
                                             </div>
-                                            <div>
+                                            <div class="flex-1">
                                                 <h3 class="font-semibold text-gray-900 mb-1">Selection Method</h3>
                                                 @php
                                                     $recruitingMethodLabels = [
@@ -244,61 +240,59 @@
                                                     <div class="space-y-3">
                                                         @foreach ($event->participant_requirements as $req)
                                                             @if (isset($req['filter_types']) && $req['filter_types'] === 'gender')
-                                                                <div
-                                                                    class="bg-white border border-gray-200 rounded-md p-3">
+                                                                <div class="bg-white border border-gray-200 rounded-md p-3">
                                                                     <div class="text-sm font-medium text-gray-700 mb-2">
-                                                                        Gender
-                                                                        Distribution
+                                                                        Gender Distribution
                                                                     </div>
-                                                                    <div
-                                                                        class="grid grid-cols-3 gap-2 text-center text-xs">
+                                                                    <div class="grid grid-cols-3 gap-2 text-center text-xs">
                                                                         <div class="bg-gray-50 rounded p-2">
                                                                             <div class="font-bold text-gray-800">
-                                                                                {{ $req['male_participants'] ?? 0 }}</div>
+                                                                                {{ $req['male_participants'] ?? 0 }}
+                                                                            </div>
                                                                             <div class="text-gray-600">Men</div>
                                                                         </div>
                                                                         <div class="bg-gray-50 rounded p-2">
                                                                             <div class="font-bold text-gray-800">
-                                                                                {{ $req['female_participants'] ?? 0 }}</div>
+                                                                                {{ $req['female_participants'] ?? 0 }}
+                                                                            </div>
                                                                             <div class="text-gray-600">Women</div>
                                                                         </div>
                                                                         <div class="bg-gray-50 rounded p-2">
                                                                             <div class="font-bold text-gray-800">
-                                                                                {{ $req['non_binary_participants'] ?? 0 }}</div>
+                                                                                {{ $req['non_binary_participants'] ?? 0 }}
+                                                                            </div>
                                                                             <div class="text-gray-600">Non-Binary</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @elseif (isset($req['filter_types']) && $req['filter_types'] === 'level')
-                                                                <div
-                                                                    class="bg-white border border-gray-200 rounded-md p-3">
+                                                                <div class="bg-white border border-gray-200 rounded-md p-3">
                                                                     <div class="text-sm font-medium text-gray-700 mb-2">
-                                                                        Experience
-                                                                        Level
+                                                                        Experience Level
                                                                     </div>
-                                                                    <div
-                                                                        class="grid grid-cols-3 gap-2 text-center text-xs">
+                                                                    <div class="grid grid-cols-3 gap-2 text-center text-xs">
                                                                         <div class="bg-gray-50 rounded p-2">
                                                                             <div class="font-bold text-gray-800">
-                                                                                {{ $req['beginner_participants'] ?? 0 }}</div>
+                                                                                {{ $req['beginner_participants'] ?? 0 }}
+                                                                            </div>
                                                                             <div class="text-gray-600">Beginner</div>
                                                                         </div>
                                                                         <div class="bg-gray-50 rounded p-2">
                                                                             <div class="font-bold text-gray-800">
-                                                                                {{ $req['intermediate_participants'] ?? 0 }}</div>
-                                                                            <div class="text-gray-600">Intermediate
+                                                                                {{ $req['intermediate_participants'] ?? 0 }}
                                                                             </div>
+                                                                            <div class="text-gray-600">Intermediate</div>
                                                                         </div>
                                                                         <div class="bg-gray-50 rounded p-2">
                                                                             <div class="font-bold text-gray-800">
-                                                                                {{ $req['advanced_participants'] ?? 0 }}</div>
+                                                                                {{ $req['advanced_participants'] ?? 0 }}
+                                                                            </div>
                                                                             <div class="text-gray-600">Advanced</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @else
-                                                                <div
-                                                                    class="bg-white border border-gray-200 rounded-md p-2">
+                                                                <div class="bg-white border border-gray-200 rounded-md p-2">
                                                                     <span
                                                                         class="text-sm text-gray-700">{{ is_string($req) ? $req : 'Custom requirement' }}</span>
                                                                 </div>
@@ -306,10 +300,8 @@
                                                         @endforeach
                                                     </div>
                                                 @else
-                                                    <div class="text-sm text-gray-600">No specific requirements -
-                                                        Everyone
-                                                        is welcome!
-                                                    </div>
+                                                    <div class="text-sm text-gray-600">No specific requirements - Everyone
+                                                        is welcome!</div>
                                                 @endif
 
                                                 <!-- Minimum Age -->
@@ -329,38 +321,39 @@
                                 </div>
                                 <div class="mt-8">
                                     <h2 class="text-2xl font-bold text-gray-800 mb-4">Additional Notes</h2>
-                                    <div class=" p-4 space-y-2">
-                                        <p class="text-gray-700 text-base"><span class="font-semibold">Notes:</span>
-                                            {{ $event->notes }}</p>
-
+                                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2">
+                                        <p class="text-gray-700 text-base">
+                                            <span class="font-semibold">Notes:</span>
+                                            {{ $event->notes }}
+                                        </p>
                                     </div>
                                 </div>
 
-
                                 <!-- Location Card -->
-                                <div class="bg-white border border-gray-100 rounded-xl p-6">
-                                    <h3 class="text-lg font-bold text-gray-800 mb-4">Location</h3>
-                                    <div class="space-y-3">
-                                        <div class="flex items-start gap-3">
-                                            <i data-lucide="map-pin" class="w-5 h-5 text-gray-400 mt-0.5"></i>
-                                            <div>
-                                                <p class="font-medium text-gray-800">{{ $city }}</p>
+                                <div class="mt-8">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Location</h2>
+                                    <div class="bg-white border border-gray-100 rounded-xl p-6">
+                                        <div class="space-y-3">
+                                            <div class="flex items-start gap-3">
+                                                <i data-lucide="map-pin" class="w-5 h-5 text-gray-400 mt-0.5"></i>
+                                                <div>
+                                                    <p class="font-medium text-gray-800">{{ $city }}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div
-                                            class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden">
-                                            <iframe width="100%" height="100%" frameborder="0"
+                                            <div class="bg-gray-100 rounded-lg h-64 flex items-center justify-center overflow-hidden">
+                                                <iframe width="100%" height="100%" frameborder="0"
                                                     style="border:0; min-height: 120px; border-radius: 0.5rem;"
                                                     src="https://www.google.com/maps?q={{ $event->latitude }},{{ $event->longitude }}&hl=en&z=15&output=embed"
                                                     allowfullscreen>
-                                            </iframe>
+                                                </iframe>
+                                            </div>
+                                            <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
+                                                target="_blank"
+                                                class="w-full btn btn-outline btn-sm flex items-center justify-center">
+                                                <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
+                                                Open in Google Maps
+                                            </a>
                                         </div>
-                                        <a href="https://www.google.com/maps/search/?api=1&query={{ $event->latitude }},{{ $event->longitude }}"
-                                           target="_blank"
-                                           class="w-full btn btn-outline btn-sm flex items-center justify-center">
-                                            <i data-lucide="navigation" class="w-4 h-4 mr-2"></i>
-                                            Open in Google Maps
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -392,7 +385,8 @@
                                         </div>
                                     </div>
                                     <p class="text-gray-600 text-sm mb-4">
-                                        Dedicated to marine conservation with over 50 successful cleanup events and
+                                        Dedicated to marine conservation with over 50 successful cleanup events
+                                        and
                                         1000+
                                         volunteers mobilized.
                                     </p>
@@ -434,7 +428,10 @@
                                     </button>
                                     <!-- Report Event Button -->
                                     <div class="w-full">
-                                        @livewire('volunteer.dashboard.eventz.report-event', ['eventId' => $event->id])
+                                        @livewire('volunteer.dashboard.eventz.report-event', [
+                                            'eventId' =>
+                                                $event->id
+                                        ])
                                     </div>
                                 </div>
                             </div>
@@ -443,7 +440,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 </x-volunteer.dashboard-layout>
