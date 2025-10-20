@@ -31,23 +31,28 @@
                 <i data-lucide="panel-left" class="size-4 "></i>
             </div>
 
-            {{--            {{request()->path()}} --}}
+            {{-- {{request()->path()}} --}}
 
-            <div class="flex-1">
+            <div class="flex-2">
                 {{-- spacer --}}
             </div>
 
-            <div class="flex gap-2 ">
-                {{-- Show legal help only for volunteer or requester roles --}}
-
-                @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester']))
+            <div class="flex items-center gap-5">
+                {{-- Group 1: Legal Help, Notifications, Chat, Help & Support --}}
+                <div class="flex gap-0">
+                    @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester']))
                     <livewire:common.legal-help />
-                @endif
-                <livewire:common.notification />
-                <livewire:common.chat />
-                @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester','lawyer']))
-                <livewire:common.help-support />
-                @endif
+                    @endif
+                    <livewire:common.notification />
+                    <livewire:common.chat />
+                    @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester','lawyer']))
+                    <div class="ml-2">
+                        <livewire:common.help-support />
+                    </div>
+                    @endif
+                </div>
+
+                {{-- Group 2: Smile Assistant (separated with larger gap) --}}
                 <livewire:common.chatbot />
 
             </div>
