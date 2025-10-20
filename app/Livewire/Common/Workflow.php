@@ -5,8 +5,13 @@ namespace App\Livewire\Common;
 use App\Models\Event;
 use App\Models\Task;
 use App\Models\TaskList;
+use App\Models\User;
+use App\Services\Notifications\ApprovalNotification;
+use App\Services\Notifications\TaskAssignedNotification;
+use App\Services\Notifications\TaskCompletionNotification;
 use Illuminate\Support\Arr;
 use Livewire\Component;
+use PhpParser\Builder\Use_;
 
 class Workflow extends Component
 {
@@ -93,8 +98,11 @@ class Workflow extends Component
         if ($task) {
             $task->assigned_id = $volunteerId;
             $task->save();
+            User::find($volunteerId)->notify(new TaskAssignedNotification($task));
+            
         }
         $this->loadTaskLists();
+        
     }
 
     public function removeTask($taskId)
@@ -115,6 +123,12 @@ class Workflow extends Component
         if ($task) {
             $task->status = $task->status === 'done' ? 'doing' : 'done';
             $task->save();
+            if($task->status === 'done'){
+                foreach($this->event->users as $user){
+                    $user->notify(new TaskCompletionNotification($task));
+                }
+                $this->event->eventCreator()->notify(new TaskCompletionNotification($task));
+            }
         }
         $this->loadTaskLists();
     }
