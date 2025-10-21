@@ -29,7 +29,7 @@ class Profile extends Component
         $this->email = $user->email;
         $this->attribute = $user->attributes()->get()->pluck('pivot.value', 'name')->all();
 
-        $this->completion = $user->isProfileCompletionPercentage();
+        $this->completion = $user->profileCompletionPercentage();
 
         $this->contact_number = $user->attributes()->where('name', 'contact_number')->get()->pluck('pivot.value')->first();
 
@@ -63,7 +63,7 @@ class Profile extends Component
         $this->profile_picture = $this->profile_picture ?? 'IMG';
 
         $skillsValue = (is_array($this->skills) && count($this->skills) > 0) ? json_encode($this->skills) : null;
-     
+
 
     }
 
@@ -84,7 +84,7 @@ class Profile extends Component
         return redirect()->route('profile');
     }
 
-   
+
 
     public function render()
     {
