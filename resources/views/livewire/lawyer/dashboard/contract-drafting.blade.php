@@ -43,7 +43,6 @@
             </div>
 
             <!-- Saved Agreements Section -->
-            @if($savedAgreements->count() > 0)
             <div class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-white/50">
                 <div class="flex justify-between items-center mb-8">
                     <div>
@@ -56,6 +55,7 @@
                     </div>
                 </div>
 
+                @if($savedAgreements->count() > 0)
                 <div class="space-y-4">
                     @foreach($savedAgreements as $agreement)
                     <div class="bg-gradient-to-r from-white to-gray-50 border-2 border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-300">
@@ -97,8 +97,14 @@
                     </div>
                     @endforeach
                 </div>
+                @else
+                <div class="text-center py-12 text-gray-500">
+                    <i data-lucide="file-text" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+                    <p class="text-lg font-medium">No contract templates yet</p>
+                    <p class="text-sm mt-2">Create your first contract template to get started.</p>
+                </div>
+                @endif
             </div>
-            @endif
         </div>
     </main>
 
