@@ -47,3 +47,4 @@ EXPOSE 80
 
 # Start Supervisor (which will manage nginx, php-fpm, and queue workers)
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
