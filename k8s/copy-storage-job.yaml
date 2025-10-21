@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: copy-storage-assets
+  namespace: smile-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: copy-assets
+        image: registry.digitalocean.com/smile-registry/smile-app:latest
+        command: ['sh', '-c', 'cp -R /var/www/html/storage/app/. /persistent-storage-mount/ 2>/dev/null || echo "No files to copy"; chown -R www-data:www-data /persistent-storage-mount; ls -la /persistent-storage-mount']
+        volumeMounts:
+        - name: storage-volume
+          mountPath: /persistent-storage-mount
+      volumes:
+      - name: storage-volume
+        persistentVolumeClaim:
+          claimName: smile-app-storage-pvc
+      restartPolicy: Never
+  backoffLimit: 1

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smile-config
+  namespace: smile-app
+data:
+  # Application Configuration
+  APP_ENV: "development"
+  APP_DEBUG: "true"
+  APP_URL: "https://smile.thathsara.lk"
+  APP_TIMEZONE: "UTC"
+  LOG_DEPRECATIONS_CHANNEL: "null"
+  
+  # Asset Configuration
+  ASSET_URL: "https://smile.thathsara.lk"
+  
+  # Cache Configuration
+  CACHE_DRIVER: "database"
+  CACHE_PREFIX: "smile_app_cache"
+  
+  # Queue Configuration
+  QUEUE_CONNECTION: "database"
+  
+  # Session Configuration
+  SESSION_DRIVER: "database"
+  
+  # Database Configuration
+  DB_FOREIGN_KEYS: "true"
+  
+  # Broadcasting Configuration
+  PUSHER_APP_ID: ""
+  PUSHER_APP_KEY: ""
+  PUSHER_APP_SECRET: ""
+  PUSHER_HOST: ""
+  PUSHER_PORT: "443"
+  PUSHER_SCHEME: "https"
+  PUSHER_APP_CLUSTER: "mt1"
+  
+  # Vite Configuration
+  VITE_APP_NAME: "Smile App"
+  VITE_PUSHER_APP_KEY: ""
+  VITE_PUSHER_HOST: ""
+  VITE_PUSHER_PORT: "443"
+  VITE_PUSHER_SCHEME: "https"
+  VITE_PUSHER_APP_CLUSTER: "mt1"
