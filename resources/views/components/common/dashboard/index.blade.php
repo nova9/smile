@@ -46,6 +46,11 @@
                     <livewire:common.notification />
                     <livewire:common.chat />
                     <livewire:common.help-support />
+                    @if (in_array(auth()->user()->role['name'], ['volunteer', 'requester','lawyer']))
+                    <div class="ml-2">
+                        <livewire:common.help-support />
+                    </div>
+                    @endif
                 </div>
 
                 {{-- Group 2: Smile Assistant (separated with larger gap) --}}

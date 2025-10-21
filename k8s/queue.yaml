@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smile-worker
+  namespace: smile-app
+  labels:
+    app: smile-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smile-worker
+  template:
+    metadata:
+      labels:
+        app: smile-worker
+    spec:
+      containers:
+        - name: smile-worker
+          image: registry.digitalocean.com/smile-registry/smile-app:latest
+          command: ['php', 'artisan', 'queue:work', '--verbose', '--tries=3', '--timeout=90']
+          envFrom:
+            - secretRef:
+                name: smile-secrets
+            - configMapRef:
+                name: smile-config
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"

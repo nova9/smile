@@ -163,13 +163,13 @@ class User extends Authenticatable implements MustVerifyEmail
             return;
         }
         $attribute = Attribute::where('name', $attributeName)->firstOrFail();
-        $this->attributes()->syncWithoutDetaching([$attribute->id => ['value' => $value]]);
+        $this->attributes()->syncWithoutDetaching([$attribute->id => ['value' => json_encode($value)]]);
     }
 
     public function getCustomAttribute($attributeName)
     {
         $attribute = $this->attributes()->where('name', $attributeName)->first();
-        return $attribute ? $attribute->pivot->value : null;
+        return $attribute ? json_decode($attribute->pivot->value, true) : null;
     }
 
     public function getAllAttributes()

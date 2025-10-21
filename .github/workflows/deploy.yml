@@ -1,0 +1,139 @@
+# CI/CD Pipeline for GitHub Actions
+name: Deploy to DigitalOcean Kubernetes
+
+on:
+  push:
+    branches: [ main, production ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: registry.digitalocean.com/smile-registry
+  IMAGE_NAME: smile-app
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: smile_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, pdo_mysql, gd, redis
+        coverage: xdebug
+    
+    - name: Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: /tmp/composer-cache
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+    
+    - name: Install PHP dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+    
+    - name: Install Node.js dependencies
+      run: npm ci
+    
+    - name: Build frontend assets
+      run: npm run build
+    
+    - name: Prepare Laravel environment
+      run: |
+        cp .env.example .env
+        php artisan key:generate
+        php artisan config:cache
+    
+    - name: Run tests
+      env:
+        DB_CONNECTION: mysql
+        DB_HOST: 127.0.0.1
+        DB_PORT: 3306
+        DB_DATABASE: smile_test
+        DB_USERNAME: root
+        DB_PASSWORD: root
+        REDIS_HOST: 127.0.0.1
+        REDIS_PORT: 6379
+      run: |
+        php artisan migrate --force
+        php artisan test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    
+    - name: Log in to DigitalOcean Container Registry
+      run: doctl registry login --expiry-seconds 600
+    
+    - name: Build and push Docker image
+      run: |
+        docker build -t $REGISTRY/$IMAGE_NAME:$GITHUB_SHA -t $REGISTRY/$IMAGE_NAME:latest .
+        docker push $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
+        docker push $REGISTRY/$IMAGE_NAME:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/production'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    
+    - name: Save DigitalOcean kubeconfig
+      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.K8S_CLUSTER_NAME }}
+    
+    - name: Update deployment image
+      run: |
+        kubectl set image deployment/smile-app smile-app=$REGISTRY/$IMAGE_NAME:$GITHUB_SHA -n smile-app
+        kubectl set image deployment/smile-worker smile-worker=$REGISTRY/$IMAGE_NAME:$GITHUB_SHA -n smile-app
+        kubectl set image deployment/smile-scheduler smile-scheduler=$REGISTRY/$IMAGE_NAME:$GITHUB_SHA -n smile-app
+    
+    - name: Verify deployment
+      run: |
+        kubectl rollout status deployment/smile-app -n smile-app --timeout=300s
+        kubectl rollout status deployment/smile-worker -n smile-app --timeout=300s
+        kubectl rollout status deployment/smile-scheduler -n smile-app --timeout=300s
+    
+    - name: Run database migrations
+      run: |
+        kubectl wait --for=condition=ready pod -l app=smile-app -n smile-app --timeout=300s
+        POD_NAME=$(kubectl get pods -l app=smile-app -n smile-app -o jsonpath='{.items[0].metadata.name}')
+        kubectl exec $POD_NAME -n smile-app -- php artisan migrate --force
