@@ -36,7 +36,7 @@ class Messaging
     {
         return Chat::query()->whereHas('users', fn($q) => $q->where('users.id', auth()->id()))
             ->withCount('users')
-            ->where('users_count', 2)
+            ->having('users_count', 2)
             ->get();
     }
 

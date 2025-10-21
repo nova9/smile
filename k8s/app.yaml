@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smile-app
+  namespace: smile-app
+  labels:
+    app: smile-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smile-app
+  template:
+    metadata:
+      labels:
+        app: smile-app
+    spec:
+      initContainers:
+      - name: copy-storage-files
+        image: registry.digitalocean.com/smile-registry/smile-app:latest
+        imagePullPolicy: Always
+        command: ['sh', '-c', 'if [ ! -f /persistent-storage-mount/.copied ]; then cp -R /var/www/html/storage/app/. /persistent-storage-mount/ 2>/dev/null || true; touch /persistent-storage-mount/.copied; fi; chown -R www-data:www-data /persistent-storage-mount']
+        volumeMounts:
+        - name: storage-volume
+          mountPath: /persistent-storage-mount
+      - name: migrate
+        image: registry.digitalocean.com/smile-registry/smile-app:latest
+        imagePullPolicy: Always
+        command: ["/bin/sh", "-c", "php artisan migrate --force"]
+        envFrom:
+        - secretRef:
+            name: smile-secrets
+        - configMapRef:
+            name: smile-config
+        volumeMounts:
+        - name: storage-volume
+          mountPath: /var/www/html/storage/app
+      containers:
+      - name: smile-app
+        image: registry.digitalocean.com/smile-registry/smile-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: smile-secrets
+        - configMapRef:
+            name: smile-config
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: storage-volume
+          mountPath: /var/www/html/storage/app
+      volumes:
+      - name: storage-volume
+        persistentVolumeClaim:
+          claimName: smile-app-storage-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smile-app-service
+  namespace: smile-app
+spec:
+  selector:
+    app: smile-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: smile-app-ingress
+  namespace: smile-app
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - smile.thathsara.lk
+    secretName: smile-app-tls
+  rules:
+  - host: smile.thathsara.lk
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: smile-app-service
+            port:
+              number: 80

@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: laravel-migrate
+  namespace: smile-app
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsUser: 33
+        runAsGroup: 33
+        fsGroup: 33
+      containers:
+        - name: migrate
+          image: registry.digitalocean.com/smile-registry/smile-app:latest
+          imagePullPolicy: Always
+          command: ["php", "artisan", "migrate:fresh", "--seed"]
+          envFrom:
+            - configMapRef:
+                name: smile-config
+            - secretRef:
+                name: smile-secrets
