@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Services\FileManager;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
- 
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -163,13 +163,13 @@ class User extends Authenticatable implements MustVerifyEmail
             return;
         }
         $attribute = Attribute::where('name', $attributeName)->firstOrFail();
-        $this->attributes()->syncWithoutDetaching([$attribute->id => ['value' => json_encode($value)]]);
+        $this->attributes()->syncWithoutDetaching([$attribute->id => ['value' => $value]]);
     }
 
     public function getCustomAttribute($attributeName)
     {
         $attribute = $this->attributes()->where('name', $attributeName)->first();
-        return $attribute ? json_decode($attribute->pivot->value, true) : null;
+        return $attribute ? $attribute->pivot->value : null;
     }
 
     public function getAllAttributes()

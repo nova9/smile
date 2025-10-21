@@ -11,6 +11,7 @@ use App\Models\Resource;
 use App\Models\Tag;
 use App\Services\EmbeddingService;
 use App\Services\GoogleMaps;
+use App\Services\Pro;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
